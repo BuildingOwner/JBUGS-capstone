@@ -28,6 +28,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-devtools'
 
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 //	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -85,5 +87,5 @@ task buildReact(type: Exec) {
 task copyReactBuildFiles(type: Copy) {
 	dependsOn "buildReact"
 	from "$frontDir/build"
-	into "$projectDir/src/main/resources/static"
+	into "$projectDir/src/main/resources"
 }

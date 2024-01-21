@@ -16,7 +16,7 @@ public class Lecture {
     @Column(name = "lecture_id")
     private Long id;
 
-    private String name;
+    private String name;  // 강의 이름
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
@@ -26,12 +26,8 @@ public class Lecture {
     private List<Enrollment> enrollments = new ArrayList<>();
 
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
-    private List<Material> materials = new ArrayList<>();
+    private List<Week> weeks = new ArrayList<>();
 
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
     private List<Quiz> quizzes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
-    private List<Assignment> assignments = new ArrayList<>();
-
 }

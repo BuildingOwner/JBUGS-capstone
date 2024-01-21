@@ -25,5 +25,6 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Enrollment> enrollments = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Attendance> attendances = new ArrayList<>();
 }

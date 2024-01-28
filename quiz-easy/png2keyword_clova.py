@@ -2,9 +2,11 @@ import requests
 import uuid
 import time
 import json
-from secret import keys
 import os
 import glob
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from secret import keys
 
 img_extensions = ['*.png']
 
@@ -47,8 +49,8 @@ def png2keyword_clova(path):
         result_text += " ".join(field["inferText"] for field in res["images"][0]["fields"])
 
     # 결과 출력
-    print(result_text)
-    return(result_text)
+    print('png2keyword_clova done.')
+    return f"""{result_text}"""
 
 if __name__ == "__main__":
-    png2keyword_clova('quiz-easy/pdf2png/3-DL-개요/')
+    print(png2keyword_clova('quiz-easy/pdf2png/3-DL-개요/'))

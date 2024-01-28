@@ -57,7 +57,7 @@ def generator(source):
         start = quiz.find('start') + len('start')
         end = quiz.find('end')
         result = quiz[start:end].strip()
-        print("Result:", result)
+        # print("Result:", result)
         # JSON 형식 검증
         try:
             validate(instance=json.loads(result), schema=schema)

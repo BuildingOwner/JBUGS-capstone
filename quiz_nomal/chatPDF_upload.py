@@ -1,10 +1,13 @@
 import requests
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
 import pickle
 
 
 def upload_chatPDF(path):
-    with open("quiz-nomal/pdf_source.pickle", "rb") as f:
+    with open("quiz_nomal/pdf_source.pickle", "rb") as f:
         source = pickle.load(f)
 
     if path in source:

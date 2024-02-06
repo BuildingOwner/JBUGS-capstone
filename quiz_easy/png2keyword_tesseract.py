@@ -6,7 +6,7 @@ import glob
 
 img_extensions = ['*.png']
 
-def png2keyword_tesserat(path):
+def png2keyword_tesseract(path):
     string = ""
 
     img_count = 0
@@ -19,8 +19,8 @@ def png2keyword_tesserat(path):
         rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         string += pytesseract.image_to_string(rgb_image, lang='kor+eng')
         
-    print('png2keyword_tesserat done.')
+    print('png2keyword_tesseract done.')
     return f"""{string}"""
 
 if __name__ == "__main__":
-    print(png2keyword_tesserat('quiz-easy/pdf2png/3-DL-개요/'))
+    print(png2keyword_tesseract('quiz-easy/pdf2png/3-DL-개요/'))

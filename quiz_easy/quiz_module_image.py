@@ -1,8 +1,10 @@
-from quiz_generator_easy import extrect_keyword
-from quiz_generator_easy import generator
+from pdf2png import pdf2png
+from quiz_generator_image import generator
 from openai import OpenAI
+
 import os
 import sys
+
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
 
@@ -10,12 +12,12 @@ client = OpenAI(api_key=keys.OPENAPI_KEY)
 
 
 def gen(path, number):
-    keywords = extrect_keyword(path)
+    img_path = pdf2png(path)
     questions = []
 
     i = 0
     while i < number:
-        question = generator(keywords, questions, 1)
+        question = generator(img_path, questions, 1)
 
         userInput = f"""
         {question}
@@ -41,10 +43,10 @@ def gen(path, number):
             print(f"{i}번째 문제 생성완료.")
             questions.append(question)
             i += 1
-            
+
         else:
             print(f"{i}번째 문제 재생성")
-    
+
     return f"{questions}"
 
 

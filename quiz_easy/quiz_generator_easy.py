@@ -4,15 +4,16 @@ from pdf2png import pdf2png
 # from png2keyword_clova import png2keyword_clova
 # from png2keyword_google_vision import png2keyword_google_vision
 from png2keyword_tesseract import png2keyword_tesseract
+
 import json
 from jsonschema import validate, ValidationError
 from json import JSONDecodeError
+
 import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
-
 
 client = OpenAI(api_key=keys.OPENAPI_KEY)
 
@@ -99,7 +100,7 @@ def generator(keyword, questions, number=10):
         validate(instance=json.loads(result), schema=schema)
     except (ValidationError, JSONDecodeError):
         print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
-        return generator(keyword, number)  # 재귀 호출로 다시 생성
+        return generator(keyword, questions, number)  # 재귀 호출로 다시 생성
 
     return result
 

@@ -53,4 +53,4 @@ def png2keyword_clova(path):
     return f"""{result_text}"""
 
 if __name__ == "__main__":
-    print(png2keyword_clova('quiz-easy/pdf2png/3-DL-개요/'))
+    print(png2keyword_clova('quiz_easy/pdf2png/3-DL-개요/'))

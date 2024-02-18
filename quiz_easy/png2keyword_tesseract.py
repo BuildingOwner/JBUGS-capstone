@@ -23,4 +23,4 @@ def png2keyword_tesseract(path):
     return f"""{string}"""
 
 if __name__ == "__main__":
-    print(png2keyword_tesseract('quiz-easy/pdf2png/3-DL-개요/'))
+    print(png2keyword_tesseract('quiz_easy/pdf2png/3-DL-원리/'))

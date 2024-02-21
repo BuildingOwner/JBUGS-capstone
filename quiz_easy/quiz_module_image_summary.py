@@ -1,5 +1,5 @@
 from pdf2png import pdf2png
-from quiz_generator_image import generator
+from quiz_generator_image_summary import generator, summary_pdf
 from openai import OpenAI
 
 import os
@@ -14,10 +14,12 @@ client = OpenAI(api_key=keys.OPENAPI_KEY)
 def gen(path, number):
     img_path = pdf2png(path)
     questions = []
+    
+    result = summary_pdf(img_path)
 
     i = 0
     while i < number:
-        question = generator(img_path, questions, 1)
+        question = generator(result, questions, 1)
 
         userInput = f"""
         {question}

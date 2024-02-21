@@ -1,6 +1,7 @@
 import base64
 import requests
 import glob
+from openai import OpenAI
 
 import json
 from jsonschema import validate, ValidationError
@@ -12,6 +13,8 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
 
+client = OpenAI(api_key=keys.OPENAPI_KEY)
+
 # OpenAI API 키 설정
 api_key = keys.OPENAPI_KEY
 
@@ -22,9 +25,71 @@ def encode_image(image_path):
         return base64.b64encode(image_file.read()).decode("utf-8")
 
 
-def generator(path, questions=[], number=1):
+def summary_pdf(path):
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
 
+    question = f"""
+        여기서 중요한 내용을 바탕으로 아주 자세하게 설명해줘.
+    """
+
+    
+
+    img_extensions = ["*.png"]
+    img_count = 0
+    for ext in img_extensions:
+        img_count += len(glob.glob(path + ext))
+
+    texts = ""
+    # for i in range(img_count):
+    #     str = {
+    #         "type": "image_url",
+    #         "image_url": {
+    #             "url": f"data:image/jpeg;base64,{encode_image(f'{path}{i}.png')}"
+    #         },
+    #     }
+    #     payload["messages"][1]["content"].append(str)
+        
+    #     if i%20 == 0 :
+    #         response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+    #         texts += response.json()["choices"][0]["message"]["content"]
+            
+    for i in range(0, img_count, 20):
+        payload = {
+            "model": "gpt-4-vision-preview",
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You're a person who summarizes PDFs",
+                },
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": question,
+                        },
+                    ],
+                },
+            ],
+            "max_tokens": 2000,
+        }
+        
+        for j in range(i, min(i+20, img_count)):
+            str = {
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{encode_image(f'{path}{j}.png')}"
+                },
+            }
+            payload["messages"][1]["content"].append(str)
+        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+        print(response.json()["choices"][0]["message"]["content"])
+        texts += response.json()["choices"][0]["message"]["content"]
+
+    return texts
+
+
+def generator(summary, questions=[], number=1):
     template = """
         {
             "question": "",
@@ -33,7 +98,8 @@ def generator(path, questions=[], number=1):
         }
         """
 
-    question = f"""
+    userInput = f"""
+        {summary}
         여기서 중요한 내용을 바탕으로 객관식 문제와 그 문제의 선지와 답 쌍을 {number}개만 생성해줘. 
         {', '.join(questions)} 와 겹치지 않는 문제로 생성해줘
         문제를 푸는데 있어 필요한 자료가 있으면 그건 다른 필드로 추가해서 생성해줘.
@@ -49,51 +115,19 @@ def generator(path, questions=[], number=1):
         한국어로 생성해줘
     """
 
-    payload = {
-        "model": "gpt-4-vision-preview",
-        "messages": [
+    completion = client.chat.completions.create(
+        model="gpt-4-turbo-preview",
+        messages=[
             {
                 "role": "system",
-                "content": "You're a professor who makes questions",
+                "content": "You are a person who is troubleshooter the given content.",
             },
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": question,
-                    },
-                ],
-            },
+            {"role": "user", "content": userInput},
         ],
-        "max_tokens": 2000,
-    }
-
-    img_extensions = ["*.png"]
-    img_count = 0
-    for ext in img_extensions:
-        img_count += len(glob.glob(path + ext))
-
-    for i in range(img_count):
-        str = {
-            "type": "image_url",
-            "image_url": {
-                "url": f"data:image/jpeg;base64,{encode_image(f'{path}{i}.png')}"
-            },
-        }
-        payload["messages"][1]["content"].append(str)
-
-    response = requests.post(
-        "https://api.openai.com/v1/chat/completions", headers=headers, json=payload
     )
-    # 'content' 부분만 추출하여 출력
-    content = response.json()["choices"][0]["message"]["content"]
-
-    # 응답 출력
-    # print(content)
 
     quiz = ""
-    quiz = response.json()["choices"][0]["message"]["content"]
+    quiz = completion.choices[0].message.content
     start = quiz.find("start") + len("start")
     end = quiz.find("end")
     result = quiz[start:end].strip()
@@ -117,10 +151,10 @@ def generator(path, questions=[], number=1):
         validate(instance=json.loads(result), schema=schema)
     except (ValidationError, JSONDecodeError):
         print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
-        return generator(path, questions, number)  # 재귀 호출로 다시 생성
+        return generator(summary, questions, number)  # 재귀 호출로 다시 생성
 
     return result
 
 
 if __name__ == "__main__":
-    print(generator("quiz_easy/pdf2png/마케팅관리_Chap2_(003)_231022_164154/"))
+    print(generator(summary_pdf("quiz_easy/pdf2png/마케팅관리_Chap2_(003)_231022_164154/")))

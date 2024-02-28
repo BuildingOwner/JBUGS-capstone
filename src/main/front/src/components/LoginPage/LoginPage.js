@@ -1,9 +1,9 @@
-import "./LoginPage.css";
+import './LoginPage.css';
 
-import backgroundImg1 from "../../image/college.jpg";
-import backgroundImg2 from "../../image/bugi.jpg";
-import backgroundImg3 from "../../image/mirae.jpg";
-import { Icon } from "@iconify/react";
+import backgroundImg1 from '../../image/college.jpg';
+import backgroundImg2 from '../../image/bugi.jpg';
+import backgroundImg3 from '../../image/mirae.jpg';
+import { Icon } from '@iconify/react';
 
 const backgroundImgArr = [backgroundImg1, backgroundImg2, backgroundImg3]; // 무작위 배경화면 만들기
 const randIndex = Math.floor(Math.random() * backgroundImgArr.length);
@@ -45,7 +45,7 @@ const LoginPage = () => {
             <div className="university-link">
               <Icon
                 icon="icon-park-twotone:school"
-                style={{ color: "#3B469C" }}
+                style={{ color: '#3B469C' }}
                 width="1.6rem"
                 height="1.6rem"
               />
@@ -54,7 +54,7 @@ const LoginPage = () => {
             <div className="hansungInfo-link">
               <Icon
                 icon="eos-icons:system-ok-outlined"
-                style={{ color: "#3B469C" }}
+                style={{ color: '#3B469C' }}
                 width="1.6rem"
                 height="1.6rem"
               />
@@ -63,7 +63,7 @@ const LoginPage = () => {
             <div className="hsel-link">
               <Icon
                 icon="majesticons:book-line"
-                style={{ color: "#3B469C" }}
+                style={{ color: '#3B469C' }}
                 width="1.6rem"
                 height="1.6rem"
               />
@@ -72,7 +72,7 @@ const LoginPage = () => {
             <div className="nsso-link">
               <Icon
                 icon="pepicons-pencil:internet"
-                style={{ color: "#3B469C" }}
+                style={{ color: '#3B469C' }}
                 width="1.6rem"
                 height="1.6rem"
               />
@@ -81,7 +81,7 @@ const LoginPage = () => {
             <div className="mail-link">
               <Icon
                 icon="octicon:mail-24"
-                style={{ color: "#3B469C" }}
+                style={{ color: '#3B469C' }}
                 width="1.6rem"
                 height="1.6rem"
               />

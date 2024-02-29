@@ -29,7 +29,7 @@ def summary_pdf(path):
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
 
     question = f"""
-        여기서 중요한 내용을 바탕으로 아주 자세하게 설명해줘.
+        여기서 중요한 내용을 바탕으로 아주 자세하고 1000토큰 이상으로 길게 설명해줘.
     """
 
     
@@ -39,19 +39,7 @@ def summary_pdf(path):
     for ext in img_extensions:
         img_count += len(glob.glob(path + ext))
 
-    texts = ""
-    # for i in range(img_count):
-    #     str = {
-    #         "type": "image_url",
-    #         "image_url": {
-    #             "url": f"data:image/jpeg;base64,{encode_image(f'{path}{i}.png')}"
-    #         },
-    #     }
-    #     payload["messages"][1]["content"].append(str)
-        
-    #     if i%20 == 0 :
-    #         response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-    #         texts += response.json()["choices"][0]["message"]["content"]
+    summarized_text = ""
             
     for i in range(0, img_count, 20):
         payload = {
@@ -71,7 +59,7 @@ def summary_pdf(path):
                     ],
                 },
             ],
-            "max_tokens": 2000,
+            "max_tokens": 2048,
         }
         
         for j in range(i, min(i+20, img_count)):
@@ -84,9 +72,9 @@ def summary_pdf(path):
             payload["messages"][1]["content"].append(str)
         response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
         print(response.json()["choices"][0]["message"]["content"])
-        texts += response.json()["choices"][0]["message"]["content"]
+        summarized_text += response.json()["choices"][0]["message"]["content"]
 
-    return texts
+    return summarized_text
 
 
 def generator(summary, questions=[], number=1):

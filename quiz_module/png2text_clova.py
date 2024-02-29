@@ -10,7 +10,7 @@ from secret import keys
 
 img_extensions = ['*.png']
 
-def png2keyword_clova(path):
+def png2text_clova(path):
     api_url = keys.CLOVA_URL
     secret_key = keys.CLOVA_KEY
 
@@ -53,4 +53,4 @@ def png2keyword_clova(path):
     return f"""{result_text}"""
 
 if __name__ == "__main__":
-    print(png2keyword_clova('quiz_easy/pdf2png/3-DL-개요/'))
+    print(png2text_clova('quiz_easy/pdf2png/3-DL-개요/'))

@@ -1,6 +1,7 @@
 from pdf2png import pdf2png
 from quiz_generator_image_summary import generator, summary_pdf
 from openai import OpenAI
+import json
 
 import os
 import sys
@@ -48,9 +49,12 @@ def gen(path, number):
 
         else:
             print(f"{i+1}번째 문제 재생성")
-
-    return f"{questions}"
+            
+    questions_dict = dict()
+    questions_dict['questions'] = questions
+    print(questions_dict)
+    return json.dump(questions_dict)
 
 
 if __name__ == "__main__":
-    print(gen("학습자료/마케팅관리_Chap2_(003)_231022_164154.pdf", 5))
+    print(gen("학습자료/3-DL-원리.pdf", 2))

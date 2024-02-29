@@ -1,5 +1,5 @@
-from quiz_generator_easy import extrect_keyword
-from quiz_generator_easy import generator
+from quiz_generator_keyword import extrect_keyword
+from quiz_generator_keyword import generator
 from openai import OpenAI
 import os
 import sys

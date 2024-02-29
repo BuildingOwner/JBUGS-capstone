@@ -6,7 +6,7 @@ import glob
 
 img_extensions = ['*.png']
 
-def png2keyword_tesseract(path):
+def png2text_tesseract(path):
     string = ""
 
     img_count = 0
@@ -23,4 +23,4 @@ def png2keyword_tesseract(path):
     return f"""{string}"""
 
 if __name__ == "__main__":
-    print(png2keyword_tesseract('quiz_easy/pdf2png/3-DL-원리/'))
+    print(png2text_tesseract('quiz_easy/pdf2png/3-DL-원리/'))

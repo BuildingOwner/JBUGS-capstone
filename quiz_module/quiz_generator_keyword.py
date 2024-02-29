@@ -3,7 +3,7 @@ from pdf2png import pdf2png
 
 # from png2keyword_clova import png2keyword_clova
 # from png2keyword_google_vision import png2keyword_google_vision
-from png2keyword_tesseract import png2keyword_tesseract
+from quiz_easy.png2text_tesseract import png2text_tesseract
 
 import json
 from jsonschema import validate, ValidationError
@@ -20,7 +20,7 @@ client = OpenAI(api_key=keys.OPENAPI_KEY)
 
 def extrect_keyword(path, number=10):
     img_path = pdf2png(path)
-    question = png2keyword_tesseract(img_path)  # 모듈에 따라 스위칭
+    question = png2text_tesseract(img_path)  # 모듈에 따라 스위칭
     question += f"""
     
     여기서 자주 반복되는 단어 {number}개만 뽑아서 출력해줘.

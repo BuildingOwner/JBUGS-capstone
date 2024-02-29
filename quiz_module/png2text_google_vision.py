@@ -8,7 +8,7 @@ client = vision.ImageAnnotatorClient()
 
 img_extensions = ['*.png']
 
-def png2keyword_google_vision(path):
+def png2text_google_vision(path):
     string = []
 
     img_count = 0
@@ -32,4 +32,4 @@ def png2keyword_google_vision(path):
 
     
 if __name__ == "__main__":
-    print(png2keyword_google_vision('quiz-easy/pdf2png/3-DL-개요/'))
+    print(png2text_google_vision('quiz-easy/pdf2png/3-DL-개요/'))

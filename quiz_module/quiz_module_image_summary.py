@@ -50,10 +50,8 @@ def gen(path, number):
         else:
             print(f"{i+1}번째 문제 재생성")
             
-    questions_dict = dict()
-    questions_dict['questions'] = questions
-    print(questions_dict)
-    return json.dump(questions_dict)
+    
+    return f"{questions}"
 
 
 if __name__ == "__main__":

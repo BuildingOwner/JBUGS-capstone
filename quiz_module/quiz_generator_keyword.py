@@ -3,7 +3,7 @@ from pdf2png import pdf2png
 
 # from png2keyword_clova import png2keyword_clova
 # from png2keyword_google_vision import png2keyword_google_vision
-from quiz_easy.png2text_tesseract import png2text_tesseract
+from png2text_tesseract import png2text_tesseract
 
 import json
 from jsonschema import validate, ValidationError

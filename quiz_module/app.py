@@ -8,6 +8,7 @@ from secret.db_connection import getConnection
 import pymysql
 from datetime import datetime, timedelta
 from quiz_module.quiz_module_image_summary import gen
+from secret.sql_injection_detector import sql_injection_detector
 
 app = Flask(__name__)
 
@@ -22,6 +23,16 @@ def add_quiz():
     print("week: ", week)
     print("path: ", path)
 
+    if int(week) > 16 or int(week) < 0 or lecture == None or lecture == '' :
+        return 'invalied request', 401
+    
+    if not os.path.exists(path):
+        return 'no file', 402
+    
+    sql_strings = [lecture, week]
+    if sql_injection_detector(sql_strings) :
+        return 'invalied request', 403
+
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
     formatted_date = one_week_later.strftime("%Y-%m-%d %H:%M:%S")
@@ -29,6 +40,10 @@ def add_quiz():
     # path = '학습자료/3-DL-원리.pdf'
 
     question = gen(path, 3)
+    
+    sql_strings = [question]
+    if sql_injection_detector(sql_strings) :
+        return 'invalied request', 403
 
     db = getConnection()
     cursor = db.cursor()
@@ -42,4 +57,4 @@ def add_quiz():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

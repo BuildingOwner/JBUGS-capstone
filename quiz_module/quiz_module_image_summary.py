@@ -1,7 +1,6 @@
 from pdf2png import pdf2png
 from quiz_generator_image_summary import generator, summary_pdf
 from openai import OpenAI
-import json
 
 import os
 import sys
@@ -49,7 +48,8 @@ def gen(path, number):
 
         else:
             print(f"{i+1}번째 문제 재생성")
-            
+        
+    print(question)        
     
     return f"{questions}"
 

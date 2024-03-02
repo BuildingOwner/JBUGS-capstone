@@ -13,8 +13,10 @@ def pdf2png(path):
     for i, page in enumerate(doc):
         img = page.get_pixmap()
         img.save(f"{directory}/{i}.png")
+        
+    print("pdf2png done.")
 
-    return f"quiz_module/pdf2png/{filename}/"
+    return f"{directory}/"
 
 if __name__ == "__main__":
     print(pdf2png('학습자료/3-DL-개요.pdf'))

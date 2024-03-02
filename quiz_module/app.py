@@ -43,7 +43,7 @@ def add_quiz():
     
     sql_strings = [question]
     if sql_injection_detector(sql_strings) :
-        return 'invalied request', 403
+        return 'invalied quiz data', 404
 
     db = getConnection()
     cursor = db.cursor()

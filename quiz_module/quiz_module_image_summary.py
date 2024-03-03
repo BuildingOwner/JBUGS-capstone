@@ -1,12 +1,11 @@
-from pdf2png import pdf2png
-from quiz_generator_image_summary import generator, summary_pdf
-from openai import OpenAI
-
 import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
+from pdf2png import pdf2png
+from quiz_generator_image_summary import generator, summary_pdf
+from openai import OpenAI
 
 client = OpenAI(api_key=keys.OPENAPI_KEY)
 
@@ -49,9 +48,13 @@ def gen(path, number):
         else:
             print(f"{i+1}번째 문제 재생성")
         
-    print(question)        
+    print(question)  
     
-    return f"{questions}"
+    questions_dict = {
+        'questions': questions
+    }
+    
+    return f"{questions_dict}"
 
 
 if __name__ == "__main__":

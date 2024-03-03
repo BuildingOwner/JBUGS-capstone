@@ -1,10 +1,11 @@
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from secret import keys
 from quiz_generator_keyword import extrect_keyword
 from quiz_generator_keyword import generator
 from openai import OpenAI
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from secret import keys
 
 client = OpenAI(api_key=keys.OPENAPI_KEY)
 
@@ -38,15 +39,16 @@ def gen(path, number):
 
         answer = completion.choices[0].message.content.lower()
         if "true" in answer:
-            print(f"{i}번째 문제 생성완료.")
+            print(f"{i + 1}번째 문제 생성완료.")
             questions.append(question)
             i += 1
-            
+
         else:
-            print(f"{i}번째 문제 재생성")
-    
-    return f"{questions}"
+            print(f"{i + 1}번째 문제 재생성")
+
+    questions_dict = {"questions": questions}
+    return f"{questions_dict}"
 
 
 if __name__ == "__main__":
-    print(gen("학습자료/3-DL-원리.pdf", 2))
+    print(gen("학습자료/3-DL-원리.pdf", 10))

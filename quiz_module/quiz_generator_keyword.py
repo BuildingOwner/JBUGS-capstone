@@ -1,19 +1,17 @@
-from openai import OpenAI
-from pdf2png import pdf2png
-
-# from png2keyword_clova import png2keyword_clova
-# from png2keyword_google_vision import png2keyword_google_vision
-from png2text_tesseract import png2text_tesseract
-
-import json
-from jsonschema import validate, ValidationError
-from json import JSONDecodeError
-
 import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
+from openai import OpenAI
+from pdf2png import pdf2png
+import json
+from jsonschema import validate, ValidationError
+from json import JSONDecodeError
+
+# from png2keyword_clova import png2keyword_clova
+# from png2keyword_google_vision import png2keyword_google_vision
+from png2text_tesseract import png2text_tesseract
 
 client = OpenAI(api_key=keys.OPENAPI_KEY)
 
@@ -42,36 +40,66 @@ def extrect_keyword(path, number=10):
 
 
 def generator(keyword, questions, number=10):
-    template = """
-    {
-        "question": "",
-        "options": ["", "", "", ""],
-        "answer": ""
-    }
+    choice_count = 0
+    short_count = 0
+
+    for question in questions:
+        question_json = json.loads(question)
+        if question_json["type"] == "choice":
+            choice_count += 1
+        elif question_json["type"] == "short":
+            short_count += 1
+
+    template1 = """
+        {
+            "question": "",
+            "options": ["", "", "", ""],
+            "answer": ""
+            "type": "choice"
+        }
+        """
+    template2 = """
+        {
+            "question": "",
+            "answer": ""
+            "type": "short"
+        }
+        """
+
+    choice_input = f"""
+        이 단어에 관한 객관식 문제와 그 문제의 선지와 답 쌍을 {number}개만 생성해.
+        선지는 4개로 구성되어 있고 선지에 정답이 포함되어 있어야해. 
+        정답은 1개야. 
+        (객관식 예시 : {template1.strip()}) 
+        객관식 문제는 question, options, answer 키를 가져야 하고 options는 배열 형태로 생성해.
     """
 
-    question = f"""{keyword} 이 단어에 관한 객관식 문제와 그 문제의 선지와 답 쌍을 {number}개만 생성해줘.
-    {', '.join(questions)} 와 겹치지 않는 문제로 생성해줘
-    문제를 푸는데 있어 필요한 자료가 있으면 그건 다른 필드로 추가해서 생성해줘.
-    선지는 4개로 구성되어 있고 선지에 정답이 포함되어 있어야해. 
-    정답은 1개야. 
-    json형식으로 생성해주고 json 시작전에 start라고 출력하고 json이 끝나면 end라고 출력해줘.
-    (예시 : {template.strip()}) 
-    question, options, answer 키를 가져야 하고 options는 배열 형태로 생성해줘. 
-    반드시 예시에 맞는 형식으로 생성해줘. 
-    단어의 의미를 묻는 문제를 제외하고 생성해줘.
-    문제는 반드시 ?로 끝나야해.
-    질문의 의도를 명확히 해줘.
-    한국어로 생성해줘"""
+    short_input = f"""
+        이 단어에 관한 단답식 문제와 답 쌍을 {number}개만 생성해.
+        (단답식 예시 : {template2.strip()})
+        단답식 문제의 정답은 문장이 아니라 단어가 정답이여야 해.
+    """
+
+    userInput = f"""
+        {keyword}
+        {choice_input if choice_count <= short_count else short_input}
+        {', '.join(questions)} 와 겹치지 않는 문제로 생성해.
+        json형식으로 생성해주고 json 시작전에 start라고 출력하고 json이 끝나면 end라고 출력해.
+        반드시 예시에 맞는 형식으로 생성해. 
+        단어의 의미를 묻는 문제를 제외하고 생성해.
+        문제는 반드시 ?로 끝나야해.
+        질문의 의도를 명확히 해.
+        한국어로 생성해
+    """
 
     completion = client.chat.completions.create(
         model="gpt-4-turbo-preview",
         messages=[
             {
                 "role": "system",
-                "content": "You're a professor who makes questions",
+                "content": "You are a person who is troubleshooter the given content.",
             },
-            {"role": "user", "content": question},
+            {"role": "user", "content": userInput},
         ],
     )
 
@@ -81,9 +109,10 @@ def generator(keyword, questions, number=10):
     end = quiz.find("end")
     result = quiz[start:end].strip()
     # print("Result:", result)
+    
     # JSON 형식 검증
     try:
-        schema = {
+        schema1 = {
             "type": "object",
             "properties": {
                 "question": {"type": "string"},
@@ -94,10 +123,24 @@ def generator(keyword, questions, number=10):
                     "maxItems": 4,
                 },
                 "answer": {"type": "string"},
+                "type": {"type": "string"},
             },
-            "required": ["question", "options", "answer"],
+            "required": ["question", "options", "answer", "type"],
         }
-        validate(instance=json.loads(result), schema=schema)
+
+        schema2 = {
+            "type": "object",
+            "properties": {
+                "question": {"type": "string"},
+                "answer": {"type": "string"},
+                "type": {"type": "string"},
+            },
+            "required": ["question", "answer", "type"],
+        }
+
+        combined_schema = {"anyOf": [schema1, schema2]}
+
+        validate(instance=json.loads(result), schema=combined_schema)
     except (ValidationError, JSONDecodeError):
         print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
         return generator(keyword, questions, number)  # 재귀 호출로 다시 생성

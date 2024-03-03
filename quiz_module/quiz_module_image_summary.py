@@ -55,4 +55,4 @@ def gen(path, number):
 
 
 if __name__ == "__main__":
-    print(gen("학습자료/3-DL-원리.pdf", 2))
+    print(gen("학습자료/3-DL-원리.pdf", 10))

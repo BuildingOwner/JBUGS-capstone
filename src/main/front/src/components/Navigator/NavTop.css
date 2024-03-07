@@ -1,0 +1,90 @@
+body {
+    font-family: "paybooc_Medium";
+}
+
+#navTop {
+    height: 90px;
+    background-color: #1B4391;
+    width: 100vw;
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.HansungLogo{
+    width: 290px;
+    height: 55px;
+    margin-left: 20px;
+    margin-top: 20px;
+    background-size: cover;
+}
+
+/* 마진 조정 필요 */
+#buttonWrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 105px;
+}
+
+#buttonWrap button {
+    color: white;
+    border: none;
+    font-size: 28px;
+    height: 50px;
+    font-family:"paybooc_Medium";
+    background: none;
+    padding-left: 90px;
+    padding-right: 90px;
+}
+
+#buttonWrap button:nth-child(2){
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+#userInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.userImage {
+    background-color: #1B4391;
+    color:white;
+    width: 70px;
+    height: 70px;
+    margin-right: 30px;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 30px;
+    margin-bottom: 5px;
+}
+.userName {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.firstMajor {
+    border: 2px solid white;
+    border-radius: 35px;
+    padding: 5px;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.logout {
+
+    font-family: "paybooc_Bold";
+    border: 2px solid white;
+    border-radius: 35px;
+    padding: 10px;
+    color:white;
+    background-color: #1B4391;
+    margin-right: 20px;
+    font-size: 20px;
+}

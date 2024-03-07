@@ -1,6 +1,6 @@
-body {
+/* body {
     font-family: "paybooc_Medium";
-}
+} */
 
 .main {
     display:flex;
@@ -12,10 +12,10 @@ body {
 
 .main-container {
     border-radius: 4px;
-    width: 36vw;
-    height: 62vh;
-    margin-right:5rem;
-    margin-bottom: 1rem;
+    width: 690px;
+    height: 565px;
+    margin-right: 80px;
+    margin-bottom: 16px;
     display:flex;
     align-items: center;
     flex-direction: column;
@@ -33,31 +33,34 @@ body {
     background: white;
     width: 67%;
     height:100%;
-    border-radius: 0.3125rem;
+    border-radius: 5px;
     border-color: #8b90b4;
     border: 1px solid #8b90b4;
     opacity: 0.96;
 }
 
 .login-form {
-    margin-top: 3rem;
+    margin-top: 48px;
     display: flex;
     justify-content: center;
     align-items: center; 
 }
 
 .login-form input {
-    width: 12vw;
-    height: 4.5vh;
-    margin-left: 2vw;
+    width: 230px;
+    height: 40px;
+    margin-left: 35px;
     border-radius: 5px;
     border: none;
     background: #e4e9ff;
     font-family: "paybooc_Medium";
-    font-size: 1.1rem;
+    font-size: 16px;
 
 }
-
+/* 포커스시 placeholder 삭제 */
+.login-form input:focus::placeholder {
+    color: transparent;
+}
 .login-form input:nth-child(1) {
     margin-bottom: 0.5vh;
 }
@@ -65,21 +68,21 @@ body {
 .login-button {
     background: #3b469c;
     color:white;
-    width: 7.25vw;
-    height: 10vh;
+    width: 140px;
+    height: 90px;
     margin-right:35px;
     font-family:"paybooc_Bold";
-    font-size: 1.2rem;
-    border-radius: 0.3125rem;
+    font-size: 20px;
+    border-radius: 5px;
     border:none;
 }
 .check-box {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
     width: 20px;
     border-radius: 5px;
 }
 .saveId{
-    margin-left: 2vw;
+    margin-left: 35px;
     display: flex;
 }
 
@@ -91,11 +94,11 @@ body {
 }
 
 .find-id {
-    margin-left: 17rem;
-    font-size: 1.2rem;
+    margin-left: 270px;
+    font-size: 20px;
 }
 .find-id p {
-    margin-top: 1rem;
+    margin-top: 16px;
     color: #9d9fae;
     font-family: "paybooc_Medium";
 }
@@ -111,14 +114,14 @@ body {
 }
 
 .login-right > * {
-    margin-left: 0.7rem;
-    margin-top: 1.2rem;
+    margin-left: 16px;
+    margin-top: 19px;
     display: flex;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 20px;
 }
 .login-right > * >div {
-    margin-left: 0.5rem;
+    margin-left: 8px;
 }
 .notice {
     background: white;
@@ -129,9 +132,9 @@ body {
     opacity: 0.96;
 }
 .title-wrap{
-    margin-left: 2rem;
-    margin-right: 2rem;
-    height: 4rem;
+    margin-left: 32px;
+    margin-right: 32px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -144,7 +147,28 @@ body {
 .more-button{
     background: white;
     border: none;
-    height: 2rem;
-    margin-top: 1.5rem;
+    height: 32px;
     color: #949ECD;
 }
+.writing-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    height: 40px;
+    border-bottom: 1px solid #949ECD;
+    margin-left: 32px;
+    margin-right: 32px;
+}
+
+.writing-icon {
+    margin-left: 15px;
+    margin-right: 15px;
+    color: #949ECD;
+    width: 7px;
+}
+
+.writing {
+    font-size: 20px;
+    color: #292D5D;
+}
+

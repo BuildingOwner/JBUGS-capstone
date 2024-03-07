@@ -2,7 +2,7 @@ package jbugs.eclass.controller;
 
 import jakarta.validation.Valid;
 import jbugs.eclass.domain.Member;
-import jbugs.eclass.repository.MemberRepository;
+import jbugs.eclass.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
-
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("member") Member member){
@@ -24,12 +23,16 @@ public class MemberController {
     }
 
     @PostMapping("/add")
-    public String save(@Valid @ModelAttribute Member member, BindingResult
-            result) {
+    public String save(@Valid @ModelAttribute Member member, BindingResult result) {
         if (result.hasErrors()) {
             return "members/addMemberForm";
         }
-        memberRepository.save(member);
+
+        try {
+            memberService.join(member);
+        } catch (IllegalStateException e) {
+            return "redirect:/members/add?error=duplicate"; // 이미 존재하는 회원이면 로그인 창으로 이동
+        }
         return "redirect:/";
     }
 }

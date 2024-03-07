@@ -3,8 +3,6 @@ package jbugs.eclass.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jbugs.eclass.domain.Member;
-import jbugs.eclass.domain.MemberType;
 import jbugs.eclass.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;

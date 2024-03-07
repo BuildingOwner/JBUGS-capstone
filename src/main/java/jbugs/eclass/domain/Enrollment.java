@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter @Setter
 public class Enrollment { //강의를 수강하는 테이블
@@ -20,7 +23,9 @@ public class Enrollment { //강의를 수강하는 테이블
     @JoinColumn(name = "lecture_id")
     private Lecture lecture;
 
-    private String grade; //성적
-    private String division; //분반
+    @OneToMany(mappedBy = "enrollment", cascade = CascadeType.ALL)
+    private List<QuizInfo> quizInfos = new ArrayList<>();
 
+
+    private String grade; //성적
 }

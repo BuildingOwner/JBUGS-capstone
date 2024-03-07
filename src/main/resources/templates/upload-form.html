@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center"> <h2>자료 등록</h2>
+    </div>
+    <form th:action method="post" enctype="multipart/form-data">
+        <label for="enrollment">과목</label>
+        <select name="enrollment" id="enrollment">
+            <option value="">과목을 선택해 주세요</option>
+            <option th:each="enrollment : ${enrollment}" th:value="${enrollment.id}" th:text="${enrollment.lecture.name}"/>
+        </select>
+        <label for="week">주차</label>
+        <select name="week" id="week">
+            <option value="0">주차를 선택해 주세요</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+        </select>
+        <ul>
+            <li>자료명 <input type="text" name="fileName"></li>
+            <li>파일 추가<input type="file" multiple="multiple" name="attachFile" ></li>
+            <li>영상자료명 <input type="text" name="videoName"></li>
+            <li>동영상 추가<input type="file" multiple="multiple" name="video" ></li>
+        </ul>
+        <input type="submit"/>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>

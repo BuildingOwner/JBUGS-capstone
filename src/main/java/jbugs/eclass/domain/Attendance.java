@@ -21,5 +21,5 @@ public class Attendance {
     @JoinColumn(name = "week_id")
     private Week week;
 
-    private boolean isPresent; // 출석 여부
+    private boolean present; // 출석 여부
 }

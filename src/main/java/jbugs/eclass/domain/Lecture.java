@@ -17,6 +17,7 @@ public class Lecture {
     private Long id;
 
     private String name;  // 강의 이름
+    private String division; // 분반
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
@@ -28,6 +29,20 @@ public class Lecture {
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
     private List<Week> weeks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
-    private List<Quiz> quizzes = new ArrayList<>();
+    public Lecture() {
+    }
+
+    // 강좌 추가 메서드
+    public void addEnrollment(Enrollment enrollment) {
+        enrollments.add(enrollment);
+        enrollment.setLecture(this);
+    }
+
+    // 강좌 삭제 메서드
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollments.remove(enrollment);
+        enrollment.setLecture(null);
+    }
+
+
 }

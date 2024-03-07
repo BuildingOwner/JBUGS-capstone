@@ -1,12 +1,11 @@
 package jbugs.eclass.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Material {
 
     @Id
@@ -14,8 +13,16 @@ public class Material {
     @Column(name = "material_id")
     private Long id;
 
-    private String title; //제목
+    private String fileName; //제목
     private String filePath;
+    private String videoName; //제목
+    private String videoPath;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private UploadFile attachFile;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<UploadFile> imageFiles = new ArrayList<>();
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")

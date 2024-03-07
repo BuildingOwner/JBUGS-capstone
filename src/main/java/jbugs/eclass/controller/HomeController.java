@@ -1,19 +1,22 @@
 package jbugs.eclass.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.argumentresolver.Login;
+import jbugs.eclass.domain.Enrollment;
+import jbugs.eclass.domain.Lecture;
 import jbugs.eclass.domain.Member;
+import jbugs.eclass.domain.Student;
+import jbugs.eclass.repository.LectureRepository;
 import jbugs.eclass.repository.MemberRepository;
-import jbugs.eclass.session.SessionConst;
-import jbugs.eclass.session.SessionManager;
+import jbugs.eclass.repository.ProfessorRepository;
+import jbugs.eclass.repository.StudentRepository;
+import jbugs.eclass.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -25,68 +28,10 @@ public class HomeController {
     }
 
     private final MemberRepository memberRepository;
-    private final SessionManager sessionManager;
-
-    //@GetMapping("/")
-    public String homeLogin(@CookieValue(name = "memberId", required = false) Long memberId, Model model) {
-        if (memberId == null) {
-            return "home";
-        }
-        //로그인
-        Member loginMember = memberRepository.findById(memberId);
-        if (loginMember == null) {
-            return "home";
-        }
-
-        //로그인 성공시 이동
-        model.addAttribute("member", loginMember);
-        return "loginHome";
-    }
-
-    //@GetMapping("/")
-    public String homeLoginV2(HttpServletRequest request, Model model) {
-        //세션 관리자에 저장된 회원 정보 조회
-        Member member = (Member)sessionManager.getSession(request);
-
-        if (member == null) {
-            return "home";
-        }
-
-        //로그인
-        model.addAttribute("member", member);
-        return "loginHome";
-    }
-
-    //@GetMapping("/")
-    public String homeLoginV3(HttpServletRequest request, Model model) {
-        //세션이 없으면 home
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "home";
-        }
-
-        Member loginMember = (Member)session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-        //세션에 회원 데이터가 없으면 home
-        if (loginMember == null) {
-        return "home";
-        }
-
-        //세션이 유지되면 로그인으로 이동
-        model.addAttribute("member", loginMember);
-        return "loginHome";
-    }
-
-    //@GetMapping("/")
-    public String homeLoginV3Spring(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
-        //세션에 회원 데이터가 없으면 home
-        if (loginMember == null) {
-        return "home";
-    }
-        //세션이 유지되면 로그인으로 이동
-        model.addAttribute("member", loginMember);
-        return "loginHome";
-    }
+    private final EnrollmentService enrollmentService;
+    private final StudentRepository studentRepository;
+    private final LectureRepository lectureRepository;
+    private final ProfessorRepository professorRepository;
 
     @GetMapping("/")
     public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
@@ -97,6 +42,23 @@ public class HomeController {
 
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("member", loginMember);
+        Student student = studentRepository.findOne(loginMember.getStudent().getId());
+
+        model.addAttribute("track", student.getFirstTrack());
+
+        List<Enrollment> enrollments = enrollmentService.findAllByStudentId(student.getId());
+        for (Enrollment enrollment : enrollments) {
+            Long lectureId = enrollment.getLecture().getId();
+            Long professorId = enrollment.getLecture().getProfessor().getId();
+
+            Lecture lecture = lectureRepository.findOne(lectureId);
+            Member professor = memberRepository.findById(professorId);
+
+            String lectureName = lecture.getName();
+            String lectureDivision = lecture.getDivision();
+            String professorName = professor.getName();
+        }
+        model.addAttribute("enrollment",enrollments);
         return "loginHome";
     }
 

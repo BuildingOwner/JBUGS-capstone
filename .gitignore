@@ -1,3 +1,10 @@
+
+/secret
+/quiz_module/pdf2png
+/test
+/학습자료
+/quiz_nomal
+
 HELP.md
 .gradle
 build/
@@ -61,3 +68,4 @@ out/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+

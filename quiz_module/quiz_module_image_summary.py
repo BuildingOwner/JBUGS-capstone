@@ -7,7 +7,7 @@ from pdf2png import pdf2png
 from quiz_generator_image_summary import generator, summary_pdf
 from openai import OpenAI
 
-client = OpenAI(api_key=keys.OPENAPI_KEY)
+client = OpenAI(api_key=keys.OPENAI_KEY)
 
 
 def gen(path, number):

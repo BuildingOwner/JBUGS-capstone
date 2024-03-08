@@ -13,10 +13,10 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
 
-client = OpenAI(api_key=keys.OPENAPI_KEY)
+client = OpenAI(api_key=keys.OPENAI_KEY)
 
 # OpenAI API 키 설정
-api_key = keys.OPENAPI_KEY
+api_key = keys.OPENAI_KEY
 
 
 # 이미지를 base64로 인코딩하는 함수

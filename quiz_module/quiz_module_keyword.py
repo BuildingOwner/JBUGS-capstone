@@ -6,17 +6,22 @@ from secret import keys
 from quiz_generator_keyword import extrect_keyword
 from quiz_generator_keyword import generator
 from openai import OpenAI
+import json
 
-client = OpenAI(api_key=keys.OPENAPI_KEY)
+client = OpenAI(api_key=keys.OPENAI_KEY)
 
 
-def gen(path, number):
+def gen(path, choice=5, short=5):
     keywords = extrect_keyword(path)
     questions = []
 
     i = 0
-    while i < number:
-        question = generator(keywords, questions, 1)
+    while i < choice + short:
+        # print(i, choice, short, i < choice)
+        if i < choice:
+            question = generator(keywords, "choice", questions)
+        else:
+            question = generator(keywords, "short", questions)
 
         userInput = f"""
         {question}
@@ -35,7 +40,7 @@ def gen(path, number):
             ],
         )
         # print(question)
-        print(completion.choices[0].message.content)
+        print("question check ", completion.choices[0].message.content)
 
         answer = completion.choices[0].message.content.lower()
         if "true" in answer:
@@ -47,8 +52,10 @@ def gen(path, number):
             print(f"{i + 1}번째 문제 재생성")
 
     questions_dict = {"questions": questions}
-    return f"{questions_dict}"
+    print(questions_dict)
+    return json.dumps(questions_dict, ensure_ascii=False)
+    # return questions_dict
 
 
 if __name__ == "__main__":
-    print(gen("학습자료/3-DL-원리.pdf", 10))
+    print(gen("학습자료/3-DL-원리.pdf", 2, 2))

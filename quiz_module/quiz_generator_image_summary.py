@@ -124,6 +124,7 @@ def generator(summary, quiz_type, questions=[]):
         {json.dumps(questions, ensure_ascii = False)} 와 겹치지 않는 문제로 생성해.
         json형식으로 생성해주고 json 시작전에 start라고 출력하고 json이 끝나면 end라고 출력해.
         반드시 예시에 맞는 형식으로 생성해. 
+        배열로 생성하지 말고 반드시 json으로만 생성해야해
         단어의 의미를 묻는 문제를 제외하고 생성해.
         문제는 반드시 ?로 끝나야해.
         질문의 의도를 명확히 해.
@@ -180,6 +181,8 @@ def generator(summary, quiz_type, questions=[]):
 
         validate(instance=json.loads(result), schema=combined_schema)
     except (ValidationError, JSONDecodeError):
+        print(result)
+        print(questions)
         print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
         return generator(summary, quiz_type, questions)  # 재귀 호출로 다시 생성
 

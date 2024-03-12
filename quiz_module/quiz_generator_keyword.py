@@ -83,7 +83,7 @@ def generator(keyword, quiz_type, questions=[]):
     """
     
     # print(quiz_type)
-    print(userInput)
+    # print(userInput)
 
     completion = client.chat.completions.create(
         model="gpt-4-turbo-preview",
@@ -135,7 +135,7 @@ def generator(keyword, quiz_type, questions=[]):
 
         validate(instance=json.loads(result), schema=combined_schema)
     except (ValidationError, JSONDecodeError):
-        print(questions)
+        # print(questions)
         print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
         return generator(keyword, quiz_type, questions=[])  # 재귀 호출로 다시 생성
 

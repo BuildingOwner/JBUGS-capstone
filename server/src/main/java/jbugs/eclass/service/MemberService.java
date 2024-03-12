@@ -3,6 +3,7 @@ package jbugs.eclass.service;
 import jbugs.eclass.domain.Member;
 import jbugs.eclass.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //회원가입
     @Transactional
@@ -26,7 +28,7 @@ public class MemberService {
     @Transactional
     public Member login(String loginId, String password) {
         return memberRepository.findByLoginId(loginId)
-                .filter(m -> m.getPassword().equals(password))
+                .filter(m -> passwordEncoder.matches(password, m.getPassword()))
                 .orElse(null);
     }
 
@@ -49,11 +51,10 @@ public class MemberService {
         Optional<Member> optionalMember = memberRepository.findByLoginId(loginId);
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
-            if (member.getPassword().equals(password)) {
+            if (passwordEncoder.matches(password, member.getPassword())) {
                 return true;
             }
         }
         return false;
     }
-
 }

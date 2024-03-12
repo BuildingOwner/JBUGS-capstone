@@ -2,7 +2,9 @@ package jbugs.eclass;
 
 import jbugs.eclass.domain.*;
 import jbugs.eclass.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -15,13 +17,16 @@ public class DataInitializer implements CommandLineRunner {
     private final EnrollmentService enrollmentService;
     private final AssignmentService assignmentService;
     private final WeekService weekService;
+    private final PasswordEncoder passwordEncoder;
 
-    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService) {
+    @Autowired
+    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
         this.lectureService = lectureService;
         this.enrollmentService = enrollmentService;
         this.assignmentService = assignmentService;
         this.weekService = weekService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,7 +35,9 @@ public class DataInitializer implements CommandLineRunner {
         Member member1 = new Member();
         member1.setLoginId("1971080");
         member1.setName("장주찬");
-        member1.setPassword("1234!");
+        String encodedPassword = passwordEncoder.encode("1234!");
+        member1.setPassword(encodedPassword);
+//        member1.setPassword("1234!");
         member1.setMemberType(MemberType.STUDENT);
 
         Student student1 = new Student();
@@ -45,7 +52,8 @@ public class DataInitializer implements CommandLineRunner {
         Member member2 = new Member();
         member2.setLoginId("1111");
         member2.setName("김성동");
-        member2.setPassword("1234!");
+        String encodedPassword2 = passwordEncoder.encode("1234!");
+        member2.setPassword(encodedPassword2);
         member2.setMemberType(MemberType.PROFESSOR);
 
         Professor professor1 = new Professor();
@@ -61,7 +69,8 @@ public class DataInitializer implements CommandLineRunner {
         Member member3 = new Member();
         member3.setLoginId("2222");
         member3.setName("강희중");
-        member3.setPassword("1234!");
+        String encodedPassword3 = passwordEncoder.encode("1234!");
+        member3.setPassword(encodedPassword3);
         member3.setMemberType(MemberType.PROFESSOR);
 
         Professor professor2 = new Professor();
@@ -77,7 +86,8 @@ public class DataInitializer implements CommandLineRunner {
         Member member4 = new Member();
         member4.setLoginId("3333");
         member4.setName("한기준");
-        member4.setPassword("1234!");
+        String encodedPassword4 = passwordEncoder.encode("1234!");
+        member4.setPassword(encodedPassword4);
         member4.setMemberType(MemberType.PROFESSOR);
 
         Professor professor3 = new Professor();
@@ -93,7 +103,8 @@ public class DataInitializer implements CommandLineRunner {
         Member member5 = new Member();
         member5.setLoginId("4444");
         member5.setName("이재문");
-        member5.setPassword("1234!");
+        String encodedPassword5 = passwordEncoder.encode("1234!");
+        member5.setPassword(encodedPassword5);
         member5.setMemberType(MemberType.PROFESSOR);
 
         Professor professor4 = new Professor();
@@ -109,7 +120,8 @@ public class DataInitializer implements CommandLineRunner {
         Member member6 = new Member();
         member6.setLoginId("5555");
         member6.setName("허준영");
-        member6.setPassword("1234!");
+        String encodedPassword6 = passwordEncoder.encode("1234!");
+        member6.setPassword(encodedPassword6);
         member6.setMemberType(MemberType.PROFESSOR);
 
         Professor professor5 = new Professor();
@@ -125,7 +137,8 @@ public class DataInitializer implements CommandLineRunner {
         Member member7 = new Member();
         member7.setLoginId("6666");
         member7.setName("박승현");
-        member7.setPassword("1234!");
+        String encodedPassword7 = passwordEncoder.encode("1234!");
+        member7.setPassword(encodedPassword7);
         member7.setMemberType(MemberType.PROFESSOR);
 
         Professor professor6 = new Professor();
@@ -141,7 +154,8 @@ public class DataInitializer implements CommandLineRunner {
         Member member8 = new Member();
         member8.setLoginId("1971083");
         member8.setName("이영재");
-        member8.setPassword("1234!");
+        String encodedPassword8 = passwordEncoder.encode("1234!");
+        member8.setPassword(encodedPassword8);
         member8.setMemberType(MemberType.STUDENT);
 
         Student student2 = new Student();

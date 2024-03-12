@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
@@ -35,4 +37,11 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
+
+    public UserDetails toUserDetails() {
+        return User.withUsername(loginId)
+                .password(password)
+                .authorities(memberType.getAuthorities())
+                .build();
+    }
 }

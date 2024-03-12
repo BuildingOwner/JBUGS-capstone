@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URI;
 
@@ -42,27 +43,47 @@ public class MemberApiController {
         }
     }
 
+    @GetMapping("/login")
+    public ModelAndView loginForm(@ModelAttribute("loginForm") LoginRequest form) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login/loginForm");
+        return modelAndView;
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginForm form, BindingResult bindingResult,
-                                   @RequestParam(defaultValue = "/") String redirectURL,
-                                   HttpServletRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginForm form, BindingResult bindingResult,
+                                               @RequestParam(defaultValue = "/") String redirectURL,
+                                               HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("입력한 값이 올바르지 않습니다.");
+            return ResponseEntity.badRequest().body(new LoginResponse("입력한 값이 올바르지 않습니다."));
         }
 
         Member loginMember = memberService.login(form.getLoginId(), form.getPassword());
 
         if (loginMember == null) {
-            return ResponseEntity.badRequest().body("아이디 또는 비밀번호가 맞지 않습니다.");
+            return ResponseEntity.badRequest().body(new LoginResponse("아이디 또는 비밀번호가 맞지 않습니다."));
         }
 
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
+//        LoginResponse response = new LoginResponse("로그인 성공");
+//        return ResponseEntity.ok(response);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(redirectURL));
 
         return ResponseEntity.ok().headers(headers).build();
+    }
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return ResponseEntity.ok().build();
     }
 }
 

@@ -22,10 +22,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
-    //@GetMapping("/")
-    public String home() {
-        return "home";
-    }
 
     private final MemberRepository memberRepository;
     private final EnrollmentService enrollmentService;

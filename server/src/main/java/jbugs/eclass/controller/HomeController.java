@@ -12,14 +12,18 @@ import jbugs.eclass.repository.StudentRepository;
 import jbugs.eclass.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class HomeController {
 
@@ -29,7 +33,7 @@ public class HomeController {
     private final LectureRepository lectureRepository;
     private final ProfessorRepository professorRepository;
 
-    @GetMapping("/")
+    //@GetMapping("/")
     public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
         //세션에 회원 데이터가 없으면 home
         if (loginMember == null) {
@@ -58,6 +62,15 @@ public class HomeController {
         return "loginHome";
     }
 
+    //@GetMapping("/")
+//    public String home() {
+//        return "home";
+//    }
+
+    @GetMapping("/api/login")
+    public ResponseEntity<String> home() {
+        return ResponseEntity.ok("Hello from React!");
+    }
 }
 
 

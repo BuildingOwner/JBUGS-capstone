@@ -43,7 +43,7 @@ public class MemberApiController {
         }
     }
 
-    @GetMapping("/login")
+    //@GetMapping("/login")
     public ModelAndView loginForm(@ModelAttribute("loginForm") LoginRequest form) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login/loginForm");
@@ -59,7 +59,7 @@ public class MemberApiController {
         }
 
         Member loginMember = memberService.login(form.getLoginId(), form.getPassword());
-
+        System.out.println(loginMember+"성공");
         if (loginMember == null) {
             return ResponseEntity.badRequest().body(new LoginResponse("아이디 또는 비밀번호가 맞지 않습니다."));
         }

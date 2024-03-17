@@ -1,21 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.fe5fb956.css",
-    "main.js": "/static/js/main.51ba3e73.js",
+    "main.css": "/static/css/main.2d146f6c.css",
+    "main.js": "/static/js/main.e818daa3.js",
     "static/js/453.80efc53e.chunk.js": "/static/js/453.80efc53e.chunk.js",
-    "static/media/mirae.jpg": "/static/media/mirae.aa04541098e6e0e176d3.jpg",
-    "static/media/college.jpg": "/static/media/college.6f78bd0f12fbb00f7c4c.jpg",
-    "static/media/bugi.jpg": "/static/media/bugi.6f5e2100407c5ae2fc65.jpg",
     "static/media/paybooc_Bold.ttf": "/static/media/paybooc_Bold.2f1ff3522eea19db1a20.ttf",
     "static/media/paybooc_Medium.ttf": "/static/media/paybooc_Medium.4e246c74cb49afdf6c1e.ttf",
-    "static/media/hansung_logo.png": "/static/media/hansung_logo.9a9550bb507e80799a16.png",
     "index.html": "/index.html",
-    "main.fe5fb956.css.map": "/static/css/main.fe5fb956.css.map",
-    "main.51ba3e73.js.map": "/static/js/main.51ba3e73.js.map",
+    "main.2d146f6c.css.map": "/static/css/main.2d146f6c.css.map",
+    "main.e818daa3.js.map": "/static/js/main.e818daa3.js.map",
     "453.80efc53e.chunk.js.map": "/static/js/453.80efc53e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fe5fb956.css",
-    "static/js/main.51ba3e73.js"
+    "static/css/main.2d146f6c.css",
+    "static/js/main.e818daa3.js"
   ]
 }

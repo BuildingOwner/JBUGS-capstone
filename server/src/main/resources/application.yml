@@ -24,9 +24,9 @@ spring:
         #        show_sql: true
         format_sql: true
 
-logging:
-  level:
-    org.hibernate.SQL: debug
+#logging:
+#  level:
+#    org.hibernate.SQL: debug
 #    org.hibernate.orm.jdbc.bind: trace
 
 server:

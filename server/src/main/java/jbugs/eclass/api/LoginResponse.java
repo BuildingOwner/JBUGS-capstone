@@ -1,23 +1,16 @@
 package jbugs.eclass.api;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class LoginResponse {
     private Long id;
     private String name;
+    private String redirectURL; // 추가된 속성
 
-    private String message;
-    public LoginResponse(String message) {
-        this.message = message;
+    public LoginResponse(String redirectURL) {
+        this.redirectURL = redirectURL;
     }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
 }

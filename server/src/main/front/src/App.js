@@ -5,10 +5,12 @@ import Login from './components/LoginPage/Login';
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/main" element={<Main />} />
     </Routes>
   );
 };
 
 export default App;
+
+

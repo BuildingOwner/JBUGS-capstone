@@ -25,12 +25,6 @@ public class MemberService {
         memberRepository.save(member);
         return member.getId();
     }
-    @Transactional
-    public Member login(String loginId, String password) {
-        return memberRepository.findByLoginId(loginId)
-                .filter(m -> passwordEncoder.matches(password, m.getPassword()))
-                .orElse(null);
-    }
 
     private void validateDuplicateMember(Member member) {
         Optional<Member> foundMember = memberRepository.findByLoginId(member.getLoginId());
@@ -43,10 +37,23 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+    public Member getMemberByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId)
+                .orElse(null);
+    }
+
     public Member findOne(Long memberId){
         return memberRepository.findById(memberId);
     }
 
+    @Transactional
+    public Member login(String loginId, String password) {
+        return memberRepository.findByLoginId(loginId)
+                .filter(m -> passwordEncoder.matches(password, m.getPassword()))
+                .orElse(null);
+    }
+
+    @Transactional
     public boolean authenticate(String loginId, String password) {
         Optional<Member> optionalMember = memberRepository.findByLoginId(loginId);
         if (optionalMember.isPresent()) {

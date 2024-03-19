@@ -26,37 +26,12 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
-    @GetMapping("/api/login")
+    //@GetMapping("/api/login")
     public ModelAndView loginForm(@ModelAttribute("loginForm") LoginRequest form) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login/loginForm");
         return modelAndView;
     }
-
-//    @PostMapping("/login")
-//    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginForm form, BindingResult bindingResult,
-//                                               @RequestParam(defaultValue = "/") String redirectURL,
-//                                               HttpServletRequest request) {
-//        if (bindingResult.hasErrors()) {
-//            return ResponseEntity.badRequest().body(new LoginResponse("입력한 값이 올바르지 않습니다."));
-//        }
-//
-//        Member loginMember = memberService.login(form.getLoginId(), form.getPassword());
-//        System.out.println(loginMember+"성공");
-//        if (loginMember == null) {
-//            return ResponseEntity.badRequest().body(new LoginResponse("아이디 또는 비밀번호가 맞지 않습니다."));
-//        }
-//
-//        HttpSession session = request.getSession();
-//        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-//
-////        LoginResponse response = new LoginResponse("로그인 성공");
-////        return ResponseEntity.ok(response);
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setLocation(URI.create(redirectURL));
-//
-//        return ResponseEntity.ok().headers(headers).build();
-//    }
 
     @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody LoginForm form, HttpServletRequest request) {
@@ -80,9 +55,6 @@ public class MemberApiController {
         }
     }
 
-
-
-
     @PostMapping("/api/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -92,5 +64,31 @@ public class MemberApiController {
 
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/api/check-auth")
+    public ResponseEntity<?> checkAuth(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("loggedInUser") != null) {
+            // 로그인된 상태
+            return ResponseEntity.ok().build();
+        } else {
+            // 로그인되지 않은 상태
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @PostMapping("/api/protected")
+    public ResponseEntity<?> protectedEndpoint(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증이 필요합니다.");
+        }
+
+        // 인증된 사용자일 경우에 대한 로직 수행
+        // ...
+
+        return ResponseEntity.ok("인증된 사용자만 접근 가능한 경로입니다.");
+    }
+
 }
 

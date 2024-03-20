@@ -6,8 +6,9 @@ from secret import keys
 from openai import OpenAI
 from pdf2png import pdf2png
 import json
-from jsonschema import validate, ValidationError
+from jsonschema import ValidationError
 from json import JSONDecodeError
+from json_validation import json_validate
 
 # from png2keyword_clova import png2keyword_clova
 # from png2keyword_google_vision import png2keyword_google_vision
@@ -81,7 +82,7 @@ def generator(keyword, quiz_type, questions=[]):
         질문의 의도를 명확히 해.
         한국어로 생성해
     """
-    
+
     # print(quiz_type)
     # print(userInput)
 
@@ -102,38 +103,10 @@ def generator(keyword, quiz_type, questions=[]):
     end = quiz.find("end")
     result = quiz[start:end].strip()
     # print("Result:", result)
-    
+
     # JSON 형식 검증
     try:
-        schema1 = {
-            "type": "object",
-            "properties": {
-                "question": {"type": "string"},
-                "options": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "minItems": 4,
-                    "maxItems": 4,
-                },
-                "answer": {"type": "string"},
-                "type": {"type": "string"},
-            },
-            "required": ["question", "options", "answer", "type"],
-        }
-
-        schema2 = {
-            "type": "object",
-            "properties": {
-                "question": {"type": "string"},
-                "answer": {"type": "string"},
-                "type": {"type": "string"},
-            },
-            "required": ["question", "answer", "type"],
-        }
-
-        combined_schema = {"anyOf": [schema1, schema2]}
-
-        validate(instance=json.loads(result), schema=combined_schema)
+        json_validate(result)
     except (ValidationError, JSONDecodeError):
         # print(questions)
         print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")

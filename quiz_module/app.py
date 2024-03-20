@@ -12,6 +12,7 @@ from quiz_module.quiz_module_image_summary import gen as summary_gen
 from secret.sql_injection_detector import sql_injection_detector
 import json
 from explane_generator import gen
+from related_generator import related_question_gen
 
 app = Flask(__name__)
 
@@ -30,15 +31,15 @@ def add_quiz_keyword():
     print("choice: ", choice)
     print("short: ", short)
 
-    if int(week) > 16 or int(week) < 0 or lecture == None or lecture == '' :
-        return 'invalied request', 401
-    
+    if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
+        return "invalied request", 401
+
     if not os.path.exists(path):
-        return 'no file', 402
-    
+        return "no file", 402
+
     sql_strings = [lecture, week]
-    if sql_injection_detector(sql_strings) :
-        return 'invalied request', 403
+    if sql_injection_detector(sql_strings):
+        return "invalied request", 403
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
@@ -47,10 +48,10 @@ def add_quiz_keyword():
     # path = '학습자료/3-DL-원리.pdf'
 
     question = keword_gen(path, int(choice), int(short))
-    
-    sql_strings = [json.dumps(question, ensure_ascii = False)]
-    if sql_injection_detector(sql_strings) :
-        return 'invalied quiz data', 404
+
+    sql_strings = [json.dumps(question, ensure_ascii=False)]
+    if sql_injection_detector(sql_strings):
+        return "invalied quiz data", 404
 
     db = getConnection()
     cursor = db.cursor()
@@ -61,6 +62,7 @@ def add_quiz_keyword():
     db.commit()
 
     return "Quiz added successfully", 200
+
 
 @app.route("/add-quiz-summary", methods=["POST"])
 def add_quiz_summary():
@@ -76,15 +78,15 @@ def add_quiz_summary():
     print("choice: ", choice)
     print("short: ", short)
 
-    if int(week) > 16 or int(week) < 0 or lecture == None or lecture == '' :
-        return 'invalied request', 401
-    
+    if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
+        return "invalied request", 401
+
     if not os.path.exists(path):
-        return 'no file', 402
-    
+        return "no file", 402
+
     sql_strings = [lecture, week]
-    if sql_injection_detector(sql_strings) :
-        return 'invalied request', 403
+    if sql_injection_detector(sql_strings):
+        return "invalied request", 403
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
@@ -93,10 +95,10 @@ def add_quiz_summary():
     # path = '학습자료/3-DL-원리.pdf'
 
     question = summary_gen(path, int(choice), int(short))
-    
-    sql_strings = [json.dumps(question, ensure_ascii = False)]
-    if sql_injection_detector(sql_strings) :
-        return 'invalied quiz data', 404
+
+    sql_strings = [json.dumps(question, ensure_ascii=False)]
+    if sql_injection_detector(sql_strings):
+        return "invalied quiz data", 404
 
     db = getConnection()
     cursor = db.cursor()
@@ -107,6 +109,7 @@ def add_quiz_summary():
     db.commit()
 
     return "Quiz added successfully", 200
+
 
 @app.route("/get-quiz/<int:question_id>", methods=["GET"])
 def get_quiz(question_id):
@@ -128,17 +131,28 @@ def get_quiz(question_id):
         cursor.close()
         db.close()
 
+
 @app.route("/get-explane", methods=["GET"])
 def get_explane():
-    question = request.args.get("question")  # GET 요청에서 데이터를 추출하기 위해 request.form을 request.args로  변경
+    question = request.form.get("question")
     if question == "none":
         return "Quiz not found.", 200
+
     def generate():
-        for piece in gen(question):
+        for piece in gen(str(question)):
             if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                 yield piece.encode("utf-8")
 
     return Response(stream_with_context(generate()))
 
+
+@app.route("/related-quiz", methods=["GET"])
+def get_related_quiz():
+    question = request.form.get("question")
+    print(question)
+    related_question = related_question_gen(question)
+    return related_question, 200
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host="0.0.0.0", debug=True)

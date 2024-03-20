@@ -3,7 +3,7 @@ import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-from flask import Flask, request, jsonify
+from flask import Flask, Response, request, jsonify, stream_with_context
 from secret.db_connection import getConnection
 import pymysql
 from datetime import datetime, timedelta
@@ -11,6 +11,7 @@ from quiz_module.quiz_module_keyword import gen as keword_gen
 from quiz_module.quiz_module_image_summary import gen as summary_gen
 from secret.sql_injection_detector import sql_injection_detector
 import json
+from explane_generator import gen
 
 app = Flask(__name__)
 
@@ -127,6 +128,17 @@ def get_quiz(question_id):
         cursor.close()
         db.close()
 
+@app.route("/get-explane", methods=["GET"])
+def get_explane():
+    question = request.args.get("question")  # GET 요청에서 데이터를 추출하기 위해 request.form을 request.args로  변경
+    if question == "none":
+        return "Quiz not found.", 200
+    def generate():
+        for piece in gen(question):
+            if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
+                yield piece.encode("utf-8")
+
+    return Response(stream_with_context(generate()))
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

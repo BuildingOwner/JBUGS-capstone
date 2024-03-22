@@ -13,6 +13,9 @@ from secret.sql_injection_detector import sql_injection_detector
 import json
 from explane_generator import gen
 from related_generator import related_question_gen
+from datetime import datetime
+from chat import chat
+from erase_folder import erase_folder
 
 app = Flask(__name__)
 
@@ -152,6 +155,35 @@ def get_related_quiz():
     print(question)
     related_question = related_question_gen(question)
     return related_question, 200
+
+@app.route('/chat', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        # 이미지 파일저장
+        image = request.files.get('image')
+        text = request.form['text']
+        print(image, text)
+        if image:
+            erase_folder()
+            now = datetime.now()
+            filename = str(now.strftime("%H_%M_%S_") + str(now.microsecond // 1000)) + image.filename 
+            save_path = os.path.join('quiz_module/chat_img', filename)  # 'uploads' 폴더에 저장
+            image.save(save_path)
+            #chat(text, 'vision', save_path)
+            def generate():
+                for piece in chat(text, 'vision', [save_path]):
+                    if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
+                        yield piece.encode("utf-8")
+            return Response(stream_with_context(generate()))
+        
+        def generate():
+            for piece in chat(text, 'turbo'):
+                if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
+                    yield piece.encode("utf-8")
+        return Response(stream_with_context(generate()))
+        
+
+    return jsonify({'message': 'Failed to upload file'})
 
 
 if __name__ == "__main__":

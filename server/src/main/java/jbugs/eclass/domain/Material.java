@@ -15,14 +15,6 @@ public class Material {
 
     private String fileName; //제목
     private String filePath;
-    private String videoName; //제목
-    private String videoPath;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private UploadFile attachFile;
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<UploadFile> imageFiles = new ArrayList<>();
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")

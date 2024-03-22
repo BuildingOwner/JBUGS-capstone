@@ -89,8 +89,8 @@ public class UploadController {
                     videoFile.transferTo(new File(fullVideoPath));
 
                     Material material2 = new Material();
-                    material2.setVideoPath(fullVideoPath);
-                    material2.setVideoName(videoFile.getOriginalFilename());
+//                    material2.setVideoPath(fullVideoPath);
+//                    material2.setVideoName(videoFile.getOriginalFilename());
                     material2.setWeek(weekEntity);
 
                     materialService.join(material2);

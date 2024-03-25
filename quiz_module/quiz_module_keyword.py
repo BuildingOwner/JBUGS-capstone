@@ -26,9 +26,10 @@ def gen(path, choice=5, short=5):
 
         answer = validate_question(question).lower()
         if "true" in answer:
-            print(f"{i + 1}번째 문제 생성완료.")
-            questions.append(question)
             i += 1
+            print(f"{i}번째 문제 생성완료.")
+            question["id"] = i
+            questions.append(question)
 
         else:
             print(f"{i + 1}번째 문제 재생성")

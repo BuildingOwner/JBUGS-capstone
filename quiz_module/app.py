@@ -159,10 +159,16 @@ def get_related_quiz():
 @app.route('/chat', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
-        # 이미지 파일저장
+        
         image = request.files.get('image')
-        text = request.form['text']
-        print(image, text)
+        question = request.form['question']
+        chat_id = request.form['chatId']
+        print(image, question)
+        
+        if sql_injection_detector([chat_id]):
+            return "invalied chat ID", 404
+        
+        # 이미지 파일저장
         if image:
             erase_folder()
             now = datetime.now()
@@ -171,13 +177,13 @@ def upload_file():
             image.save(save_path)
             #chat(text, 'vision', save_path)
             def generate():
-                for piece in chat(text, 'vision', [save_path]):
+                for piece in chat(chat_id, question, 'vision', [save_path]):
                     if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                         yield piece.encode("utf-8")
             return Response(stream_with_context(generate()))
         
         def generate():
-            for piece in chat(text, 'turbo'):
+            for piece in chat(chat_id, question, 'turbo'):
                 if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                     yield piece.encode("utf-8")
         return Response(stream_with_context(generate()))

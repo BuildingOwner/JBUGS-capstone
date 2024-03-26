@@ -1,0 +1,121 @@
+.e-class {
+    position: relative;
+  }
+  .div,
+  .title {
+    align-self: stretch;
+  }
+  .div {
+    position: relative;
+    font-size: var(--font-size-mid);
+    color: var(--color-gray-100);
+    text-align: center;
+  }
+  .title {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--padding-11xl) 0;
+    gap: var(--gap-21xl);
+  }
+  .id,
+  .input {
+    align-self: stretch;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .inputText {
+    border-radius: var(--br-8xs);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-lightgray);
+    flex-direction: row;
+    align-items: center;
+    padding: var(--padding-smi) var(--padding-7xl);
+    font-size: var(--font-size-base);
+    color: var(--color-black);
+    width: 100vw;
+  }
+  .id {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-3xs);
+  }
+  .icon-park-outlinecheck-one {
+    width: 1.25rem;
+    position: relative;
+    height: 1.25rem;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .saveid {
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--gap-8xs);
+  }
+  .idcheck,
+  .saveid,
+  .sign-in-wrapper {
+    flex-direction: row;
+    align-items: center;
+  }
+  .idcheck {
+    align-self: stretch;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    padding: var(--padding-6xs) 0;
+    font-size: var(--font-size-base);
+    color: var(--color-gray-100);
+  }
+  .sign-in-wrapper {
+    border-radius: var(--br-8xs);
+    background-color: var(--color-gray-200);
+    justify-content: center;
+    padding: var(--padding-lg) 0;
+    cursor: pointer;
+    font-size: var(--font-size-xl);
+    color: var(--color-white);
+  }
+  .div2,
+  .loginform,
+  .mid,
+  .sign-in-wrapper {
+    align-self: stretch;
+    overflow: hidden;
+    display: flex;
+  }
+  .loginform {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: var(--gap-3xs);
+    font-size: var(--font-size-5xl);
+    color: var(--color-gray-300);
+  }
+  .div2,
+  .mid {
+    flex: 1;
+  }
+  .div2 {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    gap: var(--gap-3xl);
+    font-size: var(--font-size-sm);
+  }
+  .mid {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--padding-61xl) var(--padding-131xl);
+    text-align: left;
+    font-size: var(--font-size-21xl);
+    color: var(--color-black);
+    font-family: var(--font-malgun-gothic);
+  }
+  

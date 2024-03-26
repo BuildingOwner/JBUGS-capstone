@@ -46,8 +46,7 @@ public class MemberApiController {
             Member loginMember = memberService.getMemberByLoginId(form.getLoginId());
 
             LoginResponse response = new LoginResponse("/main");
-            response.setId(loginMember.getId());
-            response.setName(loginMember.getName());
+            response.setSessionId(session.getId());
             return ResponseEntity.ok(response);
         } else {
             // 로그인 실패 시 에러 메시지 반환

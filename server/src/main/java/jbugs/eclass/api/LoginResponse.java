@@ -6,9 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginResponse {
-    private Long id;
-    private String name;
     private String redirectURL; // 추가된 속성
+    private String sessionId;
 
     public LoginResponse(String redirectURL) {
         this.redirectURL = redirectURL;

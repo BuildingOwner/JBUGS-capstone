@@ -25,11 +25,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WebSecurityCustomizer configure(){
-        return (web -> web.ignoring()
-                .requestMatchers("/static/**"));
-    }
+//    @Bean
+//    public WebSecurityCustomizer configure(){
+//        return (web -> web.ignoring()
+//                .requestMatchers("/static/**"));
+//    }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

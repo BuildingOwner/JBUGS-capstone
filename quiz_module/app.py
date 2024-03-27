@@ -11,7 +11,7 @@ from quiz_module.quiz_module_keyword import gen as keword_gen
 from quiz_module.quiz_module_image_summary import gen as summary_gen
 from secret.sql_injection_detector import sql_injection_detector
 import json
-from explane_generator import gen
+from quiz_module.explain_generator import explain_gen
 from related_generator import related_question_gen
 from datetime import datetime
 from chat import chat
@@ -142,7 +142,7 @@ def get_explane():
         return "Quiz not found.", 200
 
     def generate():
-        for piece in gen(str(question)):
+        for piece in explain_gen(str(question)):
             if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                 yield piece.encode("utf-8")
 
@@ -153,6 +153,9 @@ def get_explane():
 def get_related_quiz():
     question = request.form.get("question")
     print(question)
+    if question == "none":
+        return "Quiz not found.", 200
+    
     related_question = related_question_gen(question)
     return related_question, 200
 

@@ -27,7 +27,7 @@ def png2text_google_vision(path):
 
         string.append(texts[0].description)
     
-    print("png2keyword_google_vision done.")
+    print("png2text_google_vision done.")
     return f"""{string}"""
 
     

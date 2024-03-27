@@ -49,7 +49,7 @@ def png2text_clova(path):
         result_text += " ".join(field["inferText"] for field in res["images"][0]["fields"])
 
     # 결과 출력
-    print('png2keyword_clova done.')
+    print('png2text_clova done.')
     return f"""{result_text}"""
 
 if __name__ == "__main__":

@@ -1,0 +1,138 @@
+.b {
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.status {
+  height: 2.444rem;
+  width: 6.111rem;
+  border-radius: var(--br-3xs);
+  background-color: var(--point-red);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-9xl);
+  box-sizing: border-box;
+}
+.secret {
+  height: 2.333rem;
+  width: 6.111rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-4xs) 0.861rem;
+  box-sizing: border-box;
+}
+.p {
+  margin: 0;
+}
+.titleTextTxt {
+  width: 100%;
+}
+.titleText {
+  height: 4rem;
+  width: 5.389rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.title {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  box-sizing: border-box;
+  min-width: 5.389rem;
+  max-width: 100%;
+}
+.writer {
+  height: 2.222rem;
+  width: 5.556rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-5xs) var(--padding-8xl-5);
+  box-sizing: border-box;
+}
+.score {
+  height: 2.556rem;
+  width: 4.444rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-17xl);
+  box-sizing: border-box;
+}
+.deadline {
+  height: 2.556rem;
+  width: 6.667rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-smi-5);
+  box-sizing: border-box;
+}
+.feedback {
+  height: 2.556rem;
+  width: 6.667rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-5xl);
+  box-sizing: border-box;
+  color: var(--color-dimgray-200);
+}
+.line {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-11xs) 0rem;
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  max-width: 100%;
+}
+.quizRow {
+  align-self: stretch;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-11xl);
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}

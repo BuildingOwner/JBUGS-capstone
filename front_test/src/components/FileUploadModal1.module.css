@@ -1,0 +1,300 @@
+.b {
+  position: relative;
+}
+.vectorIcon {
+  height: 13px;
+  width: 13px;
+  position: relative;
+}
+.heroiconsOutlinex {
+  height: 25px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-7xs);
+  box-sizing: border-box;
+  width: 25px;
+}
+.heroiconsOutlinexWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-sm) 0px 0px;
+}
+.parent {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--padding-11xl) var(--padding-3xs);
+  gap: var(--gap-xl);
+}
+.b1 {
+  position: relative;
+  display: inline-block;
+  min-width: 79px;
+}
+.div {
+  position: relative;
+  line-height: 24.67px;
+  display: inline-block;
+  min-width: 40px;
+}
+.vectorIcon1 {
+  width: 13px;
+  height: 10px;
+  position: relative;
+}
+.bxsdownArrow {
+  height: 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--padding-9xs) var(--padding-11xs);
+  box-sizing: border-box;
+}
+.bxsdownArrowWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-10xs-5) 0px 0px;
+}
+.menu {
+  border-radius: var(--br-8xs);
+  background-color: var(--color-gainsboro-100);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-7xs) var(--padding-xl);
+  gap: var(--gap-6xs);
+}
+.menuWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-10xs-5) 0px 0px;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}
+.car {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-3xs);
+}
+.carWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px var(--padding-3xs);
+}
+.b2 {
+  position: relative;
+  display: inline-block;
+  min-width: 109px;
+}
+.div1 {
+  flex: 1;
+  position: relative;
+  color: var(--color-gray-700);
+  display: inline-block;
+  min-width: 245px;
+  max-width: 100%;
+}
+.fileInputfileInput {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-3xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  max-width: 100%;
+}
+.div2 {
+  position: relative;
+  display: inline-block;
+  min-width: 64px;
+}
+.wrapper {
+  border-radius: var(--br-8xs);
+  background-color: var(--color-gainsboro-100);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-10xs) var(--padding-8xs);
+}
+.fileAddButton {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: var(--font-size-base);
+  color: var(--color-darkslategray-100);
+}
+.fileinput {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.div3 {
+  flex: 1;
+  position: relative;
+  color: var(--color-gray-700);
+  display: inline-block;
+  min-width: 276px;
+  max-width: 100%;
+}
+.fileInput {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-6xl);
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-11xl);
+  color: var(--color-dimgray-100);
+  font-family: var(--font-malgun-gothic);
+}
+.frameParent {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 0px var(--padding-399xl);
+  box-sizing: border-box;
+  gap: var(--gap-16xl);
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-11xl);
+  color: var(--color-dimgray-100);
+  font-family: var(--font-malgun-gothic);
+}
+.fileuploadmodalChild {
+  align-self: stretch;
+  height: 403px;
+  position: relative;
+  overflow: hidden;
+  display: none;
+}
+.text {
+  position: relative;
+  display: inline-block;
+  min-width: 48px;
+}
+.navBtn {
+  flex: 0.6712;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-darkgray-100);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-28xl);
+}
+.text1 {
+  position: relative;
+  display: inline-block;
+  min-width: 72px;
+}
+.navBtn1 {
+  flex: 1;
+  border-radius: var(--br-8xs);
+  background-color: var(--point-blue);
+  border: 1px solid var(--point-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-16xl);
+  color: var(--color-white);
+}
+.navbtn {
+  width: 305px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-mini);
+  font-size: var(--font-size-5xl);
+}
+.fileuploadmodal {
+  width: 744px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: var(--padding-xl) var(--padding-31xl);
+  box-sizing: border-box;
+  gap: var(--gap-16xl);
+  letter-spacing: normal;
+  text-align: left;
+  font-size: var(--font-size-21xl);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+
+@media screen and (max-width: 650px) {
+  .frameParent {
+    gap: 17px 35px;
+    padding-bottom: var(--padding-253xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .div {
+    font-size: var(--font-size-base);
+  }
+
+  .text {
+    font-size: var(--font-size-lgi);
+  }
+
+  .text1 {
+    font-size: var(--font-size-lgi);
+  }
+
+  .fileuploadmodal {
+    gap: 17px 35px;
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}

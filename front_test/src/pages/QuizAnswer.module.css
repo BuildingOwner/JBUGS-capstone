@@ -1,0 +1,115 @@
+.quizName {
+  position: relative;
+}
+.courceName {
+  position: relative;
+  display: inline-block;
+  min-width: 3.333rem;
+}
+.division {
+  position: relative;
+  display: inline-block;
+  min-width: 2.222rem;
+}
+.courceNameParent {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-xl);
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--color-dimgray-100);
+  font-family: var(--font-malgun-gothic);
+}
+.quizInfo {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--padding-17xl-5) var(--padding-49xl) var(--padding-17xl-5)
+    var(--padding-31xl);
+  gap: var(--gap-xl);
+}
+.content {
+  flex: 1;
+  border-radius: var(--br-xl) 0px 0px var(--br-xl);
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+.contentParent {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-xl) var(--padding-xl) var(--padding-xl) 0rem;
+  box-sizing: border-box;
+  max-width: calc(100% - 270px);
+  row-gap: 20px;
+}
+.quizanswer {
+  width: 100%;
+  position: relative;
+  background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  letter-spacing: normal;
+}
+
+@media screen and (max-width: 725px) {
+  .quizName {
+    font-size: var(--font-size-base);
+  }
+
+  .courceName {
+    font-size: var(--font-size-base);
+  }
+
+  .division {
+    font-size: var(--font-size-base);
+  }
+}
+@media screen and (max-width: 650px) {
+  .quizInfo {
+    padding-left: var(--padding-6xl);
+    padding-right: var(--padding-15xl);
+    box-sizing: border-box;
+  }
+
+  .contentParent {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .quizanswer {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .quizInfo {
+    flex-wrap: wrap;
+  }
+
+  .content {
+    min-width: 100%;
+  }
+}

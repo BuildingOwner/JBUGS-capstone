@@ -1,0 +1,159 @@
+.div {
+  align-self: stretch;
+  height: 5.556rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.num {
+  width: 2.222rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0rem var(--padding-8xs);
+  box-sizing: border-box;
+}
+.b {
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.status {
+  height: 2.444rem;
+  width: 6.111rem;
+  border-radius: var(--br-3xs);
+  background-color: var(--warning-red);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) 0.861rem;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.icroundLockIcon {
+  height: 1.333rem;
+  width: 1.333rem;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.secret {
+  height: 5.556rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-lg);
+  box-sizing: border-box;
+}
+.p {
+  margin: 0;
+}
+.titleText {
+  height: 4rem;
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 3.5rem;
+}
+.comment {
+  height: 1.333rem;
+  width: 1.167rem;
+  position: relative;
+  color: var(--color-dimgray-100);
+  display: flex;
+  align-items: center;
+}
+.title {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-sm) var(--padding-313xl) var(--padding-sm)
+    var(--padding-xl);
+  box-sizing: border-box;
+  gap: var(--gap-11xl);
+  min-width: 6.556rem;
+  max-width: 100%;
+}
+.writer {
+  height: 5.556rem;
+  width: 5.556rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-sm);
+  box-sizing: border-box;
+}
+.uploadDate {
+  height: 5.556rem;
+  width: 6.667rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-smi-5);
+  box-sizing: border-box;
+}
+.view {
+  height: 5.556rem;
+  width: 4.444rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-mini);
+  box-sizing: border-box;
+}
+.line {
+  flex: 1;
+  border-bottom: 1px solid var(--color-dimgray-100);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-3xs);
+  max-width: 100%;
+}
+.qnaRow {
+  width: 61.667rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0rem var(--padding-xl);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+
+@media screen and (max-width: 725px) {
+  .title {
+    flex-wrap: wrap;
+  }
+}

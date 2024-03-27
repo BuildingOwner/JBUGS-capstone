@@ -1,0 +1,325 @@
+.b {
+  position: relative;
+  display: inline-block;
+  min-width: 2.222rem;
+}
+.wrapper {
+  width: 11.667rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-8xs);
+  box-sizing: border-box;
+}
+.b2 {
+  position: relative;
+  display: inline-block;
+  min-width: 4.889rem;
+}
+.b3 {
+  flex: 1;
+  position: relative;
+}
+.header {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem var(--padding-xl);
+  gap: var(--gap-0);
+  row-gap: 20px;
+}
+.studentListWrap {
+  position: relative;
+  display: inline-block;
+  min-width: 4.333rem;
+}
+.stunumber {
+  width: 10.389rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-8xs);
+  box-sizing: border-box;
+}
+.div {
+  position: relative;
+  display: inline-block;
+  min-width: 3.333rem;
+}
+.div1 {
+  position: relative;
+  display: inline-block;
+  min-width: 0.5rem;
+}
+.div2 {
+  flex: 1;
+  position: relative;
+  flex-shrink: 0;
+}
+.wrapper2 {
+  border-radius: var(--br-3xs);
+  background-color: var(--warning-red);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-8xs) var(--padding-6xl);
+}
+.status {
+  width: 10.389rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-8xs);
+  box-sizing: border-box;
+}
+.div9 {
+  position: relative;
+  white-space: pre-wrap;
+  flex-shrink: 0;
+}
+.date2 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-8xs) var(--padding-lg) var(--padding-8xs)
+    var(--padding-8xs);
+}
+.b7 {
+  position: relative;
+  display: inline-block;
+  min-width: 4.889rem;
+}
+.wrapper4 {
+  border-radius: var(--br-3xs);
+  background-color: var(--blue4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-8xs) var(--padding-2xs);
+  white-space: nowrap;
+}
+.wrapper7 {
+  border-radius: var(--br-3xs);
+  background-color: var(--point-green);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-8xs) var(--padding-2xs);
+  white-space: nowrap;
+}
+.div35 {
+  align-self: stretch;
+  width: 4.333rem;
+  position: relative;
+  display: inline-block;
+}
+.stunumber9 {
+  height: 2.056rem;
+  width: 10.389rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-8xs);
+  box-sizing: border-box;
+}
+.div36 {
+  align-self: stretch;
+  width: 3.333rem;
+  position: relative;
+  display: inline-block;
+}
+.div37 {
+  align-self: stretch;
+  width: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+.div38 {
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  flex-shrink: 0;
+}
+.b14 {
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+}
+.wrapper11 {
+  height:;
+  width: 6.111rem;
+  border-radius: var(--br-3xs);
+  background-color: var(--warning-red);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-8xs) var(--padding-6xl);
+  box-sizing: border-box;
+}
+.list {
+  align-self: stretch;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-mini) var(--padding-xl) 0rem;
+  box-sizing: border-box;
+  gap: 0.556rem 1.517rem;
+  min-height: 38.333rem;
+  color: var(--color-black);
+}
+.framewrap {
+  align-self: stretch;
+  border-radius: var(--br-3xs);
+  background-color: var(--point-bg-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-xl);
+  gap: var(--gap-xl);
+}
+.contents {
+  align-self: stretch;
+  border-radius: var(--br-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-3xs);
+}
+.content {
+  flex: 1;
+  border-radius: var(--br-xl);
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-11xl) 0rem 0rem;
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--color-darkslategray-100);
+  font-family: var(--font-malgun-gothic);
+}
+.miscDataFields {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-xl) var(--padding-3xs);
+  box-sizing: border-box;
+  max-width: calc(100% - 270px);
+}
+.profstudentassignscore {
+  width: 100%;
+  position: relative;
+  background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  letter-spacing: normal;
+}
+
+@media screen and (max-width: 1200px) {
+  .header {
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 650px) {
+  .b {
+    font-size: var(--font-size-base);
+  }
+
+  .b2 {
+    font-size: var(--font-size-base);
+  }
+
+  .b3 {
+    font-size: var(--font-size-base);
+  }
+
+  .studentListWrap {
+    font-size: var(--font-size-base);
+  }
+
+  .div {
+    font-size: var(--font-size-base);
+  }
+
+  .div1 {
+    font-size: var(--font-size-base);
+  }
+
+  .div2 {
+    font-size: var(--font-size-base);
+  }
+
+  .div9 {
+    font-size: var(--font-size-base);
+  }
+
+  .div35 {
+    font-size: var(--font-size-base);
+  }
+
+  .div36 {
+    font-size: var(--font-size-base);
+  }
+
+  .div37 {
+    font-size: var(--font-size-base);
+  }
+
+  .div38 {
+    font-size: var(--font-size-base);
+  }
+
+  .b14 {
+    font-size: var(--font-size-base);
+  }
+}
+@media screen and (max-width: 450px) {
+  .miscDataFields {
+    max-width: 100%;
+  }
+
+  .profstudentassignscore {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}

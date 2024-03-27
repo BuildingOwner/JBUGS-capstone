@@ -1,0 +1,317 @@
+.h3 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+}
+.vectorIcon {
+  height: 13px;
+  width: 13px;
+  position: relative;
+}
+.heroiconsOutlinex {
+  height: 25px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-7xs);
+  box-sizing: border-box;
+  width: 25px;
+}
+.scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs-5) 0px 0px;
+}
+.header {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--padding-11xl) 0px;
+  gap: var(--gap-xl);
+}
+.b {
+  position: relative;
+  display: inline-block;
+  min-width: 96px;
+}
+.b1 {
+  position: relative;
+  font-size: var(--font-size-xl);
+  display: inline-block;
+  color: var(--color-black);
+  min-width: 110px;
+}
+.date {
+  width: 214.7px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-9xs-5) 0px;
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  min-width: 140px;
+}
+.date1 {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-9xs-5) 0px;
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  min-width: 140px;
+}
+.b4 {
+  position: relative;
+}
+.b5 {
+  height: 44px;
+  position: relative;
+  font-size: var(--font-size-xl);
+  display: flex;
+  color: var(--color-black);
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 110px;
+}
+.date2 {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 140px;
+  z-index: 1;
+  margin-left: -0.1px;
+}
+.dateParent {
+  width: 429.3px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  row-gap: 20px;
+  max-width: 100%;
+}
+.dateInfo {
+  align-self: stretch;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  row-gap: 20px;
+  max-width: 100%;
+}
+.b7 {
+  position: relative;
+  font-size: var(--font-size-xl);
+  display: inline-block;
+  color: var(--color-black);
+  min-width: 9px;
+}
+.submitInfo {
+  align-self: stretch;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-6xs) 0px;
+  gap: var(--gap-3xs);
+  text-align: left;
+  font-size: var(--font-size-3xl);
+  color: var(--color-dimgray-100);
+  font-family: var(--font-malgun-gothic);
+}
+.b8 {
+  position: relative;
+  display: inline-block;
+  min-width: 44px;
+}
+.p {
+  margin: 0;
+}
+.b9 {
+  align-self: stretch;
+  height: 219px;
+  position: relative;
+  font-size: var(--font-size-xl);
+  line-height: 26.67px;
+  display: inline-block;
+  color: var(--color-black);
+  flex-shrink: 0;
+}
+.dateInfo1 {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-3xs);
+  flex-shrink: 0;
+  text-align: left;
+  font-size: var(--font-size-3xl);
+  color: var(--color-dimgray-100);
+  font-family: var(--font-malgun-gothic);
+}
+.scroll1 {
+  align-self: stretch;
+  height: 722px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 0px var(--padding-242xl);
+  box-sizing: border-box;
+  gap: var(--gap-6xl);
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-3xl);
+  color: var(--color-dimgray-100);
+  font-family: var(--font-malgun-gothic);
+}
+.text {
+  position: relative;
+  display: inline-block;
+  min-width: 48px;
+}
+.navBtn {
+  flex: 0.5052;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-darkgray-100);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-28xl);
+}
+.text1 {
+  position: relative;
+  display: inline-block;
+  min-width: 96px;
+}
+.navBtn1 {
+  flex: 1;
+  border-radius: var(--br-8xs);
+  background-color: var(--point-blue);
+  border: 1px solid var(--point-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-4xl);
+  color: var(--color-white);
+}
+.navBtnParent {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-5xl);
+}
+.assignmentinfomodal {
+  width: 744px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: var(--padding-xl) var(--padding-31xl);
+  box-sizing: border-box;
+  gap: var(--gap-6xl);
+  letter-spacing: normal;
+  text-align: left;
+  font-size: var(--font-size-11xl);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+
+@media screen and (max-width: 650px) {
+  .scroll1 {
+    height: auto;
+  }
+}
+@media screen and (max-width: 450px) {
+  .b {
+    font-size: var(--font-size-lg);
+  }
+
+  .b1 {
+    font-size: var(--font-size-base);
+  }
+
+  .b4 {
+    font-size: var(--font-size-lg);
+  }
+
+  .b5 {
+    font-size: var(--font-size-base);
+  }
+
+  .date2 {
+    margin-left: 0;
+  }
+
+  .dateParent {
+    flex-wrap: wrap;
+  }
+
+  .b7 {
+    font-size: var(--font-size-base);
+  }
+
+  .b8 {
+    font-size: var(--font-size-lg);
+  }
+
+  .b9 {
+    font-size: var(--font-size-base);
+  }
+
+  .scroll1 {
+    padding-bottom: var(--padding-91xl);
+    box-sizing: border-box;
+  }
+
+  .text {
+    font-size: var(--font-size-lgi);
+  }
+
+  .text1 {
+    font-size: var(--font-size-lgi);
+  }
+
+  .assignmentinfomodal {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}

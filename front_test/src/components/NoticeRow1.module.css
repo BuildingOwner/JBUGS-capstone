@@ -1,0 +1,138 @@
+.writerLabel {
+  height: 5.556rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 1.667rem;
+}
+.num {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0rem var(--padding-8xs);
+}
+.b {
+  position: relative;
+  display: inline-block;
+  min-width: 2rem;
+}
+.status {
+  border-radius: var(--br-3xs);
+  background-color: var(--point-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-18xl);
+}
+.noticeRowData {
+  height: 0.972rem;
+  width: 0.972rem;
+  position: relative;
+}
+.pinFill {
+  height: 1.306rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-10xs);
+  box-sizing: border-box;
+  width: 1.306rem;
+}
+.secret {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 2.128rem 1.011rem 2.122rem 1.017rem;
+}
+.p {
+  margin: 0;
+}
+.titleText {
+  position: relative;
+}
+.title {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-sm) var(--padding-xl);
+  box-sizing: border-box;
+  min-width: 5rem;
+  max-width: 100%;
+}
+.div {
+  position: relative;
+  display: inline-block;
+  min-width: 4rem;
+}
+.writer {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-sm);
+}
+.div1 {
+  position: relative;
+  display: inline-block;
+  min-width: 5.278rem;
+}
+.uploadDate {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-smi-5);
+}
+.tableColumnName {
+  position: relative;
+  display: inline-block;
+  min-width: 2.778rem;
+}
+.view {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-mini);
+}
+.line {
+  align-self: stretch;
+  border-bottom: 1px solid var(--color-dimgray-100);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-3xs);
+  max-width: 100%;
+}
+.noticeRow {
+  width: 61.667rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-xl);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}

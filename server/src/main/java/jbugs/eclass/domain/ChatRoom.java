@@ -17,11 +17,9 @@ public class ChatRoom {
     private Long id;
 
     private String modelName;
+    private String chattingJson;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private Student student;
-
-    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
-    private List<Chatting> chattings = new ArrayList<>();
 }

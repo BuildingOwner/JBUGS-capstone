@@ -1,0 +1,880 @@
+.b {
+  position: relative;
+  display: inline-block;
+  min-width: 2.667rem;
+}
+.div {
+  position: relative;
+  display: inline-block;
+  min-width: 4.444rem;
+}
+.parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-3xs);
+}
+.personicon {
+  height: 2.778rem;
+  width: 2.778rem;
+  position: relative;
+  border-radius: var(--br-81xl);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.info {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-11xs-5) var(--padding-base) var(--padding-11xs-5) 0rem;
+  gap: var(--gap-mini);
+}
+.righttop {
+  align-self: stretch;
+  height: 5.278rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--padding-xl) var(--padding-mini);
+  box-sizing: border-box;
+  font-size: var(--font-size-base);
+}
+.title {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: inline-block;
+  min-width: 3.333rem;
+}
+.hwTop {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-8xs) 0rem;
+}
+.div1 {
+  position: relative;
+  display: inline-block;
+  min-width: 2.556rem;
+}
+.week {
+  border-radius: var(--br-8xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-6xs-5) var(--padding-9xs);
+  box-sizing: border-box;
+  min-height: 1.944rem;
+  font-family: var(--font-inter);
+}
+.b1 {
+  align-self: stretch;
+  height: 0.972rem;
+  position: relative;
+  line-height: 1.185rem;
+  display: flex;
+  align-items: center;
+}
+.div2 {
+  align-self: stretch;
+  position: relative;
+  font-size: var(--font-size-xs);
+  color: var(--color-dimgray-200);
+}
+.name {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 1.944rem;
+  font-size: var(--font-size-base);
+}
+.n {
+  position: relative;
+  display: inline-block;
+  min-width: 3.111rem;
+}
+.closenessCentrality {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-5xs) 0rem;
+  box-sizing: border-box;
+  min-height: 1.944rem;
+}
+.octiconx12 {
+  height: 1.111rem;
+  width: 1.111rem;
+  position: relative;
+  border-radius: var(--br-8xs);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.info1 {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap-8xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-darkslategray-200);
+}
+.homeworkitem {
+  width: 27.5rem;
+  height: 3.056rem;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-3xs);
+  box-sizing: border-box;
+  gap: var(--gap-xl);
+}
+.div11 {
+  height: 1.222rem;
+  position: relative;
+  display: inline-block;
+}
+.b6 {
+  align-self: stretch;
+  height: 0.972rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.n5 {
+  position: relative;
+}
+.hwItem {
+  width: 27.5rem;
+  height: 16.639rem;
+  overflow-x: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-3xs);
+  max-width: 100%;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+}
+.homework {
+  align-self: stretch;
+  border-radius: var(--br-3xs);
+  background-color: var(--blue2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-xl);
+  box-sizing: border-box;
+  gap: var(--gap-6xl);
+  max-width: 100%;
+}
+.h1 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: inline-block;
+  min-width: 5rem;
+}
+.fontPicker {
+  height: 2.378rem;
+  width: 1.717rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.div13 {
+  position: relative;
+  line-height: 130%;
+  display: inline-block;
+  min-width: 1.556rem;
+  white-space: nowrap;
+}
+.wrapper {
+  flex: 1;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.828rem 0rem 0.828rem;
+  min-width: 1.111rem;
+}
+.characterSpacing {
+  position: relative;
+  line-height: 130%;
+  display: inline-block;
+  min-width: 1.5rem;
+  white-space: nowrap;
+}
+.characterSpacingWrapper {
+  flex: 1;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.828rem var(--padding-12xs) 0.828rem;
+  min-width: 1.111rem;
+}
+.fontSizeController {
+  position: relative;
+  line-height: 130%;
+  display: inline-block;
+  min-width: 1.389rem;
+  white-space: nowrap;
+}
+.fontSizeControllerWrapper {
+  flex: 1;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.828rem var(--padding-11xs) 0.828rem;
+  min-width: 1.111rem;
+}
+.outputFormatter {
+  position: relative;
+  line-height: 130%;
+  display: inline-block;
+  min-width: 1.444rem;
+  white-space: nowrap;
+}
+.wrapper1 {
+  flex: 1;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.828rem var(--padding-12xs) 0.828rem;
+  min-width: 1.111rem;
+  z-index: 1;
+}
+.wrapper4 {
+  flex: 1;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.828rem 0rem 0.828rem;
+  min-width: 1.111rem;
+  z-index: 1;
+}
+.time {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  row-gap: 20px;
+}
+.div23 {
+  position: relative;
+  line-height: 130%;
+  display: inline-block;
+  min-width: 0.556rem;
+}
+.div24 {
+  position: relative;
+  line-height: 130%;
+  display: inline-block;
+  min-width: 3.278rem;
+}
+.rectangleDiv {
+  margin: 0 !important;
+  position: absolute;
+  top: 0.556rem;
+  left: 5.556rem;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-lightcoral);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0rem var(--padding-sm);
+  white-space: nowrap;
+  z-index: 1;
+  font-size: var(--font-size-xs);
+  color: var(--color-white);
+}
+.mon {
+  position: absolute;
+  top: 2.378rem;
+  left: 0rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  row-gap: 20px;
+}
+.shapeTransformer {
+  height: 2.378rem;
+  width: 1.717rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.tue {
+  position: absolute;
+  top: 4.756rem;
+  left: 0rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  row-gap: 20px;
+}
+.sizeScaler {
+  flex: 1;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.828rem var(--padding-4xs) 0.828rem;
+  min-width: 0.556rem;
+}
+.wed {
+  position: absolute;
+  top: 7.133rem;
+  left: 0rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  row-gap: 20px;
+}
+.thr {
+  position: absolute;
+  top: 9.506rem;
+  left: 0rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  row-gap: 20px;
+  z-index: 2;
+}
+.blendingMode {
+  position: absolute;
+  top: 11.883rem;
+  left: 0rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.828rem var(--padding-4xs) 0.828rem;
+}
+.timetableChild {
+  position: absolute;
+  top: 11.883rem;
+  left: 1.717rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.floater {
+  position: absolute;
+  top: 11.883rem;
+  left: 3.439rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.anchorPointManager {
+  position: absolute;
+  top: 11.883rem;
+  left: 5.156rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dynamicPositioner {
+  position: absolute;
+  top: 11.883rem;
+  left: 6.878rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.smartAnchor {
+  position: absolute;
+  top: 11.883rem;
+  left: 8.594rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.autoAlignment {
+  position: absolute;
+  top: 11.883rem;
+  left: 10.311rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.resizableContainer {
+  position: absolute;
+  top: 11.883rem;
+  left: 12.033rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.flexboxLayout {
+  position: absolute;
+  top: 11.883rem;
+  left: 13.75rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.timetableItem {
+  position: absolute;
+  top: 11.883rem;
+  left: 15.467rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.aligner {
+  position: absolute;
+  top: 11.883rem;
+  left: 17.189rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataFlowManager {
+  position: absolute;
+  top: 11.883rem;
+  left: 18.906rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+  z-index: 1;
+}
+.inputProcessor {
+  position: absolute;
+  top: 11.883rem;
+  left: 20.628rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.outputAggregator {
+  position: absolute;
+  top: 11.883rem;
+  left: 22.344rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.conditionChecker {
+  position: absolute;
+  top: 11.883rem;
+  left: 24.061rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+  z-index: 1;
+}
+.errorHandler {
+  position: absolute;
+  top: 11.883rem;
+  left: 25.783rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.loopController1 {
+  position: absolute;
+  top: 14.261rem;
+  left: 0rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.828rem var(--padding-4xs) 0.828rem;
+}
+.dataMerger {
+  position: absolute;
+  top: 14.261rem;
+  left: 1.717rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataSplitter {
+  position: absolute;
+  top: 14.261rem;
+  left: 3.439rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataTransformer {
+  position: absolute;
+  top: 14.261rem;
+  left: 5.156rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataFilter {
+  position: absolute;
+  top: 14.261rem;
+  left: 6.878rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataQueue {
+  position: absolute;
+  top: 14.261rem;
+  left: 8.594rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataBuffer {
+  position: absolute;
+  top: 14.261rem;
+  left: 10.311rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataLink {
+  position: absolute;
+  top: 14.261rem;
+  left: 12.033rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataTree {
+  position: absolute;
+  top: 14.261rem;
+  left: 13.75rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataGraph {
+  position: absolute;
+  top: 14.261rem;
+  left: 15.467rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataMap {
+  position: absolute;
+  top: 14.261rem;
+  left: 17.189rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataMatrix {
+  position: absolute;
+  top: 14.261rem;
+  left: 18.906rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+  z-index: 1;
+}
+.dataTable {
+  position: absolute;
+  top: 14.261rem;
+  left: 20.628rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.timetableInner {
+  position: absolute;
+  top: 14.261rem;
+  left: 22.344rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.dataBlock {
+  position: absolute;
+  top: 14.261rem;
+  left: 24.061rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+  z-index: 1;
+}
+.dataPool {
+  position: absolute;
+  top: 14.261rem;
+  left: 25.783rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-lightgray-200);
+  box-sizing: border-box;
+  width: 1.717rem;
+  height: 2.378rem;
+  overflow: hidden;
+}
+.timetable {
+  align-self: stretch;
+  height: 16.639rem;
+  position: relative;
+  max-width: 100%;
+  font-size: var(--font-size-3xs);
+  color: var(--color-black);
+  font-family: var(--font-inter);
+}
+.planner {
+  align-self: stretch;
+  border-radius: var(--br-3xs);
+  background-color: var(--blue2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-xl);
+  box-sizing: border-box;
+  gap: var(--gap-6xl);
+  max-width: 100%;
+}
+.rightnav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-xl);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  min-width: 20.778rem;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-11xl);
+  color: var(--color-darkslategray-200);
+  font-family: var(--font-malgun-gothic);
+}
+
+@media screen and (max-width: 725px) {
+  .time {
+    flex-wrap: wrap;
+  }
+
+  .mon {
+    flex-wrap: wrap;
+  }
+
+  .tue {
+    flex-wrap: wrap;
+  }
+
+  .wed {
+    flex-wrap: wrap;
+  }
+
+  .thr {
+    flex-wrap: wrap;
+  }
+
+  .timetable {
+    height: auto;
+    min-height: 299.5;
+  }
+}
+@media screen and (max-width: 650px) {
+  .title {
+    font-size: var(--font-size-5xl);
+  }
+
+  .h1 {
+    font-size: var(--font-size-5xl);
+  }
+
+  .rightnav {
+    flex: 1;
+  }
+}
+@media screen and (max-width: 450px) {
+  .title {
+    font-size: var(--font-size-lg);
+  }
+
+  .h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  .rightnav {
+    min-width: 100%;
+  }
+}

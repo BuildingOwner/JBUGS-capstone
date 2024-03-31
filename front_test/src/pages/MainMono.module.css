@@ -1,0 +1,401 @@
+.title {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+}
+.today {
+  position: relative;
+  font-size: var(--font-size-xl);
+  color: var(--color-dimgray-200);
+}
+.headerLeft {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-3xs);
+}
+.vectorIcon {
+  height: 1.389rem;
+  width: 1.389rem;
+  position: relative;
+}
+.letsIconssettingFill {
+  height: 1.389rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 1.389rem;
+}
+.headerRight {
+  border-radius: var(--br-8xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-8xs);
+}
+.courseheader {
+  align-self: stretch;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+}
+.positionPredictorIcon {
+  height: 4.339rem;
+  width: 3.472rem;
+  position: relative;
+}
+.personicon {
+  height: 6.111rem;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.883rem 1.039rem var(--padding-base) 1.044rem;
+  box-sizing: border-box;
+}
+.h2 {
+  margin: 0;
+  width: 4rem;
+  height: 1.778rem;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: inline-block;
+}
+.div {
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+}
+.div1 {
+  align-self: stretch;
+  width: 3.111rem;
+  position: relative;
+  display: inline-block;
+}
+.layerLoader {
+  align-self: stretch;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-11xl);
+}
+.div2 {
+  width: 4.333rem;
+  height: 0.944rem;
+  position: relative;
+  font-family: var(--font-inter);
+  display: inline-block;
+}
+.layerLoaderParent {
+  align-self: stretch;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--padding-base) 0rem;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-sm);
+}
+.info {
+  height: 6.111rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.courseLeft {
+  height: -0.889rem;
+  width: 15.056rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-mini);
+}
+.a {
+  margin: 0;
+  align-self: stretch;
+  height: 1.778rem;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.division {
+  align-self: stretch;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-9xs) var(--padding-xs-5);
+}
+.groupIcon {
+  width: 1.111rem;
+  height: 0.611rem;
+  position: relative;
+}
+.rightArrow {
+  height: 1.5rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-8xs);
+  box-sizing: border-box;
+}
+.coueseRight {
+  height: 6.111rem;
+  width: 2.222rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+.courseItem {
+  align-self: stretch;
+  height: 0.222rem;
+  border-radius: var(--br-8xs);
+  background-color: var(--point-bg-blue);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-12xs) var(--padding-xl);
+  box-sizing: border-box;
+  gap: var(--gap-xl);
+}
+.courseLeft1 {
+  height: -10.056rem;
+  width: 15.056rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-mini);
+}
+.courseItem1 {
+  align-self: stretch;
+  height: -8.944rem;
+  border-radius: var(--br-8xs);
+  background-color: var(--point-bg-blue);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem var(--padding-xl);
+  box-sizing: border-box;
+  gap: var(--gap-xl);
+}
+.personicon2 {
+  height: 6.111rem;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.883rem 1.039rem 0.889rem 1.044rem;
+  box-sizing: border-box;
+}
+.courseLeft2 {
+  height: -19.222rem;
+  width: 15.056rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-mini);
+}
+.courseItem2 {
+  align-self: stretch;
+  height: -18.111rem;
+  border-radius: var(--br-8xs);
+  background-color: var(--point-bg-blue);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem var(--padding-xl);
+  box-sizing: border-box;
+  gap: var(--gap-xl);
+}
+.scrollframe {
+  align-self: stretch;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0rem 0rem 0rem;
+  box-sizing: border-box;
+  gap: var(--gap-mini);
+  min-height: 44.389rem;
+}
+.courselist {
+  align-self: stretch;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: var(--font-size-5xl);
+}
+.course {
+  flex: 0.9439;
+  border-radius: var(--br-11xl);
+  background-color: var(--color-white);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-41xl) var(--padding-16xl) var(--padding-3xs);
+  box-sizing: border-box;
+  gap: var(--gap-11xl);
+  min-width: 20.778rem;
+  max-width: 100%;
+}
+.courseParent {
+  flex: 1;
+  border-radius: var(--br-11xl);
+  background-color: var(--point-bg-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  row-gap: 20px;
+  text-align: left;
+  font-size: 2rem;
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+.mainMonoInner {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-xl) var(--padding-xl) var(--padding-xl) 0rem;
+  box-sizing: border-box;
+  max-width: calc(100% - 270px);
+}
+.mainMono {
+  width: 100%;
+  position: relative;
+  background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  letter-spacing: normal;
+}
+
+@media screen and (max-width: 725px) {
+  .course {
+    gap: 0.833rem 1.667rem;
+    padding-top: var(--padding-6xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 650px) {
+  .title {
+    font-size: 1.611rem;
+  }
+
+  .course {
+    flex: 1;
+    padding-top: var(--padding-20xl);
+    padding-bottom: var(--padding-xl);
+    box-sizing: border-box;
+  }
+
+  .courseParent {
+    flex-wrap: wrap;
+  }
+
+  .mainMonoInner {
+    max-width: 100%;
+  }
+
+  .mainMono {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .today {
+    font-size: var(--font-size-base);
+  }
+
+  .courseheader {
+    flex-wrap: wrap;
+  }
+
+  .h2 {
+    font-size: var(--font-size-lgi);
+  }
+
+  .a {
+    font-size: var(--font-size-lgi);
+  }
+
+  .course {
+    min-width: 100%;
+  }
+}

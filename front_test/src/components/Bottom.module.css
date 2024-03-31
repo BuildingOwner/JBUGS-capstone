@@ -1,0 +1,350 @@
+.div {
+  position: relative;
+  line-height: 1.074rem;
+  display: inline-block;
+  min-width: 5.167rem;
+}
+.vectorIcon {
+  width: 0.722rem;
+  height: 0.556rem;
+  position: relative;
+}
+.bxsdownArrow {
+  height: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--padding-9xs) var(--padding-11xs);
+  box-sizing: border-box;
+}
+.menu {
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--padding-7xs) var(--padding-xl);
+  gap: var(--gap-3xs);
+  text-align: center;
+  font-size: var(--font-size-base);
+  font-family: var(--font-roboto);
+}
+.status {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-18xl);
+}
+.div2 {
+  position: relative;
+  display: inline-block;
+  min-width: 4.389rem;
+  white-space: nowrap;
+}
+.secret {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-4xs) 0.861rem;
+}
+.titleText {
+  position: relative;
+  display: inline-block;
+  min-width: 2rem;
+  white-space: nowrap;
+}
+.title {
+  width: 18.333rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  box-sizing: border-box;
+}
+.writer {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-5xs) var(--padding-2xs-5);
+}
+.score {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-3xl);
+}
+.deadline {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-23xl);
+}
+.div6 {
+  position: relative;
+  display: inline-block;
+  min-width: 3rem;
+  white-space: nowrap;
+}
+.feedback {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-14xl);
+}
+.line {
+  align-self: stretch;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-3xs);
+}
+.colName {
+  align-self: stretch;
+  border-radius: var(--br-8xs);
+  background-color: var(--bg-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-11xl);
+}
+.b {
+  position: relative;
+  display: inline-block;
+  min-width: 4.389rem;
+}
+.status1 {
+  border-radius: var(--br-3xs);
+  background-color: var(--point-green);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) 0.861rem;
+  white-space: nowrap;
+}
+.secret1 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-4xs) 0.861rem;
+}
+.p {
+  margin: 0;
+}
+.titleText1 {
+  position: relative;
+}
+.title1 {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  box-sizing: border-box;
+  min-width: 5.389rem;
+  max-width: 100%;
+}
+.div8 {
+  position: relative;
+  display: inline-block;
+  min-width: 2.5rem;
+}
+.writer1 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-5xs) var(--padding-8xl-5);
+}
+.div9 {
+  position: relative;
+  display: inline-block;
+  min-width: 3.056rem;
+}
+.score1 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-smi-5);
+}
+.div10 {
+  position: relative;
+  display: inline-block;
+  min-width: 5.278rem;
+}
+.b1 {
+  position: relative;
+  display: inline-block;
+  min-width: 5.389rem;
+}
+.feedback1 {
+  border-radius: var(--br-8xs);
+  background-color: var(--point-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-10xs) var(--padding-xs-5);
+  white-space: nowrap;
+  color: var(--color-white);
+}
+.line1 {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-11xs) 0rem;
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  max-width: 100%;
+}
+.quizRow {
+  align-self: stretch;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-11xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.b6 {
+  position: relative;
+  display: inline-block;
+  min-width: 3rem;
+}
+.status4 {
+  border-radius: var(--br-3xs);
+  background-color: var(--point-red);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-9xl);
+}
+.div21 {
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.score4 {
+  height: 2.556rem;
+  width: 4.444rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-17xl);
+  box-sizing: border-box;
+}
+.div23 {
+  position: relative;
+  display: inline-block;
+  min-width: 4rem;
+}
+.feedback4 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-5xl);
+  color: var(--color-dimgray-200);
+}
+.quizRow3 {
+  align-self: stretch;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-11xl);
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+.list {
+  align-self: stretch;
+  height: 22.056rem;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap-mini);
+  max-width: 100%;
+}
+.bottom {
+  align-self: stretch;
+  background-color: var(--point-bg-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-11xl) var(--padding-11xl) var(--padding-3xs);
+  box-sizing: border-box;
+  gap: var(--gap-xl);
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}

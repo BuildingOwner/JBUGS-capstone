@@ -1,0 +1,171 @@
+.vectorIcon {
+  height: 4.339rem;
+  width: 3.472rem;
+  position: relative;
+}
+.personicon {
+  height: 6.111rem;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.883rem 1.039rem var(--padding-base) 1.044rem;
+  box-sizing: border-box;
+  min-width: 5.556rem;
+}
+.h2 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: inline-block;
+  min-width: 4rem;
+}
+.div {
+  position: relative;
+  display: inline-block;
+  min-width: 3.889rem;
+}
+.div1 {
+  position: relative;
+  display: inline-block;
+  min-width: 3.111rem;
+}
+.valueComparator {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-11xl);
+}
+.div2 {
+  position: relative;
+  font-family: var(--font-inter);
+  display: inline-block;
+  min-width: 4.333rem;
+}
+.logicBranch {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--padding-base) 0rem;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-sm);
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 8.667rem;
+}
+.courseLeft {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-mini);
+}
+.a {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: inline-block;
+  min-width: 0.944rem;
+}
+.division {
+  align-self: stretch;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-9xs) var(--padding-xs-5);
+}
+.groupIcon {
+  width: 1.111rem;
+  height: 0.611rem;
+  position: relative;
+}
+.rightArrow {
+  height: 1.5rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-8xs);
+  box-sizing: border-box;
+}
+.coueseRight {
+  height: 6.111rem;
+  width: 2.222rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+.courseItem {
+  align-self: stretch;
+  border-radius: var(--br-8xs);
+  background-color: var(--point-bg-blue);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-xl);
+  gap: var(--gap-xl);
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+
+@media screen and (max-width: 450px) {
+  .vectorIcon {
+    flex: 1;
+  }
+
+  .personicon {
+    flex: 1;
+  }
+
+  .h2 {
+    font-size: var(--font-size-lgi);
+  }
+
+  .info {
+    flex: 1;
+  }
+
+  .courseLeft {
+    flex-wrap: wrap;
+  }
+
+  .a {
+    font-size: var(--font-size-lgi);
+  }
+
+  .courseItem {
+    flex-wrap: wrap;
+  }
+}

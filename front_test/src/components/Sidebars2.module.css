@@ -1,0 +1,366 @@
+.logoIcon {
+  height: 2.889rem;
+  width: 8.333rem;
+  position: relative;
+  object-fit: cover;
+}
+.sidebar {
+  height: 2.889rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-41xl);
+  box-sizing: border-box;
+}
+.bottomPanelIcon {
+  height: 1.389rem;
+  width: 1.389rem;
+  position: relative;
+}
+.bitcoinIconshomeOutline {
+  height: 1.667rem;
+  width: 1.667rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.home {
+  align-self: stretch;
+  position: relative;
+}
+.homeWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-11xs-5) 0rem 0rem;
+}
+.navitem {
+  align-self: stretch;
+  border-radius: var(--br-8xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs) var(--padding-mini);
+  gap: var(--gap-mini);
+}
+.vectorIcon {
+  width: 1.389rem;
+  height: 1.389rem;
+  position: relative;
+}
+.fluentlibrary20Regular {
+  height: 1.667rem;
+  width: 1.667rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.div1 {
+  position: relative;
+  display: inline-block;
+  min-width: 4.444rem;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-11xs-5) 0rem 0rem;
+}
+.mainNav {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-38xl-5);
+  gap: var(--gap-xl);
+}
+.b {
+  position: relative;
+}
+.line {
+  height: 1.5rem;
+  width: 0.111rem;
+  position: relative;
+  border-right: 2px solid var(--color-white);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.a {
+  position: relative;
+  display: inline-block;
+  min-width: 0.833rem;
+}
+.courseName {
+  border-radius: var(--br-8xs);
+  background-color: var(--point-blue);
+  overflow-x: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-11xs) var(--padding-3xs);
+  gap: var(--gap-3xs);
+  color: var(--color-white);
+}
+.vectorIcon2 {
+  height: 1.389rem;
+  width: 0.728rem;
+  position: relative;
+}
+.navitem3 {
+  flex: 1;
+  border-radius: var(--br-8xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs) var(--padding-mini);
+  gap: var(--gap-mini);
+}
+.navitemWrapper {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-mid);
+}
+.groupIcon {
+  width: 1.389rem;
+  height: 1.233rem;
+  position: relative;
+}
+.groupIcon1 {
+  height: 1.389rem;
+  width: 1.078rem;
+  position: relative;
+}
+.div3 {
+  position: relative;
+  display: inline-block;
+  min-width: 2.222rem;
+}
+.vectorIcon3 {
+  height: 1.389rem;
+  width: 1.306rem;
+  position: relative;
+}
+.courseNav {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-6xl) var(--padding-21xl-5) 0rem;
+  gap: var(--gap-xl);
+}
+.nav {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-31xl) 0rem var(--padding-159xl);
+  gap: var(--gap-6xl);
+}
+.b1 {
+  position: relative;
+  display: inline-block;
+  min-width: 2.667rem;
+}
+.wrapper2 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-base);
+}
+.div5 {
+  position: relative;
+  display: inline-block;
+  min-width: 4.444rem;
+}
+.frameParent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0.861rem 0rem;
+  gap: var(--gap-3xs);
+}
+.personicon {
+  width: 2.778rem;
+  height: 2.778rem;
+  position: relative;
+  border-radius: var(--br-81xl);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.personiconWrapper {
+  height: 3.694rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-base-5) 0rem 0rem;
+  box-sizing: border-box;
+}
+.info {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs) 0rem;
+  gap: var(--gap-mini);
+}
+.infoWrapper {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0rem var(--padding-43xl) 0rem var(--padding-43xl-5);
+  font-size: var(--font-size-base);
+}
+.collepseBtnIcon {
+  height: 1.667rem;
+  width: 3.317rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.div6 {
+  height: 1.5rem;
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  padding-left: var(--padding-xl);
+  padding-right: var(--padding-xl);
+}
+.logOut {
+  width: 10.833rem;
+  background-color: var(--color-darkgray-100);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) 0rem;
+  box-sizing: border-box;
+}
+.bottom {
+  align-self: stretch;
+  height: 1.667rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: var(--gap-3xs);
+}
+.sidebars {
+  width: 15rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-31xl) 0rem var(--padding-3xs);
+  box-sizing: border-box;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--color-darkslategray-200);
+  font-family: var(--font-malgun-gothic);
+}
+
+@media screen and (max-width: 725px) {
+  .sidebar {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+
+  .home {
+    font-size: var(--font-size-base);
+  }
+
+  .div1 {
+    font-size: var(--font-size-base);
+  }
+
+  .mainNav {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+
+  .b {
+    font-size: var(--font-size-base);
+  }
+
+  .a {
+    font-size: var(--font-size-base);
+  }
+
+  .div3 {
+    font-size: var(--font-size-base);
+  }
+
+  .nav {
+    padding-top: var(--padding-2xl);
+    padding-bottom: var(--padding-56xl);
+    box-sizing: border-box;
+  }
+
+  .infoWrapper {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+
+  .div6 {
+    font-size: var(--font-size-base);
+  }
+
+  .sidebars {
+    padding-top: var(--padding-2xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 650px) {
+  .nav {
+    padding-top: var(--padding-13xl);
+    padding-bottom: var(--padding-97xl);
+    box-sizing: border-box;
+  }
+
+  .sidebars {
+    display: none;
+    padding-top: var(--padding-13xl);
+    padding-bottom: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}

@@ -5,6 +5,7 @@ import glob
 import json
 from jsonschema import validate, ValidationError
 from json import JSONDecodeError
+from json_validation import json_validate
 
 import os
 import sys
@@ -100,21 +101,7 @@ def generator(path, questions=[], number=1):
     # print("Result:", result)
     # JSON 형식 검증
     try:
-        schema = {
-            "type": "object",
-            "properties": {
-                "question": {"type": "string"},
-                "options": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "minItems": 4,
-                    "maxItems": 4,
-                },
-                "answer": {"type": "string"},
-            },
-            "required": ["question", "options", "answer"],
-        }
-        validate(instance=json.loads(result), schema=schema)
+        json_validate(result)
     except (ValidationError, JSONDecodeError):
         print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
         return generator(path, questions, number)  # 재귀 호출로 다시 생성

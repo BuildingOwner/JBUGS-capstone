@@ -1,0 +1,59 @@
+.logo-icon {
+    width: 12.5rem;
+    margin-top: 1.5rem;
+    position: relative;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  .left,
+  .logo,
+  .schoolimg-icon {
+    align-self: stretch;
+    overflow: hidden;
+  }
+  .logo {
+    height: 6.25rem;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 3.125rem;
+    box-sizing: border-box;
+  }
+  .left,
+  .schoolimg-icon {
+    flex: 1;
+  }
+  .left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .schoolimg-icon {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  .login-page,
+  .right {
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .right {
+    align-self: stretch;
+    flex: 1;
+    flex-direction: column;
+  }
+  .login-page {
+    width: 100%;
+    position: relative;
+    background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
+    height: 64rem;
+    flex-direction: row;
+  }
+  

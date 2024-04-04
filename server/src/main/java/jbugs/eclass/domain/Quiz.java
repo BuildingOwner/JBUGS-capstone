@@ -15,6 +15,8 @@ public class Quiz {
     @Column(name = "quiz_id")
     private Long id;
 
+    private String jsonData; //퀴즈 생성 json 데이터
+
     private String quizName; // 퀴즈 이름
     private LocalDateTime deadline; // 종료일시
     private LocalDateTime createdAt; // 생성 시간
@@ -29,9 +31,6 @@ public class Quiz {
 
     @OneToOne(mappedBy = "quiz", fetch = FetchType.LAZY)
     private QuizInfo quizInfo;
-
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
-    private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();

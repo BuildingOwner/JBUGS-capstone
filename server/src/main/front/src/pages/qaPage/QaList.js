@@ -1,9 +1,9 @@
 import Sidebar from "../../sidebar/Sidebar";
-import Top1 from "./QaHeader";
+import QaHeader from "./QaHeader";
 import QnaRow1 from "./QnaRow1";
 import QnaRow from "./QnaRow";
 import QaButton from "./QaButton";
-import QaHeader from "./QaListHeader";
+import QaListHeader from "./QaListHeader";
 import "./QaList.css";
 
 const QaList = () => {
@@ -12,10 +12,10 @@ const QaList = () => {
       <Sidebar />
       <main className="align-center">
         <section className="content1">
-          <Top1 />
+          <QaHeader />
           <div className="list1">
             <QaButton />
-            <QaHeader />
+            <QaListHeader />
             <div className="table">
               <QnaRow1 prop="완료" />
               <QnaRow1

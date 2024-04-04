@@ -1,4 +1,3 @@
-import Top5 from "../../profHeader/Top5";
 import ProfAssignItem1 from "./ProfAssignItem1";
 import ProfAssignItem from "./ProfAssignItem";
 import "./Bottom2.css";
@@ -7,7 +6,15 @@ const Bottom2 = () => {
   return (
     <footer className="bottom20">
       <div className="quiz-list1">
-        <Top5 prop="과제 목록" />
+        <div className="top8">
+          <b className="b236">과제목록</b>
+          <button className="menu7">
+            <div className="div295">주차</div>
+            <div className="bxsdown-arrow8">
+              <img className="pattern-matcher-icon1" alt="" src="/vector-53.svg" />
+            </div>
+          </button>
+        </div>
         <div className="name22">
           <div className="title39">
             <div className="div328">제목</div>

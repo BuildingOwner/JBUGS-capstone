@@ -1,5 +1,3 @@
-import Top5 from "../../profHeader/Top5"
-import Item1 from "./Item1";
 import Item from "./Item";
 import "./Bottom1.css";
 
@@ -7,7 +5,15 @@ const Bottom1 = () => {
   return (
     <div className="bottom18">
       <div className="quiz-list">
-        <Top5 prop="퀴즈 목록" />
+      <div className="top8">
+          <b className="b236">과제목록</b>
+          <button className="menu7">
+            <div className="div295">주차</div>
+            <div className="bxsdown-arrow8">
+              <img className="pattern-matcher-icon1" alt="" src="/vector-53.svg" />
+            </div>
+          </button>
+        </div>
         <div className="name21">
           <div className="title35">
             <div className="div306">제목</div>
@@ -32,17 +38,11 @@ const Bottom1 = () => {
           </div>
         </div>
         <div className="list7">
-          <Item1 />
           <Item />
           <Item />
           <Item />
-          <Item1 />
-          <Item1 />
-          <Item1 />
           <Item />
           <Item />
-          <Item1 />
-          <Item1 />
           <Item />
           <Item />
         </div>

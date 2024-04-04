@@ -1,6 +1,6 @@
 import "./QaHeader.css";
 
-const Top1 = () => {
+const QaHeader = () => {
   return (
     <div className="top4">
       <h1 className="title19">QnA</h1>
@@ -31,4 +31,4 @@ const Top1 = () => {
   );
 };
 
-export default Top1;
+export default QaHeader;

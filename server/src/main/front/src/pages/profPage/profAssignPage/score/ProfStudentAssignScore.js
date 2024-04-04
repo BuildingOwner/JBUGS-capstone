@@ -1,6 +1,7 @@
 import Sidebar from "../../../../sidebar/Sidebar";
 import StudentItemTitle from "../../profScoreTitle/StudentItemTitle";
 import "./ProfStudentAssignScore.css";
+import StudentScoreItem from "./StudentScoreItem";
 
 const ProfStudentAssignScore = () => {
   return (
@@ -40,40 +41,9 @@ const ProfStudentAssignScore = () => {
                 </div>
               </div>
               <div className="list5">
-                <div className="stunumber2">
-                  <div className="student-list-wrap">1971084</div>
-                </div>
-                <div className="stuname2">
-                  <div className="div102">진승원</div>
-                </div>
-                <div className="date16">
-                  <div className="div103">-</div>
-                </div>
-                <div className="score2">
-                  <div className="div104">-</div>
-                </div>
-                <div className="status5">
-                  <button className="wrapper25">
-                    <b className="b162">미제출</b>
-                  </button>
-                </div>
-                <div className="stunumber3">
-                  <div className="div105">1971084</div>
-                </div>
-                <div className="stuname3">
-                  <div className="div106">진승원</div>
-                </div>
-                <div className="date17">
-                  <div className="div107">-</div>
-                </div>
-                <div className="score3">
-                  <div className="div108">-</div>
-                </div>
-                <div className="status6">
-                  <button className="wrapper26">
-                    <b className="b163">미제출</b>
-                  </button>
-                </div>
+                <StudentScoreItem/>
+                <StudentScoreItem/>
+                <StudentScoreItem/>
                 <div className="stunumber4">
                   <div className="div109">1971084</div>
                 </div>

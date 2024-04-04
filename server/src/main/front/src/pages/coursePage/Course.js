@@ -1,6 +1,5 @@
 import Sidebar from "../../sidebar/Sidebar";
 import FileItem from "./FileItem";
-import QuizItem1 from "./QuizItem1";
 import QuizItem from "./QuizItem";
 import VideoItem from "./VideoItem";
 import AssignmentItem from "./AssignmentItem";
@@ -92,12 +91,8 @@ const Course = () => {
                   <h2 className="h26">퀴즈</h2>
                 </div>
                 <div className="qcontent">
-                  <QuizItem1 />
-                  <QuizItem1 />
-                  <QuizItem1 />
                   <QuizItem />
                   <QuizItem />
-                  <QuizItem1 />
                   <QuizItem />
                   <QuizItem />
                 </div>

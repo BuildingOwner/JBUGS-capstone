@@ -1,6 +1,7 @@
 import AveScore from "./AveScore";
 import UncompleteQuizItem from "./UncompleteQuizItem";
 import "./FrameComponent1.css";
+import QuizScoreBar from "./QuizScoreBar";
 
 const FrameComponent1 = () => {
   return (
@@ -9,20 +10,18 @@ const FrameComponent1 = () => {
         <div className="parent11">
           <h2 className="h28">퀴즈</h2>
           <div className="score-board">
-            <div className="score-item">
-              <div className="text116">40</div>
-              <div className="bar-wrapper7">
-                <div className="bar9" />
-              </div>
-              <div className="name10">
-                <span className="name-txt">
-                  <p className="p132">1주차</p>
-                  <p className="p133">연습문제</p>
-                  <p className="p134">3줄임</p>
-                </span>
-              </div>
-            </div>
-            <div className="score-item1">
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            <QuizScoreBar/>
+            {/* <div className="score-item1">
               <div className="text117">40</div>
               <div className="bar-wrapper8">
                 <div className="bar10" />
@@ -137,19 +136,8 @@ const FrameComponent1 = () => {
                   <p className="p164">3줄임</p>
                 </span>
               </div>
-            </div>
-            <div className="turn-indicator">
-              <div className="right1">
-                <img className="vector-icon70" alt="" src="/vector-51.svg" />
-              </div>
-              <div className="turn-indicator-child" />
-              <div className="turn-indicator-item" />
-              <div className="turn-indicator-inner" />
-              <div className="turn-indicator-child1" />
-              <div className="left1">
-                <img className="vector-icon71" alt="" src="/vector-6.svg" />
-              </div>
-            </div>
+            </div> */}
+            
           </div>
           <div className="info25">
             <AveScore prop="평균 점수" prop1="40 점" />
@@ -163,7 +151,7 @@ const FrameComponent1 = () => {
             <b className="b207">미응시 퀴즈</b>
           </div>
           <div className="item">
-            <div className="uncomplete-quiz-item1">
+            {/* <div className="uncomplete-quiz-item1">
               <div className="tltle1">
                 <div className="div241">3주차 연습문제</div>
               </div>
@@ -198,7 +186,7 @@ const FrameComponent1 = () => {
                   </div>
                 </button>
               </div>
-            </div>
+            </div> */}
             <UncompleteQuizItem />
             <UncompleteQuizItem />
           </div>

@@ -1,54 +1,11 @@
 import { useMemo } from "react";
 import "./StudentQuizItem.css";
 
-const StudentQuizItem = ({
-  prop,
-  progressBar,
-  prop1,
-  studentQuizItemAlignSelf,
-  studentQuizItemWidth,
-  divMinWidth,
-  listContainerPadding,
-  listContainerBackgroundColor,
-  bMinWidth,
-  studentQuizItemFlex,
-  studentQuizItemPadding,
-}) => {
-  const studentQuizItemStyle = useMemo(() => {
-    return {
-      alignSelf: studentQuizItemAlignSelf,
-      width: studentQuizItemWidth,
-      flex: studentQuizItemFlex,
-      padding: studentQuizItemPadding,
-    };
-  }, [
-    studentQuizItemAlignSelf,
-    studentQuizItemWidth,
-    studentQuizItemFlex,
-    studentQuizItemPadding,
-  ]);
-
-  const div2Style = useMemo(() => {
-    return {
-      minWidth: divMinWidth,
-    };
-  }, [divMinWidth]);
-
-  const listContainerStyle = useMemo(() => {
-    return {
-      padding: listContainerPadding,
-      backgroundColor: listContainerBackgroundColor,
-    };
-  }, [listContainerPadding, listContainerBackgroundColor]);
-
-  const b7Style = useMemo(() => {
-    return {
-      minWidth: bMinWidth,
-    };
-  }, [bMinWidth]);
+const StudentQuizItem = (
+) => {
 
   return (
-    <div className="student-quiz-item7" style={studentQuizItemStyle}>
+    <div className="student-quiz-item7">
       <div className="stunumber16">
         <div className="submit22">1971084</div>
       </div>
@@ -56,17 +13,16 @@ const StudentQuizItem = ({
         <div className="div336">진승원</div>
       </div>
       <div className="date44">
-        <div className="div337" style={div2Style}>
-          {prop}
+        <div className="div337">dd
         </div>
       </div>
       <div className="score23">
-        <div className="progress-bar1">{progressBar}</div>
+        <div className="progress-bar1">d</div>
       </div>
       <div className="submit23">
-        <button className="list-container" style={listContainerStyle}>
-          <b className="b256" style={b7Style}>
-            {prop1}
+        <button className="list-container">
+          <b className="b256">
+            미응시
           </b>
         </button>
       </div>

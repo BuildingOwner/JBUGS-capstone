@@ -1527,6 +1527,10 @@
   background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
   letter-spacing: normal;
 }
+
+.ddd {
+  display: flex;
+}
 @media screen and (max-width: 1200px) {
   .header6 {
     flex-wrap: wrap;

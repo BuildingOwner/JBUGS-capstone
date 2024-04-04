@@ -1,3 +1,4 @@
+import MainAssignItem from "./MainAssignItem";
 import "./RightNav.css";
 
 const RightNav = () => {
@@ -22,101 +23,9 @@ const RightNav = () => {
           <h1 className="title17">과제</h1>
         </div>
         <div className="hw-item">
-          <div className="homeworkitem">
-            <div className="week">
-              <div className="div162">00 주</div>
-            </div>
-            <div className="name2">
-              <b className="b177">겁나 기이이이이이잉ㅇㄴ 강의명</b>
-              <div className="div163">제목이에용</div>
-            </div>
-            <div className="info10">
-              <div className="star-styles">
-                <div className="n9">n일 남음</div>
-              </div>
-              <img
-                className="octiconx-12"
-                loading="lazy"
-                alt=""
-                src="/octiconx12.svg"
-              />
-            </div>
-          </div>
-          <div className="homeworkitem1">
-            <div className="week1">
-              <div className="div164">00 주</div>
-            </div>
-            <div className="name3">
-              <b className="b178">겁나 기이이이이이잉ㅇㄴ 강의명</b>
-              <div className="div165">제목이에용</div>
-            </div>
-            <div className="info11">
-              <div className="n-wrapper">
-                <div className="n10">n일 남음</div>
-              </div>
-              <img className="octiconx-121" alt="" src="/octiconx12.svg" />
-            </div>
-          </div>
-          <div className="homeworkitem2">
-            <div className="week2">
-              <div className="div166">00 주</div>
-            </div>
-            <div className="name4">
-              <b className="b179">겁나 기이이이이이잉ㅇㄴ 강의명</b>
-              <div className="div167">제목이에용</div>
-            </div>
-            <div className="info12">
-              <div className="n-container">
-                <div className="n11">n일 남음</div>
-              </div>
-              <img className="octiconx-122" alt="" src="/octiconx12.svg" />
-            </div>
-          </div>
-          <div className="homeworkitem3">
-            <div className="week3">
-              <div className="div168">00 주</div>
-            </div>
-            <div className="name5">
-              <b className="b180">겁나 기이이이이이잉ㅇㄴ 강의명</b>
-              <div className="div169">제목이에용</div>
-            </div>
-            <div className="info13">
-              <div className="expression-evaluator">
-                <div className="n12">n일 남음</div>
-              </div>
-              <img className="octiconx-123" alt="" src="/octiconx12.svg" />
-            </div>
-          </div>
-          <div className="homeworkitem4">
-            <div className="week4">
-              <div className="div170">00 주</div>
-            </div>
-            <div className="name6">
-              <b className="b181">겁나 기이이이이이잉ㅇㄴ 강의명</b>
-              <div className="div171">제목이에용</div>
-            </div>
-            <div className="info14">
-              <div className="logical-operations">
-                <div className="n13">n일 남음</div>
-              </div>
-              <img className="octiconx-124" alt="" src="/octiconx12.svg" />
-            </div>
-          </div>
-          <div className="homeworkitem5">
-            <div className="week5">
-              <div className="div172">00 주</div>
-            </div>
-            <div className="name7">
-              <b className="b182">겁나 기이이이이이잉ㅇㄴ 강의명</b>
-              <div className="div173">제목이에용</div>
-            </div>
-            <div className="info15">
-              <div className="for-each-loop">
-                <div className="n14">n일 남음</div>
-              </div>
-              <img className="octiconx-125" alt="" src="/octiconx12.svg" />
-            </div>
-          </div>
+          <MainAssignItem />
+          <MainAssignItem />
+          <MainAssignItem />
         </div>
       </div>
       <div className="planner">

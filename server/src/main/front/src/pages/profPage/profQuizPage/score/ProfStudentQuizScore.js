@@ -35,111 +35,15 @@ const ProfStudentQuizScore = () => {
                 </div>
               </div>
               <div className="list4">
-                <StudentQuizItem prop="-" progressBar="-" prop1="미응시" />
-                <StudentQuizItem
-                  prop="-"
-                  progressBar="-"
-                  prop1="미응시"
-                  studentQuizItemAlignSelf="unset"
-                  studentQuizItemWidth="unset"
-                  divMinWidth="0.563rem"
-                  listContainerPadding="var(--padding-8xs) var(--padding-6xl)"
-                  listContainerBackgroundColor="#f49e9e"
-                  bMinWidth="3.75rem"
-                  studentQuizItemFlex="unset"
-                  studentQuizItemPadding="var(--padding-mini) var(--padding-xl)"
-                />
-                <StudentQuizItem
-                  prop="-"
-                  progressBar="-"
-                  prop1="미응시"
-                  studentQuizItemAlignSelf="unset"
-                  studentQuizItemWidth="68.125rem"
-                  divMinWidth="0.563rem"
-                  listContainerPadding="var(--padding-8xs) var(--padding-6xl)"
-                  listContainerBackgroundColor="#f49e9e"
-                  bMinWidth="3.75rem"
-                  studentQuizItemFlex="unset"
-                  studentQuizItemPadding="var(--padding-mini) var(--padding-xl)"
-                />
-                <StudentQuizItem
-                  prop="24.10.10  00:00:00"
-                  progressBar="30"
-                  prop1="응시 완료"
-                  studentQuizItemAlignSelf="unset"
-                  studentQuizItemWidth="68.125rem"
-                  divMinWidth="unset"
-                  listContainerPadding="var(--padding-8xs) var(--padding-2xs)"
-                  listContainerBackgroundColor="#72bd92"
-                  bMinWidth="5.5rem"
-                  studentQuizItemFlex="unset"
-                  studentQuizItemPadding="var(--padding-mini) var(--padding-xl)"
-                />
-                <StudentQuizItem
-                  prop="-"
-                  progressBar="-"
-                  prop1="미응시"
-                  studentQuizItemAlignSelf="unset"
-                  studentQuizItemWidth="68.125rem"
-                  divMinWidth="0.563rem"
-                  listContainerPadding="var(--padding-8xs) var(--padding-6xl)"
-                  listContainerBackgroundColor="#f49e9e"
-                  bMinWidth="3.75rem"
-                  studentQuizItemFlex="unset"
-                  studentQuizItemPadding="var(--padding-mini) var(--padding-xl)"
-                />
-                <StudentQuizItem
-                  prop="-"
-                  progressBar="-"
-                  prop1="미응시"
-                  studentQuizItemAlignSelf="unset"
-                  studentQuizItemWidth="68.125rem"
-                  divMinWidth="0.563rem"
-                  listContainerPadding="var(--padding-8xs) var(--padding-6xl)"
-                  listContainerBackgroundColor="#f49e9e"
-                  bMinWidth="3.75rem"
-                  studentQuizItemFlex="unset"
-                  studentQuizItemPadding="var(--padding-mini) var(--padding-xl)"
-                />
-                <StudentQuizItem
-                  prop="-"
-                  progressBar="-"
-                  prop1="미응시"
-                  studentQuizItemAlignSelf="unset"
-                  studentQuizItemWidth="68.125rem"
-                  divMinWidth="0.563rem"
-                  listContainerPadding="var(--padding-8xs) var(--padding-6xl)"
-                  listContainerBackgroundColor="#f49e9e"
-                  bMinWidth="3.75rem"
-                  studentQuizItemFlex="unset"
-                  studentQuizItemPadding="var(--padding-mini) var(--padding-xl)"
-                />
-                <StudentQuizItem
-                  prop="-"
-                  progressBar="-"
-                  prop1="미응시"
-                  studentQuizItemAlignSelf="unset"
-                  studentQuizItemWidth="68.125rem"
-                  divMinWidth="0.563rem"
-                  listContainerPadding="var(--padding-8xs) var(--padding-6xl)"
-                  listContainerBackgroundColor="#f49e9e"
-                  bMinWidth="3.75rem"
-                  studentQuizItemFlex="unset"
-                  studentQuizItemPadding="var(--padding-mini) var(--padding-xl)"
-                />
-                <StudentQuizItem
-                  prop="-"
-                  progressBar="-"
-                  prop1="미응시"
-                  studentQuizItemAlignSelf="unset"
-                  studentQuizItemWidth="68.125rem"
-                  divMinWidth="0.563rem"
-                  listContainerPadding="var(--padding-8xs) var(--padding-6xl)"
-                  listContainerBackgroundColor="#f49e9e"
-                  bMinWidth="3.75rem"
-                  studentQuizItemFlex="unset"
-                  studentQuizItemPadding="var(--padding-mini) var(--padding-xl)"
-                />
+                <StudentQuizItem />
+                <StudentQuizItem/>
+                <StudentQuizItem/>
+                <StudentQuizItem/>
+                <StudentQuizItem/>
+                <StudentQuizItem/>
+                <StudentQuizItem/>
+                <StudentQuizItem/>
+                <StudentQuizItem/>
                 <footer className="student-quiz-item5">
                   <div className="stunumber">
                     <div className="div94">1971084</div>

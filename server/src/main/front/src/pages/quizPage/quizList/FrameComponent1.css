@@ -10,7 +10,6 @@
   justify-content: center;
   min-width: 3.5rem;
 }
-.bar9,
 .text116 {
   align-self: stretch;
   position: relative;
@@ -20,47 +19,6 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-}
-.bar9 {
-  width: 1.25rem;
-  background: linear-gradient(180deg, #a4ebf3, #aac4ff);
-}
-.bar-wrapper7 {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0 var(--padding-mini);
-}
-.p132,
-.p133,
-.p134 {
-  margin: 0;
-}
-.name-txt {
-  line-break: anywhere;
-}
-.name10,
-.score-item {
-  align-self: stretch;
-  display: flex;
-}
-.name10 {
-  height: 3rem;
-  position: relative;
-  align-items: flex-end;
-}
-.score-item {
-  margin-left: -6.25rem;
-  width: 3.125rem;
-  overflow: hidden;
-  flex-shrink: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: var(--gap-8xs);
-  debug_commit: f6aba90;
 }
 .bar10,
 .text117 {
@@ -89,9 +47,6 @@
 .p136,
 .p137 {
   margin: 0;
-}
-.name-txt1 {
-  line-break: anywhere;
 }
 .name11,
 .score-item1 {
@@ -407,9 +362,6 @@
 .p161 {
   margin: 0;
 }
-.name-txt2 {
-  line-break: anywhere;
-}
 .name19,
 .score-item9 {
   align-self: stretch;
@@ -457,9 +409,6 @@
 .p163,
 .p164 {
   margin: 0;
-}
-.name-txt3 {
-  line-break: anywhere;
 }
 .name20,
 .score-item10 {

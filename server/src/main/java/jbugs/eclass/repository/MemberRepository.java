@@ -1,54 +1,15 @@
 package jbugs.eclass.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jbugs.eclass.domain.Member;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
-@Slf4j
-@Repository
-@RequiredArgsConstructor
-public class MemberRepository {
-    @PersistenceContext
-    private final EntityManager em;
+public interface MemberRepository extends JpaRepository<Member, Long> {
+    // 이름으로 Member 조회
+    Optional<Member> findByName(String name);
 
-    public Member save(Member member){
-        if (member.getId() == null) {
-            em.persist(member); // 새로운 엔티티를 저장(등록)
-        } else {
-            em.merge(member); // 기존 엔티티를 업데이트
-        }
-        return member;
-    }
+    // 로그인 ID로 Member 조회
+    Optional<Member> findByLoginId(String loginId);
 
-    //단건 조회
-    public Member findById(Long id) {
-        return em.find(Member.class, id);
-    }
-
-    public Optional<Member> findByLoginId(String loginId) {
-        List<Member> result = em.createQuery("select m from Member m where m.loginId = :loginId", Member.class)
-                .setParameter("loginId", loginId)
-                .getResultList();
-        return result.stream().findFirst();
-    }
-
-    // 전체 조회
-    public List<Member> findAll(){
-        return em.createQuery("select m from Member m", Member.class)
-                .getResultList();
-    }
-
-    // 특정이름 회원조회
-    public List<Member> findByName(String name){
-        return em.createQuery("select m from Member m where m.name = :name", Member.class)
-                .setParameter("name", name)
-                .getResultList();
-    }
-
+    // 기타 필요한 메서드가 있으면 여기에 추가
 }

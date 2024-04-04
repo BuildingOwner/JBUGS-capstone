@@ -23,7 +23,7 @@ const LoginForm = () => {
         e.preventDefault();
 
         axios
-            .post('/api/auth/login', {
+            .post('/api/login', {
                 loginId: loginId,
                 password: password,
             })

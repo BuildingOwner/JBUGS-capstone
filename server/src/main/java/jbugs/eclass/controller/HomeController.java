@@ -12,6 +12,7 @@ import jbugs.eclass.repository.MemberRepository;
 import jbugs.eclass.repository.ProfessorRepository;
 import jbugs.eclass.repository.StudentRepository;
 import jbugs.eclass.service.EnrollmentService;
+import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Arrays;
@@ -37,7 +39,7 @@ public class HomeController {
     private final ProfessorRepository professorRepository;
 
     //@GetMapping("/")
-    public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
+    public String homeLoginV3ArgumentResolver(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         //세션에 회원 데이터가 없으면 home
         if (loginMember == null) {
         return "home";
@@ -55,17 +57,17 @@ public class HomeController {
             Long professorId = enrollment.getLecture().getProfessor().getId();
 
             Lecture lecture = lectureRepository.findOne(lectureId);
-            Member professor = memberRepository.findById(professorId);
+//            Member professor = memberRepository.findById(professorId);
 
             String lectureName = lecture.getName();
             String lectureDivision = lecture.getDivision();
-            String professorName = professor.getName();
+//            String professorName = professor.getName();
         }
         model.addAttribute("enrollment",enrollments);
         return "loginHome";
     }
 
-    @GetMapping("/")
+//    @GetMapping("/")
     public RedirectView main(HttpServletRequest request) {
         // 세션에서 로그인 정보 확인
         HttpSession session = request.getSession();

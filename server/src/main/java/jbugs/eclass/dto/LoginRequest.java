@@ -1,4 +1,4 @@
-package jbugs.eclass.api;
+package jbugs.eclass.dto;
 
 import lombok.Data;
 import lombok.Getter;

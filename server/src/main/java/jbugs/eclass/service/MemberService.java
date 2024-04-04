@@ -42,10 +42,6 @@ public class MemberService {
                 .orElse(null);
     }
 
-    public Member findOne(Long memberId){
-        return memberRepository.findById(memberId);
-    }
-
     @Transactional
     public Member login(String loginId, String password) {
         return memberRepository.findByLoginId(loginId)

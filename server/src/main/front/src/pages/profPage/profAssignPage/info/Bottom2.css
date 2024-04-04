@@ -1,0 +1,144 @@
+.div328 {
+  align-self: stretch;
+  position: relative;
+}
+.title39 {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: calc(100% - 560px);
+}
+.div329 {
+  align-self: stretch;
+  position: relative;
+}
+.ave5 {
+  width: 6.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div330 {
+  align-self: stretch;
+  position: relative;
+}
+.week28 {
+  width: 6.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div331 {
+  align-self: stretch;
+  position: relative;
+}
+.count5 {
+  width: 6.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div332 {
+  align-self: stretch;
+  position: relative;
+}
+.date43 {
+  width: 6.875rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div333 {
+  align-self: stretch;
+  position: relative;
+}
+.list8,
+.name22,
+.status32 {
+  display: flex;
+  align-items: center;
+}
+.status32 {
+  width: 6.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.list8,
+.name22 {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.name22 {
+  align-self: stretch;
+  overflow: hidden;
+  flex-direction: row;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-11xl);
+  gap: var(--gap-3xs);
+}
+.list8 {
+  width: 69.375rem;
+  height: 37.938rem;
+  overflow-x: auto;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 var(--padding-xl);
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+}
+.bottom20,
+.quiz-list1 {
+  overflow: hidden;
+  display: flex;
+  max-width: 100%;
+}
+.quiz-list1 {
+  flex: 1;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.bottom20 {
+  align-self: stretch;
+  border-radius: 0 0 var(--br-xl) var(--br-xl);
+  background-color: var(--point-bg-blue);
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--padding-xl);
+  box-sizing: border-box;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--color-darkslategray-100);
+  font-family: var(--font-malgun-gothic);
+}
+@media screen and (max-width: 450px) {
+  .div328,
+  .div329,
+  .div330,
+  .div331,
+  .div332,
+  .div333 {
+    font-size: var(--font-size-base);
+  }
+}

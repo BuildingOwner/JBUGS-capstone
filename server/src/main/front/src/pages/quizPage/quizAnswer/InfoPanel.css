@@ -1,0 +1,168 @@
+.div221,
+.div222 {
+  position: relative;
+  display: inline-block;
+  min-width: 5.5rem;
+}
+.div222 {
+  font-size: var(--font-size-31xl);
+  min-width: 7.688rem;
+}
+.time4 {
+  align-self: stretch;
+  background-color: var(--boder-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2xs) var(--padding-xl);
+}
+.number-icon14,
+.number-icon15,
+.number-icon16,
+.number-icon17,
+.number-icon18,
+.number-icon19,
+.number-icon20,
+.number-icon21,
+.number-icon22,
+.number-icon23 {
+  height: 3.125rem;
+  width: 3.125rem;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.navigator1 {
+  align-self: stretch;
+  height: 7.75rem;
+  background-color: var(--color-white);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-6xl);
+  box-sizing: border-box;
+}
+.infopanel-title {
+  align-self: stretch;
+  height: 20.75rem;
+  position: relative;
+  display: inline-block;
+}
+.notice1 {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-xl) var(--padding-7xl);
+  box-sizing: border-box;
+  min-height: 23.25rem;
+}
+.div223 {
+  position: relative;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-malgun-gothic);
+  color: var(--color-black);
+  text-align: left;
+  display: inline-block;
+  min-width: 5.5rem;
+}
+.quiz-nav-btn4 {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-6xs-5) var(--padding-3xs);
+  background-color: var(--blue3);
+  border-radius: var(--br-8xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+.quiz-nav-btn4:hover,
+.quiz-nav-btn5:hover {
+  background-color: var(--color-lightsteelblue);
+}
+.div224 {
+  position: relative;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-malgun-gothic);
+  color: var(--color-black);
+  text-align: left;
+}
+.info-panel1,
+.quiz-nav-btn5,
+.quiz-nav-buttons {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.quiz-nav-btn5 {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-6xs-5) var(--padding-3xs);
+  background-color: var(--blue3);
+  border-radius: var(--br-8xs);
+  flex-direction: row;
+  justify-content: center;
+  white-space: nowrap;
+}
+.info-panel1,
+.quiz-nav-buttons {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--padding-7xs) var(--padding-12xs);
+  gap: var(--gap-3xs);
+}
+.info-panel1 {
+  width: 18.75rem;
+  border-radius: 0 var(--br-xl) var(--br-xl) 0;
+  background-color: var(--point-bg-blue);
+  flex-shrink: 0;
+  padding: var(--padding-81xl) 0 var(--padding-xl);
+  box-sizing: border-box;
+  gap: var(--gap-31xl);
+  min-width: 18.75rem;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+@media screen and (max-width: 975px) {
+  .div222 {
+    font-size: var(--font-size-21xl);
+  }
+  .info-panel1 {
+    flex: 1;
+    padding-top: var(--padding-46xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 700px) {
+  .info-panel1 {
+    padding-top: var(--padding-23xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .div221 {
+    font-size: var(--font-size-base);
+  }
+  .div222 {
+    font-size: var(--font-size-11xl);
+  }
+  .infopanel-title {
+    font-size: var(--font-size-base);
+  }
+  .info-panel1 {
+    gap: 1.563rem 3.125rem;
+  }
+}

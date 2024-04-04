@@ -49,7 +49,8 @@ out/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+*/node_modules
+JBUGS-capstone/server/src/main/front/node_modules
 /.pnp
 .pnp.js
 

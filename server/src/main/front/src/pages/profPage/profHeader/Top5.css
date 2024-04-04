@@ -1,0 +1,73 @@
+.b236,
+.div295 {
+  position: relative;
+}
+.b236 {
+  width: 6.563rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 6.563rem;
+}
+.div295 {
+  font-size: var(--font-size-xl);
+  line-height: 1.5rem;
+  font-family: var(--font-roboto);
+  color: var(--color-black);
+  text-align: center;
+  display: inline-block;
+  min-width: 2.5rem;
+}
+.pattern-matcher-icon1 {
+  width: 0.813rem;
+  height: 0.625rem;
+  position: relative;
+}
+.bxsdown-arrow8,
+.menu7,
+.top8 {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.bxsdown-arrow8 {
+  height: 1.125rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--padding-9xs) var(--padding-11xs);
+  box-sizing: border-box;
+}
+.menu7,
+.top8 {
+  flex-direction: row;
+}
+.menu7 {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-8xs) var(--padding-xl);
+  background-color: var(--point-bg-blue);
+  border-radius: var(--br-8xs);
+  justify-content: center;
+  gap: var(--gap-6xs);
+}
+.top8 {
+  align-self: stretch;
+  justify-content: space-between;
+  padding: var(--padding-xl);
+  gap: var(--gap-xl);
+  text-align: center;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}
+@media screen and (max-width: 450px) {
+  .b236 {
+    font-size: var(--font-size-lgi);
+  }
+  .div295 {
+    font-size: var(--font-size-base);
+  }
+  .top8 {
+    flex-wrap: wrap;
+  }
+}

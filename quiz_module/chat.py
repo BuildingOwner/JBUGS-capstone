@@ -73,7 +73,7 @@ def chat(chat_id, question, model_name="turbo", img_path=["test/images/test.png"
             }
             message[-1]["content"].append(img)
             
-    print(message)
+    # print(message)
             
     response = client.chat.completions.create(
         model=model[model_name],

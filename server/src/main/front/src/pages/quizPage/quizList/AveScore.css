@@ -1,0 +1,70 @@
+.div230,
+.div231 {
+  position: relative;
+}
+.div230 {
+  width: 3rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 3rem;
+}
+.div231 {
+  align-self: stretch;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  display: inline-block;
+  min-width: 3.5rem;
+}
+.vector-icon68 {
+  width: 0.875rem;
+  height: 0.875rem;
+  position: relative;
+}
+.fluent-emoji-high-contrastred {
+  height: 0.875rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 0.875rem;
+}
+.data-collector {
+  flex: 1;
+  position: relative;
+  display: inline-block;
+  min-width: 1.688rem;
+}
+.ave-score,
+.grade {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.grade {
+  align-self: stretch;
+  flex-direction: row;
+  padding: 0 var(--padding-8xs);
+  gap: var(--gap-8xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-darkgray-100);
+}
+.ave-score {
+  width: 4.75rem;
+  flex-shrink: 0;
+  flex-direction: column;
+  padding: var(--padding-3xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-dimgray);
+  font-family: var(--font-roboto);
+}
+@media screen and (max-width: 450px) {
+  .div231 {
+    font-size: var(--font-size-lgi);
+  }
+}

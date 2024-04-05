@@ -171,41 +171,57 @@ public class DataInitializer implements CommandLineRunner {
         lecture1.setName("알고리즘");
         lecture1.setProfessor(professor2);
         lecture1.setDivision("A");
+        lecture1.setClassification("전필");
+        lecture1.setLectureTime("월 13 ~ 14.5");
 
         Lecture lecture2 = new Lecture();
         lecture2.setName("모바일스마트시스템");
         lecture2.setProfessor(professor4);
         lecture2.setDivision("8");
+        lecture2.setClassification("전필");
+        lecture2.setLectureTime("월 10.5 ~ 12");
 
         Lecture lecture3 = new Lecture();
         lecture3.setName("컴파일러");
         lecture3.setProfessor(professor1);
         lecture3.setDivision("B");
+        lecture3.setClassification("전선");
+        lecture3.setLectureTime("화 9 ~ 12");
 
         Lecture lecture4 = new Lecture();
         lecture4.setName("설계패턴");
         lecture4.setProfessor(professor3);
         lecture4.setDivision("C");
+        lecture4.setClassification("전선");
+        lecture4.setLectureTime("수 13 ~ 16");
 
         Lecture lecture5 = new Lecture();
         lecture5.setName("안드로이드프로그래밍");
         lecture5.setProfessor(professor5);
         lecture5.setDivision("A");
+        lecture5.setClassification("전필");
+        lecture5.setLectureTime("금 13 ~ 14.5");
 
         Lecture lecture6 = new Lecture();
         lecture6.setName("웹프레임워크1");
         lecture6.setProfessor(professor6);
         lecture6.setDivision("7");
+        lecture6.setClassification("전필");
+        lecture6.setLectureTime("화 13 ~ 16");
 
         Lecture lecture7 = new Lecture();
         lecture7.setName("운영체제");
         lecture7.setProfessor(professor4);
         lecture7.setDivision("B");
+        lecture7.setClassification("전선");
+        lecture7.setLectureTime("수 9 ~ 12");
 
         Lecture lecture8 = new Lecture();
         lecture8.setName("알고리즘");
         lecture8.setProfessor(professor2);
         lecture8.setDivision("B");
+        lecture8.setClassification("전필");
+        lecture8.setLectureTime("월 14.5 ~ 16");
 
         lectureService.saveLecture(lecture1);
         lectureService.saveLecture(lecture2);
@@ -229,10 +245,22 @@ public class DataInitializer implements CommandLineRunner {
         Week week1 = weekService.findOne(1L);
         Week week2 = weekService.findOne(2L);
         Week week3 = weekService.findOne(3L);
+        Week week4 = weekService.findOne(20L);
+        Week week5 = weekService.findOne(41L);
+        Week week6 = weekService.findOne(51L);
+        Week week7 = weekService.findOne(68L);
+        Week week8 = weekService.findOne(84L);
+        Week week9 = weekService.findOne(101L);
 
         assignmentService.createAssignment(week1.getId(), "과제 제목 1", "과제 내용 1", LocalDateTime.of(2024, 5, 15, 23, 59));
         assignmentService.createAssignment(week2.getId(), "과제 제목 2", "과제 내용 2", LocalDateTime.of(2024, 5, 22, 23, 59));
         assignmentService.createAssignment(week3.getId(), "과제 제목 3", "과제 내용 3", LocalDateTime.of(2024, 5, 29, 23, 59));
+        assignmentService.createAssignment(week4.getId(), "과제 제목 4", "과제 내용 4", LocalDateTime.of(2024, 5, 15, 23, 59));
+        assignmentService.createAssignment(week5.getId(), "과제 제목 5", "과제 내용 5", LocalDateTime.of(2024, 5, 22, 23, 59));
+        assignmentService.createAssignment(week6.getId(), "과제 제목 6", "과제 내용 6", LocalDateTime.of(2024, 5, 29, 23, 59));
+        assignmentService.createAssignment(week7.getId(), "과제 제목 7", "과제 내용 7", LocalDateTime.of(2024, 5, 15, 23, 59));
+        assignmentService.createAssignment(week8.getId(), "과제 제목 8", "과제 내용 8", LocalDateTime.of(2024, 5, 22, 23, 59));
+        assignmentService.createAssignment(week9.getId(), "과제 제목 9", "과제 내용 9", LocalDateTime.of(2024, 5, 29, 23, 59));
 
 
 

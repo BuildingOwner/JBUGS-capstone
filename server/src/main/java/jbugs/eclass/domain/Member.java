@@ -23,15 +23,15 @@ public class Member {
     @NotEmpty
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
@@ -41,7 +41,6 @@ public class Member {
     public UserDetails toUserDetails() {
         return User.withUsername(loginId)
                 .password(password)
-                .authorities(memberType.getAuthorities())
                 .build();
     }
 }

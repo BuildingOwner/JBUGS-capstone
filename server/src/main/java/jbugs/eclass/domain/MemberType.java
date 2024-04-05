@@ -7,8 +7,4 @@ import java.util.Collections;
 
 public enum MemberType {
     ADMIN, STUDENT, PROFESSOR;
-
-    public Collection<SimpleGrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.name()));
-    }
 }

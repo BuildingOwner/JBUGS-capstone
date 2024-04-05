@@ -1,16 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.8dd6e03f.css",
-    "main.js": "/static/js/main.598fde81.js",
-    "static/media/mirae.jpg": "/static/media/mirae.aa04541098e6e0e176d3.jpg",
+    "main.css": "/static/css/main.c0650d3a.css",
+    "main.js": "/static/js/main.73da33b6.js",
     "static/media/malgun.ttf": "/static/media/malgun.a41f507bf875bde2c1bd.ttf",
-    "static/media/hansungLogo.png": "/static/media/hansungLogo.9a9550bb507e80799a16.png",
     "index.html": "/index.html",
-    "main.8dd6e03f.css.map": "/static/css/main.8dd6e03f.css.map",
-    "main.598fde81.js.map": "/static/js/main.598fde81.js.map"
+    "main.c0650d3a.css.map": "/static/css/main.c0650d3a.css.map",
+    "main.73da33b6.js.map": "/static/js/main.73da33b6.js.map"
   },
   "entrypoints": [
-    "static/css/main.8dd6e03f.css",
-    "static/js/main.598fde81.js"
+    "static/css/main.c0650d3a.css",
+    "static/js/main.73da33b6.js"
   ]
 }

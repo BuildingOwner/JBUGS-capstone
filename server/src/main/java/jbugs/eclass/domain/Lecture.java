@@ -18,6 +18,8 @@ public class Lecture {
 
     private String name;  // 강의 이름
     private String division; // 분반
+    private String classification; //강좌 이수구분
+    private String lectureTime; //강의 시간
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")

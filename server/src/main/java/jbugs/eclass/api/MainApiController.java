@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.Assignment;
 import jbugs.eclass.domain.Enrollment;
 import jbugs.eclass.domain.Member;
+import jbugs.eclass.domain.MemberType;
 import jbugs.eclass.dto.AssignmentDto;
 import jbugs.eclass.dto.MainPageInfo;
 import jbugs.eclass.repository.*;
@@ -52,9 +53,15 @@ public class MainApiController {
             List<MainPageInfo> mainPageInfos = new ArrayList<>();
             for (Enrollment enrollment : enrollments) {
                 MainPageInfo info = new MainPageInfo();
+                info.setName(loginMember.getName());
+                if (loginMember.getMemberType() == MemberType.STUDENT) {
+                    info.setFirstTrack(loginMember.getStudent().getFirstTrack());
+                }
                 info.setLectureName(enrollment.getLecture().getName());
                 info.setProfessorName(enrollment.getLecture().getProfessor().getMember().getName());
                 info.setDivision(enrollment.getLecture().getDivision());
+                info.setClassification(enrollment.getLecture().getClassification());
+                info.setLectureTime(enrollment.getLecture().getLectureTime());
 
                 // 과제 정보 설정 (과제가 있는 경우만)
                 List<Assignment> assignments = weekService.findValidAssignmentsByLectureId(enrollment.getLecture().getId());

@@ -1025,7 +1025,7 @@
   gap: var(--gap-3xs);
 }
 .sidebars {
-  height: 64rem;
+  height: 100%;
   width: 16.875rem;
   flex-shrink: 0;
   align-items: center;

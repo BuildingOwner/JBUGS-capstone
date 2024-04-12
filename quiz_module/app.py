@@ -171,6 +171,7 @@ def upload_file():
         if sql_injection_detector([chat_id]):
             return "invalied chat ID", 404
         
+        image_paths = []
         # 이미지 파일저장
         if image:
             erase_folder()
@@ -178,15 +179,16 @@ def upload_file():
             filename = str(now.strftime("%H_%M_%S_") + str(now.microsecond // 1000)) + image.filename 
             save_path = os.path.join('quiz_module/chat_img', filename)  # 'uploads' 폴더에 저장
             image.save(save_path)
-            #chat(text, 'vision', save_path)
-            def generate():
-                for piece in chat(chat_id, question, 'vision', [save_path]):
-                    if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
-                        yield piece.encode("utf-8")
-            return Response(stream_with_context(generate()))
+            image_paths.append(save_path)
+            # chat(text, 'vision', save_path)
+            # def generate():
+            #     for piece in chat(chat_id, question, model, [save_path]):
+            #         if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
+            #             yield piece.encode("utf-8")
+            # return Response(stream_with_context(generate()))
         
         def generate():
-            for piece in chat(chat_id, question, 'turbo'):
+            for piece in chat(chat_id, question):
                 if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                     yield piece.encode("utf-8")
         return Response(stream_with_context(generate()))

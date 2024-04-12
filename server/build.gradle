@@ -52,6 +52,7 @@ tasks.named('test') {
 def frontDir = "$projectDir/src/main/front"
 
 sourceSets {
+
 	main {
 		resources { srcDirs = ["$projectDir/src/main/resources"]
 		}

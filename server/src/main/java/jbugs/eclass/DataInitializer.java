@@ -23,10 +23,11 @@ public class DataInitializer implements CommandLineRunner {
     private final WeekRepository weekRepository;
     private final QuizService quizService;
     private final NoticeService noticeService;
+    private final QnAService qnAService;
 
 
     @Autowired
-    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder, WeekRepository weekRepository, QuizService quizService, NoticeService noticeService) {
+    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder, WeekRepository weekRepository, QuizService quizService, NoticeService noticeService, QnAService qnAService) {
         this.memberService = memberService;
         this.lectureService = lectureService;
         this.enrollmentService = enrollmentService;
@@ -36,6 +37,7 @@ public class DataInitializer implements CommandLineRunner {
         this.weekRepository = weekRepository;
         this.quizService = quizService;
         this.noticeService = noticeService;
+        this.qnAService = qnAService;
     }
 
     @Override
@@ -307,16 +309,28 @@ public class DataInitializer implements CommandLineRunner {
         quizService.saveQuiz(quiz1);
         quizService.saveQuiz(quiz2);
 
-        noticeService.createNotice(lecture1.getId(),"중간고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, NoticeStatus.EXAM);
-        noticeService.createNotice(lecture1.getId(),"4월 12일은 온라인 수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, NoticeStatus.ONLINE);
-        noticeService.createNotice(lecture1.getId(),"4월 22일은 온라인 수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, NoticeStatus.ONLINE);
-        noticeService.createNotice(lecture1.getId(),"4월 25일은 대면수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100, NoticeStatus.FACE_TO_FACE_CLASSES);
-        noticeService.createNotice(lecture1.getId(),"기말고사 공지하겠습니다", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100, NoticeStatus.EXAM);
+        noticeService.createNotice(lecture1.getId(),"중간고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "중간고사에 대해 공지하겠습니다.",NoticeStatus.EXAM);
+        noticeService.createNotice(lecture1.getId(),"4월 12일은 온라인 수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, "온라인수업으로 대체합니다",NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture1.getId(),"4월 22일은 온라인 수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100,"온라인수업으로 대체합니다", NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture1.getId(),"4월 25일은 대면수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100,"대면수업으로 대체합니다", NoticeStatus.FACE_TO_FACE_CLASSES);
+        noticeService.createNotice(lecture1.getId(),"기말고사 공지하겠습니다", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100,"기말고사에 대해 공지하겠습니다.",NoticeStatus.EXAM);
 
-        noticeService.createNotice(lecture2.getId(),"중간고사 공지하겠습니다.1", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, NoticeStatus.EXAM);
-        noticeService.createNotice(lecture2.getId(),"4월 12일은 온라인 수업입니다.2", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, NoticeStatus.ONLINE);
-        noticeService.createNotice(lecture2.getId(),"4월 22일은 온라인 수업입니다.3", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, NoticeStatus.ONLINE);
-        noticeService.createNotice(lecture2.getId(),"4월 25일은 대면수업입니다.4", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100, NoticeStatus.FACE_TO_FACE_CLASSES);
-        noticeService.createNotice(lecture2.getId(),"기말고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100, NoticeStatus.EXAM);
+        noticeService.createNotice(lecture2.getId(),"중간고사 공지하겠습니다.1", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100,"중간고사에 대해 공지하겠습니다.", NoticeStatus.EXAM);
+        noticeService.createNotice(lecture2.getId(),"4월 12일은 온라인 수업입니다.2", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, "온라인수업으로 대체합니다", NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture2.getId(),"4월 22일은 온라인 수업입니다.3", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, "온라인수업으로 대체합니다", NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture2.getId(),"4월 25일은 대면수업입니다.4", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100, "대면수업으로 대체합니다", NoticeStatus.FACE_TO_FACE_CLASSES);
+        noticeService.createNotice(lecture2.getId(),"기말고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100, "기말고사에 대해 공지하겠습니다.", NoticeStatus.EXAM);
+
+        qnAService.createQnA(lecture1.getId(),"이건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+        qnAService.createQnA(lecture1.getId(),"저건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+        qnAService.createQnA(lecture1.getId(),"요건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+        qnAService.createQnA(lecture1.getId(),"그건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+        qnAService.createQnA(lecture1.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+
+        qnAService.createQnA(lecture2.getId(),"이건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+        qnAService.createQnA(lecture2.getId(),"저건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+        qnAService.createQnA(lecture2.getId(),"요건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+        qnAService.createQnA(lecture2.getId(),"그건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+        qnAService.createQnA(lecture2.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
     }
 }

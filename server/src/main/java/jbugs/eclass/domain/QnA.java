@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class Notice {
+public class QnA {
     @Id
     @GeneratedValue
     @Column(name = "notice_id")
@@ -20,7 +20,7 @@ public class Notice {
     private String content;
     private LocalDateTime createdAt;
     private int views;
-    private NoticeStatus noticeStatus;
+    private QnAStatus qnaStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")

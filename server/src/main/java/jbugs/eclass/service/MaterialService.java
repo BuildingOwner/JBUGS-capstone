@@ -2,6 +2,7 @@ package jbugs.eclass.service;
 
 import jbugs.eclass.domain.Material;
 import jbugs.eclass.repository.MaterialRepository;
+import jbugs.eclass.repository.VideoMaterialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -16,7 +17,6 @@ import java.util.List;
 public class MaterialService {
     private final MaterialRepository materialRepository;
 
-    //회원가입
     @Transactional
     public Long join(Material material) {
 
@@ -26,10 +26,6 @@ public class MaterialService {
 
     public List<Material> findMaterials(){
         return materialRepository.findAll();
-    }
-
-    public Material findOne(Long materialId){
-        return materialRepository.findOne(materialId);
     }
 
     public List<Material> findMaterialsByWeekIds(List<Long> weekIds) {
@@ -49,4 +45,6 @@ public class MaterialService {
             throw new RuntimeException("Material 파일을 로드할 수 없습니다.");
         }
     }
+
+
 }

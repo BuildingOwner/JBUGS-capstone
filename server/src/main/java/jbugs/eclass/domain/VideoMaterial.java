@@ -11,6 +11,7 @@ public class VideoMaterial {
     @Column(name = "video_material_id")
     private Long id;
 
+    private String title;
     private String videoName; //제목
     private String videoPath;
 

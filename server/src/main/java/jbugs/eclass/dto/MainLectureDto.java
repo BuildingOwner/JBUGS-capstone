@@ -5,9 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class MainPageInfo {
-    private String name;
-    private String firstTrack;
+public class MainLectureDto {
+    private Long enrollmentId;
     private String lectureName;
     private String professorName;
     private String division;

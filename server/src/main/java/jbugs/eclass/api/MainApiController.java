@@ -7,7 +7,9 @@ import jbugs.eclass.domain.Enrollment;
 import jbugs.eclass.domain.Member;
 import jbugs.eclass.domain.MemberType;
 import jbugs.eclass.dto.AssignmentDto;
-import jbugs.eclass.dto.MainPageInfo;
+import jbugs.eclass.dto.MainInfoDto;
+import jbugs.eclass.dto.MainLectureDto;
+import jbugs.eclass.dto.MemberInfoDto;
 import jbugs.eclass.repository.*;
 import jbugs.eclass.service.EnrollmentService;
 import jbugs.eclass.service.MemberService;
@@ -17,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +35,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class MainApiController {
 
-    private final MemberService memberService;
     private final EnrollmentService enrollmentService;
-    private final EnrollmentRepository enrollmentRepository;
     private final WeekService weekService;
 
     @GetMapping("/main")
@@ -49,38 +48,36 @@ public class MainApiController {
             // 사용자와 관련된 enrollment 정보 조회
             List<Enrollment> enrollments = enrollmentService.findAllByStudentId(loginMember.getId());
 
-            // enrollment 정보를 기반으로 필요한 데이터 구성
-            List<MainPageInfo> mainPageInfos = new ArrayList<>();
-            for (Enrollment enrollment : enrollments) {
-                MainPageInfo info = new MainPageInfo();
-                info.setName(loginMember.getName());
-                if (loginMember.getMemberType() == MemberType.STUDENT) {
-                    info.setFirstTrack(loginMember.getStudent().getFirstTrack());
-                }
-                info.setLectureName(enrollment.getLecture().getName());
-                info.setProfessorName(enrollment.getLecture().getProfessor().getMember().getName());
-                info.setDivision(enrollment.getLecture().getDivision());
-                info.setClassification(enrollment.getLecture().getClassification());
-                info.setLectureTime(enrollment.getLecture().getLectureTime());
+            MainInfoDto mainInfoDto = new MainInfoDto();
+            MemberInfoDto memberInfoDto = new MemberInfoDto();
+            memberInfoDto.setMemberId(loginMember.getId());
+            memberInfoDto.setMemberName(loginMember.getName());
+            if (loginMember.getMemberType() == MemberType.STUDENT) {
+                memberInfoDto.setFirstTrack(loginMember.getStudent().getFirstTrack());
+            }
+            mainInfoDto.setMemberInfoDto(memberInfoDto);
 
-                // 과제 정보 설정 (과제가 있는 경우만)
+            List<MainLectureDto> lectureInfos = enrollments.stream().map(enrollment -> {
+                MainLectureDto lectureInfo = new MainLectureDto();
+                lectureInfo.setEnrollmentId(enrollment.getId());
+                lectureInfo.setLectureName(enrollment.getLecture().getName());
+                lectureInfo.setProfessorName(enrollment.getLecture().getProfessor().getMember().getName());
+                lectureInfo.setDivision(enrollment.getLecture().getDivision());
+                lectureInfo.setClassification(enrollment.getLecture().getClassification());
+                lectureInfo.setLectureTime(enrollment.getLecture().getLectureTime());
+
+                // 과제 정보 설정
                 List<Assignment> assignments = weekService.findValidAssignmentsByLectureId(enrollment.getLecture().getId());
                 List<AssignmentDto> assignmentDtos = assignments.stream()
-                        .map(assignment -> {
-                            AssignmentDto assignmentDto = new AssignmentDto();
-                            assignmentDto.setId(assignment.getId());
-                            assignmentDto.setTitle(assignment.getTitle());
-                            assignmentDto.setDueDate(assignment.getDueDate());
-                            assignmentDto.setWeekId(assignment.getWeek().getId());
-                            return assignmentDto;
-                        })
+                        .map(AssignmentDto::from) // 변경된 부분
                         .collect(Collectors.toList());
-                info.setAssignments(assignmentDtos);
+                lectureInfo.setAssignments(assignmentDtos);
 
-                mainPageInfos.add(info);
-            }
+                return lectureInfo;
+            }).collect(Collectors.toList());
+            mainInfoDto.setMainLectures(lectureInfos);
 
-            return ResponseEntity.ok(mainPageInfos);
+            return ResponseEntity.ok(mainInfoDto);
         }
         else {
             // 세션이 없거나 로그인 되어있지 않은 경우

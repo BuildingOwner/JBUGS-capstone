@@ -1,6 +1,8 @@
 package jbugs.eclass;
 
 import jbugs.eclass.domain.*;
+import jbugs.eclass.repository.QuizInfoRepository;
+import jbugs.eclass.repository.WeekRepository;
 import jbugs.eclass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,15 +20,22 @@ public class DataInitializer implements CommandLineRunner {
     private final AssignmentService assignmentService;
     private final WeekService weekService;
     private final PasswordEncoder passwordEncoder;
+    private final WeekRepository weekRepository;
+    private final QuizService quizService;
+    private final NoticeService noticeService;
+
 
     @Autowired
-    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder) {
+    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder, WeekRepository weekRepository, QuizService quizService, NoticeService noticeService) {
         this.memberService = memberService;
         this.lectureService = lectureService;
         this.enrollmentService = enrollmentService;
         this.assignmentService = assignmentService;
         this.weekService = weekService;
         this.passwordEncoder = passwordEncoder;
+        this.weekRepository = weekRepository;
+        this.quizService = quizService;
+        this.noticeService = noticeService;
     }
 
     @Override
@@ -242,15 +251,15 @@ public class DataInitializer implements CommandLineRunner {
         enrollmentService.enrollStudentInLecture(student2, lecture2);
         enrollmentService.enrollStudentInLecture(student2, lecture3);
 
-        Week week1 = weekService.findOne(1L);
-        Week week2 = weekService.findOne(2L);
-        Week week3 = weekService.findOne(3L);
-        Week week4 = weekService.findOne(20L);
-        Week week5 = weekService.findOne(41L);
-        Week week6 = weekService.findOne(51L);
-        Week week7 = weekService.findOne(68L);
-        Week week8 = weekService.findOne(84L);
-        Week week9 = weekService.findOne(101L);
+        Week week1 = weekRepository.findOne(1L);
+        Week week2 = weekRepository.findOne(2L);
+        Week week3 = weekRepository.findOne(3L);
+        Week week4 = weekRepository.findOne(20L);
+        Week week5 = weekRepository.findOne(41L);
+        Week week6 = weekRepository.findOne(51L);
+        Week week7 = weekRepository.findOne(68L);
+        Week week8 = weekRepository.findOne(84L);
+        Week week9 = weekRepository.findOne(101L);
 
         assignmentService.createAssignment(week1.getId(), "과제 제목 1", "과제 내용 1", LocalDateTime.of(2024, 5, 15, 23, 59));
         assignmentService.createAssignment(week2.getId(), "과제 제목 2", "과제 내용 2", LocalDateTime.of(2024, 5, 22, 23, 59));
@@ -262,7 +271,52 @@ public class DataInitializer implements CommandLineRunner {
         assignmentService.createAssignment(week8.getId(), "과제 제목 8", "과제 내용 8", LocalDateTime.of(2024, 5, 22, 23, 59));
         assignmentService.createAssignment(week9.getId(), "과제 제목 9", "과제 내용 9", LocalDateTime.of(2024, 5, 29, 23, 59));
 
+        Quiz quiz1 = new Quiz();
+        quiz1.setQuizName("컴퓨터 과학 1주차 퀴즈");
+        quiz1.setQuizType("연습 문제");
+        quiz1.setCreatedAt(LocalDateTime.of(2024, 4, 11, 23, 59));
+        quiz1.setUpdateAt(LocalDateTime.of(2024, 4, 11, 23, 59));
+        quiz1.setDeadline(LocalDateTime.of(2024, 5, 30, 23, 59));
+        quiz1.setJsonData("test");
+        quiz1.setWeek(week1);
 
+        Quiz quiz2 = new Quiz();
+        quiz2.setQuizName("생활속의 인공지능 1주차 퀴즈");
+        quiz2.setQuizType("연습 문제");
+        quiz2.setCreatedAt(LocalDateTime.of(2024, 4, 11, 23, 59));
+        quiz2.setUpdateAt(LocalDateTime.of(2024, 4, 11, 23, 59));
+        quiz2.setDeadline(LocalDateTime.of(2024, 5, 30, 23, 59));
+        quiz2.setJsonData("test");
+        quiz2.setWeek(week2);
 
+        QuizInfo quizInfo1 = new QuizInfo();
+        quizInfo1.setQuiz(quiz1);
+        quizInfo1.setQuizScore(100);
+        quizInfo1.setStudent(student1);
+        quizInfo1.setSubmittedAt(LocalDateTime.of(2024, 4, 12, 23, 59));
+        quizInfo1.setSubmissionStatus(true);
+
+        QuizInfo quizInfo2 = new QuizInfo();
+        quizInfo2.setQuiz(quiz2);
+        quizInfo2.setStudent(student1);
+        quizInfo2.setSubmissionStatus(false);
+
+        quizService.saveQuizInfo(quizInfo1);
+        quizService.saveQuizInfo(quizInfo2);
+
+        quizService.saveQuiz(quiz1);
+        quizService.saveQuiz(quiz2);
+
+        noticeService.createNotice(lecture1.getId(),"중간고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, NoticeStatus.EXAM);
+        noticeService.createNotice(lecture1.getId(),"4월 12일은 온라인 수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture1.getId(),"4월 22일은 온라인 수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture1.getId(),"4월 25일은 대면수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100, NoticeStatus.FACE_TO_FACE_CLASSES);
+        noticeService.createNotice(lecture1.getId(),"기말고사 공지하겠습니다", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100, NoticeStatus.EXAM);
+
+        noticeService.createNotice(lecture2.getId(),"중간고사 공지하겠습니다.1", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, NoticeStatus.EXAM);
+        noticeService.createNotice(lecture2.getId(),"4월 12일은 온라인 수업입니다.2", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture2.getId(),"4월 22일은 온라인 수업입니다.3", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture2.getId(),"4월 25일은 대면수업입니다.4", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100, NoticeStatus.FACE_TO_FACE_CLASSES);
+        noticeService.createNotice(lecture2.getId(),"기말고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100, NoticeStatus.EXAM);
     }
 }

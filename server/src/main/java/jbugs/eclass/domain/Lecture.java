@@ -31,6 +31,12 @@ public class Lecture {
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
     private List<Week> weeks = new ArrayList<>();
 
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
+    private List<Notice> notices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
+    private List<QuestionAndAnswer> questionAndAnswers = new ArrayList<>();
+
     public Lecture() {
     }
 

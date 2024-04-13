@@ -13,6 +13,7 @@ public class Material {
     @Column(name = "material_id")
     private Long id;
 
+    private String title;
     private String fileName; //제목
     private String filePath;
 

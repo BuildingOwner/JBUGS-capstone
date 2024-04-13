@@ -1,43 +1,16 @@
 package jbugs.eclass.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jbugs.eclass.domain.Material;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-@Repository
-@RequiredArgsConstructor
-public class MaterialRepository {
-    @PersistenceContext
-    private final EntityManager em;
+public interface MaterialRepository extends JpaRepository<Material, Long> {
+    List<Material> findByWeekId(Long weekId);
 
-
-    public Material save(Material material) {
-        em.persist(material);
-        return material;
-    }
-
-    public Material findOne(Long id){
-        return em.find(Material.class, id);
-    }
-
-    public List<Material> findAll(){
-        return em.createQuery("select m from Material m", Material.class)
-                .getResultList();
-    }
-
-    public List<Material> findByWeekIds(List<Long> weekIds) {
-        return em.createQuery("SELECT m FROM Material m WHERE m.week.id IN :weekIds", Material.class)
-                .setParameter("weekIds", weekIds)
-                .getResultList();
-    }
-
-    public List<Material> findByWeekId(Long weekId) {
-        return em.createQuery("SELECT m FROM Material m WHERE m.week.id = :weekId", Material.class)
-                .setParameter("weekId", weekId)
-                .getResultList();
-    }
+    // @Query 어노테이션을 사용하여 커스텀 쿼리 작성
+    @Query("SELECT m FROM Material m WHERE m.week.id IN :weekIds")
+    List<Material> findByWeekIds(@Param("weekIds") List<Long> weekIds);
 }

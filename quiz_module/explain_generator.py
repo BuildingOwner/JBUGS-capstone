@@ -21,7 +21,7 @@ def explain_gen(question=question1):
     """
     print(question)
     completion = client.chat.completions.create(
-        model="gpt-4-turbo-preview",
+        model="gpt-4-turbo",
         messages=[
             {"role": "system", "content": "You are the professor explaining the problem."},
             {"role": "user", "content": question},
@@ -42,7 +42,7 @@ def gen_test(question=question1):
     type이 short인 문제는 왜 answer이 정답인지 설명해줘.
     """
     completion = client.chat.completions.create(
-        model="gpt-4-turbo-preview",
+        model="gpt-4-turbo",
         messages=[
             {"role": "system", "content": "You are the professor explaining the problem."},
             {"role": "user", "content": question},

@@ -360,7 +360,7 @@
   gap: var(--gap-xl);
 }
 .nav1 {
-  padding: var(--padding-31xl) 0 var(--padding-228xl-4);
+  padding: var(--padding-31xl) 0;
   gap: var(--gap-6xl);
 }
 .b183 {
@@ -478,10 +478,11 @@
   gap: var(--gap-3xs);
 }
 .sidebars1 {
+  height: 100%;
   width: 16.875rem;
   flex-shrink: 0;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: var(--padding-31xl) var(--padding-3xs) var(--padding-3xs);
   box-sizing: border-box;
   text-align: left;

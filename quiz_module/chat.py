@@ -29,8 +29,8 @@ def encode_image(image_path):
         return base64.b64encode(image_file.read()).decode("utf-8")
 
 
-def chat(chat_id, question, model_name="turbo", img_path=["test/images/test.png"]):
-    model = {"vision": "gpt-4-vision-preview", "turbo": "gpt-4-turbo-preview"}
+def chat(chat_id, question, img_path=[]):
+    # model = {"vision": "gpt-4-vision-preview", "turbo": "gpt-4-turbo-preview"}
     message = []
     
     db = getConnection()
@@ -41,7 +41,7 @@ def chat(chat_id, question, model_name="turbo", img_path=["test/images/test.png"
     
     # 인코딩된 이미지 URL을 저장할 리스트
     urls = []
-    
+
     if prev_chat_text:
         message = json.loads(prev_chat_text[0])
     
@@ -51,7 +51,8 @@ def chat(chat_id, question, model_name="turbo", img_path=["test/images/test.png"
                 if item.get("type") == "image_url":
                     urls.append(item["image_url"]["url"])  # 인코딩된 URL을 리스트에 추가
                     encoded_url = encode_image(item["image_url"]["url"])  # 이미지 URL 인코딩
-                    item["image_url"]["url"] = encoded_url  # 이미지 URL 업데이트
+                    item["image_url"]["url"] = f"data:image/jpeg;base64,{encoded_url}"  # 이미지 URL 업데이트
+
     msg = {
             "role": "user",
             "content": [
@@ -63,7 +64,7 @@ def chat(chat_id, question, model_name="turbo", img_path=["test/images/test.png"
         }
     message.append(msg)
 
-    if model_name == "vision":
+    if len(img_path) != 0:
         # base64 문자열 얻기
         for path in img_path:
             urls.append(path)
@@ -72,9 +73,10 @@ def chat(chat_id, question, model_name="turbo", img_path=["test/images/test.png"
                 "image_url": {"url": f"data:image/jpeg;base64,{encode_image(path)}"},
             }
             message[-1]["content"].append(img)
-            
+    
+    
     response = client.chat.completions.create(
-        model=model[model_name],
+        model="gpt-4-turbo",
         messages=message,
         max_tokens=1024,
         stream=True
@@ -86,6 +88,7 @@ def chat(chat_id, question, model_name="turbo", img_path=["test/images/test.png"
             insert_text += chunk.choices[0].delta.content
         yield chunk.choices[0].delta.content
     
+    print(f"\ngpt 끝 \n{insert_text}")
     gpt_msg = {
         "role": "assistant",
             "content": [
@@ -98,12 +101,14 @@ def chat(chat_id, question, model_name="turbo", img_path=["test/images/test.png"
     
     message.append(gpt_msg)
     i=0
-    for msg in message:
-            for item in msg["content"]:
-                if item.get("type") == "image_url":
-                    item["image_url"]["url"] = urls[i]  # 이미지 URL 업데이트
-                    i+1
-    
+    if len(urls) != 0:
+        print(urls)
+        for msg in message:
+                for item in msg["content"]:
+                    if item.get("type") == "image_url":
+                        item["image_url"]["url"] = urls[i]  # 이미지 URL 업데이트
+                        i+1
+
     sql_str = ""
     params = ""
     if prev_chat_text is None:

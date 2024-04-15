@@ -42,7 +42,7 @@ def summary_pdf(path):
 
     for i in range(0, img_count, 20):
         payload = {
-            "model": "gpt-4-vision-preview",
+            "model": "gpt-4-turbo",
             "messages": [
                 {
                     "role": "system",
@@ -68,6 +68,7 @@ def summary_pdf(path):
                     "url": f"data:image/jpeg;base64,{encode_image(f'{path}{j}.png')}"
                 },
             }
+            print(j)
             payload["messages"][1]["content"].append(str)
         response = requests.post(
             "https://api.openai.com/v1/chat/completions", headers=headers, json=payload

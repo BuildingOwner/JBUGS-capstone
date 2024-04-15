@@ -597,7 +597,7 @@
 }
 
 .disassembler {
-  width: 66.875rem;
+  width: 100%;
   flex-direction: row;
   gap: var(--gap-11xl);
 }
@@ -889,7 +889,7 @@
 }
 
 .bottom {
-  width: 66.875rem;
+  width: 100%;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
@@ -905,7 +905,7 @@
 }
 
 .assembler {
-  width: 69.375rem;
+  width: 100%;
   border-radius: var(--br-3xs);
   background-color: var(--point-bg-blue);
   overflow-x: auto;
@@ -938,9 +938,10 @@
 }
 
 .serializer {
+  height: 100%;
   flex: 1;
   flex-direction: column;
-  padding: var(--padding-xl) 0 0;
+  padding: var(--padding-xl) 0;
   max-width: calc(100% - 270px);
 }
 

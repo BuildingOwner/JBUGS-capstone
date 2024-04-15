@@ -16,6 +16,8 @@ public class NoticeDto {
     private LocalDateTime createdAt;
     private int views;
     private NoticeStatus noticeStatus;
+    private String content;
+
 
     public static NoticeDto from(Notice notice) {
         NoticeDto dto = new NoticeDto();
@@ -25,6 +27,7 @@ public class NoticeDto {
         dto.setCreatedAt(notice.getCreatedAt());
         dto.setNoticeStatus(notice.getNoticeStatus());
         dto.setViews(notice.getViews());
+        dto.setContent(notice.getContent());
         return dto;
     }
 }

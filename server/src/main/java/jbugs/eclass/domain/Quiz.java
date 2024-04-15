@@ -15,7 +15,10 @@ public class Quiz {
     @Column(name = "quiz_id")
     private Long id;
 
+    @Column(length = 50000)
     private String jsonData; //퀴즈 생성 json 데이터
+    @Column(length = 50000)
+    private String discription; // 설명
 
     private String quizName; // 퀴즈 이름
     private String quizType; // 문제 분류

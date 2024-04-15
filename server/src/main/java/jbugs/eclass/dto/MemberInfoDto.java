@@ -7,5 +7,6 @@ import lombok.Data;
 public class MemberInfoDto {
     private Long memberId;
     private String memberName;
+    private MemberType memberType;
     private String firstTrack;
 }

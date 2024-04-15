@@ -57,6 +57,7 @@ public class MemberApiController {
         LoginResponse.User user = new LoginResponse.User();
         user.setLoginId(loginMember.getLoginId());
         user.setName(loginMember.getName());
+        user.setMemberType(loginMember.getMemberType());
         response.setUser(user);
 
         return ResponseEntity.ok(response);

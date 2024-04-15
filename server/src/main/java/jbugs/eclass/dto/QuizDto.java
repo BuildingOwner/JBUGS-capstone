@@ -12,6 +12,7 @@ public class QuizDto {
 
     private String quizType;
     private String quizName;
+    private String discription;
     private LocalDateTime deadline; // 종료일시
     private boolean submissionStatus;
     private Integer quizScore;
@@ -20,6 +21,7 @@ public class QuizDto {
         QuizDto dto = new QuizDto();
         dto.setQuizId(quiz.getId());
         dto.setQuizType(quiz.getQuizType());
+        dto.setDiscription(quiz.getDiscription());
         dto.setQuizName(quiz.getQuizName());
         dto.setDeadline(quiz.getDeadline());
 

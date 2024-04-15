@@ -20,4 +20,8 @@ public class Material {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")
     private Week week;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "qna_id")
+    private QnA qna;
 }

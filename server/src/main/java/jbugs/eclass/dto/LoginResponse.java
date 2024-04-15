@@ -1,5 +1,6 @@
 package jbugs.eclass.dto;
 
+import jbugs.eclass.domain.MemberType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ public class LoginResponse {
     public static class User {
         private String loginId;
         private String name;
+        private MemberType memberType;
 
         // Getter와 Setter
         public String getLoginId() {
@@ -29,6 +31,14 @@ public class LoginResponse {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public void setMemberType(MemberType memberType){
+            this.memberType = memberType;
+        }
+
+        public MemberType getMemberType() {
+            return memberType;
         }
     }
 

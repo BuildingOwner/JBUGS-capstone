@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 public class QnA {
     @Id
     @GeneratedValue
-    @Column(name = "notice_id")
+    @Column(name = "qna_id")
     private Long id;
 
     private String title;
@@ -25,4 +27,7 @@ public class QnA {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
     private Lecture lecture;
+
+    @OneToMany(mappedBy = "qna", cascade = CascadeType.ALL)
+    private List<Material> materials = new ArrayList<>();
 }

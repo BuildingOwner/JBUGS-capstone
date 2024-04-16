@@ -6,6 +6,7 @@ import jbugs.eclass.domain.Lecture;
 import jbugs.eclass.domain.Material;
 import jbugs.eclass.domain.Week;
 import jbugs.eclass.repository.EnrollmentRepository;
+import jbugs.eclass.repository.MaterialRepository;
 import jbugs.eclass.service.EnrollmentService;
 import jbugs.eclass.service.MaterialService;
 import jbugs.eclass.service.WeekService;
@@ -23,10 +24,7 @@ import org.springframework.web.util.UriUtils;
 
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -35,6 +33,7 @@ public class EnrollmentController {
     private final EnrollmentService enrollmentService;
     private final EnrollmentRepository enrollmentRepository;
     private final MaterialService materialService;
+    private final MaterialRepository materialRepository;
     private final WeekService weekService;
     private final UploadController uploadController;
     @GetMapping(value = "/{enrollmentId}/edit")
@@ -67,8 +66,8 @@ public class EnrollmentController {
     @GetMapping("/{enrollmentId}/edit/download/{materialId}")
     public ResponseEntity<Resource> downloadAttach(@PathVariable Long enrollmentId, @PathVariable Long materialId)
             throws MalformedURLException {
-        Material item = materialService.findOne(materialId);
-        String uploadFileName = item.getFileName();
+        Optional<Material> item = materialRepository.findById(materialId);
+        String uploadFileName = item.get().getFileName();
         UrlResource resource = new UrlResource("file:" + uploadController.getFullPath(uploadFileName));
         log.info("uploadFileName={}", uploadFileName);
         String encodedUploadFileName = UriUtils.encode(uploadFileName,

@@ -43,4 +43,5 @@ public class EnrollmentService {
     public List<Enrollment> findAllByStudentId(Long studentId) {
         return enrollmentRepository.findAllByStudentId(studentId);
     }
+
 }

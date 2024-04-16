@@ -1,6 +1,8 @@
 package jbugs.eclass;
 
 import jbugs.eclass.domain.*;
+import jbugs.eclass.repository.QuizInfoRepository;
+import jbugs.eclass.repository.WeekRepository;
 import jbugs.eclass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,15 +20,24 @@ public class DataInitializer implements CommandLineRunner {
     private final AssignmentService assignmentService;
     private final WeekService weekService;
     private final PasswordEncoder passwordEncoder;
+    private final WeekRepository weekRepository;
+    private final QuizService quizService;
+    private final NoticeService noticeService;
+    private final QnAService qnAService;
+
 
     @Autowired
-    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder) {
+    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder, WeekRepository weekRepository, QuizService quizService, NoticeService noticeService, QnAService qnAService) {
         this.memberService = memberService;
         this.lectureService = lectureService;
         this.enrollmentService = enrollmentService;
         this.assignmentService = assignmentService;
         this.weekService = weekService;
         this.passwordEncoder = passwordEncoder;
+        this.weekRepository = weekRepository;
+        this.quizService = quizService;
+        this.noticeService = noticeService;
+        this.qnAService = qnAService;
     }
 
     @Override
@@ -171,41 +182,57 @@ public class DataInitializer implements CommandLineRunner {
         lecture1.setName("알고리즘");
         lecture1.setProfessor(professor2);
         lecture1.setDivision("A");
+        lecture1.setClassification("전필");
+        lecture1.setLectureTime("월 13 ~ 14.5");
 
         Lecture lecture2 = new Lecture();
         lecture2.setName("모바일스마트시스템");
         lecture2.setProfessor(professor4);
         lecture2.setDivision("8");
+        lecture2.setClassification("전필");
+        lecture2.setLectureTime("월 10.5 ~ 12");
 
         Lecture lecture3 = new Lecture();
         lecture3.setName("컴파일러");
         lecture3.setProfessor(professor1);
         lecture3.setDivision("B");
+        lecture3.setClassification("전선");
+        lecture3.setLectureTime("화 9 ~ 12");
 
         Lecture lecture4 = new Lecture();
         lecture4.setName("설계패턴");
         lecture4.setProfessor(professor3);
         lecture4.setDivision("C");
+        lecture4.setClassification("전선");
+        lecture4.setLectureTime("수 13 ~ 16");
 
         Lecture lecture5 = new Lecture();
         lecture5.setName("안드로이드프로그래밍");
         lecture5.setProfessor(professor5);
         lecture5.setDivision("A");
+        lecture5.setClassification("전필");
+        lecture5.setLectureTime("금 13 ~ 14.5");
 
         Lecture lecture6 = new Lecture();
         lecture6.setName("웹프레임워크1");
         lecture6.setProfessor(professor6);
         lecture6.setDivision("7");
+        lecture6.setClassification("전필");
+        lecture6.setLectureTime("화 13 ~ 16");
 
         Lecture lecture7 = new Lecture();
         lecture7.setName("운영체제");
         lecture7.setProfessor(professor4);
         lecture7.setDivision("B");
+        lecture7.setClassification("전선");
+        lecture7.setLectureTime("수 9 ~ 12");
 
         Lecture lecture8 = new Lecture();
         lecture8.setName("알고리즘");
         lecture8.setProfessor(professor2);
         lecture8.setDivision("B");
+        lecture8.setClassification("전필");
+        lecture8.setLectureTime("월 14.5 ~ 16");
 
         lectureService.saveLecture(lecture1);
         lectureService.saveLecture(lecture2);
@@ -226,15 +253,84 @@ public class DataInitializer implements CommandLineRunner {
         enrollmentService.enrollStudentInLecture(student2, lecture2);
         enrollmentService.enrollStudentInLecture(student2, lecture3);
 
-        Week week1 = weekService.findOne(1L);
-        Week week2 = weekService.findOne(2L);
-        Week week3 = weekService.findOne(3L);
+        Week week1 = weekRepository.findOne(1L);
+        Week week2 = weekRepository.findOne(2L);
+        Week week3 = weekRepository.findOne(3L);
+        Week week4 = weekRepository.findOne(20L);
+        Week week5 = weekRepository.findOne(41L);
+        Week week6 = weekRepository.findOne(51L);
+        Week week7 = weekRepository.findOne(68L);
+        Week week8 = weekRepository.findOne(84L);
+        Week week9 = weekRepository.findOne(101L);
 
-        assignmentService.createAssignment(week1.getId(), "과제 제목 1", "과제 내용 1", LocalDateTime.of(2024, 3, 15, 23, 59));
-        assignmentService.createAssignment(week2.getId(), "과제 제목 2", "과제 내용 2", LocalDateTime.of(2024, 3, 22, 23, 59));
-        assignmentService.createAssignment(week3.getId(), "과제 제목 3", "과제 내용 3", LocalDateTime.of(2024, 3, 29, 23, 59));
+        assignmentService.createAssignment(week1.getId(), "과제 제목 1", "과제 내용 1", LocalDateTime.of(2024, 5, 15, 23, 59));
+        assignmentService.createAssignment(week2.getId(), "과제 제목 2", "과제 내용 2", LocalDateTime.of(2024, 5, 22, 23, 59));
+        assignmentService.createAssignment(week3.getId(), "과제 제목 3", "과제 내용 3", LocalDateTime.of(2024, 5, 29, 23, 59));
+        assignmentService.createAssignment(week4.getId(), "과제 제목 4", "과제 내용 4", LocalDateTime.of(2024, 5, 15, 23, 59));
+        assignmentService.createAssignment(week5.getId(), "과제 제목 5", "과제 내용 5", LocalDateTime.of(2024, 5, 22, 23, 59));
+        assignmentService.createAssignment(week6.getId(), "과제 제목 6", "과제 내용 6", LocalDateTime.of(2024, 5, 29, 23, 59));
+        assignmentService.createAssignment(week7.getId(), "과제 제목 7", "과제 내용 7", LocalDateTime.of(2024, 5, 15, 23, 59));
+        assignmentService.createAssignment(week8.getId(), "과제 제목 8", "과제 내용 8", LocalDateTime.of(2024, 5, 22, 23, 59));
+        assignmentService.createAssignment(week9.getId(), "과제 제목 9", "과제 내용 9", LocalDateTime.of(2024, 5, 29, 23, 59));
 
+        Quiz quiz1 = new Quiz();
+        quiz1.setQuizName("컴퓨터 과학 1주차 퀴즈");
+        quiz1.setQuizType("연습 문제");
+        quiz1.setCreatedAt(LocalDateTime.of(2024, 4, 11, 23, 59));
+        quiz1.setUpdateAt(LocalDateTime.of(2024, 4, 11, 23, 59));
+        quiz1.setDeadline(LocalDateTime.of(2024, 5, 30, 23, 59));
+        quiz1.setJsonData("{\\\"questions\\\": [{\\\"question\\\": \\\"머신러닝 모델을 학습시킬 때, 가장 적합한 매개변수를 찾기 위해 사용되는 알고리즘은 무엇인가?\\\", \\\"options\\\": [\\\"활성화 함수\\\", \\\"비용 함수\\\", \\\"경사 하강법\\\", \\\"역전파\\\"], \\\"answer\\\": \\\"경사 하강법\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 1}, {\\\"question\\\": \\\"뉴럴 네트워크에서 가중치를 업데이트하는데 사용되는 알고리즘은 무엇인가?\\\", \\\"options\\\": [\\\"활성화 함수\\\", \\\"경사 하강법\\\", \\\"편향 조정\\\", \\\"전방향 전파\\\"], \\\"answer\\\": \\\"경사 하강법\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 2}, {\\\"question\\\": \\\"신경망에서 오차를 전파시켜 가중치를 업데이트하는 과정을 무엇이라 하는가?\\\", \\\"options\\\": [\\\"경사 상승법\\\", \\\"활성화 함수조정\\\", \\\"역전파\\\", \\\"편향 조정\\\"], \\\"answer\\\": \\\"역전파\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 3}, {\\\"question\\\": \\\"신경망에서 특정 입력에 대한 출력의 활성화 여부를 결정하는 데 사용되는 함수는 무엇인가?\\\", \\\"options\\\": [\\\"비용 함수\\\", \\\"경사 하강법\\\", \\\"활성화 함수\\\", \\\"편향 조정\\\"], \\\"answer\\\": \\\"활성화 함수\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 4}, {\\\"question\\\": \\\"인공 신경망에서 입력층과 출력층 사이의 모든 층을 통틀어 무엇이라 하는가?\\\", \\\"options\\\": [\\\"경사 하강법\\\", \\\"은닉층\\\", \\\"활성화 함수\\\", \\\"편향\\\"], \\\"answer\\\": \\\"은닉층\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 5}, {\\\"question\\\": \\\"신경망 모델에서 실제 값과 예측 값의 차이를 계산하는 데 사용되는 함수는 무엇인가?\\\", \\\"options\\\": [\\\"경사 상승법\\\", \\\"은닉층\\\", \\\"비용 함수\\\", \\\"입력층\\\"], \\\"answer\\\": \\\"비용 함수\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 6}, {\\\"question\\\": \\\"신경망에서 입력 데이터에 더해지는 값으로, 가중치와 함께 조절되어 출력을 조정하는 역할을 하는 것은 무엇인가?\\\", \\\"options\\\": [\\\"은닉층\\\", \\\"비용 함수\\\", \\\"편향\\\", \\\"역전파\\\"], \\\"answer\\\": \\\"편향\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 7}, {\\\"question\\\": \\\"신경망에서 오차를 전파하는 과정은 무엇인가?\\\", \\\"answer\\\": \\\"backpropagation\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 8}, {\\\"question\\\": \\\"신경망에서 가중치에 직접 더해지는 값으로 출력을 조정하는 데 사용되는 것은 무엇인가?\\\", \\\"answer\\\": \\\"편향\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 9}, {\\\"question\\\": \\\"신경망에서 입력층으로부터 최종 출력층까지의 데이터가 이동하는 경로에서 가장 처음 만나는 층은 무엇인가?\\\", \\\"answer\\\": \\\"은닉층\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 10}]}");
+        quiz1.setWeek(week1);
 
+        Quiz quiz2 = new Quiz();
+        quiz2.setQuizName("생활속의 인공지능 1주차 퀴즈");
+        quiz2.setQuizType("연습 문제");
+        quiz2.setCreatedAt(LocalDateTime.of(2024, 4, 11, 23, 59));
+        quiz2.setUpdateAt(LocalDateTime.of(2024, 4, 11, 23, 59));
+        quiz2.setDeadline(LocalDateTime.of(2024, 5, 30, 23, 59));
+        quiz2.setJsonData("{\\\"questions\\\": [{\\\"question\\\": \\\"신경망에서 입력층부터 출력층까지 신호가 전달되는 과정을 무엇이라고 하나요?\\\", \\\"options\\\": [\\\"역전파\\\", \\\"활성화 함수 적용\\\", \\\"순전파\\\", \\\"그라데이션 하강\\\"], \\\"answer\\\": \\\"순전파\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 1}, {\\\"question\\\": \\\"신경망 학습 과정에서 기대 출력값과 실제 출력값의 차이를 줄이기 위해 사용되는 알고리즘은 무엇인가요?\\\", \\\"options\\\": [\\\"활성화 함수\\\", \\\"순전파\\\", \\\"역전파\\\", \\\"신경망 최적화\\\"], \\\"answer\\\": \\\"역전파\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 2}, {\\\"question\\\": \\\"신경망의 학습 효율을 높이기 위해 비용 함수의 기울기를 계산하여 가중치를 조절하는 최적화 기법은 무엇인가요?\\\", \\\"options\\\": [\\\"활성화 함수 조절\\\", \\\"순전파 최적화\\\", \\\"가중치 초기화\\\", \\\"그라데이션 하강\\\"], \\\"answer\\\": \\\"그라데이션 하강\\\", \\\"type\\\": \\\"choice\\\", \\\"id\\\": 3}, {\\\"question\\\": \\\"손글씨 숫자를 인식하는 데 사용되는 데이터셋의 이름은 무엇인가요?\\\", \\\"answer\\\": \\\"MNIST\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 4}, {\\\"question\\\": \\\"신경망에서 각 연결선에 적용되는 값으로 뉴런의 신호 강도를 결정하는 요소는 무엇인가요?\\\", \\\"answer\\\": \\\"가중치\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 5}, {\\\"question\\\": \\\"신경망의 기본 단위로, 다른 뉴런에서 온 신호들을 받아 처리하는 기능을 수행하는 것은 무엇인가요?\\\", \\\"answer\\\": \\\"뉴런\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 6}, {\\\"question\\\": \\\"신경망의 학습 과정에서 성능을 평가하고 개선하는 데 사용되는 함수는 무엇인가요?\\\", \\\"answer\\\": \\\"비용 함수\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 7}, {\\\"question\\\": \\\"신경망에서 실제 값과 예측 값 사이의 오차를 줄이기 위해 가중치를 조정하는 과정을 무엇이라고 하나요?\\\", \\\"answer\\\": \\\"역전파\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 8}, {\\\"question\\\": \\\"입력된 가중치 합을 0과 1 사이의 값으로 압축하는 활성화 함수의 이름은 무엇인가요?\\\", \\\"answer\\\": \\\"시그모이드\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 9}, {\\\"question\\\": \\\"비용 함수의 기울기를 계산하여 가중치를 조정하는 최적화 기법을 한국어로 무엇이라고 하나요?\\\", \\\"answer\\\": \\\"그라데이션 하강\\\", \\\"type\\\": \\\"short\\\", \\\"id\\\": 10}]}");
+        quiz2.setWeek(week2);
 
+        QuizInfo quizInfo1 = new QuizInfo();
+        quizInfo1.setQuiz(quiz1);
+        quizInfo1.setQuizScore(100);
+        quizInfo1.setStudent(student1);
+        quizInfo1.setSubmittedAt(LocalDateTime.of(2024, 4, 12, 23, 59));
+        quizInfo1.setSubmissionStatus(true);
+
+        QuizInfo quizInfo2 = new QuizInfo();
+        quizInfo2.setQuiz(quiz2);
+        quizInfo2.setStudent(student1);
+        quizInfo2.setSubmissionStatus(false);
+
+        quizService.saveQuizInfo(quizInfo1);
+        quizService.saveQuizInfo(quizInfo2);
+
+        quizService.saveQuiz(quiz1);
+        quizService.saveQuiz(quiz2);
+
+        noticeService.createNotice(lecture1.getId(),"중간고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "중간고사에 대해 공지하겠습니다.",NoticeStatus.EXAM);
+        noticeService.createNotice(lecture1.getId(),"4월 12일은 온라인 수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, "온라인수업으로 대체합니다",NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture1.getId(),"4월 22일은 온라인 수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100,"온라인수업으로 대체합니다", NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture1.getId(),"4월 25일은 대면수업입니다.", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100,"대면수업으로 대체합니다", NoticeStatus.FACE_TO_FACE_CLASSES);
+        noticeService.createNotice(lecture1.getId(),"기말고사 공지하겠습니다", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100,"기말고사에 대해 공지하겠습니다.",NoticeStatus.EXAM);
+
+        noticeService.createNotice(lecture2.getId(),"중간고사 공지하겠습니다.1", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100,"중간고사에 대해 공지하겠습니다.", NoticeStatus.EXAM);
+        noticeService.createNotice(lecture2.getId(),"4월 12일은 온라인 수업입니다.2", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, "온라인수업으로 대체합니다", NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture2.getId(),"4월 22일은 온라인 수업입니다.3", "장주찬", LocalDateTime.of(2024, 4, 10, 23, 59), 100, "온라인수업으로 대체합니다", NoticeStatus.ONLINE);
+        noticeService.createNotice(lecture2.getId(),"4월 25일은 대면수업입니다.4", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100, "대면수업으로 대체합니다", NoticeStatus.FACE_TO_FACE_CLASSES);
+        noticeService.createNotice(lecture2.getId(),"기말고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100, "기말고사에 대해 공지하겠습니다.", NoticeStatus.EXAM);
+
+        qnAService.createQnA(lecture1.getId(),"이건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+        qnAService.createQnA(lecture1.getId(),"저건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+        qnAService.createQnA(lecture1.getId(),"요건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+        qnAService.createQnA(lecture1.getId(),"그건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+        qnAService.createQnA(lecture1.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+
+        qnAService.createQnA(lecture2.getId(),"이건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+        qnAService.createQnA(lecture2.getId(),"저건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+        qnAService.createQnA(lecture2.getId(),"요건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+        qnAService.createQnA(lecture2.getId(),"그건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+        qnAService.createQnA(lecture2.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
     }
 }

@@ -1,17 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.2d146f6c.css",
-    "main.js": "/static/js/main.3427dd52.js",
-    "static/js/453.80efc53e.chunk.js": "/static/js/453.80efc53e.chunk.js",
-    "static/media/paybooc_Bold.ttf": "/static/media/paybooc_Bold.2f1ff3522eea19db1a20.ttf",
-    "static/media/paybooc_Medium.ttf": "/static/media/paybooc_Medium.4e246c74cb49afdf6c1e.ttf",
+    "main.css": "/static/css/main.c0650d3a.css",
+    "main.js": "/static/js/main.73da33b6.js",
+    "static/media/malgun.ttf": "/static/media/malgun.a41f507bf875bde2c1bd.ttf",
     "index.html": "/index.html",
-    "main.2d146f6c.css.map": "/static/css/main.2d146f6c.css.map",
-    "main.3427dd52.js.map": "/static/js/main.3427dd52.js.map",
-    "453.80efc53e.chunk.js.map": "/static/js/453.80efc53e.chunk.js.map"
+    "main.c0650d3a.css.map": "/static/css/main.c0650d3a.css.map",
+    "main.73da33b6.js.map": "/static/js/main.73da33b6.js.map"
   },
   "entrypoints": [
-    "static/css/main.2d146f6c.css",
-    "static/js/main.3427dd52.js"
+    "static/css/main.c0650d3a.css",
+    "static/js/main.73da33b6.js"
   ]
 }

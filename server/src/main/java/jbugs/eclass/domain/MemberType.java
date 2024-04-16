@@ -1,18 +1,10 @@
 package jbugs.eclass.domain;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Collection;
+import java.util.Collections;
+
 public enum MemberType {
     ADMIN, STUDENT, PROFESSOR;
-
-    public String getAuthorities() {
-        switch (this) {
-            case ADMIN:
-                return "ADMIN";
-            case STUDENT:
-                return "STUDENT";
-            case PROFESSOR:
-                return "PROFESSOR";
-            default:
-                throw new IllegalArgumentException("Unsupported member type: " + this);
-        }
-    }
 }

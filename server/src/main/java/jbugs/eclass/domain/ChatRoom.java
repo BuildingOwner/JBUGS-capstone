@@ -17,6 +17,7 @@ public class ChatRoom {
     private Long id;
 
     private String modelName;
+    @Column(length = 50000)
     private String chattingJson;
 
     @ManyToOne(fetch = FetchType.LAZY)

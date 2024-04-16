@@ -35,5 +35,5 @@ public class Student {
     private List<ChatRoom> chatRooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<Quiz> quizzes = new ArrayList<>();
+    private List<QuizInfo> quizInfos = new ArrayList<>();
 }

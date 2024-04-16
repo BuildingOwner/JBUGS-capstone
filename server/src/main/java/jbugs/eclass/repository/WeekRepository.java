@@ -42,4 +42,9 @@ public class WeekRepository {
                 .setParameter("lectureId", lectureId)
                 .getResultList();
     }
+
+    public Optional<Week> findById(Long id) {
+        Week week = em.find(Week.class, id);
+        return Optional.ofNullable(week);
+    }
 }

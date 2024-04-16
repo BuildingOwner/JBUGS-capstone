@@ -162,12 +162,12 @@ def get_related_quiz():
 @app.route('/chat', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
-        
-        image = request.files.get('image')
+
+        # 여러 파일을 처리하기 위해 getlist 사용
+        image = request.files.getlist('image')
         question = request.form['question']
         chat_id = request.form['chatId']
-        print(image, question)
-        
+
         if sql_injection_detector([chat_id]):
             return "invalied chat ID", 404
         
@@ -192,7 +192,6 @@ def upload_file():
                 if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                     yield piece.encode("utf-8")
         return Response(stream_with_context(generate()))
-        
 
     return jsonify({'message': 'Failed to upload file'})
 

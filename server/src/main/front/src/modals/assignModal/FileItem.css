@@ -1,0 +1,81 @@
+.file-list {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  align-self: stretch;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: var(--padding-3xs);
+  gap: var(--gap-8xs);
+  max-width: 100%;
+}
+.l-file-item {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: 8rem;
+    max-width: 100%;
+    gap: var(--gap-8xs);
+    min-width: 24.125rem;
+  }
+
+  .l{
+  position: relative;
+  margin: 0;
+  height: 0.938rem;
+  width: 0.688rem;
+  border-bottom: 2px solid var(--color-black);
+  border-left: 2px solid var(--color-black);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.file-item {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: 8rem;
+    max-width: 100%;
+  }
+
+.txt {
+    position: relative;
+  }
+  .txt {
+    display: inline-block;
+    min-width: 8rem;
+  }
+  .heroicons-outlinex1 {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+  .heroicons-outlinex1 {
+    height: 1.563rem;
+    align-items: center;
+    padding: var(--padding-7xs);
+    width: 1.563rem;
+  }
+
+
+.vector-icon1 {
+    height: 0.813rem;
+    width: 0.813rem;
+    position: relative;
+  }
+  @media screen and (max-width: 450px) {
+    .txt{
+      font-size: var(--font-size-base);
+    }
+  }

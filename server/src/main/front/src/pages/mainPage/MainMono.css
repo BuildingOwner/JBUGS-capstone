@@ -536,6 +536,7 @@
   max-width: 100%;
 }
 .course {
+  height: 100%;
   flex: 0.9439;
   background-color: var(--color-white);
   overflow-y: auto;
@@ -549,6 +550,7 @@
   min-width: 23.375rem;
 }
 .course-parent {
+
   flex: 1;
   background-color: var(--point-bg-blue);
   overflow: hidden;
@@ -561,6 +563,7 @@
 .course-parent,
 .mainpage,
 .mainpage-inner {
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;

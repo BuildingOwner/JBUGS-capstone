@@ -164,30 +164,31 @@ def upload_file():
     if request.method == 'POST':
 
         # 여러 파일을 처리하기 위해 getlist 사용
-        images = request.files.getlist('image')
+        image = request.files.getlist('image')
         question = request.form['question']
         chat_id = request.form['chatId']
 
-        print(images)
-        print(question)
-
         if sql_injection_detector([chat_id]):
-            return "Invalid chat ID", 404
-
-        save_paths = []  # 저장된 이미지의 경로를 보관할 리스트
-
-        # 이미지 파일들 저장
-        for image in images:
-            if image:
-                erase_folder()
-                now = datetime.now()
-                filename = str(now.strftime("%H_%M_%S_") + str(now.microsecond // 1000)) + image.filename
-                save_path = os.path.join('quiz_module/chat_img', filename)  # 예를 들어 'quiz_module/chat_img' 폴더에 저장
-                image.save(save_path)
-                save_paths.append(save_path)
-
+            return "invalied chat ID", 404
+        
+        image_paths = []
+        # 이미지 파일저장
+        if image:
+            erase_folder()
+            now = datetime.now()
+            filename = str(now.strftime("%H_%M_%S_") + str(now.microsecond // 1000)) + image.filename 
+            save_path = os.path.join('quiz_module/chat_img', filename)  # 'uploads' 폴더에 저장
+            image.save(save_path)
+            image_paths.append(save_path)
+            # chat(text, 'vision', save_path)
+            # def generate():
+            #     for piece in chat(chat_id, question, model, [save_path]):
+            #         if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
+            #             yield piece.encode("utf-8")
+            # return Response(stream_with_context(generate()))
+        
         def generate():
-            for piece in chat(chat_id, question, 'vision', save_paths):
+            for piece in chat(chat_id, question):
                 if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                     yield piece.encode("utf-8")
         return Response(stream_with_context(generate()))

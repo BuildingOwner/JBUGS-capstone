@@ -490,7 +490,7 @@
   max-width: 100%;
 }
 .hw-item {
-  width: 30.938rem;
+  width: 100%;
   height: 18.813rem;
   overflow-x: auto;
   flex-shrink: 0;
@@ -1621,6 +1621,7 @@
   gap: var(--gap-6xl);
 }
 .rightnav {
+  height: 100%;
   flex: 1;
   gap: var(--gap-3xs);
   min-width: 23.375rem;

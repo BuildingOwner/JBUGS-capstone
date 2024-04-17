@@ -38,7 +38,7 @@ def add_quiz_keyword():
     print(f"[{current_file_name}] week: {week}")
     print(f"[{current_file_name}] path: {path}")
     print(f"[{current_file_name}] choice: {choice}")
-    print(f"[{current_file_name}] short: {short}")
+    print(f"[{current_file_name}] short: {short}\n")
 
     if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
         return "invalied request", 401
@@ -86,7 +86,7 @@ def add_quiz_summary():
     print(f"[{current_file_name}] week: {week}")
     print(f"[{current_file_name}] path: {path}")
     print(f"[{current_file_name}] choice: {choice}")
-    print(f"[{current_file_name}] short: {short}")
+    print(f"[{current_file_name}] short: {short}\n")
 
     if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
         return "invalied request", 401
@@ -123,7 +123,7 @@ def add_quiz_summary():
 
 @app.route("/get-quiz/<int:question_id>", methods=["GET"])
 def get_quiz(question_id):
-    print(f"[{current_file_name}] #get-quiz id: {question_id}")
+    print(f"[{current_file_name}] #get-quiz id: {question_id}\n")
     try:
         db = getConnection()
         cursor = db.cursor()
@@ -145,6 +145,7 @@ def get_quiz(question_id):
 
 @app.route("/get-explane", methods=["GET"])
 def get_explane():
+    print(f"[{current_file_name}] #get-explane\n")
     question = request.form.get("question")
     if question == "none":
         return "Quiz not found.", 200
@@ -160,7 +161,7 @@ def get_explane():
 @app.route("/related-quiz", methods=["GET"])
 def get_related_quiz():
     question = request.form.get("question")
-    print(f"[{current_file_name}] #related-quiz quiz: {question}")
+    print(f"[{current_file_name}] #related-quiz quiz: {question}\n")
     if question == "none":
         return "Quiz not found.", 200
     
@@ -183,7 +184,7 @@ def chat():
         # if sql_injection_detector([chat_id]):
         #     return "invalied chat ID", 404
         print(f"[{current_file_name}] #chat images len : {len(images)}")
-        print(f"[{current_file_name}] #chat id : {chat_id}")
+        print(f"[{current_file_name}] #chat id : {chat_id}\n")
         image_paths = []
         # 이미지 파일저장
         if images:

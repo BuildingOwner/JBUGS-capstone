@@ -37,6 +37,8 @@ def explain_gen(question=question1):
     
     for chunk in completion:
         yield chunk.choices[0].delta.content
+    
+    print(f"[{current_file_name}] done.")
 
 def gen_test(question=question1):
     question += """

@@ -19,7 +19,7 @@ def pdf2png(path):
         img = page.get_pixmap()
         img.save(f"{directory}/{i}.png")
         
-    print(f"[{current_file_name}] #pdf2png done.")
+    print(f"[{current_file_name}] #pdf2png done.\n")
 
     return f"{directory}/"
 

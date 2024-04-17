@@ -25,7 +25,7 @@ def delete_all_files_in_folder(folder):
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)  # 폴더 삭제
         except Exception as e:
-            print(f'[{current_file_name}] #delete_all_files_in_folder Failed to delete {file_path}. Reason: {e}')
+            print(f'[{current_file_name}] #delete_all_files_in_folder Failed to delete {file_path}. Reason: {e}\n')
 
 def erase_folder():
     folder_path = 'quiz_module/chat_img'  # 여기에 폴더 경로 입력
@@ -33,6 +33,6 @@ def erase_folder():
 
     if folder_size > 1 * 1024 * 1024 * 1024:  # 1GB 초과 시
         delete_all_files_in_folder(folder_path)
-        print(f"[{current_file_name}] #erase_folder 폴더 내의 모든 파일이 삭제되었습니다.")
+        print(f"[{current_file_name}] #erase_folder 폴더 내의 모든 파일이 삭제되었습니다.\n")
     else:
-        print(f"[{current_file_name}] #erase_folder 폴더 크기가 1GB를 초과하지 않습니다.")
+        print(f"[{current_file_name}] #erase_folder 폴더 크기가 1GB를 초과하지 않습니다.\n")

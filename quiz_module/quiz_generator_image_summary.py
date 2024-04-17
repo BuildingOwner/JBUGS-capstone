@@ -80,7 +80,7 @@ def summary_pdf(path):
         )
         # print(response.json()["choices"][0]["message"]["content"])
         summarized_text += response.json()["choices"][0]["message"]["content"]
-        print(f"[{current_file_name}] #summary_pdf PDF 요약 완료.")
+        print(f"[{current_file_name}] #summary_pdf PDF 요약 완료.\n")
 
     return summarized_text
 
@@ -162,10 +162,10 @@ def generator(summary, quiz_type, questions=[]):
     except (ValidationError, JSONDecodeError):
         # print(result)
         # print(questions)
-        print(f"[{current_file_name}] #generator JSON 형식이 잘못되었습니다. 다시 생성합니다.\n")
+        print(f"[{current_file_name}] #generator JSON 형식이 잘못되었습니다. 다시 생성합니다.")
         return generator(summary, quiz_type, questions)  # 재귀 호출로 다시 생성
 
-    print(f"[{current_file_name}] #generator type:{json.loads(result)["type"]}")
+    print(f"[{current_file_name}] #generator type: {json.loads(result)["type"]}")
     return json.loads(result)
 
 

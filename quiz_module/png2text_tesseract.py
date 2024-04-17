@@ -25,7 +25,7 @@ def png2text_tesseract(path):
         rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         string += pytesseract.image_to_string(rgb_image, lang='kor+eng')
         
-    print(f"[{current_file_name}] #png2text_tesseract done.")
+    print(f"[{current_file_name}] #png2text_tesseract done.\n")
     return f"""{string}"""
 
 if __name__ == "__main__":

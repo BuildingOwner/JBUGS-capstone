@@ -164,31 +164,37 @@ def upload_file():
     if request.method == 'POST':
 
         # 여러 파일을 처리하기 위해 getlist 사용
-        image = request.files.getlist('image')
+        image_keys = [key for key in request.files.keys() if key.startswith('image_')]
+        images = []
+        for key in image_keys:
+            image_file = request.files[key]
+            images.append(image_file)
         question = request.form['question']
-        chat_id = request.form['chatId']
+        chat_id = request.form.get('chatId')
 
-        if sql_injection_detector([chat_id]):
-            return "invalied chat ID", 404
-        
+        # if sql_injection_detector([chat_id]):
+        #     return "invalied chat ID", 404
+        print(f"images len : {len(images)}")
+        print(f"id : {chat_id}")
         image_paths = []
         # 이미지 파일저장
-        if image:
+        if images:
             erase_folder()
-            now = datetime.now()
-            filename = str(now.strftime("%H_%M_%S_") + str(now.microsecond // 1000)) + image.filename 
-            save_path = os.path.join('quiz_module/chat_img', filename)  # 'uploads' 폴더에 저장
-            image.save(save_path)
-            image_paths.append(save_path)
-            # chat(text, 'vision', save_path)
+            for i, image in enumerate(images):
+                now = datetime.now()
+                filename = str(now.strftime("%H_%M_%S_") + str(now.microsecond // 1000))+ str(i) + image.filename 
+                save_path = os.path.join('quiz_module/chat_img', filename)  # 'uploads' 폴더에 저장
+                image.save(save_path)
+                image_paths.append(save_path)
+                
             # def generate():
-            #     for piece in chat(chat_id, question, model, [save_path]):
+            #     for piece in chat(chat_id, question, image_paths):
             #         if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
             #             yield piece.encode("utf-8")
             # return Response(stream_with_context(generate()))
         
         def generate():
-            for piece in chat(chat_id, question):
+            for piece in chat(chat_id, question, image_paths):
                 if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                     yield piece.encode("utf-8")
         return Response(stream_with_context(generate()))

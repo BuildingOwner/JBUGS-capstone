@@ -17,6 +17,11 @@ from datetime import datetime
 from chat import chat
 from erase_folder import erase_folder
 
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
+
 app = Flask(__name__)
 
 
@@ -28,11 +33,12 @@ def add_quiz_keyword():
     choice = request.form.get("choice")
     short = request.form.get("short")
 
-    print("lecture: ", lecture)
-    print("week: ", week)
-    print("path: ", path)
-    print("choice: ", choice)
-    print("short: ", short)
+    print(f"[{current_file_name}] #add-quiz-keyword")
+    print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] week: {week}")
+    print(f"[{current_file_name}] path: {path}")
+    print(f"[{current_file_name}] choice: {choice}")
+    print(f"[{current_file_name}] short: {short}")
 
     if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
         return "invalied request", 401
@@ -75,11 +81,12 @@ def add_quiz_summary():
     choice = request.form.get("choice")
     short = request.form.get("short")
 
-    print("lecture: ", lecture)
-    print("week: ", week)
-    print("path: ", path)
-    print("choice: ", choice)
-    print("short: ", short)
+    print(f"[{current_file_name}] #add-quiz-summary")
+    print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] week: {week}")
+    print(f"[{current_file_name}] path: {path}")
+    print(f"[{current_file_name}] choice: {choice}")
+    print(f"[{current_file_name}] short: {short}")
 
     if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
         return "invalied request", 401
@@ -116,6 +123,7 @@ def add_quiz_summary():
 
 @app.route("/get-quiz/<int:question_id>", methods=["GET"])
 def get_quiz(question_id):
+    print(f"[{current_file_name}] #get-quiz id: {question_id}")
     try:
         db = getConnection()
         cursor = db.cursor()
@@ -152,7 +160,7 @@ def get_explane():
 @app.route("/related-quiz", methods=["GET"])
 def get_related_quiz():
     question = request.form.get("question")
-    print(question)
+    print(f"[{current_file_name}] #related-quiz quiz: {question}")
     if question == "none":
         return "Quiz not found.", 200
     
@@ -160,7 +168,7 @@ def get_related_quiz():
     return related_question, 200
 
 @app.route('/chat', methods=['POST'])
-def upload_file():
+def chat():
     if request.method == 'POST':
 
         # 여러 파일을 처리하기 위해 getlist 사용
@@ -174,8 +182,8 @@ def upload_file():
 
         # if sql_injection_detector([chat_id]):
         #     return "invalied chat ID", 404
-        print(f"images len : {len(images)}")
-        print(f"id : {chat_id}")
+        print(f"[{current_file_name}] #chat images len : {len(images)}")
+        print(f"[{current_file_name}] #chat id : {chat_id}")
         image_paths = []
         # 이미지 파일저장
         if images:

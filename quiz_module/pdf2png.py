@@ -1,6 +1,11 @@
 import fitz #PyMuPDF
 import os
 
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
+
 def pdf2png(path):
     filename = os.path.splitext(os.path.basename(path))[0]  # 확장자 제거
     directory = f"quiz_module/pdf2png/{filename}"
@@ -14,7 +19,7 @@ def pdf2png(path):
         img = page.get_pixmap()
         img.save(f"{directory}/{i}.png")
         
-    print("pdf2png done.")
+    print(f"[{current_file_name}] #pdf2png done.")
 
     return f"{directory}/"
 

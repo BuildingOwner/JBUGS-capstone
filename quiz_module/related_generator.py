@@ -9,6 +9,11 @@ from json_validation import json_validate
 from jsonschema import ValidationError
 from json import JSONDecodeError
 
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
+
 client = OpenAI(api_key=keys.OPENAI_KEY)
 
 question1 = '''
@@ -37,11 +42,11 @@ def related_question_gen(question=question1):
             json_validate(related_question)
         except (ValidationError, JSONDecodeError):
             # print(questions)
-            print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
+            print(f"[{current_file_name}] JSON 형식이 잘못되었습니다. 다시 생성합니다.\n")
             related_question_gen(question)
         return related_question
     else:
-        print('퀴즈 재생성')
+        print(f"[{current_file_name}] 퀴즈 재생성\n")
         related_question_gen(question)
 
 if __name__ == "__main__":

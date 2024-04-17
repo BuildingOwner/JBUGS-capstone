@@ -16,6 +16,11 @@ import json
 from secret.db_connection import getConnection
 from secret.sql_injection_detector import sql_injection_detector
 
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
+
 client = OpenAI(api_key=keys.OPENAI_KEY)
 
 # OpenAI API 키 설정
@@ -24,7 +29,7 @@ api_key = keys.OPENAI_KEY
 
 # 이미지를 base64로 인코딩하는 함수
 def encode_image(image_path):
-    print(f"[chat.py] 이미지 변환 url: {image_path}\n")
+    print(f"[{current_file_name}] 이미지 변환 url: {image_path}")
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode("utf-8")
 
@@ -32,7 +37,7 @@ def encode_image(image_path):
 def chat(chat_id, question, img_path=[]):
     # model = {"vision": "gpt-4-vision-preview", "turbo": "gpt-4-turbo-preview"}
     message = []
-    print(f"[chat.py] chat_id: {chat_id}\n")
+    print(f"[{current_file_name}] chat_id: {chat_id}")
     db = getConnection()
     cursor = db.cursor()
     sql = "SELECT chat_str FROM chat WHERE id = %s"
@@ -53,7 +58,7 @@ def chat(chat_id, question, img_path=[]):
                     encoded_url = encode_image(item["image_url"]["url"])  # 이미지 URL 인코딩
                     item["image_url"]["url"] = f"data:image/jpeg;base64,{encoded_url}"  # 이미지 URL 업데이트
 
-    print(f"[chat.py] 이전 대화 이미지 urls\n{urls}\n")
+    print(f"[{current_file_name}] 이전 대화 이미지 urls: {urls}")
     msg = {
             "role": "user",
             "content": [
@@ -65,7 +70,7 @@ def chat(chat_id, question, img_path=[]):
         }
     message.append(msg)
 
-    print(f"[chat.py] 현재 질문 이미지\n{img_path}\n")
+    print(f"[{current_file_name}] 현재 질문 이미지: {img_path}")
     if len(img_path) != 0:
         # base64 문자열 얻기
         for path in img_path:
@@ -89,7 +94,7 @@ def chat(chat_id, question, img_path=[]):
             insert_text += chunk.choices[0].delta.content
         yield chunk.choices[0].delta.content
     
-    print(f"\ngpt 답변 생성 완료 \n{insert_text}\n")
+    print(f"[{current_file_name}] gpt 답변 생성 완료: {insert_text}")
     gpt_msg = {
         "role": "assistant",
             "content": [
@@ -114,16 +119,16 @@ def chat(chat_id, question, img_path=[]):
     if prev_chat_text is None:
         sql_str = "INSERT INTO chat (chat_str) VALUES (%s)"
         params = (json.dumps(message, ensure_ascii=False, separators=(',', ':')))
-        print("[chat.py] db 삽입", end="")
+        print(f"[{current_file_name}] db 삽입", end="")
     else:
         sql_str = "UPDATE chat SET chat_str = %s WHERE id = %s"
         params = (json.dumps(message, ensure_ascii=False, separators=(',', ':')), chat_id)
-        print("[chat.py] db 업데이트", end="")
+        print(f"[{current_file_name}]  db 업데이트", end="")
 
     if sql_injection_detector([sql_str]) == False:
         cursor.execute(sql_str, params)
         db.commit()
-        print(" 완료\n")
+        print(" 완료")
 
 def chat_test2(question, model_name="turbo", img_path=["test/images/test.png"]):
     image_path = img_path

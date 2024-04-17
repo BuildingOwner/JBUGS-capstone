@@ -1,10 +1,12 @@
 import os
 import shutil
 
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
+
 def get_folder_size(folder):
-    """
-    폴더의 총 용량을 계산합니다.
-    """
     total_size = 0
     for dirpath, dirnames, filenames in os.walk(folder):
         for f in filenames:
@@ -15,9 +17,6 @@ def get_folder_size(folder):
     return total_size
 
 def delete_all_files_in_folder(folder):
-    """
-    폴더 안의 모든 파일을 삭제합니다.
-    """
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
         try:
@@ -26,7 +25,7 @@ def delete_all_files_in_folder(folder):
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)  # 폴더 삭제
         except Exception as e:
-            print(f'Failed to delete {file_path}. Reason: {e}')
+            print(f'[{current_file_name}] #delete_all_files_in_folder Failed to delete {file_path}. Reason: {e}')
 
 def erase_folder():
     folder_path = 'quiz_module/chat_img'  # 여기에 폴더 경로 입력
@@ -34,6 +33,6 @@ def erase_folder():
 
     if folder_size > 1 * 1024 * 1024 * 1024:  # 1GB 초과 시
         delete_all_files_in_folder(folder_path)
-        print("폴더 내의 모든 파일이 삭제되었습니다.")
+        print(f"[{current_file_name}] #erase_folder 폴더 내의 모든 파일이 삭제되었습니다.")
     else:
-        print("폴더 크기가 1GB를 초과하지 않습니다.")
+        print(f"[{current_file_name}] #erase_folder 폴더 크기가 1GB를 초과하지 않습니다.")

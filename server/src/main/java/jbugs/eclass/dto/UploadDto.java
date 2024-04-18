@@ -10,4 +10,6 @@ public class UploadDto {
     private int weekNumber;
     private MultipartFile[] attachFiles;
     private MultipartFile[] videoFiles;
+    private String shortAnswer;
+    private String choice;
 }

@@ -13,9 +13,11 @@ import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -35,6 +37,7 @@ public class UploadApiController {
     private final WeekService weekService;
     private final MaterialService materialService;
     private final VideoMaterialRepository videoMaterialRepository;
+    private final RestTemplate restTemplate;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -64,6 +67,8 @@ public class UploadApiController {
             if (uploadDto.getVideoFiles() != null && uploadDto.getVideoFiles().length > 0) {
                 uploadFiles(Arrays.asList(uploadDto.getVideoFiles()), weekEntity.getId(), true, uploadDto.getVideoTitle());
             }
+
+            sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), fileDir+uploadDto.getAttachFiles(), uploadDto.getChoice(), uploadDto.getShortAnswer());
 
             // 성공적으로 파일이 저장된 경우
             return ResponseEntity.ok().body("파일이 성공적으로 업로드 되었습니다.");
@@ -103,5 +108,28 @@ public class UploadApiController {
                 }
             }
         }
+    }
+
+    // 파일 업로드 로직 이후에 추가
+    public void sendQuizKeywordRequest(String lecture, String week, String path, String choice, String shortAnswer) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("lecture", lecture);
+        map.add("week", week);
+        map.add("path", path);
+        map.add("choice", choice);
+        map.add("short", shortAnswer);
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(map, headers);
+
+        String url = "http://localhost:5000/add-quiz-keyword";
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        // 필요하다면 응답 처리
+        log.info("Status Code: {}", responseEntity.getStatusCode());
+        log.info("Response Body: {}", responseEntity.getBody());
     }
 }

@@ -12,7 +12,7 @@ public class AssignmentDto {
     private String title;
     private String contents;
     private LocalDateTime dueDate;
-    private Long weekId;
+    private int weekNumber;
     private AssignmentStatus status;
 
     public static AssignmentDto from(Assignment assignment) {
@@ -21,7 +21,7 @@ public class AssignmentDto {
         dto.setTitle(assignment.getTitle());
         dto.setContents(assignment.getContent());
         dto.setDueDate(assignment.getDueDate());
-        dto.setWeekId(assignment.getWeek().getId());
+        dto.setWeekNumber(assignment.getWeek().getWeekNumber());
         dto.setStatus(assignment.getStatus());
         return dto;
     }

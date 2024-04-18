@@ -35,7 +35,7 @@ server:
   servlet:
     session:
       tracking-modes: cookie
-      timeout: 1800s
+      timeout: 1h
 
 file:
   dir: /Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/

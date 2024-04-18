@@ -141,6 +141,10 @@
   color: var(--color-black);
   font-family: var(--font-roboto);
 }
+.course-item3:hover {
+  cursor:pointer;
+  background-color: #999999;
+}
 @media screen and (max-width: 450px) {
   .personicon3,
   .vector-icon36 {

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/loginPage/LoginPage";
 import AssignmentInfoModal from "./modals//assignModal/AssignmentInfoModal";
-import MainMono from "./pages/mainPage/MainMono";
+import Main from "./pages/mainPage/Main";
 import Course from "./pages/coursePage/Course";
 import QaList from "./pages/qaPage/QaList";
 import NoticeList from "./pages/noticePage/NoticeList";
@@ -162,7 +162,7 @@ function App() {
     <Routes>
       <Route path="/" element={<LoginPage />} />
       <Route path="/assignmentinfomodal" element={<AssignmentInfoModal />} />
-      <Route path="/main" element={<MainMono />} />
+      <Route path="/main" element={<Main />} />
       <Route path="/course" element={<Course />} />
       <Route path="/qalist" element={<QaList />} />
       <Route path="/noticelist" element={<NoticeList />} />

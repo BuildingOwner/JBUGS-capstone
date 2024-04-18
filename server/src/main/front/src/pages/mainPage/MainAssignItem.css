@@ -91,3 +91,8 @@
     display: inline-block;
     min-width: 3.5rem;
   }
+
+  .homeworkitem:hover{
+    cursor: pointer;
+    background-color: #999999;
+  }

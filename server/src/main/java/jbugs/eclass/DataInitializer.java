@@ -275,7 +275,7 @@ public class DataInitializer implements CommandLineRunner {
 
         Quiz quiz1 = new Quiz();
         quiz1.setQuizName("컴퓨터 과학 1주차 퀴즈");
-        quiz1.setQuizType("연습 문제");
+        quiz1.setQuizType(QuizType.PRACTICE);
         quiz1.setCreatedAt(LocalDateTime.of(2024, 4, 11, 23, 59));
         quiz1.setUpdateAt(LocalDateTime.of(2024, 4, 11, 23, 59));
         quiz1.setDeadline(LocalDateTime.of(2024, 5, 30, 23, 59));
@@ -284,7 +284,7 @@ public class DataInitializer implements CommandLineRunner {
 
         Quiz quiz2 = new Quiz();
         quiz2.setQuizName("생활속의 인공지능 1주차 퀴즈");
-        quiz2.setQuizType("연습 문제");
+        quiz2.setQuizType(QuizType.PRACTICE);
         quiz2.setCreatedAt(LocalDateTime.of(2024, 4, 11, 23, 59));
         quiz2.setUpdateAt(LocalDateTime.of(2024, 4, 11, 23, 59));
         quiz2.setDeadline(LocalDateTime.of(2024, 5, 30, 23, 59));

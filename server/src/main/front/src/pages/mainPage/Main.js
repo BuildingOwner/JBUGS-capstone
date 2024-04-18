@@ -32,14 +32,19 @@ const Main = () => {
         const response = await axios.get("/api/main", {
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
         });
+
+        const memberInfoDto2 = response.data.memberInfoDto; // 여기에 데이터 저장
+        const mainLectures2 = response.data.mainLectures; // 여기에 데이터 저장
         console.log("get 응답:", response)
         setMemberInfoDto(response.data.memberInfoDto)
         setMainLectures(response.data.mainLectures)
-        console.log("memberInfoDto:", memberInfoDto)
-        console.log("mainLectures", mainLectures)
+        console.log("memberInfoDto:", memberInfoDto2)
+        console.log("response memberInfoDto:", response.data.memberInfoDto)
+        console.log("mainLectures", mainLectures2)
+        console.log("response mainLectures", response.data.mainLectures)
 
-        setMemberName(memberInfoDto.memberName)
-        setFirstTrack(memberInfoDto.firstTrack)
+        setMemberName(memberInfoDto2.memberName)
+        setFirstTrack(memberInfoDto2.firstTrack)
 
         // 현재 날짜 정보 설정
         const currentDate = new Date();

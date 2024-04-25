@@ -16,6 +16,11 @@ from png2text_tesseract import png2text_tesseract
 
 client = OpenAI(api_key=keys.OPENAI_KEY)
 
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
+
 
 def extrect_keyword(path, number=10):
     img_path = pdf2png(path)
@@ -36,7 +41,7 @@ def extrect_keyword(path, number=10):
         ],
     )
 
-    print(completion.choices[0].message.content)
+    print(f"[{current_file_name}] #extrect_keyword keyword: {completion.choices[0].message.content}\n")
     return completion.choices[0].message.content
 
 
@@ -109,9 +114,10 @@ def generator(keyword, quiz_type, questions=[]):
         json_validate(result)
     except (ValidationError, JSONDecodeError):
         # print(questions)
-        print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
+        print(f"[{current_file_name}] #generator JSON 형식이 잘못되었습니다. 다시 생성합니다.")
         return generator(keyword, quiz_type, questions=[])  # 재귀 호출로 다시 생성
 
+    print(f"[{current_file_name}] #generator type: {json.loads(result)["type"]}")
     return json.loads(result)
 
 

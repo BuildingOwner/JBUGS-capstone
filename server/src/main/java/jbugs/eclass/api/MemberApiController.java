@@ -48,8 +48,6 @@ public class MemberApiController {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
-//            Member loginMember = memberService.getMemberByLoginId(form.getLoginId());
-
         LoginResponse response = new LoginResponse();
         response.setSessionId(session.getId());
         response.setMessage("로그인 성공");

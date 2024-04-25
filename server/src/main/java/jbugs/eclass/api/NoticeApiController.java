@@ -67,5 +67,29 @@ public class NoticeApiController {
         }
     }
 
+    @PostMapping("/{enrollmentId}/notice")
+    public ResponseEntity<?> saveNotice(@PathVariable Long enrollmentId,
+                                        @RequestBody NoticeSaveDto noticeSaveDto,
+                                        HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
+            Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+            // enrollmentId를 사용해 Lecture 객체 찾기
+            Lecture lecture = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
+            if (lecture == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("강의를 찾을 수 없습니다.");
+            }
+
+            // NoticeSaveDto를 사용해 Notice 객체 생성 및 저장
+            Notice notice = noticeSaveDto.toEntity(lecture); // Notice 객체 생성
+            noticeRepository.save(notice); // Notice 객체 저장
+
+            return ResponseEntity.ok().body("공지사항이 성공적으로 등록되었습니다.");
+        } else {
+            // 세션이 없거나 로그인 되어있지 않은 경우
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("세션이 없거나 로그인되어 있지 않습니다.");
+        }
+    }
 
 }

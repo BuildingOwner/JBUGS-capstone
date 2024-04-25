@@ -14,6 +14,11 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
 
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
+
 client = OpenAI(api_key=keys.OPENAI_KEY)
 
 # OpenAI API 키 설정
@@ -68,15 +73,15 @@ def summary_pdf(path):
                     "url": f"data:image/jpeg;base64,{encode_image(f'{path}{j}.png')}"
                 },
             }
-            print(j)
+            # print(j)
             payload["messages"][1]["content"].append(str)
         response = requests.post(
             "https://api.openai.com/v1/chat/completions", headers=headers, json=payload
         )
         # print(response.json()["choices"][0]["message"]["content"])
         summarized_text += response.json()["choices"][0]["message"]["content"]
-        print("PDF 요약 완료.")
-
+        print(f"[{current_file_name}] #summary_pdf {i} - {min(i + 20, img_count)} / {img_count} PDF 요약 완료.")
+    print("")
     return summarized_text
 
 
@@ -155,11 +160,12 @@ def generator(summary, quiz_type, questions=[]):
     try:
         json_validate(result)
     except (ValidationError, JSONDecodeError):
-        print(result)
-        print(questions)
-        print("JSON 형식이 잘못되었습니다. 다시 생성합니다.")
+        # print(result)
+        # print(questions)
+        print(f"[{current_file_name}] #generator JSON 형식이 잘못되었습니다. 다시 생성합니다.")
         return generator(summary, quiz_type, questions)  # 재귀 호출로 다시 생성
 
+    print(f"[{current_file_name}] #generator type: {json.loads(result)["type"]}")
     return json.loads(result)
 
 

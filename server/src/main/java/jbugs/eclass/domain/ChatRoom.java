@@ -16,7 +16,6 @@ public class ChatRoom {
     @Column(name = "chat_room_id")
     private Long id;
 
-    private String modelName;
     @Column(length = 50000)
     private String chattingJson;
 

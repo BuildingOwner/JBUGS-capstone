@@ -80,8 +80,8 @@ def summary_pdf(path):
         )
         # print(response.json()["choices"][0]["message"]["content"])
         summarized_text += response.json()["choices"][0]["message"]["content"]
-        print(f"[{current_file_name}] #summary_pdf PDF 요약 완료.\n")
-
+        print(f"[{current_file_name}] #summary_pdf {i} - {min(i + 20, img_count)} / {img_count} PDF 요약 완료.")
+    print("")
     return summarized_text
 
 

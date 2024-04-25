@@ -1,14 +1,18 @@
+import { useState, useEffect } from "react";
 import MainAssignItem from "./MainAssignItem";
 import "./RightNav.css";
 
-const RightNav = () => {
+const RightNav = (props) => {
+  console.log("RightNav의 props", props)
+  const mainLectures = props.mainLectures
+
   return (
     <div className="rightnav">
       <div className="righttop">
         <div className="info9">
           <div className="parent9">
-            <b className="b176">진승원</b>
-            <div className="div161">웹공학트랙</div>
+            <b className="b176">{props.memberName}</b>
+            <div className="div161">{props.firstTrack}</div>
           </div>
           <img
             className="personicon4"
@@ -23,12 +27,23 @@ const RightNav = () => {
           <h1 className="title17">과제</h1>
         </div>
         <div className="hw-item">
-          <MainAssignItem />
-          <MainAssignItem />
-          <MainAssignItem />
+          {mainLectures &&
+            mainLectures.map((lecture) => (
+              lecture.assignments.map((assignment) => (
+                <MainAssignItem
+                  lectureName={lecture.lectureName}
+                  key={assignment.id}
+                  title={assignment.title}
+                  contents={assignment.contents}
+                  dueDate={assignment.dueDate}
+                  weekNumber={assignment.weekNumber}
+                  status={assignment.status}
+                />
+              ))
+            ))}
         </div>
       </div>
-      <div className="planner">
+      {/* <div className="planner">
         <div className="title18">
           <h1 className="h1">시간표</h1>
         </div>
@@ -195,7 +210,7 @@ const RightNav = () => {
           <div className="timetable-child15" />
           <div className="timetable-child16" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

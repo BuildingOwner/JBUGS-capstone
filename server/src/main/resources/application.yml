@@ -1,0 +1,42 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  datasource:
+    url: jdbc:mysql://43.200.202.59:3306/eclass?characterEncoding=UTF-8&serverTimezone=UTC
+    username: jbugs
+    password: jbugsdatabase
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  #  datasource:
+  #    url: jdbc:h2:tcp://localhost/~/jbugs
+  #    username: sa
+  #    password:
+  #    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+#    show_sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+#logging:
+#  level:
+#    org.hibernate.SQL: debug
+#    org.hibernate.orm.jdbc.bind: trace
+
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
+      timeout: 1h
+
+file:
+  dir: /Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/
+

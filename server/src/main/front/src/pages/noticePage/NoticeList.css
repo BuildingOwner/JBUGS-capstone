@@ -1,0 +1,382 @@
+.num1 {
+  overflow: hidden;
+}
+
+.num1 {
+  height: 3rem;
+  width: 2.5rem;
+  flex-shrink: 0;
+}
+
+.div21 {
+  position: relative;
+  display: inline-block;
+  min-width: 2.25rem;
+}
+
+.pin,
+.status1 {
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.status1 {
+  border-radius: var(--br-xl);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-18xl);
+}
+
+.pin {
+  height: 3rem;
+  width: 3.75rem;
+}
+
+.div22 {
+  position: relative;
+  display: inline-block;
+  min-width: 2.25rem;
+}
+
+.title4 {
+  width: 31.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) 0;
+  box-sizing: border-box;
+}
+
+.div23 {
+  position: relative;
+  display: inline-block;
+  min-width: 3.375rem;
+}
+
+.writer1 {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-4xl);
+}
+
+.div24 {
+  position: relative;
+  display: inline-block;
+  min-width: 3.375rem;
+}
+
+.upload-date1 {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-14xl);
+}
+
+.div25 {
+  position: relative;
+  display: inline-block;
+  min-width: 3.375rem;
+}
+
+.col-name1,
+.view1 {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.view1 {
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: var(--padding-xs) var(--padding-smi);
+}
+
+.col-name1 {
+  align-self: stretch;
+  border-radius: 0 var(--br-3xs) 0 0;
+  background-color: var(--point-bg-blue);
+  overflow-x: auto;
+  padding: var(--padding-3xs) var(--padding-xl);
+  gap: var(--gap-3xs);
+}
+
+.col-name1,
+.div26,
+.num2 {
+  display: flex;
+  align-items: center;
+}
+
+.div26 {
+  height: 6.25rem;
+  position: relative;
+  min-width: 1.875rem;
+}
+
+.num2 {
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--padding-8xs);
+}
+
+.b71 {
+  position: relative;
+  font-size: var(--font-size-lg);
+  display: inline-block;
+  font-family: var(--font-roboto);
+  color: var(--color-black);
+  text-align: left;
+  min-width: 3.375rem;
+}
+
+.status2 {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-3xs) var(--padding-9xl);
+  background-color: var(--boder-blue);
+  border-radius: var(--br-3xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.status2:hover {
+  background-color: var(--color-steelblue);
+}
+
+.vector-icon8 {
+  height: 1.094rem;
+  width: 1.094rem;
+  position: relative;
+}
+
+.pin-fill,
+.secret1 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.pin-fill {
+  height: 1.469rem;
+  padding: var(--padding-10xs);
+  box-sizing: border-box;
+  width: 1.469rem;
+}
+
+.secret1 {
+  padding: var(--padding-19xl-2) var(--padding-lg-2) var(--padding-19xl-3) var(--padding-lg-3);
+}
+
+.p10,
+.p11,
+.p12 {
+  margin: 0;
+}
+
+.title-text {
+  position: relative;
+}
+
+.title5 {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-sm) var(--padding-xl);
+  box-sizing: border-box;
+  min-width: 10.625rem;
+  max-width: 100%;
+}
+
+.div27 {
+  position: relative;
+  display: inline-block;
+  min-width: 4.5rem;
+}
+
+.writer2 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-sm);
+}
+
+.div28 {
+  position: relative;
+  display: inline-block;
+  min-width: 5.938rem;
+}
+
+.upload-date2 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-smi-5);
+}
+
+.div29 {
+  position: relative;
+  display: inline-block;
+  min-width: 3.125rem;
+}
+
+.line,
+.notice-row,
+.view2 {
+  overflow: hidden;
+  display: flex;
+}
+
+.view2 {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-19xl) var(--padding-mini);
+}
+
+.line,
+.notice-row {
+  box-sizing: border-box;
+}
+
+.line {
+  align-self: stretch;
+  border-bottom: 1px solid var(--color-dimgray-100);
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-3xs);
+  max-width: 100%;
+}
+
+.notice-row {
+  width: 69.375rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 var(--padding-xl);
+  flex-shrink: 0;
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+
+.content2,
+.list2,
+.table1 {
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.table1 {
+  width: 69.375rem;
+  height: 42.438rem;
+  background-color: var(--bg-blue);
+  overflow-x: auto;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.content2,
+.list2 {
+  align-self: stretch;
+}
+
+.list2 {
+  border-radius: var(--br-3xs);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.content2 {
+  border-radius: var(--br-11xl);
+  background-color: var(--color-white);
+  padding: var(--padding-31xl) var(--padding-xl) var(--padding-xl);
+  gap: var(--gap-11xl);
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}
+
+.content-wrapper,
+.content2,
+.noticelist {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  flex: 1;
+  flex-direction: column;
+  padding: var(--padding-xl) 0 0;
+  max-width: calc(100% - 270px);
+}
+
+.noticelist {
+  width: 100%;
+  position: relative;
+  background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
+  overflow: hidden;
+  flex-direction: row;
+  padding: 0 var(--padding-xl) 0 0;
+  letter-spacing: normal;
+}
+
+@media screen and (max-width: 1025px) {
+  .content2 {
+    padding-top: var(--padding-13xl);
+    box-sizing: border-box;
+  }
+
+  .content-wrapper {
+    max-width: 100%;
+  }
+
+  .noticelist {
+    padding-left: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .content2 {
+    box-sizing: border-box;
+  }
+
+  .content2 {
+    padding-top: var(--padding-2xl);
+  }
+}

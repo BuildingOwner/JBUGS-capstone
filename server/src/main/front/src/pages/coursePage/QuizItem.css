@@ -1,0 +1,82 @@
+.b188 {
+  position: relative;
+  font-size: var(--font-size-base);
+  display: inline-block;
+  font-family: var(--font-roboto);
+  color: var(--color-darkslategray-200);
+  text-align: left;
+  min-width: 4.375rem;
+}
+.submit13 {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-8xs) var(--padding-mini);
+  background-color: var(--point-green);
+  border-radius: var(--br-3xs);
+  overflow: hidden;
+  flex-direction: row;
+  justify-content: center;
+  white-space: nowrap;
+}
+.submit13:hover {
+  background-color: var(--color-seagreen);
+}
+.b189,
+.info18,
+.submit13 {
+  display: flex;
+  align-items: center;
+}
+.b189 {
+  width: 3.5rem;
+  position: relative;
+  justify-content: center;
+  min-width: 3.5rem;
+}
+.info18 {
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: var(--gap-3xs);
+  text-align: center;
+}
+.b190 {
+  flex: 1;
+  position: relative;
+}
+.name9 {
+  width: 17.875rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--padding-xl);
+  box-sizing: border-box;
+}
+.n16 {
+  width: 3rem;
+  position: relative;
+  font-size: var(--font-size-xs);
+  display: inline-block;
+}
+.quizitem3 {
+  align-self: stretch;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  overflow-x: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-mini-5) var(--padding-3xs);
+  gap: var(--gap-0);
+  row-gap: 20px;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-darkslategray-200);
+  font-family: var(--font-roboto);
+}

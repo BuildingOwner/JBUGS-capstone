@@ -1,0 +1,144 @@
+.tab1 {
+    margin: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 31.875rem 0 0;
+    row-gap: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.tab-item3 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-2xl-5) var(--padding-12xl);
+    background-color: var(--blue3);
+    border-radius: var(--br-3xs) 0 0 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.tab-item3:hover {
+    background-color: var(--color-lightsteelblue);
+}
+
+.tab-item4 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-2xl-5) var(--padding-36xl);
+    background-color: var(--boder-blue);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .tab-item4:hover {
+    background-color: var(--color-steelblue);
+  }
+  .tab-item5 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-2xl-5) 2.813rem;
+    background-color: var(--blue3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .tab-item5:hover,
+  .tab-item6:hover {
+    background-color: var(--color-lightsteelblue);
+  }
+  .tab-item6 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-2xl-5) var(--padding-16xl);
+    background-color: var(--blue3);
+    border-radius: 0 var(--br-3xs) 0 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+.my3 {
+    position: relative;
+    font-size: var(--font-size-xl);
+    font-family: var(--font-malgun-gothic);
+    color: var(--color-black);
+    text-align: left;
+    display: inline-block;
+    min-width: 5.5rem;
+}
+
+.my4 {
+    position: relative;
+    font-size: var(--font-size-xl);
+    font-family: var(--font-malgun-gothic);
+    color: var(--color-black);
+    text-align: left;
+    display: inline-block;
+    min-width: 2.5rem;
+}
+
+.my5 {
+    position: relative;
+    font-size: var(--font-size-xl);
+    font-family: var(--font-malgun-gothic);
+    color: var(--color-black);
+    text-align: left;
+    display: inline-block;
+    min-width: 3.75rem;
+}
+
+.my6 {
+    position: relative;
+    font-size: var(--font-size-xl);
+    font-family: var(--font-malgun-gothic);
+    color: var(--color-black);
+    text-align: left;
+    display: inline-block;
+    min-width: 5rem;
+}
+
+@media screen and (max-width: 1125px) {
+    .tab1 {
+        flex-wrap: wrap;
+        padding-right: 15.938rem;
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .tab1 {
+        box-sizing: border-box;
+    }
+
+    .tab1 {
+        padding-right: 7.938rem;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    .my4,
+    .my5,
+    .my6 {
+        font-size: var(--font-size-base);
+    }
+
+    .tab1 {
+        padding-right: var(--padding-xl);
+        box-sizing: border-box;
+    }
+}

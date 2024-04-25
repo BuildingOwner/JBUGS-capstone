@@ -1,0 +1,305 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/new-course-page.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- fullcalendar CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
+  <!-- fullcalendar 언어 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
+
+  <script src="/js/course-add.js"></script>
+  <script src="/js/course-add-homework.js"></script>
+</head>
+
+
+<body>
+<div class="container">
+  <div class="nav">
+    <img src="/img/국영문시그니쳐.png" alt="logo" class="logo" onclick="location.href = '/'"/>
+    <ul>
+      <li>
+        <button onclick="location.href='/'">
+          <i class="bi bi-house"></i>HOME
+        </button>
+      </li>
+      <li>
+        <button onclick="location.href='/lib/upload'">
+          <i class="bi bi-folder"></i>자료실
+        </button>
+      </li>
+      <li>
+        <button onclick="location.href='homeworks'">
+          <i class="bi bi-people"></i>커뮤니티
+        </button>
+      </li>
+      <li>
+        <button onclick="location.href='#'">
+          <i class="bi bi-chat"></i>메시지
+        </button>
+      </li>
+      <li>
+        <button onclick="location.href='/quizHome'">
+          <i class="bi bi-pc-display-horizontal"></i>한성 MOOC
+        </button>
+      </li>
+      <li>
+        <button onclick="location.href='/developer'">
+          <i class="bi bi-gear"></i>setting
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div class="classroom">
+    <form th:Object="${form}" method="get">
+      <div class="title_prof">
+        <div class="title">
+          <h2 th:text="${form.lecture.name}"></h2>
+          <div class="dropdown">
+            <button class="prof" th:text="${form.lecture.professor.member.name}"></button>
+            <div class="dropdown-options">
+              <span href="#">email@email.com</span>
+              <span href="#">강의실 : 공학관 305호</span>
+              <span href="#">연구실 : 연구관 xxx호</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="lib1">
+      <button class="accordion" id="1week">1주차</button>
+      <div class="panel panel_1">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[1]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+          <li>
+            <video src="../static/file/video/input.mp4" controls></video>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="2week">2주차</button>
+      <div class="panel panel_2">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[2]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="3week">3주차</button>
+      <div class="panel panel_3">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[3]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="4week">4주차</button>
+      <div class="panel panel_4">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[4]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="5week">5주차</button>
+      <div class="panel panel_5">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[5]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="6week">6주차</button>
+      <div class="panel panel_6">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[6]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="7week">7주차</button>
+      <div class="panel panel_7">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[7]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="8week">8주차</button>
+      <div class="panel panel_8">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[8]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="9week">9주차</button>
+      <div class="panel panel_9">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[9]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="10week">10주차</button>
+      <div class="panel panel_10">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[10]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="11week">11주차</button>
+      <div class="panel panel_11">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[11]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="12week">12주차</button>
+      <div class="panel panel_12">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[12]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="13week">13주차</button>
+      <div class="panel panel_13">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[13]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="14week">14주차</button>
+      <div class="panel panel_14">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[14]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="15week">15주차</button>
+      <div class="panel panel_15">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[15]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lib1">
+      <button class="accordion" id="16week">16주차</button>
+      <div class="panel panel_16">
+        <ul>
+          <li th:each="material : ${materialsByWeekNumber[16]}">
+            <a th:href="@{/{enrollmentId}/edit/download/{materialId}(enrollmentId=${form.id}, materialId=${material.id})}" th:text="${material.fileName}"></a>
+            <a th:text="${material.videoName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-bar">
+
+
+    <!--    <div id="calendar"></div>-->
+    <div class="homework">
+      <h3>과제</h3>
+      <div class="get-homework"></div>
+    </div>
+    <div class="sticky-bar">
+      <table id="course-table">
+        <tr>
+          <td><a href="#1week">1</a></td>
+          <td><a href="#2week">2</a></td>
+          <td><a href="#3week">3</a></td>
+          <td><a href="#4week">4</a></td>
+        </tr>
+        <tr>
+          <td><a href="#5week">5</a></td>
+          <td><a href="#6week">6</a></td>
+          <td><a href="#7week">7</a></td>
+          <td><a href="#8week">8</a></td>
+        </tr>
+        <tr>
+          <td><a href="#9week">9</a></td>
+          <td><a href="#10week">10</a></td>
+          <td><a href="#11week">11</a></td>
+          <td><a href="#12week">12</a></td>
+        </tr>
+        <tr>
+          <td><a href="#13week">13</a></td>
+          <td><a href="#14week">14</a></td>
+          <td><a href="#15week">15</a></td>
+          <td><a href="#16week">16</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="/js/accordion.js"></script>
+<!--<script src="/js/calendar.js"></script>-->
+
+</body>
+
+</html>

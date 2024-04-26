@@ -130,6 +130,7 @@
   text-align: center;
 }
 .course-item3 {
+  height: 120px;
   align-self: stretch;
   border-radius: var(--br-8xs);
   background-color: var(--point-bg-blue);

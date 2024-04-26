@@ -216,3 +216,18 @@ body {
 #root, #root > div{
   height: 100%;
 }
+
+.no-scroll-bar {
+  overflow-y: scroll; 
+}
+
+/* 크롬, 사파리, 오페라 기준 */
+.no-scroll-bar::-webkit-scrollbar {
+    display: none;
+}
+
+/* 파이어폭스, 익스플로러, 엣지 */
+.no-scroll-bar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

@@ -521,9 +521,9 @@
   justify-content: flex-start;
 }
 .scrollframe {
+  height: 100%;
   overflow-y: auto;
   gap: var(--gap-mini);
-  min-height: 49.938rem;
 }
 .courselist {
   overflow: hidden;

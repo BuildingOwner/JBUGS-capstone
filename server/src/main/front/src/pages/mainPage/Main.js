@@ -87,20 +87,18 @@ const Main = () => {
                 </div>
               </div>
             </div>
-            <div className="courselist">
-              <div className="scrollframe">
-                {mainLectures && mainLectures.map((lecture, index) => (
-                  <CourseItem
-                    key={index}
-                    lectureName={lecture.lectureName}
-                    professorName={lecture.professorName}
-                    division={lecture.division}
-                    lectureTime={lecture.lectureTime}
-                    classification={lecture.classification}
-                  />
-                ))}
+            <div className="scrollframe no-scroll-bar">
+              {mainLectures && mainLectures.map((lecture, index) => (
+                <CourseItem
+                  key={index}
+                  lectureName={lecture.lectureName}
+                  professorName={lecture.professorName}
+                  division={lecture.division}
+                  lectureTime={lecture.lectureTime}
+                  classification={lecture.classification}
+                />
+              ))}
 
-              </div>
             </div>
           </div>
           <RightNav memberName={memberName} firstTrack={firstTrack} mainLectures={mainLectures} />

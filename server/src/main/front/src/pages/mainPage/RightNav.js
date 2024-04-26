@@ -26,7 +26,7 @@ const RightNav = (props) => {
         <div className="hw-top">
           <h1 className="title17">과제</h1>
         </div>
-        <div className="hw-item">
+        <div className="hw-item no-scroll-bar">
           {mainLectures &&
             mainLectures.map((lecture) => (
               lecture.assignments.map((assignment) => (

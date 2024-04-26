@@ -84,7 +84,6 @@ def chat(chat_id, question, img_path=[]):
     response = client.chat.completions.create(
         model="gpt-4-turbo",
         messages=message,
-        max_tokens=1024,
         stream=True
     )
     

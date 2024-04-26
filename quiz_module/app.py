@@ -14,7 +14,7 @@ import json
 from quiz_module.explain_generator import explain_gen
 from related_generator import related_question_gen
 from datetime import datetime
-from chat import chat
+from chat import chat as mychat
 from erase_folder import erase_folder
 
 # Get the absolute path of the current Python script
@@ -203,7 +203,7 @@ def chat():
             # return Response(stream_with_context(generate()))
         
         def generate():
-            for piece in chat(chat_id, question, image_paths):
+            for piece in mychat(chat_id, question, image_paths):
                 if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                     yield piece.encode("utf-8")
         return Response(stream_with_context(generate()))

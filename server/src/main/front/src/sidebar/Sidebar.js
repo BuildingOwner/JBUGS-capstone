@@ -1,6 +1,6 @@
 import "./Sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   return (
     <div className="sidebars1">
       <div className="input-processor">
@@ -35,9 +35,9 @@ const Sidebar = () => {
         </div>
         <div className="course-nav">
           <div className="course-name">
-            <h3 className="h34">웹프레임워크2</h3>
+            <h3 className="h34">{props.lectureName}</h3>
             <div className="line8" />
-            <h3 className="a4">A</h3>
+            <h3 className="a4">{props.division}</h3>
           </div>
           <div className="aggregator">
             <div className="navitem4">

@@ -231,3 +231,7 @@ body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+h3{
+  margin: 0;
+}

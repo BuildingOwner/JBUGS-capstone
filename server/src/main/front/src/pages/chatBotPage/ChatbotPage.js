@@ -1,14 +1,92 @@
-import Sidebar from "../../sidebar/Sidebar"
+import MainSidebar from "../../sidebar/MainSidebar";
 import BotChatItem from "./BotChatItem";
 import UserChatItem from "./UserChatItem"
 import HistoryItem from "./HistoryItem";
-import "./ChatbotPage.css";
+import styles from "./ChatbotPage.module.css";
+import { useEffect } from "react";
 
 const ChatbotPage = () => {
+  const chatBoardScoll = () => {
+    const chatUl = document.querySelector('.ChatbotPage_chatBoard__vOg3W');
+    chatUl.scrollTop = chatUl.scrollHeight;
+  }
+
+  useEffect(() => {
+    chatBoardScoll();
+  }, []);
+
   return (
-    <div className="chatbotpage">
-      <Sidebar />
-      <main className="box-wrapper">
+    <div className={styles.chatbotpage}>
+      <MainSidebar />
+      <main className={styles.boxWrapper}>
+        <div className={styles.box}>
+          <div className={styles.top}>
+            <div className={styles.topLeft}>
+              <h3>AI Chat Hellper AI부기</h3>
+              <div className={styles.selectedModel}>GPT 4 Turbo</div>
+            </div>
+            <div className={styles.topRight}>
+              <h3>History</h3>
+              <div className={styles.historyCount}>
+                6 / 50
+              </div>
+            </div>
+          </div>
+          <div className={styles.bottom}>
+            <div className={styles.bottomLeft}>
+              <div className={`${styles.chatBoard} no-scroll-bar`}>
+                <UserChatItem />
+                <BotChatItem />
+                <UserChatItem />
+                <BotChatItem />
+                <UserChatItem />
+                <BotChatItem />
+                <UserChatItem />
+                <BotChatItem />
+                <UserChatItem />
+                <BotChatItem />
+                <UserChatItem />
+                <BotChatItem />
+              </div>
+              <div className={styles.chat}>
+                <button type="button" className={`${styles.RegenerateBtn} btn btn-primary`}>
+                  Regenerate response
+                </button>
+                <div className={styles.inputBtns}>
+                  <button type="button" className="btn btn-primary">이미지</button>
+                  <textarea className="form-control" placeholder="질문을 입력해주세요..."/>
+                  <button type="submit" className="btn btn-primary">보내기</button>
+                </div>
+              </div>
+            </div>
+            <div className={styles.bottomRight}>
+              <div className={`${styles.historys} no-scroll-bar`}>
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+                <HistoryItem />
+              </div>
+              <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}>
+                선택 삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+      {/* <main className="box-wrapper">
         <section className="box">
           <div className="top6">
             <div className="title-parent1">
@@ -116,7 +194,7 @@ const ChatbotPage = () => {
             </div>
           </div>
         </section>
-      </main>
+      </main> */}
     </div>
   );
 };

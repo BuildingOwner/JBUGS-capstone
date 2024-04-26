@@ -1,4 +1,137 @@
-.frame-child20 {
+.chatbotpage {
+  background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
+  display: flex;
+}
+
+.boxWrapper {
+  flex-grow: 1;
+  padding: 20px;
+  padding-left: 0;
+}
+
+.box {
+  width: 100%;
+  background-color: white;
+  height: 100%;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+}
+
+.topLeft {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.topLeft h3{
+  height: 40px;
+  font-size: var(--font-size-11xl);
+}
+
+.selectedModel{
+  background-color: var(--point-bg-blue);
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.topRight{
+  display: flex;
+  width: 230px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--bg-blue);
+  border-radius: 0 30px 0 0;
+  box-sizing: border-box;
+}
+
+.topRight h3{
+  font-size: var(--font-size-5xl);
+}
+
+.historyCount{
+  background-color: var(--point-bg-blue);
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.bottom{
+  display: flex;
+  flex-grow: 1;
+  height: 1%;
+}
+
+.bottomLeft {
+  flex-grow: 1;
+  width: 1px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #eee;
+  border-radius: 0 0 0 30px;
+}
+
+.chatBoard{
+  height: 100%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+
+.bottomRight {
+  width: 230px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: var(--point-bg-blue);
+  border-radius: 0 0 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 50px;
+  align-items: center;
+}
+
+.historys{
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.chat{
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  margin: 30px 0
+}
+
+.inputBtns{
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+
+.inputBtns button{
+  width: 100px;
+}
+
+.inputBtns > textarea{
+  resize: none;
+}
+
+/* .frame-child20 {
   align-self: stretch;
   flex: 1;
   position: relative;
@@ -58,7 +191,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) 0;
   gap: var(--gap-6xl);
-  debug_commit: f6aba90;
 }
 
 .div34,
@@ -133,7 +265,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) 0;
   gap: var(--gap-6xl);
-  debug_commit: f6aba90;
 }
 
 .frame-child22 {
@@ -211,7 +342,6 @@
   flex-wrap: wrap;
   padding: var(--padding-3xs) 0;
   gap: var(--gap-6xl);
-  debug_commit: f6aba90;
 }
 
 .chat-board {
@@ -447,7 +577,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox2 {
@@ -479,7 +608,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox3 {
@@ -511,7 +639,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox4 {
@@ -543,7 +670,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox5 {
@@ -575,7 +701,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox6 {
@@ -607,7 +732,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox7 {
@@ -639,7 +763,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox8 {
@@ -671,7 +794,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox9 {
@@ -699,7 +821,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox10,
@@ -739,7 +860,6 @@
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox11 {
@@ -772,7 +892,6 @@
   padding: var(--padding-3xs) var(--padding-xl);
   box-sizing: border-box;
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .checkbox12,
@@ -812,7 +931,6 @@
   flex-direction: row;
   padding: var(--padding-3xs) var(--padding-xl);
   gap: var(--gap-xl);
-  debug_commit: f6aba90;
 }
 
 .history-list {
@@ -1165,4 +1283,4 @@
   .div49 {
     font-size: var(--font-size-base);
   }
-}
+} */

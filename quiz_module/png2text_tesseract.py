@@ -3,6 +3,12 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
+import os
+
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
 
 img_extensions = ['*.png']
 
@@ -19,7 +25,7 @@ def png2text_tesseract(path):
         rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         string += pytesseract.image_to_string(rgb_image, lang='kor+eng')
         
-    print('png2text_tesseract done.')
+    print(f"[{current_file_name}] #png2text_tesseract done.\n")
     return f"""{string}"""
 
 if __name__ == "__main__":

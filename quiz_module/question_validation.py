@@ -5,6 +5,11 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from secret import keys
 from openai import OpenAI
 
+# Get the absolute path of the current Python script
+current_file_path = os.path.abspath(__file__)
+# Extract the file name from the path
+current_file_name = os.path.basename(current_file_path)
+
 client = OpenAI(api_key=keys.OPENAI_KEY)
 
 
@@ -26,5 +31,5 @@ def validate_question(question):
         ],
     )
     # print(question)
-    print("question check ", completion.choices[0].message.content)
+    print(f"[{current_file_name}] question check {completion.choices[0].message.content}")
     return completion.choices[0].message.content

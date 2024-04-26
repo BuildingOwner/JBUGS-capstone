@@ -14,10 +14,6 @@ const Main = () => {
   const [currentDate, setCurrentDate] = useState('')
   const [currentWeek, setCurrentWeek] = useState()
 
-
-
-
-
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
 
@@ -51,7 +47,7 @@ const Main = () => {
 
         // 현재 날짜 정보 설정
         const currentDate = new Date();
-        const startDate = new Date('2024-03-01'); // 개강일
+        const startDate = new Date('2024-03-01'); // 개강일 적는 곳
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth() + 1;
         const date = currentDate.getDate();
@@ -91,6 +87,7 @@ const Main = () => {
               {mainLectures && mainLectures.map((lecture, index) => (
                 <CourseItem
                   key={index}
+                  enrollmentId={lecture.enrollmentId}
                   lectureName={lecture.lectureName}
                   professorName={lecture.professorName}
                   division={lecture.division}

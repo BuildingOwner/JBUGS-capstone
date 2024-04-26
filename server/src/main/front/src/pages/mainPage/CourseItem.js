@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CourseItem.css";
 
 const CourseItem = (props) => {
+  const navigate = useNavigate();
+
+  const moveToCourse = () => {
+    navigate('/course', { state: props.enrollmentId })
+  }
   return (
-    <div className="course-item3">
+    <div className="course-item3" onClick={moveToCourse}>
       <div className="course-left3">
         <div className="personicon3">
           <img className="vector-icon36" alt="" src="/vector-41.svg" />

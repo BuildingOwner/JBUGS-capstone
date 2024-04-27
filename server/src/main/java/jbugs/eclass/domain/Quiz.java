@@ -25,6 +25,8 @@ public class Quiz {
     private LocalDateTime deadline; // 종료일시
     private LocalDateTime createdAt; // 생성 시간
     private LocalDateTime updateAt; // 수정 시간
+    private String timeLimit; // 제한시간
+    private String reflectionRatio; //반영비율
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")

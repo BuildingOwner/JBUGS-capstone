@@ -18,6 +18,8 @@ public class QuizDto {
     private LocalDateTime deadline; // 종료일시
     private boolean submissionStatus;
     private Integer quizScore;
+    private String timeLimit; // 제한시간
+    private String reflectionRatio; //반영비율
 
     public static QuizDto from(Quiz quiz, QuizInfo quizInfo) {
         QuizDto dto = new QuizDto();
@@ -26,7 +28,9 @@ public class QuizDto {
         dto.setDescription(quiz.getDescription());
         dto.setQuizName(quiz.getQuizName());
         dto.setDeadline(quiz.getDeadline());
-        dto.setJsonData(quiz.getJsonData());
+        dto.setTimeLimit(quiz.getTimeLimit());
+        dto.setReflectionRatio(quiz.getReflectionRatio());
+//        dto.setJsonData(quiz.getJsonData());
 
         if (quizInfo != null) { // QuizInfo 객체가 제공되는 경우에만
             dto.setSubmissionStatus(quizInfo.isSubmissionStatus());

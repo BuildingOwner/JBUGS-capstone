@@ -20,7 +20,7 @@ const QuizAnswer = () => {
               <div className={styles.quizInfoRight}>
                 <h3 className={styles.fontSize5xl}>과목명</h3>
                 <h3 className={styles.fontSize5xl}>분반</h3>
-                <button type="button" className={`btn btn-primary`}>나가기</button>
+                <button type="button" className={`btn btn-primary ${styles.backBtn}`}>나가기</button>
               </div>
             </div>
             <div className={styles.rightBottom}>
@@ -32,6 +32,7 @@ const QuizAnswer = () => {
                     return (
                       <div className={styles.answerOption}>
                         {num}
+                        {/* {i번째 보기가 정답인 경우 style.correct, 오답인 경우 style.wrong 클래스 넣으면 됨 유저가 찍은 답을 먼저 wrong클래스 넣고 그다음 정답을 correct넣으면 알아서 초록색으로 될껴} */}
                         <h3 className={styles.optionText}>{i}번 보기</h3>
                       </div>
                     )
@@ -39,8 +40,8 @@ const QuizAnswer = () => {
                 </div>
                 <p className={styles.answerContainer}>해설 생성 가능</p>
                 <div className={styles.buttons}>
-                  <button type="button" className={`btn btn-secondary`}>이전 문제</button>
-                  <button type="button" className={`btn btn-primary`}>다음 문제</button>
+                  <button type="button" className={`btn btn-secondary`} style={{border: 'none'}}>이전 문제</button>
+                  <button type="button" className={`btn btn-primary ${styles.featureBtn}`}>다음 문제</button>
                 </div>
               </div>
             </div>
@@ -59,8 +60,8 @@ const QuizAnswer = () => {
               <h3 className={styles.fontSizeBase}>asdf</h3>
             </div>
             <div className={styles.answerFeatureBtns}>
-              <button type="button" className={`btn btn-primary`}>해설 생성</button>
-              <button type="button" className={`btn btn-primary`}>관련 문제 더 풀어보기</button>
+              <button type="button" className={`btn btn-primary ${styles.featureBtn}`}>해설 생성</button>
+              <button type="button" className={`btn btn-primary ${styles.featureBtn}`}>관련 문제 더 풀어보기</button>
             </div>
           </div>
         </div>

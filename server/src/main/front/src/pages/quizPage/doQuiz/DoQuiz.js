@@ -3,7 +3,6 @@ import QuizInfo from "../quizComponents/QuizInfo";
 import Option1 from "../quizComponents/Option1";
 import styles from "./DoQuiz.module.css";
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
-import { BiFontSize } from "react-icons/bi";
 
 const DoQuiz = () => {
 
@@ -20,7 +19,7 @@ const DoQuiz = () => {
               <div className={styles.quizInfoRight}>
                 <h3 className={styles.fontSize5xl}>과목명</h3>
                 <h3 className={styles.fontSize5xl}>분반</h3>
-                <button type="button" className={`btn btn-primary`}>나가기</button>
+                <button type="button" className={`btn btn-primary ${styles.backBtn}`}>나가기</button>
               </div>
             </div>
             <div className={styles.rightBottom}>
@@ -38,8 +37,8 @@ const DoQuiz = () => {
                   })}
                 </div>
                 <div className={styles.buttons}>
-                  <button type="button" className={`btn btn-secondary`}>이전 문제</button>
-                  <button type="button" className={`btn btn-primary`}>다음 문제</button>
+                  <button type="button" className={`btn btn-secondary`} style={{border: 'none'}}>이전 문제</button>
+                  <button type="button" className={`btn btn-primary ${styles.featureBtn}`}>다음 문제</button>
                 </div>
               </div>
             </div>

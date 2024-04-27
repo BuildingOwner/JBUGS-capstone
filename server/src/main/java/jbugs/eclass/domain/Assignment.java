@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +27,9 @@ public class Assignment {
 
     @Enumerated(EnumType.STRING)
     private AssignmentStatus status;  // 과제 상태
+
+    @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL)
+    private List<Material> materials = new ArrayList<>();
 
     // 과제 제출
     public void submitAssignment() {

@@ -4,47 +4,20 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jbugs.eclass.domain.Week;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
-public class WeekRepository {
-    @PersistenceContext
-    private final EntityManager em;
+public interface WeekRepository extends JpaRepository<Week, Long> {
 
-    public void save(Week week){
-        em.persist(week);
-    }
+    // 이 메소드는 Spring Data JPA가 자동으로 구현해줍니다.
+    Optional<Week> findById(Long id);
 
-    public Week findOne(Long id){
-        return em.find(Week.class, id);
-    }
+    Optional<Week> findByLectureIdAndWeekNumber(Long lectureId, int weekNumber);
 
-    public List<Week> findAll(){
-        return em.createQuery("select w from Week w", Week.class)
-                .getResultList();
-    }
-
-    public Optional<Week> findByLectureIdAndWeekNumber(Long lectureId, int weekNumber) {
-        return em.createQuery("select w from Week w where w.lecture.id = :lectureId and w.weekNumber = :weekNumber", Week.class)
-                .setParameter("lectureId", lectureId)
-                .setParameter("weekNumber", weekNumber)
-                .getResultList()
-                .stream()
-                .findFirst();
-    }
-
-    public List<Week> findByLectureId(Long lectureId) {
-        return em.createQuery("select w from Week w where w.lecture.id = :lectureId", Week.class)
-                .setParameter("lectureId", lectureId)
-                .getResultList();
-    }
-
-    public Optional<Week> findById(Long id) {
-        Week week = em.find(Week.class, id);
-        return Optional.ofNullable(week);
-    }
+    // lecture의 id를 기준으로 모든 Week을 찾습니다.
+    List<Week> findByLectureId(Long lectureId);
 }

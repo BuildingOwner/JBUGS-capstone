@@ -6,6 +6,7 @@ import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
 import jbugs.eclass.service.EnrollmentService;
+import jbugs.eclass.service.QuizService;
 import jbugs.eclass.service.WeekService;
 import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import java.util.stream.IntStream;
 public class CourseApiController {
     private final WeekService weekService;
     private final EnrollmentRepository enrollmentRepository;
+    private final QuizService quizService;
 
     @GetMapping("/{enrollmentId}")
     public ResponseEntity<?> getCourseInfo(@PathVariable Long enrollmentId, HttpServletRequest request) {
@@ -38,6 +40,7 @@ public class CourseApiController {
             MemberInfoDto memberInfoDto = new MemberInfoDto();
             memberInfoDto.setMemberId(loginMember.getId());
             memberInfoDto.setMemberName(loginMember.getName());
+            memberInfoDto.setMemberType(loginMember.getMemberType());
             if (loginMember.getMemberType() == MemberType.STUDENT) {
                 memberInfoDto.setFirstTrack(loginMember.getStudent().getFirstTrack());
             }
@@ -80,8 +83,15 @@ public class CourseApiController {
                 weeklyContentDto.setClassFiles(fileDtos);
 
                 //퀴즈 부분
+                List<Quiz> quizzes = weekService.findQuizByLectureId(enrollment.getLecture().getId());
 
+                // 퀴즈 목록을 QuizDto로 변환
+                List<QuizDto> quizDtos = quizzes.stream().map(quiz -> {
+                    QuizInfo quizInfo = quizService.findQuizInfoByQuizId(quiz.getId()); // QuizService를 사용하여 QuizInfo 조회
+                    return QuizDto.from(quiz, quizInfo); // QuizInfo를 포함하여 QuizDto 생성
+                }).collect(Collectors.toList());
 
+                weeklyContentDto.setQuizzes(quizDtos);
 
                 return weeklyContentDto;
             }).collect(Collectors.toList());

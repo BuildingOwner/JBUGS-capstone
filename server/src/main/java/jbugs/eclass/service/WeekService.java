@@ -32,12 +32,14 @@ public class WeekService {
         weekRepository.save(week);
     }
 
-    public List<Week> findWeeks(){
-        return weekRepository.findAll();
+    public Week findOne(Long weekId) {
+        Optional<Week> week = weekRepository.findById(weekId);
+        return week.orElseThrow(() -> new IllegalArgumentException("해당 주차 정보를 찾을 수 없습니다: " + weekId));
+        // Optional 객체의 orElseThrow 메소드를 사용하여 Week 객체를 찾을 수 없는 경우 예외를 발생시킵니다.
     }
 
-    public Week findOne(Long weekId){
-        return weekRepository.findOne(weekId);
+    public List<Week> findWeeks(){
+        return weekRepository.findAll();
     }
 
     public List<Assignment> findAssignmentsByLectureId(Long lectureId) {
@@ -52,6 +54,8 @@ public class WeekService {
 
         return assignments;
     }
+
+
 
     public List<Quiz> findQuizByLectureId(Long lectureId) {
         // lectureId에 해당하는 모든 weekId를 찾음

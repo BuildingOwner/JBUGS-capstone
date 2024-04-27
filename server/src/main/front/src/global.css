@@ -240,3 +240,22 @@ h3{
 button:hover{
   background-color: #ccc !important;
 }
+
+.background{
+  display: flex;
+  background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
+}
+
+.mycontainer{
+  flex-grow: 1;
+  padding: 20px;
+  padding-left: 0;
+}
+
+.bg{
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  display: flex;
+}

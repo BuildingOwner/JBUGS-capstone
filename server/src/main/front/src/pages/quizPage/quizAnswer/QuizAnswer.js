@@ -10,10 +10,10 @@ const QuizAnswer = () => {
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
 
   return (
-    <div className={styles.quiz}>
+    <div className={`background`}>
       <Sidebar />
-      <div className={styles.container}>
-        <div className={styles.bg}>
+      <div className={`mycontainer`}>
+        <div className={`bg`}>
           <div className={styles.right}>
             <div className={styles.quizInfo}>
               <h3 className={styles.fontSize5xl}>이건 무슨 문제일까용?</h3>

@@ -2,13 +2,13 @@
     align-self: stretch;
     display: flex;
     /* margin-left: -6.25rem; */
-    width: 3.125rem;
-    overflow: hidden;
+    width: 50px;
     flex-shrink: 0;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     gap: var(--gap-8xs);
+    height: 100%;
 }
 
 .text116 {
@@ -21,7 +21,7 @@
 }
 
 .bar-wrapper7 {
-    flex: 1;
+    flex-grow: 1;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -52,4 +52,7 @@
 .p133,
 .p134 {
     margin: 0;
+    font-size: var(--font-size-sm);
+    text-align: center;
+    height: var();
 }

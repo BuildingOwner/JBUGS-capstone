@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import "./Info.css";
 
-const Info = ({
+const Info = (
+  {
   prop,
   prop1,
   propPadding,
@@ -9,6 +10,7 @@ const Info = ({
   propAlignSelf,
   propAlignSelf1,
   propMinWidth1,
+  props
 }) => {
   const scoreStyle = useMemo(() => {
     return {
@@ -16,6 +18,7 @@ const Info = ({
     };
   }, [propPadding]);
 
+  console.log(props)
   const b3Style = useMemo(() => {
     return {
       minWidth: propMinWidth,
@@ -46,7 +49,7 @@ const Info = ({
       </div>
       <div className="time7">
         <b className="b217">분류</b>
-        <b className="b218">연습 문제</b>
+        <b className="b218">{props.quizType}</b>
       </div>
     </section>
   );

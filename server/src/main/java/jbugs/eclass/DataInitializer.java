@@ -351,7 +351,7 @@ public class DataInitializer implements CommandLineRunner {
         VideoMaterial videoMaterial = new VideoMaterial();
         videoMaterial.setTitle("test1");
         videoMaterial.setVideoName("0. 스프링 MVC2 전체 목차.pdf");
-        videoMaterial.setVideoPath("/Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/0. 스프링 MVC2 전체 목차.pdf");
+        videoMaterial.setVideoPath("/Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file//video/예제 도메인 모델 - 2편만 듣는 분을 위한 내용.pdf");
         videoMaterial.setWeek(week1.orElseThrow());
         videoMaterialRepository.save(videoMaterial);
     }

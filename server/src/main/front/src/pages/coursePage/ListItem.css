@@ -34,3 +34,8 @@ h4 {
 .fourfh {
   min-width: fit-content;
 }
+
+.list-item-cjw:hover {
+  cursor:pointer;
+  background-color: #999999;
+}

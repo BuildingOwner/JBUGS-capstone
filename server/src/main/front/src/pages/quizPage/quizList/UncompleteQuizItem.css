@@ -153,4 +153,5 @@
   font-size: var(--font-size-lg);
   color: var(--color-black);
   font-family: var(--font-roboto);
+  height: 100%;
 }

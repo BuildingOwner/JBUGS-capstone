@@ -16,10 +16,10 @@ const ChatbotPage = () => {
   }, []);
 
   return (
-    <div className={styles.chatbotpage}>
+    <div className={`background`}>
       <MainSidebar />
-      <main className={styles.boxWrapper}>
-        <div className={styles.box}>
+      <div className={`mycontainer`}>
+        <div className={`bg ${styles.bg}`}>
           <div className={styles.top}>
             <div className={styles.topLeft}>
               <h3>AI Chat Hellper AI부기</h3>
@@ -85,7 +85,7 @@ const ChatbotPage = () => {
             </div>
           </div>
         </div>
-      </main>
+      </div>
       {/* <main className="box-wrapper">
         <section className="box">
           <div className="top6">

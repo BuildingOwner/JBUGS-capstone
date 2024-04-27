@@ -1,20 +1,4 @@
-.chatbotpage {
-  background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
-  display: flex;
-}
-
-.boxWrapper {
-  flex-grow: 1;
-  padding: 20px;
-  padding-left: 0;
-}
-
-.box {
-  width: 100%;
-  background-color: white;
-  height: 100%;
-  border-radius: 30px;
-  display: flex;
+.bg{
   flex-direction: column;
 }
 

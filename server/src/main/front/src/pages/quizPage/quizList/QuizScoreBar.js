@@ -9,9 +9,9 @@ const QuizScoreBar = () => {
             </div>
             <div className="name10">
                 <span className="name-txt">
-                    <p className="p132">1주차</p>
-                    <p className="p133">연습문제</p>
-                    <p className="p134">3줄</p>
+                    <p className="p132">1주차 연습문제 3줄</p>
+                    {/* <p className="p133">연습문제</p>
+                    <p className="p134">3줄</p> */}
                 </span>
             </div>
         </div>

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
+import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 
 const Course = () => {
   const location = useLocation()
@@ -22,7 +22,6 @@ const Course = () => {
   const [quizs, setQuizs] = useState([]);
   const assignmentlist = "assignmentlist"
   const quizlist = "quizlist"
-
 
   useEffect(() => {
     const fetchCourse = async () => {

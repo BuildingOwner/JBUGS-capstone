@@ -246,9 +246,10 @@
   padding: 0 0 0 var(--padding-320xl);
   gap: var(--gap-mini);
 }
-
+/* 높이 넓이 수정필요 */
 .quizinfomodal {
-  width: 100%;
+  width: 800px;
+  height: 700px;
   position: relative;
   border-radius: var(--br-3xs);
   background-color: var(--color-white);

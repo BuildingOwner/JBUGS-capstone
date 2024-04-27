@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
-    private final WeekRepository weekRepository;
+    private final WeekService weekService;
 
     public void createAssignment(Long weekId, String title, String content, LocalDateTime dueDate) {
-        Week week = weekRepository.findOne(weekId);
+        Week week = weekService.findOne(weekId);
         if (week == null) {
             throw new IllegalArgumentException("주차 정보를 찾을 수 없습니다.");
         }

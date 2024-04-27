@@ -1,7 +1,9 @@
 package jbugs.eclass;
 
 import jbugs.eclass.domain.*;
+import jbugs.eclass.repository.MaterialRepository;
 import jbugs.eclass.repository.QuizInfoRepository;
+import jbugs.eclass.repository.VideoMaterialRepository;
 import jbugs.eclass.repository.WeekRepository;
 import jbugs.eclass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,12 @@ public class DataInitializer implements CommandLineRunner {
     private final QuizService quizService;
     private final NoticeService noticeService;
     private final QnAService qnAService;
+    private final MaterialRepository materialRepository;
+    private final VideoMaterialRepository videoMaterialRepository;
 
 
     @Autowired
-    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder, WeekRepository weekRepository, QuizService quizService, NoticeService noticeService, QnAService qnAService) {
+    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder, WeekRepository weekRepository, QuizService quizService, NoticeService noticeService, QnAService qnAService, MaterialRepository materialRepository, VideoMaterialRepository videoMaterialRepository) {
         this.memberService = memberService;
         this.lectureService = lectureService;
         this.enrollmentService = enrollmentService;
@@ -40,6 +44,8 @@ public class DataInitializer implements CommandLineRunner {
         this.quizService = quizService;
         this.noticeService = noticeService;
         this.qnAService = qnAService;
+        this.materialRepository = materialRepository;
+        this.videoMaterialRepository = videoMaterialRepository;
     }
 
     @Override
@@ -334,5 +340,19 @@ public class DataInitializer implements CommandLineRunner {
         qnAService.createQnA(lecture2.getId(),"요건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
         qnAService.createQnA(lecture2.getId(),"그건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
         qnAService.createQnA(lecture2.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+
+        Material material1 = new Material();
+        material1.setTitle("test1");
+        material1.setFileName("0. 스프링 MVC2 전체 목차.pdf");
+        material1.setFilePath("/Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/0. 스프링 MVC2 전체 목차.pdf");
+        material1.setWeek(week1.orElseThrow());
+        materialRepository.save(material1);
+
+        VideoMaterial videoMaterial = new VideoMaterial();
+        videoMaterial.setTitle("test1");
+        videoMaterial.setVideoName("0. 스프링 MVC2 전체 목차.pdf");
+        videoMaterial.setVideoPath("/Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/0. 스프링 MVC2 전체 목차.pdf");
+        videoMaterial.setWeek(week1.orElseThrow());
+        videoMaterialRepository.save(videoMaterial);
     }
 }

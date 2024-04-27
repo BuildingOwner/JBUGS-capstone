@@ -90,7 +90,7 @@ public class UploadApiController {
             if (!file.isEmpty()) {
                 String fullPath;
                 if (isVideo) {
-                    fullPath = fileDir + "/video/" + file.getOriginalFilename(); // 비디오 파일의 경우
+                    fullPath = fileDir + "video/" + file.getOriginalFilename(); // 비디오 파일의 경우
                 } else {
                     fullPath = fileDir + file.getOriginalFilename(); // 일반 파일의 경우
                 }
@@ -100,13 +100,15 @@ public class UploadApiController {
                 if (isVideo) {
                     VideoMaterial videoMaterial = new VideoMaterial();
                     videoMaterial.setVideoPath(fullPath);
-                    videoMaterial.setVideoName(title);
+                    videoMaterial.setTitle(title);
+                    videoMaterial.setVideoName(file.getOriginalFilename());
                     videoMaterial.setWeek(weekEntity);
                     videoMaterialRepository.save(videoMaterial);
                 } else {
                     Material material = new Material();
                     material.setFilePath(fullPath);
-                    material.setFileName(title);
+                    material.setTitle(title);
+                    material.setFileName(file.getOriginalFilename());
                     material.setWeek(weekEntity);
                     materialService.join(material);
                 }

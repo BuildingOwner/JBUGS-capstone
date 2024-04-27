@@ -96,7 +96,9 @@ public class WeekService {
         return materialRepository.findByWeekId(weekId);
     }
 
-
+    public List<Quiz> findQuizzesByWeekId(Long weekId) {
+        return quizRepository.findByWeekId(weekId);
+    }
 
     public List<Assignment> findValidAssignmentsByLectureId(Long lectureId) {
         List<Assignment> allAssignments = findAssignmentsByLectureId(lectureId);

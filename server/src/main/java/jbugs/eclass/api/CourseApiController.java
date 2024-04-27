@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -82,16 +83,14 @@ public class CourseApiController {
                         .collect(Collectors.toList());
                 weeklyContentDto.setClassFiles(fileDtos);
 
-                //퀴즈 부분
-                List<Quiz> quizzes = weekService.findQuizByLectureId(enrollment.getLecture().getId());
-
-                // 퀴즈 목록을 QuizDto로 변환
-                List<QuizDto> quizDtos = quizzes.stream().map(quiz -> {
-                    QuizInfo quizInfo = quizService.findQuizInfoByQuizId(quiz.getId()); // QuizService를 사용하여 QuizInfo 조회
-                    return QuizDto.from(quiz, quizInfo); // QuizInfo를 포함하여 QuizDto 생성
+                List<Quiz> quizzes = weekService.findQuizzesByWeekId(week.getId());
+                List<QuizDto> quizDtoList = quizzes.stream().map(quiz -> {
+                    // Quiz에 해당하는 QuizInfo 객체를 조회
+                    Optional<QuizInfo> quizInfoOptional = Optional.ofNullable(quizService.findQuizInfoByQuizId(quiz.getId()));
+                    // QuizInfo 객체가 존재하는 경우 QuizDto 생성, 그렇지 않은 경우 null 반환
+                    return quizInfoOptional.map(quizInfo -> QuizDto.from(quiz, quizInfo)).orElse(null);
                 }).collect(Collectors.toList());
-
-                weeklyContentDto.setQuizzes(quizDtos);
+                weeklyContentDto.setQuizzes(quizDtoList);
 
                 return weeklyContentDto;
             }).collect(Collectors.toList());
@@ -104,7 +103,4 @@ public class CourseApiController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("세션이 없거나 로그인되어 있지 않습니다.");
         }
     }
-
-
-
 }

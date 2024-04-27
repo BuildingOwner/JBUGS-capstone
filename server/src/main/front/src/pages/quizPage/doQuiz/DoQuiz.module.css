@@ -49,6 +49,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-11xl);
+  width: 80%;
+  height: 80%;
 }
 
 .question{
@@ -58,11 +60,6 @@
 .questionNumber{
   color: #666;
   font-size: var(--font-size-5xl);
-}
-
-.quizContainer{
-  width: 80%;
-  height: 80%;
 }
 
 .option{
@@ -91,6 +88,7 @@
   flex-direction: column;
   gap: var(--gap-11xl);
   padding: 100px 0;
+  padding-bottom: 50px;
 }
 
 .leftTime{
@@ -117,13 +115,63 @@
 
 .notice{
   padding: 20px 20px;
+  flex-grow: 1;
 }
 
 .fontSizeBase{
   font-size: var(--font-size-xl);
 }
 
+.answerQuizContainer{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-11xl);
+  width: 80%;
+  height: 90%;
+}
 
+.answerOption{
+  display: flex;
+  gap: var(--gap-6xl);
+  align-items: center;
+  background-color: white;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+}
+
+.answerContainer{
+  width: 100%;
+  flex-grow: 1;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.answerFeatureBtns{
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--padding-18xl);
+  gap: 20px;
+}
+
+.featureBtn{
+  background-color: var(--point-blue) !important;
+  border: none !important;
+}
+
+.backBtn{
+  background-color: var(--red) !important;
+  border: none !important;
+}
+
+.correct{
+  background-color: var(--point-green);
+}
+
+.wrong{
+  background-color: var(--point-red);
+}
 /* .h31,
 .question-1-of {
   position: relative;

@@ -236,3 +236,7 @@ h3{
   margin: 0 !important;
   line-height: normal !important;
 }
+
+button:hover{
+  background-color: #ccc !important;
+}

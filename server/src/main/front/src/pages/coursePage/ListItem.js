@@ -1,18 +1,29 @@
+import { useEffect, useState } from "react";
 import "./ListItem.css"
 import { useNavigate } from "react-router-dom";
 const ListItem = (props) => {
   const navigate = useNavigate()
-  const dueDate = new Date(props.dueDate);
-  // 현재 날짜를 가져옵니다
-  const currentDate = new Date();
-  // 남은 시간을 계산합니다 (밀리초 단위)
-  const timeDiff = dueDate.getTime() - currentDate.getTime();
-  // 남은 일수를 계산합니다
-  const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  const [daysRemaining, setDaysRemaining] = useState()
 
+  useEffect(() => {
+  if (props.url === "assignmentlist") {
+    const dueDate = new Date(props.dueDate);
+    const currentDate = new Date();
+    const timeDiff = dueDate.getTime() - currentDate.getTime();
+    setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+  } else if (props.url === "quizlist") {
+    const dueDate = new Date(props.deadline);
+    const currentDate = new Date();
+    const timeDiff = dueDate.getTime() - currentDate.getTime();
+    setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+  }
+}, [props.url, props.dueDate, props.deadline]);
   const checkURL = () => {
-    if(props.url == "assignmentlist")
-      moveToAssignmentList()
+    if (props.url === "assignmentlist") {
+      moveToAssignmentList();
+    } else if (props.url === "quizlist") {
+      moveToQuizList();
+    }
   }
 
   const moveToAssignmentList = () => {
@@ -20,10 +31,13 @@ const ListItem = (props) => {
   }
 
   return (
+    
     <div className="list-item-cjw" onClick={checkURL}>
       <div className="flex-cjw">
         <div className="first">
-          {props.status === "NOT_SUBMITTED" ? (
+          {/* type에 따라 다른 UI를 렌더링 */}
+      {props.url === 'assignmentlist' && (
+        props.status === "NOT_SUBMITTED" ? (
           <h4>
             미제출
           </h4>
@@ -31,10 +45,40 @@ const ListItem = (props) => {
           <h4>
             제출
           </h4>
-        )}
+        )
+      )}
+      {props.url === 'quizlist' && (
+        props.submissionStatus === true ? (
+          <h4>
+            응시
+          </h4>
+        ) : (
+          <h4>
+            미응시
+          </h4>
+        )
+      )}
+      {props.url === 'material' && (
+        <p>This is a material</p>
+      )}
+      {props.url === 'video' && (
+        <p>This is a video</p>
+      )}
+          
         </div>
         <div className="second">
-          <h4>{props.title}</h4>
+        {props.url === 'assignmentlist' && (
+        <h4>{props.title}</h4>
+      )}
+      {props.url === 'quizlist' && (
+       <h4>{props.quizName}</h4>
+      )}
+      {props.url === 'material' && (
+        <p>This is a material</p>
+      )}
+      {props.url === 'video' && (
+        <p>This is a video</p>
+      )}
         </div>
         <div className="third">
           <div className="prograss-bar"></div>

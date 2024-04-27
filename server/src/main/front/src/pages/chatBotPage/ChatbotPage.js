@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const ChatbotPage = () => {
   const chatBoardScoll = () => {
-    const chatUl = document.querySelector('.ChatbotPage_chatBoard__vOg3W');
+    const chatUl = document.querySelector('#chatBoard');
     chatUl.scrollTop = chatUl.scrollHeight;
   }
 
@@ -34,7 +34,7 @@ const ChatbotPage = () => {
           </div>
           <div className={styles.bottom}>
             <div className={styles.bottomLeft}>
-              <div className={`${styles.chatBoard} no-scroll-bar`}>
+              <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`}>
                 <UserChatItem />
                 <BotChatItem />
                 <UserChatItem />

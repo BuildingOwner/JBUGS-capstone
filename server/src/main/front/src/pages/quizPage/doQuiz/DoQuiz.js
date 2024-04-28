@@ -5,8 +5,11 @@ import styles from "./DoQuiz.module.css";
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
 
 const DoQuiz = () => {
-
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
+
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <div className={`background`}>

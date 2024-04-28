@@ -3,15 +3,15 @@ import "./Info.css";
 
 const Info = (
   {
-  prop,
-  prop1,
-  propPadding,
-  propMinWidth,
-  propAlignSelf,
-  propAlignSelf1,
-  propMinWidth1,
-  props
-}) => {
+    prop,
+    score,
+    propPadding,
+    propMinWidth,
+    propAlignSelf,
+    propAlignSelf1,
+    propMinWidth1,
+    props
+  }) => {
   const scoreStyle = useMemo(() => {
     return {
       padding: propPadding,
@@ -40,7 +40,7 @@ const Info = (
           {prop}
         </b>
         <b className="b214" style={b4Style}>
-          {prop1}
+          {score}점
         </b>
       </div>
       <div className="percent">
@@ -49,7 +49,27 @@ const Info = (
       </div>
       <div className="time7">
         <b className="b217">분류</b>
-        <b className="b218">{props.quizType}</b>
+        {props.quizType === 'PRACTICE' && (
+          <b className="b218">연습문제</b>
+        )}
+        {props.quizType === 'quizlist' && (
+          props.submissionStatus === true ? (
+            <h4>
+              응시
+            </h4>
+          ) : (
+            <h4>
+              미응시
+            </h4>
+          )
+        )}
+        {props.quizType === 'material' && (
+          <p>This is a material</p>
+        )}
+        {props.quizType === 'video' && (
+          <p>This is a video</p>
+        )}
+        
       </div>
     </section>
   );

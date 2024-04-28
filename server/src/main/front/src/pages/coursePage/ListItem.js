@@ -6,7 +6,7 @@ import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 const ListItem = (props) => {
   const navigate = useNavigate()
   const [daysRemaining, setDaysRemaining] = useState()
-
+  const [fileExtension, setFileExtension] = useState()
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -26,6 +26,12 @@ const ListItem = (props) => {
       const currentDate = new Date();
       const timeDiff = dueDate.getTime() - currentDate.getTime();
       setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+    } else if (props.url === "file") {
+      console.log("file")
+      const extension = props.fileName.split('.')
+      const last = extension.length - 1
+
+      setFileExtension(extension[last])
     }
   }, [modalOpen]);
   
@@ -45,6 +51,10 @@ const ListItem = (props) => {
     showModal()
   }
 
+  const closeModal = (bool) => {
+    setModalOpen(bool)
+    console.log("돼야한다")
+  }
   return (
 
     <div className="list-item-cjw" onClick={checkURL}>
@@ -72,11 +82,12 @@ const ListItem = (props) => {
               </h4>
             )
           )}
-          {props.url === 'material' && (
-            <p>This is a material</p>
+          {props.url === 'file' && (
+            
+            <h4>{fileExtension}</h4>
           )}
           {props.url === 'video' && (
-            <p>This is a video</p>
+            <h4>length</h4>
           )}
 
         </div>
@@ -87,11 +98,11 @@ const ListItem = (props) => {
           {props.url === 'quizlist' && (
             <h4>{props.quizName}</h4>
           )}
-          {props.url === 'material' && (
-            <p>This is a material</p>
+          {props.url === 'file' && (
+            <h4>{props.fileName}</h4>
           )}
           {props.url === 'video' && (
-            <p>This is a video</p>
+            <h4>This is a video</h4>
           )}
         </div>
         <div className="third">
@@ -101,10 +112,21 @@ const ListItem = (props) => {
         </div>
       </div>
       <div className="fourth">
-        <h4>{daysRemaining}일 남음</h4>
+        {props.url === 'assignmentlist' && (
+            <h4>{daysRemaining}일 남음</h4>
+          )}
+          {props.url === 'quizlist' && (
+            <h4>{daysRemaining}일 남음</h4>
+          )}
+          {props.url === 'file' && (
+            <h4>sizeOfFile</h4>
+          )}
+          {props.url === 'video' && (
+            <h4>progressPercent</h4>
+          )}
       </div>
       {modalOpen === true ? <QuizInfoModal
-        setModalOpen={setModalOpen}
+        modalChange={closeModal}
         modalOpen={modalOpen}
         props={props}
         /> : null}

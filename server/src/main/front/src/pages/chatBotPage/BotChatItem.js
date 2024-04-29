@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import "./BotChatItem.css";
 
-const ChatItem = ({ propLineHeight }) => {
+const ChatItem = ({ propLineHeight, props }) => {
+  // console.log(props)
   const divStyle = useMemo(() => {
     return {
       lineHeight: propLineHeight,
@@ -18,13 +19,7 @@ const ChatItem = ({ propLineHeight }) => {
       </div>
       <div className="div211" style={divStyle}>
         <span>
-          <p className="p124">기계의 답변이다.</p>
-          <p className="p125">
-            ㅁㄴㅇㄻㄴㅇㄴㄹㄴㅁㅇㄻㄴㄻㄴㄻㄴㅇㄹㄴㄹㄴㅁㄹㄴㅇㅁ
-          </p>
-          <p className="p126">
-            ㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇ
-          </p>
+          <p className="p124">{props}</p>
         </span>
       </div>
     </div>

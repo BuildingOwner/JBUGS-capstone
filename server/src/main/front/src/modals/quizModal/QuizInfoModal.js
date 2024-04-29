@@ -15,7 +15,7 @@ const QuizInfoModal = (props) => {
 
   const moveToDoQuiz = () => {
     console.log("전달된 state : ", [props.props.quizId, props.props])
-    navigate('/doquiz',{
+    navigate('/doquiz', {
       state: {
         props: props.props
       },
@@ -49,7 +49,8 @@ const QuizInfoModal = (props) => {
             <b className="b80">60 분</b>
           </div>
         </div>
-        <Info prop="점수" score={props.props.quizScore}
+        <Info prop="점수"
+          score={props.props.quizScore}
           props={props.props} />
         <section className="discription">
           <b className="b81">설명</b>

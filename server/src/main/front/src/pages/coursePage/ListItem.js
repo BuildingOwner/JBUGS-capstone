@@ -34,7 +34,7 @@ const ListItem = (props) => {
 
   const changeModal = (bool) => {
     setModalOpen(bool)
-    console.log("돼야한다")
+    // console.log("돼야한다")
   }
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const ListItem = (props) => {
         const timeDiff = dueDate.getTime() - currentDate.getTime();
         setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
       } else if (props.url === "file") {
-        console.log("file")
+        // console.log("file")
         const extension = props.fileName.split('.')
         const last = extension.length - 1
 

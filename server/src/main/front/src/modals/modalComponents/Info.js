@@ -39,9 +39,11 @@ const Info = (
         <b className="b213" style={b3Style}>
           {prop}
         </b>
-        <b className="b214" style={b4Style}>
+        {score !== null ? <b className="b214" style={b4Style}>
           {score}점
-        </b>
+        </b> : <b className="b214" style={b4Style}>미응시</b>}
+
+        
       </div>
       <div className="percent">
         <b className="b215">반영 비율</b>

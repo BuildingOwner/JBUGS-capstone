@@ -4,6 +4,7 @@ import axios from "axios"
 import "./LoginForm.css"
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [loginId, setLoginId] = useState();
   const [password, setPassword] = useState();
 
@@ -14,11 +15,6 @@ const LoginForm = () => {
     setPassword(e.target.value)
   }
 
-  const navigate = useNavigate();
-
-  // const onFrameContainerClick = useCallback(() => {
-  //   navigate("/main");
-  // }, [navigate]);
 
   const login = async () => {
     try {

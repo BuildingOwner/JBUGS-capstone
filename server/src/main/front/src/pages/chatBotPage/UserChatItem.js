@@ -1,6 +1,7 @@
 import "./UserChatItem.css"
 
-const UserChatItem = () => {
+const UserChatItem = (props) => {
+  // console.log("user chatting : ", props)
   return (
     <div className="chat-item">
       <div className="link-list">
@@ -10,7 +11,7 @@ const UserChatItem = () => {
         </div>
       </div>
       <div className="div31">
-        <p className="p13">질문이다.</p>
+        <p className="p13">{props.props}</p>
       </div>
     </div>
   );

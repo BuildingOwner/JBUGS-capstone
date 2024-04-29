@@ -3,17 +3,43 @@ import BotChatItem from "./BotChatItem";
 import UserChatItem from "./UserChatItem"
 import HistoryItem from "./HistoryItem";
 import styles from "./ChatbotPage.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 const ChatbotPage = () => {
+  const location = useLocation()
+  console.log(location)
+  const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
+  
   const chatBoardScoll = () => {
     const chatUl = document.querySelector('#chatBoard');
     chatUl.scrollTop = chatUl.scrollHeight;
   }
 
   useEffect(() => {
-    chatBoardScoll();
+    const fetchChatData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/get-chat/${4}`, {
+          withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
+          credentials: 'include', // credentials를 포함하는 요청으로 설정
+        })
+
+        const chatData = JSON.parse(response.data.chat_text);
+
+        console.log("Chat data:", chatData); // 파싱된 채팅 데이터
+        console.log(chatData[0].content[0].text)
+        setChats(chatData);
+      } catch (error) {
+        console.error("Error fetching chat data:", error)
+      }
+    }
+    chatBoardScoll()
+    fetchChatData()
   }, []);
+  // chats가 바뀔때마다 렌더링 다시 필요?
+
 
   return (
     <div className={`background`}>
@@ -35,7 +61,20 @@ const ChatbotPage = () => {
           <div className={styles.bottom}>
             <div className={styles.bottomLeft}>
               <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`}>
-                <UserChatItem />
+                {chats.length > 0 && (
+                  chats.map((chat, index) => (
+                    chat.role === 'user' ?
+                      <UserChatItem
+                        key={index}
+                        props={chat.content[0].text}
+                      /> :
+                      <BotChatItem
+                        key={index}
+                        props={chat.content[0].text}
+                      />
+                  ))
+                )}
+                {/* <UserChatItem />
                 <BotChatItem />
                 <UserChatItem />
                 <BotChatItem />
@@ -46,7 +85,8 @@ const ChatbotPage = () => {
                 <UserChatItem />
                 <BotChatItem />
                 <UserChatItem />
-                <BotChatItem />
+                <BotChatItem /> */}
+
               </div>
               <div className={styles.chat}>
                 <button type="button" className={`${styles.RegenerateBtn} btn btn-primary`}>
@@ -54,7 +94,7 @@ const ChatbotPage = () => {
                 </button>
                 <div className={styles.inputBtns}>
                   <button type="button" className="btn btn-primary">이미지</button>
-                  <textarea className="form-control" placeholder="질문을 입력해주세요..."/>
+                  <textarea className="form-control" placeholder="질문을 입력해주세요..." />
                   <button type="submit" className="btn btn-primary">보내기</button>
                 </div>
               </div>

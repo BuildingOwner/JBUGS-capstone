@@ -13,7 +13,6 @@ const Main = () => {
   const [firstTrack, setFirstTrack] = useState()
   const [currentDate, setCurrentDate] = useState('')
   const [currentWeek, setCurrentWeek] = useState()
-
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
 
@@ -35,13 +34,14 @@ const Main = () => {
         const memberInfoDto2 = response.data.memberInfoDto; // 여기에 데이터 저장
         const mainLectures2 = response.data.mainLectures; // 여기에 데이터 저장
         console.log("get 응답:", response)
+
+        // console.log("memberInfoDto:", memberInfoDto2)
+        // console.log("response memberInfoDto:", response.data.memberInfoDto)
+        // console.log("mainLectures", mainLectures2)
+        // console.log("response mainLectures", response.data.mainLectures)
+
         setMemberInfoDto(response.data.memberInfoDto)
         setMainLectures(response.data.mainLectures)
-        console.log("memberInfoDto:", memberInfoDto2)
-        console.log("response memberInfoDto:", response.data.memberInfoDto)
-        console.log("mainLectures", mainLectures2)
-        console.log("response mainLectures", response.data.mainLectures)
-
         setMemberName(memberInfoDto2.memberName)
         setFirstTrack(memberInfoDto2.firstTrack)
 
@@ -51,12 +51,11 @@ const Main = () => {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth() + 1;
         const date = currentDate.getDate();
+
         setCurrentDate(`${year}년 ${month}월 ${date}일`);
-        console.log("현재 날짜", currentDate)
-
         setCurrentWeek(calculateWeek(startDate, currentDate))
-        console.log("현재 주차:", currentWeek)
-
+        // console.log("현재 주차:", currentWeek)
+        // console.log("현재 날짜", currentDate)
       }
       catch (error) {
         console.error("Error fetching main info:", error);
@@ -68,7 +67,7 @@ const Main = () => {
 
   return (
     <div className="mainpage">
-      <MainSidebar />
+      <MainSidebar memberInfoDto={memberInfoDto} />
       <main className="mainpage-inner">
         <section className="course-parent">
           <div className="course">

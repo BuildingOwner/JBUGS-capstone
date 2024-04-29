@@ -3,16 +3,17 @@ import QuizInfo from "../quizComponents/QuizInfo";
 import Option1 from "../quizComponents/Option1";
 import styles from "./DoQuiz.module.css";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
 import axios from "axios";
 
 const DoQuiz = () => {
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
+  const navigate = useNavigate()
   const data = useLocation().state.props // 이곳에서 사용될 데이터
   const [indexOfOptions, setIndexOfOptions] = useState(0)
   const quizId = data.quizId
-  console.log(data)
+  console.log("DoQuiz의 data : ", data)
   const [questions, setQuestions] = useState([])
 
   const minusIndex = () => {
@@ -30,8 +31,12 @@ const DoQuiz = () => {
     }
   }
 
+  const backToPreviousPage = () => {
+    navigate(-1); // 이전 페이지로 이동
+  }
+
   const submitQuiz = () => {
-    
+
   }
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -65,7 +70,7 @@ const DoQuiz = () => {
               <div className={styles.quizInfoRight}>
                 <h3 className={styles.fontSize5xl}>{data.lectureName}</h3>
                 <h3 className={styles.fontSize5xl}>분반</h3>
-                <button type="button" className={`btn btn-primary ${styles.backBtn}`}>나가기</button>
+                <button type="button" onClick={backToPreviousPage} className={`btn btn-primary ${styles.backBtn}`}>나가기</button>
               </div>
             </div>
             <div className={styles.rightBottom}>
@@ -91,8 +96,8 @@ const DoQuiz = () => {
                   <button type="button" className={`btn btn-secondary`} style={{ border: 'none' }} onClick={minusIndex}>이전 문제</button>
 
 
-                  {indexOfOptions === 9 ? <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={submitQuiz}>퀴즈 제출</button> : 
-                  <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={plusIndex}>다음 문제</button>}
+                  {indexOfOptions === 9 ? <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={submitQuiz}>퀴즈 제출</button> :
+                    <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={plusIndex}>다음 문제</button>}
 
                 </div>
               </div>

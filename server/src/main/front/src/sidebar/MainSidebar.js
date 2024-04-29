@@ -1,6 +1,25 @@
+import { useEffect, useState } from "react";
 import "./MainSidebar.css";
+import { useNavigate } from "react-router-dom";
 
-const MainSidebar = () => {
+const MainSidebar = (props) => {
+  const navigate = useNavigate()
+  const [memberInfoDto, setMemberInfoDto] = useState()
+
+  const moveToChatPage = () => {
+    // const response = await axios.get("/api/")
+    navigate("/chatbotpage", {
+      state: {
+        memberInfoDto: memberInfoDto,
+      },
+    })
+  }
+
+  useEffect(() => {
+    console.log("sidebar의 props : ",props)
+    setMemberInfoDto(props.memberInfoDto)
+  }, [])
+
   return (
     <div className="sidebars">
       <img
@@ -24,7 +43,7 @@ const MainSidebar = () => {
           </div>
           <div className="navitem1">
             <img className="vector-icon34" alt="" src="/vector-1.svg" />
-            <h3 className="ai-chat">AI Chat</h3>
+            <h3 className="ai-chat" onClick={moveToChatPage}>AI Chat</h3>
           </div>
         </div>
         <div className="calendar">

@@ -23,6 +23,8 @@ const Course = () => {
   const [lectureVideos, setLectureVideos] = useState([])
   const [classFiles, setClassFiles] = useState([])
   const [courseDto, setCourseDto] = useState()
+  const [memberInfoDto, setMemberInfoDto] = useState()
+
   const assignmentUrl = "assignmentlist"
   const quizUrl = "quizlist"
   const videoUrl = "video"
@@ -45,19 +47,21 @@ const Course = () => {
         const quizData = response.data.weeklyContents.map((week) => week.quizzes).flat()
         const videoData = response.data.weeklyContents.map((week) => week.lectureVideos).flat()
         const fileData = response.data.weeklyContents.map((week) => week.classFiles).flat()
+        const memberInfo = response.data.memberInfoDto
 
         setLectureVideos(videoData)
         setAssignments(assignmentData)
         setQuizs(quizData)
         setClassFiles(fileData)
+        setMemberInfoDto(memberInfo)
 
-        console.log("Course response : ", response)
-        console.log("lectureName : ", lectureName1)
-        console.log("video Data: ", videoData)
-        console.log("quiz Data : ", quizData)
-        console.log("assignmentData : ", assignmentData)
-        console.log("file Data : ", fileData)
-        console.log("courseDto : ", courseDto)
+        // console.log("Course response : ", response)
+        // console.log("lectureName : ", lectureName1)
+        // console.log("video Data: ", videoData)
+        // console.log("quiz Data : ", quizData)
+        // console.log("assignmentData : ", assignmentData)
+        // console.log("file Data : ", fileData)
+        // console.log("courseDto : ", courseDto)
       }
       catch (error) {
         console.error("Error fetching course info:", error);
@@ -69,27 +73,14 @@ const Course = () => {
 
   return (
     <div className="course1">
-      <Sidebar lectureName={lectureName} division={division} />
+      <Sidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className="serializer">
         <section className="content">
           <div className="nav">
             <nav className="weeklist">
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
-              <WeekItem />
+              {Array.from({ length: 16 }).map((_, index) => (
+                <WeekItem key={index} weekNumber={index+1}/>
+              ))}
             </nav>
           </div>
           <div className="container-cjw">
@@ -100,7 +91,7 @@ const Course = () => {
               <div className="list-cjw no-scroll-bar">
                 {lectureVideos.map((video, i) => (
                   <ListItem
-                    key={`lectureVideo${i}`} 
+                    key={`lectureVideo${i}`}
                     title={video.title}
                     videoName={video.videoName}
                     videoPath={video.videoPath}
@@ -116,7 +107,7 @@ const Course = () => {
               <div className="list-cjw no-scroll-bar">
                 {assignments.map((assignment, i) => (
                   <ListItem
-                    key={`assignment${i}`} 
+                    key={`assignment${i}`}
                     title={assignment.title}
                     contents={assignment.contents}
                     dueDate={assignment.dueDate}
@@ -134,7 +125,7 @@ const Course = () => {
                 <h2>자료</h2>
               </div>
               <div className="list-cjw no-scroll-bar">
-              {classFiles.map((file, i) => (
+                {classFiles.map((file, i) => (
                   <ListItem
                     key={`file${i}`}
                     fileName={file.fileName}

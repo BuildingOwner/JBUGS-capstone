@@ -211,9 +211,9 @@ def chat():
 
     return jsonify({'message': 'Failed to upload file'})
 
-@app.route('/chat', methods=['get'])
-def get_chat():
-    chat_id = request.form.get("chat_id")
+@app.route('/get-chat/<int:chat_id>', methods=['get'])
+def get_chat(chat_id):
+    # chat_id = request.form.get("chat_id")
     print(f"[{current_file_name}] chat_id: {chat_id}")
     db = getConnection()
     cursor = db.cursor()

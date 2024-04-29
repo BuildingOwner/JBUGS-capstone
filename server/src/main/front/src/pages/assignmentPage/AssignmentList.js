@@ -10,7 +10,11 @@ import axios from "axios";
 
 const AssignmentList = () => {
   const enrollmentId = useLocation().state
-  const [assignments, setAssignments] = useState([]);
+  const [lectureName, setLectureName] = useState()
+  const [division, setDivision] = useState()
+  const [assignments, setAssignments] = useState([])
+  const [memberInfoDto, setMemberInfoDto] = useState()
+  const [courseDto, setCourseDto] = useState()
 
   useEffect(() => {
     const fetchAssignmentList = async () => {
@@ -18,10 +22,19 @@ const AssignmentList = () => {
         const response = await axios.get(`/api/course/${enrollmentId}/assignment`, {
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
         });
-        console.log("response = ", response.data.assignmentDtoList)
-        const assignmentList = response.data.assignmentDtoList;
-        setAssignments(assignmentList);
-        console.log("assignmentData=", assignmentList)
+        const assignmentList = response.data.assignmentDtoList
+
+        console.log("memberInfoDto : ",response.data.memberInfoDto)
+        console.log("assignmentData : ", assignmentList)
+        console.log("assignmentList response : ", response)
+        const lectureName1 = response.data.courseDto.lectureName
+        const division1 = response.data.courseDto.division
+
+        setLectureName(lectureName1)
+        setDivision(division1)
+        setMemberInfoDto(response.data.memberInfoDto)
+        setAssignments(assignmentList)
+        setCourseDto(response.data.courseDto)
       }
       catch (error) {
         console.error("Error fetching assignList info:", error);
@@ -30,18 +43,18 @@ const AssignmentList = () => {
 
     fetchAssignmentList();
   }, []);
+
   return (
     <div className="assignmentlist">
-      <Sidebar />
+      <Sidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className="content-frame">
         <section className="content7">
           <AssignHeader />
           <div className="list3">
             <div className="yet">
-              <AssignListHeader title="미제출 과제"/>
+              <AssignListHeader title="미제출 과제" />
               <div className="list-items">
-
-              {assignments.map((assignment) =>
+                {assignments.map((assignment) =>
                   assignment.status === "NOT_SUBMITTED" ? (
                     <YetAssign
                       key={assignment.id}
@@ -56,15 +69,15 @@ const AssignmentList = () => {
               </div>
             </div>
             <div className="done">
-              <AssignListHeader title="제출 과제"/>
+              <AssignListHeader title="제출 과제" />
               <div className="done-assign">
-              {assignments.map((assignment) =>
+                {assignments.map((assignment) =>
                   assignment.status === "SSUBMITTED" ? (
-                    <DoneAssign 
-                  key={assignment.id}
+                    <DoneAssign
+                      key={assignment.id}
                       title={assignment.title}
                       contents={assignment.contents}
-                      dueDate={assignment.dueDate}/>
+                      dueDate={assignment.dueDate} />
                   ) : null
                 )}
               </div>

@@ -1,9 +1,13 @@
+import { useEffect } from "react";
 import "./WeekItem.css"
 
-const WeekItem = () => {
+const WeekItem = (props) => {
+    // useEffect(() => {
+    //     console.log(props)
+    // })
     return (
         <div className="week-item">
-            <b className="search-engine">1</b>
+            <b className="search-engine">{props.weekNumber}</b>
             <div className="generator-wrapper">
                 <div className="generator" />
             </div>

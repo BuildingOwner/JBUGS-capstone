@@ -29,6 +29,10 @@ const DoQuiz = () => {
       setIndexOfOptions(indexOfOptions + 1)
     }
   }
+
+  const submitQuiz = () => {
+    
+  }
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
@@ -85,7 +89,11 @@ const DoQuiz = () => {
                 </div>
                 <div className={styles.buttons}>
                   <button type="button" className={`btn btn-secondary`} style={{ border: 'none' }} onClick={minusIndex}>이전 문제</button>
-                  <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={plusIndex}>다음 문제</button>
+
+
+                  {indexOfOptions === 9 ? <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={submitQuiz}>퀴즈 제출</button> : 
+                  <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={plusIndex}>다음 문제</button>}
+
                 </div>
               </div>
             </div>

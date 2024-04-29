@@ -1,10 +1,7 @@
 package jbugs.eclass;
 
 import jbugs.eclass.domain.*;
-import jbugs.eclass.repository.MaterialRepository;
-import jbugs.eclass.repository.QuizInfoRepository;
-import jbugs.eclass.repository.VideoMaterialRepository;
-import jbugs.eclass.repository.WeekRepository;
+import jbugs.eclass.repository.*;
 import jbugs.eclass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -30,10 +27,11 @@ public class DataInitializer implements CommandLineRunner {
     private final QnAService qnAService;
     private final MaterialRepository materialRepository;
     private final VideoMaterialRepository videoMaterialRepository;
+    private final ChatRepository chatRepository;
 
 
     @Autowired
-    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder, WeekRepository weekRepository, QuizService quizService, NoticeService noticeService, QnAService qnAService, MaterialRepository materialRepository, VideoMaterialRepository videoMaterialRepository) {
+    public DataInitializer(MemberService memberService, LectureService lectureService, EnrollmentService enrollmentService, AssignmentService assignmentService, WeekService weekService, PasswordEncoder passwordEncoder, WeekRepository weekRepository, QuizService quizService, NoticeService noticeService, QnAService qnAService, MaterialRepository materialRepository, VideoMaterialRepository videoMaterialRepository, ChatRepository chatRepository) {
         this.memberService = memberService;
         this.lectureService = lectureService;
         this.enrollmentService = enrollmentService;
@@ -46,6 +44,7 @@ public class DataInitializer implements CommandLineRunner {
         this.qnAService = qnAService;
         this.materialRepository = materialRepository;
         this.videoMaterialRepository = videoMaterialRepository;
+        this.chatRepository = chatRepository;
     }
 
     @Override
@@ -360,5 +359,37 @@ public class DataInitializer implements CommandLineRunner {
         videoMaterial.setVideoPath("/Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/video/예제 도메인 모델 - 2편만 듣는 분을 위한 내용.pdf");
         videoMaterial.setWeek(week1.orElseThrow());
         videoMaterialRepository.save(videoMaterial);
+
+        ChatRoom chatRoom1 = new ChatRoom();
+        chatRoom1.setChattingJson("test1");
+        chatRoom1.setChatRoomName("이름1");
+        chatRoom1.setStudent(student1);
+        ChatRoom chatRoom2 = new ChatRoom();
+        chatRoom2.setChattingJson("test2");
+        chatRoom2.setChatRoomName("이름2");
+        chatRoom2.setStudent(student1);
+        ChatRoom chatRoom3 = new ChatRoom();
+        chatRoom3.setChattingJson("test3");
+        chatRoom3.setChatRoomName("이름3");
+        chatRoom3.setStudent(student1);
+        ChatRoom chatRoom4 = new ChatRoom();
+        chatRoom4.setChattingJson("test4");
+        chatRoom4.setChatRoomName("이름4");
+        chatRoom4.setStudent(student1);
+        ChatRoom chatRoom5 = new ChatRoom();
+        chatRoom5.setChattingJson("test5");
+        chatRoom5.setChatRoomName("이름5");
+        chatRoom5.setStudent(student1);
+        ChatRoom chatRoom6 = new ChatRoom();
+        chatRoom6.setChattingJson("test6");
+        chatRoom6.setChatRoomName("이름6");
+        chatRoom6.setStudent(student1);
+
+        chatRepository.save(chatRoom1);
+        chatRepository.save(chatRoom2);
+        chatRepository.save(chatRoom3);
+        chatRepository.save(chatRoom4);
+        chatRepository.save(chatRoom5);
+        chatRepository.save(chatRoom6);
     }
 }

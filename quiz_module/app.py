@@ -211,6 +211,21 @@ def chat():
 
     return jsonify({'message': 'Failed to upload file'})
 
+@app.route('/chat', methods=['get'])
+def get_chat():
+    chat_id = request.form.get("chat_id")
+    print(f"[{current_file_name}] chat_id: {chat_id}")
+    db = getConnection()
+    cursor = db.cursor()
+    sql = "SELECT chat_str FROM chat WHERE id = %s"
+    cursor.execute(sql, (chat_id,))
+    prev_chat_text = cursor.fetchone()
+    
+    if prev_chat_text:
+        return jsonify({"chat_text": prev_chat_text[0]}), 200
+    else:
+        return jsonify({"error": "Chat not found"}), 404
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

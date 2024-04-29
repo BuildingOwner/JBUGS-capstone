@@ -83,3 +83,6 @@ logs
 node_modules
 bower_components
 
+###python###
+testenv/
+static/

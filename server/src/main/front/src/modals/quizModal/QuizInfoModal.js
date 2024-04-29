@@ -3,6 +3,7 @@ import Info from "../modalComponents/Info";
 import "./QuizInfoModal.css";
 import Modal from 'react-modal';
 import { Navigate, useNavigate } from "react-router-dom";
+
 const QuizInfoModal = (props) => {
   const navigate = useNavigate()
   console.log("modal의 props : ", props)
@@ -13,7 +14,8 @@ const QuizInfoModal = (props) => {
   }
 
   const moveToDoQuiz = () => {
-    navigate('/doquiz', {state: props.quizId})
+    console.log("전달된 state : ", props.props.quizId)
+    navigate('/doquiz', {state: props.props.quizId})
   }
 
   return (

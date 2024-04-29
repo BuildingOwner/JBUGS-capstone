@@ -16,6 +16,7 @@ from related_generator import related_question_gen
 from datetime import datetime
 from chat import chat as mychat
 from erase_folder import erase_folder
+from flask_cors import CORS
 
 # Get the absolute path of the current Python script
 current_file_path = os.path.abspath(__file__)
@@ -23,7 +24,7 @@ current_file_path = os.path.abspath(__file__)
 current_file_name = os.path.basename(current_file_path)
 
 app = Flask(__name__)
-
+CORS(app, supports_credentials=True)  # CORS를 활성화하고 credentials를 허용합니다.
 
 @app.route("/add-quiz-keyword", methods=["POST"])
 def add_quiz_keyword():

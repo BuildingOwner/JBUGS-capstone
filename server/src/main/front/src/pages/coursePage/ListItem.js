@@ -10,31 +10,7 @@ const ListItem = (props) => {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
-  // 모달창 노출
-  const showModal = () => {
-      setModalOpen(true);
-  };
 
-  useEffect(() => {
-    if (props.url === "assignmentlist") {
-      const dueDate = new Date(props.dueDate);
-      const currentDate = new Date();
-      const timeDiff = dueDate.getTime() - currentDate.getTime();
-      setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
-    } else if (props.url === "quizlist") {
-      const dueDate = new Date(props.deadline);
-      const currentDate = new Date();
-      const timeDiff = dueDate.getTime() - currentDate.getTime();
-      setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
-    } else if (props.url === "file") {
-      console.log("file")
-      const extension = props.fileName.split('.')
-      const last = extension.length - 1
-
-      setFileExtension(extension[last])
-    }
-  }, [modalOpen]);
-  
   const checkURL = () => {
     if (props.url === "assignmentlist") {
       moveToAssignmentList();
@@ -47,14 +23,43 @@ const ListItem = (props) => {
     navigate('/assignmentlist', { state: props.enrollmentId })
   }
 
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   const openQuizmodal = () => {
     showModal()
   }
 
-  const closeModal = (bool) => {
+  const changeModal = (bool) => {
     setModalOpen(bool)
     console.log("돼야한다")
   }
+
+    useEffect(() => {
+      if (props.url === "assignmentlist") {
+        const dueDate = new Date(props.dueDate);
+        const currentDate = new Date();
+        const timeDiff = dueDate.getTime() - currentDate.getTime();
+        setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+      } else if (props.url === "quizlist") {
+        const dueDate = new Date(props.deadline);
+        const currentDate = new Date();
+        const timeDiff = dueDate.getTime() - currentDate.getTime();
+        setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+      } else if (props.url === "file") {
+        console.log("file")
+        const extension = props.fileName.split('.')
+        const last = extension.length - 1
+
+        setFileExtension(extension[last])
+      }
+      // if(modalOpen == true) {
+      //   changeModal(false)
+      // }
+    }, [modalOpen]);
+
   return (
 
     <div className="list-item-cjw" onClick={checkURL}>
@@ -83,7 +88,7 @@ const ListItem = (props) => {
             )
           )}
           {props.url === 'file' && (
-            
+
             <h4>{fileExtension}</h4>
           )}
           {props.url === 'video' && (
@@ -113,23 +118,23 @@ const ListItem = (props) => {
       </div>
       <div className="fourth">
         {props.url === 'assignmentlist' && (
-            <h4>{daysRemaining}일 남음</h4>
-          )}
-          {props.url === 'quizlist' && (
-            <h4>{daysRemaining}일 남음</h4>
-          )}
-          {props.url === 'file' && (
-            <h4>sizeOfFile</h4>
-          )}
-          {props.url === 'video' && (
-            <h4>progressPercent</h4>
-          )}
+          <h4>{daysRemaining}일 남음</h4>
+        )}
+        {props.url === 'quizlist' && (
+          <h4>{daysRemaining}일 남음</h4>
+        )}
+        {props.url === 'file' && (
+          <h4>sizeOfFile</h4>
+        )}
+        {props.url === 'video' && (
+          <h4>progressPercent</h4>
+        )}
       </div>
       {modalOpen === true ? <QuizInfoModal
-        modalChange={closeModal}
+        modalChange={changeModal}
         modalOpen={modalOpen}
         props={props}
-        /> : null}
+      /> : null}
     </div>
   )
 }

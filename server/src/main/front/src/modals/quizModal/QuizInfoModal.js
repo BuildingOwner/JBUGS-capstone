@@ -14,8 +14,12 @@ const QuizInfoModal = (props) => {
   }
 
   const moveToDoQuiz = () => {
-    console.log("전달된 state : ", props.props.quizId)
-    navigate('/doquiz', {state: props.props.quizId})
+    console.log("전달된 state : ", [props.props.quizId, props.props])
+    navigate('/doquiz',{
+      state: {
+        props: props.props
+      },
+    })
   }
 
   return (

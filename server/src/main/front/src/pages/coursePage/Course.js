@@ -22,10 +22,12 @@ const Course = () => {
   const [quizs, setQuizs] = useState([])
   const [lectureVideos, setLectureVideos] = useState([])
   const [classFiles, setClassFiles] = useState([])
+  const [courseDto, setCourseDto] = useState()
   const assignmentUrl = "assignmentlist"
   const quizUrl = "quizlist"
   const videoUrl = "video"
   const fileUrl = "file"
+
   useEffect(() => {
     const fetchCourse = async () => {
       try {
@@ -35,26 +37,27 @@ const Course = () => {
         const lectureName1 = response.data.courseDto.lectureName
         const division1 = response.data.courseDto.division
 
-        console.log("response : ", response)
-        console.log("lectureName : ", lectureName1)
-
         setLectureName(lectureName1)
         setDivision(division1)
+        setCourseDto(response.data.courseDto)
 
         const assignmentData = response.data.weeklyContents.map((week) => week.assignments).flat()
         const quizData = response.data.weeklyContents.map((week) => week.quizzes).flat()
         const videoData = response.data.weeklyContents.map((week) => week.lectureVideos).flat()
         const fileData = response.data.weeklyContents.map((week) => week.classFiles).flat()
 
-        console.log("video Data: ", videoData)
-        console.log("quiz Data : ", quizData)
-        console.log("assignmentData : ", assignmentData)
-        console.log("file Data : ", fileData)
-
         setLectureVideos(videoData)
         setAssignments(assignmentData)
         setQuizs(quizData)
         setClassFiles(fileData)
+
+        console.log("Course response : ", response)
+        console.log("lectureName : ", lectureName1)
+        console.log("video Data: ", videoData)
+        console.log("quiz Data : ", quizData)
+        console.log("assignmentData : ", assignmentData)
+        console.log("file Data : ", fileData)
+        console.log("courseDto : ", courseDto)
       }
       catch (error) {
         console.error("Error fetching course info:", error);
@@ -120,6 +123,7 @@ const Course = () => {
                     weekId={assignment.weekId}
                     status={assignment.status}
                     enrollmentId={enrollmentId}
+                    courseDto={courseDto}
                     url={assignmentUrl}
                   />
                 ))}
@@ -159,6 +163,7 @@ const Course = () => {
                     quizScore={quiz.quizScore}
                     submissionStatus={quiz.submissionStatus}
                     enrollmentId={enrollmentId}
+                    courseDto={courseDto}
                     url={quizUrl}
                   />
                 ))}

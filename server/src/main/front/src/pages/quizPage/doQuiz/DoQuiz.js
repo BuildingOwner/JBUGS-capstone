@@ -9,10 +9,26 @@ import axios from "axios";
 
 const DoQuiz = () => {
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
-  const location = useLocation()
-  const quizId = location.state
+  const data = useLocation().state.props // 이곳에서 사용될 데이터
+  const [indexOfOptions, setIndexOfOptions] = useState(0)
+  const quizId = data.quizId
+  console.log(data)
   const [questions, setQuestions] = useState([])
 
+  const minusIndex = () => {
+    if (indexOfOptions == 0) {
+    } else {
+      setIndexOfOptions(indexOfOptions - 1)
+    }
+  }
+
+  const plusIndex = () => {
+    if (indexOfOptions == 9) {
+    } else {
+      console.log(questions[indexOfOptions].options)
+      setIndexOfOptions(indexOfOptions + 1)
+    }
+  }
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
@@ -20,10 +36,10 @@ const DoQuiz = () => {
           withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
           credentials: 'include', // credentials를 포함하는 요청으로 설정
         });
-        console.log("quiz가 받은 response : ",response)
+        console.log("quiz가 받은 response : ", response)
 
         const questionData = response.data.questions.map((quiz) => quiz).flat()
-
+        console.log(questionData)
         setQuestions(questionData)
       }
       catch (error) {
@@ -32,7 +48,7 @@ const DoQuiz = () => {
     };
 
     fetchQuiz();
-  }, [])
+  }, [indexOfOptions])
 
   return (
     <div className={`background`}>
@@ -41,30 +57,35 @@ const DoQuiz = () => {
         <div className={`bg`}>
           <div className={styles.right}>
             <div className={styles.quizInfo}>
-              <h3 className={styles.fontSize5xl}>이건 무슨 문제일까용?</h3>
+              <h3 className={styles.fontSize5xl}>{data.quizName}</h3>
               <div className={styles.quizInfoRight}>
-                <h3 className={styles.fontSize5xl}>과목명</h3>
+                <h3 className={styles.fontSize5xl}>{data.lectureName}</h3>
                 <h3 className={styles.fontSize5xl}>분반</h3>
                 <button type="button" className={`btn btn-primary ${styles.backBtn}`}>나가기</button>
               </div>
             </div>
             <div className={styles.rightBottom}>
               <div className={styles.quizContainer}>
-                <h3 className={styles.question}>{questions[0].question}</h3>
-                <h3 className={styles.questionNumber}>1 of 10</h3>
+                {questions.length > 0 && questions[indexOfOptions] && (
+                  <h3 className={styles.question}>{questions[indexOfOptions].question}</h3>
+                )}
+                <h3 className={styles.questionNumber}>{indexOfOptions + 1} of 10</h3>
                 <div className={styles.choice}>
-                  {optionIcon.map((num, i) => {
+                  {questions[indexOfOptions] && questions[indexOfOptions].type === "choice" ? (optionIcon.map((num, i) => {
                     return (
-                      <div className={styles.option}>
+                      <div className={styles.option} key={i}>
                         {num}
-                        <h3 className={styles.optionText}>{questions[0].options[i]}</h3>
+                        {questions[indexOfOptions].options[i] && (
+                          <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
+                        )}
                       </div>
                     )
-                  })}
+                  })) : <textarea></textarea>
+                  }
                 </div>
                 <div className={styles.buttons}>
-                  <button type="button" className={`btn btn-secondary`} style={{border: 'none'}}>이전 문제</button>
-                  <button type="button" className={`btn btn-primary ${styles.featureBtn}`}>다음 문제</button>
+                  <button type="button" className={`btn btn-secondary`} style={{ border: 'none' }} onClick={minusIndex}>이전 문제</button>
+                  <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={plusIndex}>다음 문제</button>
                 </div>
               </div>
             </div>

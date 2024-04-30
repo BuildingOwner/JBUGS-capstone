@@ -7,7 +7,6 @@ import moment from "moment";
 import styles from "./MainSidebar.module.css"
 import { GoHome } from "react-icons/go";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const MainSidebar = (props) => {
   const navigate = useNavigate()
@@ -45,12 +44,6 @@ const MainSidebar = (props) => {
           alt=""
           src="/rectangle-1@2x.png"
         />
-      </div>
-      <div className={styles.colleseBtn}>
-        <div className={styles.colleseBtnRight}>
-          <IoIosArrowBack size="50" />
-          <IoIosArrowForward className={`invisible`} />
-        </div>
       </div>
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>

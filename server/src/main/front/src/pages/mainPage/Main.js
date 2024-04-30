@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
-import MainSidebar from "../../sidebar/MainSidebar";
+import Sidebar from "../../sidebar/sidebars";
 import CourseItem from "./CourseItem";
 import RightNav from "./RightNav";
 import "./Main.css";
@@ -67,7 +67,7 @@ const Main = () => {
 
   return (
     <div className="mainpage">
-      <MainSidebar memberInfoDto={memberInfoDto} />
+      <Sidebar memberInfoDto={memberInfoDto} />
       <main className="mainpage-inner">
         <section className="course-parent">
           <div className="course">

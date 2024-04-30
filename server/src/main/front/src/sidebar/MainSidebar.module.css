@@ -41,26 +41,6 @@
   background-color: var(--point-blue) !important;
 }
 
-.colleseBtn{
-  position: relative;
-  top: 35%;
-  display: flex;
-  justify-content: end;
-}
-
-.colleseBtnRight{
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-radius: 10px 0 0 10px;
-  width: 30px;
-  height: 50px;
-}
-
-.colleseBtnRight:hover{
-  background-color: #ccc;
-}
-
 .reactCalendar{
   border: none;
   border-radius: 10px;

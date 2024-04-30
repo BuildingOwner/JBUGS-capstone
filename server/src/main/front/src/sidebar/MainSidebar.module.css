@@ -1,0 +1,68 @@
+.sidebars{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gap-mini);
+}
+
+.logo{
+  padding: var(--padding-xl);
+  padding-top: var(--padding-31xl);
+  display: flex;
+  justify-content: center;
+}
+
+.sidebarLogo{
+  width: 150px;
+}
+
+.sidebarContainer{
+  padding: var(--padding-xl);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.navBtns{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-6xl);
+  align-items: center;
+}
+
+.sidebarNavBtn{
+  display: flex !important;
+  align-items: center;
+  gap: var(--gap-mini);
+  width: 60%;
+  border: none !important;
+  background-color: var(--point-blue) !important;
+}
+
+.colleseBtn{
+  position: relative;
+  top: 35%;
+  display: flex;
+  justify-content: end;
+}
+
+.colleseBtnRight{
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px 0 0 10px;
+  width: 30px;
+  height: 50px;
+}
+
+.colleseBtnRight:hover{
+  background-color: #ccc;
+}
+
+.reactCalendar{
+  border: none;
+  border-radius: 10px;
+  width: 300px;
+}

@@ -1,28 +1,85 @@
 import { useEffect, useState } from "react";
 import "./MainSidebar.css";
 import { useNavigate } from "react-router-dom";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import moment from "moment";
+import styles from "./MainSidebar.module.css"
+import { GoHome } from "react-icons/go";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const MainSidebar = (props) => {
   const navigate = useNavigate()
   const [memberInfoDto, setMemberInfoDto] = useState()
+  const [date, setDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()); // 현재 월을 상태로 저장
 
-  const moveToChatPage = () => {
+  const moveToChatPage = (path) => {
     // const response = await axios.get("/api/")
-    navigate("/chatbotpage", {
+    navigate(path, {
       state: {
         memberInfoDto: memberInfoDto,
       },
     })
   }
 
+  const navigateBtn = (path) => {
+    window.location.href = path
+  }
+
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
+  };
   useEffect(() => {
-    console.log("sidebar의 props : ",props)
+    console.log("sidebar의 props : ", props)
     setMemberInfoDto(props.memberInfoDto)
   }, [])
 
   return (
-    <div className="sidebars">
-      <img
+    <div className={styles.sidebars}>
+      <div className={styles.logo}>
+        <img
+          className={styles.sidebarLogo}
+          loading="lazy"
+          alt=""
+          src="/rectangle-1@2x.png"
+        />
+      </div>
+      <div className={styles.colleseBtn}>
+        <div className={styles.colleseBtnRight}>
+          <IoIosArrowBack size="50" />
+          <IoIosArrowForward className={`invisible`} />
+        </div>
+      </div>
+      <div className={styles.sidebarContainer}>
+        <div className={styles.navBtns}>
+          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
+            <GoHome size="30" />
+            <h3>HOME</h3>
+          </button>
+          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
+            <IoChatbubbleEllipsesOutline size="30" />
+            <h3>AI chat</h3>
+          </button>
+        </div>
+        <div className={styles.calendar}>
+          <Calendar
+            className={styles.reactCalendar}
+            value={date}
+            formatDay={(locale, date) => moment(date).format("D")} // 일 제거 숫자만 보이게
+            formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션 눌렀을때 숫자 년도만 보이게
+            formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")} // 네비게이션에서 2023. 12 이렇게 보이도록 설정
+            calendarType="gregory" // 일요일 부터 시작
+            showNeighboringMonth={false} // 전달, 다음달 날짜 숨기기
+            next2Label={null} // +1년 & +10년 이동 버튼 숨기기
+            prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
+            minDetail="year" // 10년단위 년도 숨기기
+          >
+          </Calendar>
+        </div>
+      </div>
+      {/* <img
         className="input-filter-icon"
         loading="lazy"
         alt=""
@@ -227,7 +284,7 @@ const MainSidebar = (props) => {
         <div className="phsquare-half-fill">
           <img className="vector-icon35" alt="" src="/vector-4.svg" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

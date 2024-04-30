@@ -37,6 +37,8 @@ server:
       tracking-modes: cookie
       timeout: 1h
 
-file:
-  dir: /Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/
+#file:
+#  dir: /Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/
 
+file:
+  dir: C:\0jaewan\1college\4-1\capstone\JBUGS-capstone\server\src\main\resources\static\file

@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
 
 @Service
@@ -46,5 +47,17 @@ public class MaterialService {
         }
     }
 
+    public void deleteMaterial(Long materialId) {
+        Material material = materialRepository.findById(materialId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 파일을 찾을 수 없습니다. id=" + materialId));
 
+        // 파일 시스템에서 파일 삭제
+        File file = new File(material.getFilePath());
+        if (file.exists()) {
+            file.delete();
+        }
+
+        // 데이터베이스에서 Material 엔티티 삭제
+        materialRepository.delete(material);
+    }
 }

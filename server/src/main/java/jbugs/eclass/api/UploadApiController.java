@@ -22,10 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
@@ -89,14 +86,15 @@ public class UploadApiController {
     public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title) throws IOException {
         Week weekEntity = weekService.findWeekById(weekId).orElseThrow(() -> new IllegalArgumentException("Invalid weekId"));
         List<String> filePaths = new ArrayList<>();
+        String directory = isVideo ? fileDir + "video/" : fileDir;
+
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
-                String fullPath;
-                if (isVideo) {
-                    fullPath = fileDir + "video/" + file.getOriginalFilename(); // 비디오 파일의 경우
-                } else {
-                    fullPath = fileDir + file.getOriginalFilename(); // 일반 파일의 경우
-                }
+                // 파일명 보안 처리
+                String originalFileName = file.getOriginalFilename();
+                String safeFileName = UUID.randomUUID().toString() + "_" + originalFileName; // 예시로 UUID 추가
+                String fullPath = directory + safeFileName;
+
                 log.info("{} 저장 fullPath={}", isVideo ? "비디오" : "파일", fullPath);
                 file.transferTo(new File(fullPath));
 
@@ -104,14 +102,14 @@ public class UploadApiController {
                     VideoMaterial videoMaterial = new VideoMaterial();
                     videoMaterial.setVideoPath(fullPath);
                     videoMaterial.setTitle(title);
-                    videoMaterial.setVideoName(file.getOriginalFilename());
+                    videoMaterial.setVideoName(safeFileName);
                     videoMaterial.setWeek(weekEntity);
                     videoMaterialRepository.save(videoMaterial);
                 } else {
                     Material material = new Material();
                     material.setFilePath(fullPath);
                     material.setTitle(title);
-                    material.setFileName(file.getOriginalFilename());
+                    material.setFileName(safeFileName);
                     material.setWeek(weekEntity);
                     materialService.join(material);
                 }
@@ -120,6 +118,7 @@ public class UploadApiController {
         }
         return filePaths;
     }
+
 
     // 파일 업로드 로직 이후에 추가
     public void sendQuizKeywordRequest(String lecture, String week, String path, String choice, String shortAnswer) {

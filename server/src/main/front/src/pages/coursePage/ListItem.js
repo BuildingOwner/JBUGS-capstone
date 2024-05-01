@@ -23,45 +23,44 @@ const ListItem = (props) => {
     navigate('/assignmentlist', { state: props.enrollmentId })
   }
 
+  const openQuizmodal = () => {
+    showModal()
+  }
+
   // 모달창 노출
   const showModal = () => {
     setModalOpen(true);
   };
-
-  const openQuizmodal = () => {
-    showModal()
-  }
 
   const changeModal = (bool) => {
     setModalOpen(bool)
     // console.log("돼야한다")
   }
 
-    useEffect(() => {
-      if (props.url === "assignmentlist") {
-        const dueDate = new Date(props.dueDate);
-        const currentDate = new Date();
-        const timeDiff = dueDate.getTime() - currentDate.getTime();
-        setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
-      } else if (props.url === "quizlist") {
-        const dueDate = new Date(props.deadline);
-        const currentDate = new Date();
-        const timeDiff = dueDate.getTime() - currentDate.getTime();
-        setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
-      } else if (props.url === "file") {
-        // console.log("file")
-        const extension = props.fileName.split('.')
-        const last = extension.length - 1
+  useEffect(() => {
+    if (props.url === "assignmentlist") {
+      const dueDate = new Date(props.dueDate);
+      const currentDate = new Date();
+      const timeDiff = dueDate.getTime() - currentDate.getTime();
+      setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+    } else if (props.url === "quizlist") {
+      const dueDate = new Date(props.deadline);
+      const currentDate = new Date();
+      const timeDiff = dueDate.getTime() - currentDate.getTime();
+      setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+    } else if (props.url === "file") {
+      // console.log("file")
+      const extension = props.fileName.split('.')
+      const last = extension.length - 1
 
-        setFileExtension(extension[last])
-      }
-      // if(modalOpen == true) {
-      //   changeModal(false)
-      // }
-    }, [modalOpen]);
+      setFileExtension(extension[last])
+    }
+    // if(modalOpen == true) {
+    //   changeModal(false)
+    // }
+  }, [modalOpen]);
 
   return (
-
     <div className="list-item-cjw" onClick={checkURL}>
       <div className="flex-cjw">
         <div className="first">

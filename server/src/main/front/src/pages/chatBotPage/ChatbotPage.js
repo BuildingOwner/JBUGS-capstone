@@ -9,10 +9,10 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 const ChatbotPage = () => {
-  const location = useLocation()
+  // const location = useLocation()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
   const [chatDtoList, setChatDtoList] = useState([])
-  const [chatRoomId, setChatRoomId] = useState([]) // 챗룸 아이디 배열
+  // const [chatRoomId, setChatRoomId] = useState([]) // 챗룸 아이디 배열
   const [chatId, setChatId] = useState() // 챗룸 아이디 
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
@@ -47,8 +47,9 @@ const ChatbotPage = () => {
       const formData = new FormData();
       formData.append('question', text);
       formData.append('chat_id', chatId);
-
       const response = await axiosInstance.post("http://localhost:5000/chat", formData);
+      console.log("sendMessage.response : ", response)
+
       // 텍스트 필드 비워주기
       setText('');
       console.log("Response.data :", response.data);
@@ -60,11 +61,15 @@ const ChatbotPage = () => {
     }
   }
 
+  const newChatting = () => {
+    console.log(chatDtoList)
+  }
   const fetchChattings = async (chatRoomId) => { // chatRoomId 매개변수 추가
     try {
       const formData = new FormData();
-      formData.append('chat_id', chatId);
+      formData.append('chat_id', chatRoomId);
       const response = await axios.post(`http://localhost:5000/get-chat`, formData);
+      console.log("fetchCahttings.response : ", response)
 
       const chatData = JSON.parse(response.data.chat_text);
 
@@ -82,7 +87,7 @@ const ChatbotPage = () => {
       const response = await axios.get(`api/chat`, {
         withCredentials: true,
       })
-
+      console.log("fetchChatData.response : ", response)
       const chatDto = response.data.chatDtoList.map((chat) => chat).flat()
       const chatId = chatDto.map((chat) => chat.chatRoomId).flat()
 
@@ -90,7 +95,7 @@ const ChatbotPage = () => {
       console.log("chatDto : ", chatDto)
       console.log("chatRoomId : ", chatId)
 
-      setChatRoomId(chatId);
+      // setChatRoomId(chatId);
       setChatDtoList(chatDto);
       return chatId; // chatId 반환
 
@@ -107,14 +112,14 @@ const ChatbotPage = () => {
       await fetchChattings(selectedId); // fetchChattings 호출 및 chatId 전달
     }
   }
+
+  // 건들면 죽임
   useEffect(() => {
     chatBoardScoll()
-    // 수정 필요
-    if (firstDo == true) {
+    if (firstDo == true) { // 처음 실행하면 1번 채팅룸 호출 (수정필요)
       fetchDataAndChattings(1)
       setFirstDo(false)
     } else {
-      console.log("firstDo : ", firstDo)
       fetchDataAndChattings(chatId)
     }
   }, [chatId]);
@@ -175,6 +180,10 @@ const ChatbotPage = () => {
                   />
                 ))}
               </div>
+              <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}
+              onClick={newChatting}>
+                채팅 생성
+              </button>
               <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}>
                 선택 삭제
               </button>

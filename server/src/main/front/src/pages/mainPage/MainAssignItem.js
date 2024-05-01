@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "./MainAssignItem.css"
 
 const MainAssignItem = (props) => {
+  const navigate = useNavigate()
   console.log("MainAssignItem의 props", props)
   // dueDate 문자열을 Date 객체로 변환합니다
   const dueDate = new Date(props.dueDate);
@@ -11,8 +13,13 @@ const MainAssignItem = (props) => {
   // 남은 일수를 계산합니다
   const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
+  const moveToAssingList = () => {
+    navigate("/assignmentlist",
+      { state: props.enrollmentId })
+  }
+
   return (
-    <div className="homeworkitem">
+    <div className="homeworkitem" onClick={moveToAssingList}>
       <div className="week">
         <div className="div162">{props.weekNumber}주차</div>
       </div>

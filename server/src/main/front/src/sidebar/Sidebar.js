@@ -16,6 +16,7 @@ const Sidebar = (props) => {
     console.log("Sidebar의 props : ", props)
     setMemberInfoDto(props.memberInfoDto)
   }, [])
+  
   return (
     <div className={styles.sidebar}>
       <Link to={"/main"} className={styles.logo}>

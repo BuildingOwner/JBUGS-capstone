@@ -42,7 +42,7 @@ public class UploadController {
     public String getFullPath(String filename){
         return fileDir + filename;
     }
-    @GetMapping("/upload")
+//    @GetMapping("/upload")
     public String newFile(@Login Member loginMember, Model model) {
         //세션에 회원 데이터가 없으면 home
         if (loginMember == null) {
@@ -56,7 +56,7 @@ public class UploadController {
         model.addAttribute("material", material);
         return "upload-form";
     }
-    @PostMapping("/upload")
+//    @PostMapping("/upload")
     public String saveFile(@RequestParam String fileName, @RequestParam("enrollment") Long enrollmentId,
                            @RequestParam("week") int weekNumber, @RequestParam("attachFile") MultipartFile[] attachFiles,
                            @RequestParam("video") MultipartFile[] videoFiles, HttpServletRequest request) throws IOException {

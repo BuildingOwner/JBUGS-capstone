@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/add")
+//    @GetMapping("/add")
     public String addForm(@ModelAttribute("member") Member member){
         return "members/addMemberForm";
     }
 
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String save(@Valid @ModelAttribute Member member, BindingResult result) {
         if (result.hasErrors()) {
             return "members/addMemberForm";

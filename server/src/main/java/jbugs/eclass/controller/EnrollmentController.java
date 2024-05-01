@@ -36,7 +36,7 @@ public class EnrollmentController {
     private final MaterialRepository materialRepository;
     private final WeekService weekService;
     private final UploadController uploadController;
-    @GetMapping(value = "/{enrollmentId}/edit")
+//    @GetMapping(value = "/{enrollmentId}/edit")
     public String classesForm(@PathVariable("enrollmentId") Long enrollmentId, Model model){
         Enrollment one = enrollmentService.findOne(enrollmentId);
         model.addAttribute("form", one);
@@ -63,7 +63,7 @@ public class EnrollmentController {
         return "course";
     }
 
-    @GetMapping("/{enrollmentId}/edit/download/{materialId}")
+//    @GetMapping("/{enrollmentId}/edit/download/{materialId}")
     public ResponseEntity<Resource> downloadAttach(@PathVariable Long enrollmentId, @PathVariable Long materialId)
             throws MalformedURLException {
         Optional<Material> item = materialRepository.findById(materialId);

@@ -14,15 +14,14 @@ const MainSidebar = (props) => {
   const [date, setDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()); // 현재 월을 상태로 저장
 
-  const moveToChatPage = (path) => {
-    // const response = await axios.get("/api/")
-    navigate(path, {
-      state: {
-        memberInfoDto: memberInfoDto,
-      },
-    })
+  const moveToChatPage = () => {
+    navigate("/chatbotpage")
   }
 
+  const moveToMain = () => {
+    navigate("/main")
+  }
+  
   const navigateBtn = (path) => {
     window.location.href = path
   }
@@ -37,7 +36,7 @@ const MainSidebar = (props) => {
 
   return (
     <div className={styles.sidebars}>
-      <div className={styles.logo}>
+      <div className={styles.logo} onClick={moveToMain}>
         <img
           className={styles.sidebarLogo}
           loading="lazy"
@@ -47,11 +46,11 @@ const MainSidebar = (props) => {
       </div>
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
+          <button className={`btn btn-primary ${styles.sidebarNavBtn}`} onClick={moveToMain}>
             <GoHome size="30" />
             <h3>HOME</h3>
           </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
+          <button className={`btn btn-primary ${styles.sidebarNavBtn}`} onClick={moveToChatPage}>
             <IoChatbubbleEllipsesOutline size="30" />
             <h3>AI chat</h3>
           </button>

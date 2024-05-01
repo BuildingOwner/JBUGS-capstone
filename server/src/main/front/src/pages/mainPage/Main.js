@@ -13,6 +13,7 @@ const Main = () => {
   const [firstTrack, setFirstTrack] = useState()
   const [currentDate, setCurrentDate] = useState('')
   const [currentWeek, setCurrentWeek] = useState()
+  
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
 
@@ -25,6 +26,7 @@ const Main = () => {
     return week;
   };
 
+  
   useEffect(() => {
     const fetchMainInfo = async () => {
       try {
@@ -94,10 +96,13 @@ const Main = () => {
                   classification={lecture.classification}
                 />
               ))}
-
             </div>
           </div>
-          <RightNav memberName={memberName} firstTrack={firstTrack} mainLectures={mainLectures} />
+          <RightNav 
+          memberName={memberName} 
+          firstTrack={firstTrack} 
+          mainLectures={mainLectures} 
+          />
         </section>
       </main>
     </div>

@@ -38,6 +38,7 @@ const RightNav = (props) => {
                   dueDate={assignment.dueDate}
                   weekNumber={assignment.weekNumber}
                   status={assignment.status}
+                  enrollmentId={lecture.enrollmentId}
                 />
               ))
             ))}

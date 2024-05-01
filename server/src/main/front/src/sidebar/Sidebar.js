@@ -8,21 +8,21 @@ const Sidebar = (props) => {
   const [memberInfoDto, setMemberInfoDto] = useState()
 
   const moveToChatPage = () => {
-    // const response = await axios.get("/api/")
-    navigate("/chatbotpage", {
-      state: {
-        memberInfoDto: memberInfoDto,
-      },
-    })
+    navigate("/chatbotpage")
   }
 
+  const moveToMain = () => {
+    navigate("/main")
+  }
+  
   useEffect(() => {
     console.log("Sidebar의 props : ",props)
     setMemberInfoDto(props.memberInfoDto)
   }, [])
+  
   return (
     <div className="sidebars1">
-      <div className="input-processor">
+      <div className="input-processor" onClick={moveToMain}>
         <img
           className="logo-icon1"
           loading="lazy"
@@ -41,7 +41,7 @@ const Sidebar = (props) => {
                 src="/vector.svg"
               />
             </div>
-            <div className="decision-tree">
+            <div className="decision-tree" onClick={moveToMain}>
               <h3 className="home1">HOME</h3>
             </div>
           </div>

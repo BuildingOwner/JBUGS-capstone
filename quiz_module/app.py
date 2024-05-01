@@ -216,14 +216,15 @@ def chat():
 
     return jsonify({'message': 'Failed to upload file'})
 
-@app.route('/get-chat/<int:chat_id>', methods=['get'])
-def get_chat(chat_id):
-    # chat_id = request.form.get("chat_id")
+@app.route('/get-chat', methods=['post'])
+def get_chat():
+    chat_id = request.form.get("chat_id")
+    student_id = request.form.get("student_id")
     print(f"[{current_file_name}] chat_id: {chat_id}")
     db = getConnection()
     cursor = db.cursor()
-    sql = "SELECT chat_str FROM chat WHERE id = %s"
-    cursor.execute(sql, (chat_id,))
+    sql = "SELECT chatting_json FROM chat_room WHERE chat_room_id = %s AND student_id = %s"
+    cursor.execute(sql, (chat_id, student_id))
     prev_chat_text = cursor.fetchone()
     
     if prev_chat_text:

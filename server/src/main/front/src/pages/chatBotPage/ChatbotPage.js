@@ -1,4 +1,4 @@
-import MainSidebar from "../../sidebar/MainSidebar";
+import Sidebar from "../../sidebar/sidebars";
 import BotChatItem from "./BotChatItem";
 import UserChatItem from "./UserChatItem"
 import HistoryItem from "./HistoryItem";
@@ -122,7 +122,7 @@ const ChatbotPage = () => {
 
   return (
     <div className={`background`}>
-      <MainSidebar />
+      <Sidebar />
       <div className={`mycontainer`}>
         <div className={`bg ${styles.bg}`}>
           <div className={styles.top}>

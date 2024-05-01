@@ -37,14 +37,18 @@ const ChatbotPage = () => {
     const axiosInstance = axios.create({
       withCredentials: true,
       credentials: 'include',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
     console.log("text : ", text)
     console.log("chatRoomId : ", chatId)
     try {
-      const response = await axiosInstance.post("http://localhost:5000/chat", {
-        question: text,
-        chat_id: chatId,
-      });
+      const formData = new FormData();
+      formData.append('question', text);
+      formData.append('chat_id', chatId);
+
+      const response = await axiosInstance.post("http://localhost:5000/chat", formData);
       // 텍스트 필드 비워주기
       setText('');
       console.log("Response.data :", response.data);
@@ -156,7 +160,7 @@ const ChatbotPage = () => {
                 </button>
                 <div className={styles.inputBtns}>
                   <button type="button" className="btn btn-primary">이미지</button>
-                  <textarea className="form-control" placeholder="질문을 입력해주세요..." value={text}onChange={onChange} />
+                  <textarea className="form-control" placeholder="질문을 입력해주세요..." value={text} onChange={onChange} />
                   <button type="submit" className="btn btn-primary" onClick={sendMeesage}>보내기</button>
                 </div>
               </div>

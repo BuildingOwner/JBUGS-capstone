@@ -181,8 +181,8 @@ def chat():
             images.append(image_file)
         # question = request.form.get('question')
         # chat_id = request.form.get('chatId')
-
-        data = request.json
+        print(request.form)
+        data = request.form
         question = data.get('question')
         chat_id = data.get('chat_id')
 
@@ -198,6 +198,7 @@ def chat():
                 now = datetime.now()
                 filename = str(now.strftime("%H_%M_%S_") + str(now.microsecond // 1000))+ str(i) + image.filename 
                 save_path = os.path.join('quiz_module/chat_img', filename)  # 'uploads' 폴더에 저장
+                save_path = save_path.replace('\\', '/')
                 image.save(save_path)
                 image_paths.append(save_path)
                 

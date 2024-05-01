@@ -134,7 +134,6 @@ def get_quiz(question_id):
         if question_row:
             # 데이터베이스로부터 읽어온 문자열을 다시 Python 딕셔너리로 변환
             question_dict = json.loads(question_row[0])
-            print(question_dict)
             return jsonify(question_dict), 200
         else:
             return "Question not found", 404

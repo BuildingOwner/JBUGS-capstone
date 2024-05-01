@@ -15,12 +15,12 @@ function Sidebar(memberInfoDto) {
 
   return (
     <div className={`${styles.sidebars} ${collapsed ? styles.collapsed : ''}`}>
+      {showMainSidebar ? <MainSidebar memberInfoDto={memberInfoDto} /> : <CollepsedSidebar />}
       <div className={showMainSidebar ? styles.colleseBtn : styles.colleseBtnCollepsed}>
         <div className={styles.colleseBtnRight} onClick={toggleSidebar}>
           {showMainSidebar ? <IoIosArrowBack /> : <IoIosArrowForward />}
         </div>
       </div>
-      {showMainSidebar ? <MainSidebar memberInfoDto={memberInfoDto} /> : <CollepsedSidebar />}
     </div>
   );
 }

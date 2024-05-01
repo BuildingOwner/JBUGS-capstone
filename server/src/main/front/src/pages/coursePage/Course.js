@@ -1,4 +1,4 @@
-import Sidebar from "../../sidebar/Sidebar";
+import CourseSidebar from "../../sidebar/CourseSidebars";
 import FileItem from "./FileItem";
 import QuizItem from "./QuizItem";
 import VideoItem from "./VideoItem";
@@ -72,7 +72,7 @@ const Course = () => {
 
   return (
     <div className="course1">
-      <Sidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
+      <CourseSidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className="serializer">
         <section className="content">
           <div className="nav">

@@ -1,53 +1,53 @@
-.sidebars{
+.sidebars {
   height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--gap-mini);
+  width: fit-content;
 }
 
-.logo{
+.logo {
   padding: var(--padding-xl);
   padding-top: var(--padding-31xl);
+  padding-right: 0;
   display: flex;
   justify-content: center;
 }
 
-.sidebarLogo{
+.sidebarLogo {
   width: 150px;
 }
 
-.sidebarContainer{
+.sidebarContainer {
   padding: var(--padding-xl);
+  padding-right: 0;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: var(--gap-6xl);
 }
 
-.navBtns{
+.navBtns {
   display: flex;
   flex-direction: column;
   gap: var(--gap-6xl);
   align-items: center;
-  padding: var(--padding-xl) 0 ;
+  padding: var(--padding-xl);
   border-radius: 10px;
+  width: 230px;
 }
 
-.sidebarNavBtn{
+.sidebarNavBtn {
   display: flex !important;
   align-items: center;
   border: none !important;
   background-color: var(--point-blue) !important;
+  width: 100%;
 }
 
-.reactCalendar{
-  border: none;
-  border-radius: 10px;
-  width: 300px;
-}
-
-.linkBtn{
+.linkBtn {
   display: flex;
   text-decoration: none;
   align-items: center;

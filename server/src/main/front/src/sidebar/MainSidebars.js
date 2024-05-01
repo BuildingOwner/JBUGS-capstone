@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MainSidebar from './MainSidebar';
 import CollepsedSidebar from './MainCollepsedSidebar';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import styles from "./sidebars.module.css"
+import styles from "./MainSidebars.module.css"
 
 function Sidebar(memberInfoDto) {
   const [showMainSidebar, setShowMainSidebar] = useState(true);

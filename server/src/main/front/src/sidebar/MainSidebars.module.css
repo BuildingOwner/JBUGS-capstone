@@ -1,0 +1,23 @@
+.sidebars{
+  height: 100%;
+  display: flex;
+}
+
+.colleseBtn, .colleseBtnCollepsed {
+  display: flex;
+  align-items: center;
+}
+
+.colleseBtnRight {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px 0 0 10px;
+  width: 30px;
+  height: 50px;
+}
+
+.colleseBtnRight:hover {
+  background-color: #ccc;
+}
+

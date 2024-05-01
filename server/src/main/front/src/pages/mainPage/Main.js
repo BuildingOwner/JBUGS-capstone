@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
-import Sidebar from "../../sidebar/sidebars";
+import Sidebar from "../../sidebar/MainSidebars";
 import CourseItem from "./CourseItem";
 import RightNav from "./RightNav";
 import "./Main.css";

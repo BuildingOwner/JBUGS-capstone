@@ -1,4 +1,4 @@
-import Sidebar from "../../sidebar/sidebars";
+import Sidebar from "../../sidebar/MainSidebars";
 import BotChatItem from "./BotChatItem";
 import UserChatItem from "./UserChatItem"
 import HistoryItem from "./HistoryItem";

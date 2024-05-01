@@ -1,7 +1,11 @@
 .sidebars{
-  width: 100px;
+  width: fit-content;
 }
 
 .sidebarLogo{
   width: 50px;
+}
+
+.sidebarNavBtn{
+  width: fit-content;
 }

@@ -54,9 +54,12 @@ def chat(chat_id, question, img_path=[]):
         for msg in message:
             for item in msg["content"]:
                 if item.get("type") == "image_url":
-                    urls.append(item["image_url"]["url"])  # 인코딩된 URL을 리스트에 추가
-                    encoded_url = encode_image(item["image_url"]["url"])  # 이미지 URL 인코딩
-                    item["image_url"]["url"] = f"data:image/jpeg;base64,{encoded_url}"  # 이미지 URL 업데이트
+                    try:
+                        encoded_url = encode_image(item["image_url"]["url"])  # 이미지 URL 인코딩
+                        item["image_url"]["url"] = f"data:image/jpeg;base64,{encoded_url}"  # 이미지 URL 업데이트
+                        urls.append(item["image_url"]["url"])  # 인코딩된 URL을 리스트에 추가
+                    except FileNotFoundError:
+                        msg["content"].remove(item)  # FileNotFoundError가 발생하면 해당 항목 삭제
 
     print(f"[{current_file_name}] 이전 대화 이미지 urls: {urls}")
     msg = {

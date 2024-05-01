@@ -28,3 +28,30 @@
 .colleseBtnRight:hover {
   background-color: #ccc;
 }
+
+.fadeIn {
+  animation: fadeInAnimation 0.5s ease-in-out forwards;
+}
+
+.fadeOut {
+  animation: fadeOutAnimation 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+

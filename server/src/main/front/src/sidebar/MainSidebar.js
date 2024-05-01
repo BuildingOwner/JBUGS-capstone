@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./MainSidebar.css";
 import { useNavigate } from "react-router-dom";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -7,28 +6,13 @@ import moment from "moment";
 import styles from "./MainSidebar.module.css"
 import { GoHome } from "react-icons/go";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const MainSidebar = (props) => {
   const navigate = useNavigate()
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [date, setDate] = useState(new Date());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()); // 현재 월을 상태로 저장
 
-  const moveToChatPage = () => {
-    navigate("/chatbotpage")
-  }
-
-  const moveToMain = () => {
-    navigate("/main")
-  }
-  
-  const navigateBtn = (path) => {
-    window.location.href = path
-  }
-
-  const handleDateChange = (newDate) => {
-    setDate(newDate);
-  };
   useEffect(() => {
     console.log("sidebar의 props : ", props)
     setMemberInfoDto(props.memberInfoDto)
@@ -36,23 +20,27 @@ const MainSidebar = (props) => {
 
   return (
     <div className={styles.sidebars}>
-      <div className={styles.logo} onClick={moveToMain}>
+      <Link to={"/main"} className={styles.logo}>
         <img
           className={styles.sidebarLogo}
           loading="lazy"
           alt=""
-          src="/rectangle-1@2x.png"
+          src="/logo.png"
         />
-      </div>
+      </Link>
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`} onClick={moveToMain}>
-            <GoHome size="30" />
-            <h3>HOME</h3>
+          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
+            <Link to={"/main"} className={styles.linkBtn}>
+              <GoHome size="30" />
+              <h3>HOME</h3>
+            </Link>
           </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`} onClick={moveToChatPage}>
-            <IoChatbubbleEllipsesOutline size="30" />
-            <h3>AI chat</h3>
+          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
+            <Link to={"/chatbotpage"} className={styles.linkBtn}>
+              <IoChatbubbleEllipsesOutline size="30" />
+              <h3>AI chat</h3>
+            </Link>
           </button>
         </div>
         <div className={styles.calendar}>

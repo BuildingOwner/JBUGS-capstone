@@ -1,10 +1,24 @@
 import { useState, useEffect } from "react";
 import MainAssignItem from "./MainAssignItem";
+import axios from "axios";
 import "./RightNav.css";
 
 const RightNav = (props) => {
   console.log("RightNav의 props", props)
   const mainLectures = props.mainLectures
+
+  const handleLogout = () => {
+    axios.post('/logout', null, { withCredentials: true }) // withCredentials를 설정하여 쿠키를 서버로 전송합니다.
+      .then(response => {
+        // 로그아웃 성공 시 처리
+        console.log("로그아웃 성공");
+        // 로그아웃 후에 적절한 동작 수행
+      })
+      .catch(error => {
+        // 오류 처리
+        console.error("로그아웃 실패", error);
+      });
+  }
 
   return (
     <div className="rightnav">
@@ -20,6 +34,9 @@ const RightNav = (props) => {
             alt=""
             src="/personicon1.svg"
           />
+          <button type="button" className={`btn btn-primary`} onClick={handleLogout}> 
+            로그아웃
+          </button>
         </div>
       </div>
       <div className="homework">

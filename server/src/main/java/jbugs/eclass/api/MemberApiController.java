@@ -61,31 +61,6 @@ public class MemberApiController {
         return ResponseEntity.ok(response);
     }
 
-    //Spring Security 사용
-    //@PostMapping("/api/login")
-//    public ResponseEntity<?> loginV2(@RequestBody LoginForm form, HttpServletRequest request) {
-//        try {
-//            // 사용자 이름과 비밀번호를 사용하여 UsernamePasswordAuthenticationToken 객체 생성
-//            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-//                    form.getLoginId(), form.getPassword());
-//
-//            // AuthenticationManager를 사용하여 사용자 인증 수행
-//            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-//
-//            // 인증 성공 후, SecurityContext에 Authentication 객체 저장하여 세션에 인증 상태 유지
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//            // 세션 ID를 포함한 쿠키 설정
-//            HttpSession session = request.getSession();
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add("Set-Cookie", "JSESSIONID=" + session.getId() + "; Path=/; HttpOnly");
-//
-//            return ResponseEntity.ok().headers(headers).body("로그인 성공");
-//        } catch (BadCredentialsException e) {
-//            // 로그인 실패 시 에러 메시지 반환
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디 또는 비밀번호가 맞지 않습니다.");
-//        }
-//    }
     @PostMapping("/api/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

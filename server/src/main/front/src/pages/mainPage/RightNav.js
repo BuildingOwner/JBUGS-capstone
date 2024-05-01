@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import MainAssignItem from "./MainAssignItem";
+import MainAssignItem from "./MainAssignItem"
 import axios from "axios";
 import "./RightNav.css";
+import { useNavigate } from "react-router-dom"
+
 
 const RightNav = (props) => {
+  const navigate = useNavigate()
   console.log("RightNav의 props", props)
   const mainLectures = props.mainLectures
 
@@ -12,12 +15,13 @@ const RightNav = (props) => {
       .then(response => {
         // 로그아웃 성공 시 처리
         console.log("로그아웃 성공");
-        // 로그아웃 후에 적절한 동작 수행
+        
       })
       .catch(error => {
         // 오류 처리
         console.error("로그아웃 실패", error);
       });
+      navigate("/");
   }
 
   return (
@@ -34,7 +38,7 @@ const RightNav = (props) => {
             alt=""
             src="/personicon1.svg"
           />
-          <button type="button" className={`btn btn-primary`} onClick={handleLogout}> 
+          <button type="button" className={`btn btn-primary`} onClick={handleLogout}>
             로그아웃
           </button>
         </div>

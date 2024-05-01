@@ -361,27 +361,27 @@ public class DataInitializer implements CommandLineRunner {
         videoMaterialRepository.save(videoMaterial);
 
         ChatRoom chatRoom1 = new ChatRoom();
-        chatRoom1.setChattingJson("test1");
+        chatRoom1.setChattingJson("[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"None\"},{\"type\":\"image_url\",\"image_url\":{\"url\":\"quiz_module/chat_img/15_04_08_7050시스템 구조도 설계.png\"}}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"This image appears to be a system architecture diagram involving various technologies including MySQL, Spring, Flask, React, and AWS EC2. The diagram also shows how these components are interconnected. \\n\\nTo provide a bit more detail:\\n- **MySQL** is being used as a database.\\n- **Spring** and **Flask** are being used as backend frameworks. Spring appears to be connected to MySQL, React, AWS EC2, and Flask. Flask, in turn, is connected to two functionalities labeled in Korean: \\\"쿠아드 기반 컴포즈 생성\\\" (Quad-based Compose Creation) and \\\"pdf 내용 기반 컴포즈 생성\\\" (Compose Creation based on PDF content). \\n- **React** is used as a frontend technology, connected to Spring.\\n- **AWS EC2** is used as a cloud computing service to probably host and manage the applications developed with Spring.\\n\\nThis setup indicates a multi-layered application using modern web and cloud technologies where both Spring and Flask might be serving different parts of the application, providing an interface for data interaction via MySQL and user interaction via React.\"}]},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"이 그림에 대해 설명해줘 \"},{\"type\":\"image_url\",\"image_url\":{\"url\":\"quiz_module/chat_img/15_04_08_7050시스템 구조도 설계.png\"}}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"이 그림은 Spring MVC, WebForm 그리고 Spring Security를 활용한 모바일 애플리케이션 개발에 관한 설명을 담고 있습니다. 주요 내용은 아래와 같습니다:\\n\\n1. **Spring MVC 사용**: 이 도구를 사용하여 어플리케이션의 로직과 뷰를 구현하는 방법을 설명합니다. 사용자 인터페이스(UI)는 X(횡단) 축을 기반으로 구성되며 다양한 데이터를 효과적으로 디스플레이하고 관리하는 것을 목적으로 합니다.\\n\\n2. **디자인과 기능**:\\n   - 스크린 샷들에서는 모바일 화면을 통해 과제 제출과 코스 상세보기 같은 기능을 보여줍니다. \\n   - 사용자는 로그인을 하여 시스템에 접근할 수 있으며, 코스 등록이나 과제 제출과 같은 활동을 할 수 있습니다.\\n\\n3. **데이터베이스 구성**:\\n   - **Courses** 테이블로부터 각각의 과정에 대한 정보(고유 ID, 과목 코드, 명칭, 학점 등)를 관리합니다.\\n   - **Users** 및 **Authorities** 테이블에서는 사용자의 권한과 인증 정보를 관리하며, 이는 Spring Security로 보호됩니다.\\n\\n4. **로그인 및 보안**:\\n   - Spring Security를 활용하여 사용자 인증 및 권한 부여 프로세스를 구현합니다. 예를 들어, `alice`라는 사용자 이름으로 `alice@hansung.ac.kr` 이메일을 사용하여 로그인 할 수 있으며, 해당 사용자에게는 `ROLE_USER` 권한이 부여됩니다.\\n\\n이 이미지는 특히 교육 기관에서의 애플리케이션 사용을 예시로 한 개발 문서 혹은 교육 자료의 일부로 보입니다. 이를 통해 개발자들이 실제 교육 환경에 적용할 수 있는 웹 애플리케이션의 구성과 보안 요소를 이해하는 데 도움을 줄 수 있습니다.\"}]},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"하이\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"안녕하세요! 무엇을 도와드릴까요?\"}]},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"안녕하세요\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"안녕하세요! 어떤 질문이나 도움이 필요하신가요?\"}]}]");
         chatRoom1.setChatRoomName("이름1");
         chatRoom1.setStudent(student1);
         ChatRoom chatRoom2 = new ChatRoom();
-        chatRoom2.setChattingJson("test2");
+        chatRoom2.setChattingJson("[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"None\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"Hello! How can I assist you today? If you have any questions or need information on a specific topic, feel free to ask!\"}]}]");
         chatRoom2.setChatRoomName("이름2");
         chatRoom2.setStudent(student1);
         ChatRoom chatRoom3 = new ChatRoom();
-        chatRoom3.setChattingJson("test3");
+        chatRoom3.setChattingJson("[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"None\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"Hello! How can I assist you today? If you have any questions or need information on a specific topic, feel free to ask!\"}]}]");
         chatRoom3.setChatRoomName("이름3");
         chatRoom3.setStudent(student1);
         ChatRoom chatRoom4 = new ChatRoom();
-        chatRoom4.setChattingJson("test4");
+        chatRoom4.setChattingJson("[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"None\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"Hello! How can I assist you today? If you have any questions or need information on a specific topic, feel free to ask!\"}]}]");
         chatRoom4.setChatRoomName("이름4");
         chatRoom4.setStudent(student1);
         ChatRoom chatRoom5 = new ChatRoom();
-        chatRoom5.setChattingJson("test5");
+        chatRoom5.setChattingJson("[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"None\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"Hello! How can I assist you today? If you have any questions or need information on a specific topic, feel free to ask!\"}]}]");
         chatRoom5.setChatRoomName("이름5");
         chatRoom5.setStudent(student1);
         ChatRoom chatRoom6 = new ChatRoom();
-        chatRoom6.setChattingJson("test6");
+        chatRoom6.setChattingJson("[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"None\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"Hello! How can I assist you today? If you have any questions or need information on a specific topic, feel free to ask!\"}]}]");
         chatRoom6.setChatRoomName("이름6");
         chatRoom6.setStudent(student1);
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MainSidebar from './MainSidebar';
-import CollepsedSidebar from './MainCollepsedSidebar';
+import MainCollepsedSidebar from './MainCollepsedSidebar';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import styles from "./MainSidebars.module.css"
 
@@ -15,7 +15,7 @@ function Sidebar(memberInfoDto) {
 
   return (
     <div className={`${styles.sidebars} ${collapsed ? styles.collapsed : ''}`}>
-      {showMainSidebar ? <MainSidebar memberInfoDto={memberInfoDto} /> : <CollepsedSidebar />}
+      {showMainSidebar ? <MainSidebar memberInfoDto={memberInfoDto} /> : <MainCollepsedSidebar />}
       <div className={showMainSidebar ? styles.colleseBtn : styles.colleseBtnCollepsed}>
         <div className={styles.colleseBtnRight} onClick={toggleSidebar}>
           {showMainSidebar ? <IoIosArrowBack /> : <IoIosArrowForward />}

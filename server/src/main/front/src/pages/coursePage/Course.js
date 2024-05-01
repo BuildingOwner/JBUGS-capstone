@@ -36,19 +36,18 @@ const Course = () => {
         const response = await axios.get(`/api/course/${enrollmentId}`, {
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
         });
+        
         const lectureName1 = response.data.courseDto.lectureName
         const division1 = response.data.courseDto.division
-
-        setLectureName(lectureName1)
-        setDivision(division1)
-        setCourseDto(response.data.courseDto)
-
         const assignmentData = response.data.weeklyContents.map((week) => week.assignments).flat()
         const quizData = response.data.weeklyContents.map((week) => week.quizzes).flat()
         const videoData = response.data.weeklyContents.map((week) => week.lectureVideos).flat()
         const fileData = response.data.weeklyContents.map((week) => week.classFiles).flat()
         const memberInfo = response.data.memberInfoDto
 
+        setLectureName(lectureName1)
+        setDivision(division1)
+        setCourseDto(response.data.courseDto)
         setLectureVideos(videoData)
         setAssignments(assignmentData)
         setQuizs(quizData)

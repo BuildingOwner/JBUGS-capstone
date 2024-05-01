@@ -1,11 +1,11 @@
 import "./HistoryItem.css"
 
-const HistoryItem = () => {
+const HistoryItem = (props) => {
     return (
-        <div className="history-item">
+        <button className="history-item" onClick={() => (props.changeRoomId(props.chatRoomId))}>
             <input className="form-check-input" type="checkbox" />
-            <div className="div36">채팅방 제목임ㅁㄴㅇㄻㄴㄹㅇ</div>
-        </div>
+            <div className="div36">{props.chatRoomName}</div>
+        </button>
     );
 }
 

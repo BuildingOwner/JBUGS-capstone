@@ -179,8 +179,12 @@ def chat():
         for key in image_keys:
             image_file = request.files[key]
             images.append(image_file)
-        question = request.form['question']
-        chat_id = request.form.get('chatId')
+        # question = request.form.get('question')
+        # chat_id = request.form.get('chatId')
+
+        data = request.json
+        question = data.get('question')
+        chat_id = data.get('chat_id')
 
         # if sql_injection_detector([chat_id]):
         #     return "invalied chat ID", 404

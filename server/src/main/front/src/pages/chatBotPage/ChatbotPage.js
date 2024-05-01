@@ -10,36 +10,111 @@ import { useLocation } from "react-router-dom";
 
 const ChatbotPage = () => {
   const location = useLocation()
-  console.log(location)
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
-  
+  const [chatDtoList, setChatDtoList] = useState([])
+  const [chatRoomId, setChatRoomId] = useState([]) // 챗룸 아이디 배열
+  const [chatId, setChatId] = useState() // 챗룸 아이디 
+  const [text, setText] = useState()
+  const [firstDo, setFirstDo] = useState(true)
+
   const chatBoardScoll = () => {
     const chatUl = document.querySelector('#chatBoard');
     chatUl.scrollTop = chatUl.scrollHeight;
   }
 
-  useEffect(() => {
-    const fetchChatData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/get-chat/${4}`, {
-          withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
-          credentials: 'include', // credentials를 포함하는 요청으로 설정
-        })
+  const changeRoomId = (selectedId) => {
+    console.log("선택된 chat Room Id: ", selectedId)
+    setChatId(selectedId)
+    fetchChattings(selectedId)
+  }
 
-        const chatData = JSON.parse(response.data.chat_text);
+  function onChange(e) {
+    setText(e.target.value);
+  }
 
-        console.log("Chat data:", chatData); // 파싱된 채팅 데이터
-        console.log(chatData[0].content[0].text)
-        setChats(chatData);
-      } catch (error) {
-        console.error("Error fetching chat data:", error)
-      }
+  const sendMeesage = async () => {
+    // Axios 구성 생성
+    const axiosInstance = axios.create({
+      withCredentials: true,
+      credentials: 'include',
+    });
+    console.log("text : ", text)
+    console.log("chatRoomId : ", chatId)
+    try {
+      const response = await axiosInstance.post("http://localhost:5000/chat", {
+        question: text,
+        chat_id: chatId,
+      });
+      // 텍스트 필드 비워주기
+      setText('');
+      console.log("Response.data :", response.data);
+      fetchChattings(chatId)
+      // 여기에서 응답 처리
+    } catch (error) {
+      console.error("Error sending message:", error);
+      // 에러 처리
     }
-    chatBoardScoll()
-    fetchChatData()
-  }, []);
-  // chats가 바뀔때마다 렌더링 다시 필요?
+  }
 
+  const fetchChattings = async (chatRoomId) => { // chatRoomId 매개변수 추가
+    try {
+      const response = await axios.get(`http://localhost:5000/get-chat/${chatRoomId}`, {
+        withCredentials: true,
+        credentials: 'include',
+      });
+
+      const chatData = JSON.parse(response.data.chat_text);
+
+      console.log("Chat data:", chatData);
+      // console.log(chatData[0].content[0].text);
+      setChats(chatData);
+
+    } catch (error) {
+      console.error("Error fetching chat data:", error);
+    }
+  }
+
+  const fetchChatData = async () => {
+    try {
+      const response = await axios.get(`api/chat`, {
+        withCredentials: true,
+      })
+
+      const chatDto = response.data.chatDtoList.map((chat) => chat).flat()
+      const chatId = chatDto.map((chat) => chat.chatRoomId).flat()
+
+      console.log("chatBotPage의 response : ", response)
+      console.log("chatDto : ", chatDto)
+      console.log("chatRoomId : ", chatId)
+
+      setChatRoomId(chatId);
+      setChatDtoList(chatDto);
+      return chatId; // chatId 반환
+
+    } catch (error) {
+      console.error("Error fetching chat data:", error);
+      return null; // 에러 발생 시 null 반환
+    }
+  }
+
+  const fetchDataAndChattings = async (selectedId) => { // 새로운 함수 추가
+    console.log(selectedId)
+    const chatId = await fetchChatData(); // fetchChatData 호출 및 chatId 반환 대기
+    if (chatId) { // chatId가 유효한 경우에만 fetchChattings 호출
+      await fetchChattings(selectedId); // fetchChattings 호출 및 chatId 전달
+    }
+  }
+  useEffect(() => {
+    chatBoardScoll()
+    // 수정 필요
+    if (firstDo == true) {
+      fetchDataAndChattings(1)
+      setFirstDo(false)
+    } else {
+      console.log("firstDo : ", firstDo)
+      fetchDataAndChattings(chatId)
+    }
+  }, [chatId]);
 
   return (
     <div className={`background`}>
@@ -54,7 +129,7 @@ const ChatbotPage = () => {
             <div className={styles.topRight}>
               <h3>History</h3>
               <div className={styles.historyCount}>
-                6 / 50
+                {chatDtoList?.length} / 50
               </div>
             </div>
           </div>
@@ -74,19 +149,6 @@ const ChatbotPage = () => {
                       />
                   ))
                 )}
-                {/* <UserChatItem />
-                <BotChatItem />
-                <UserChatItem />
-                <BotChatItem />
-                <UserChatItem />
-                <BotChatItem />
-                <UserChatItem />
-                <BotChatItem />
-                <UserChatItem />
-                <BotChatItem />
-                <UserChatItem />
-                <BotChatItem /> */}
-
               </div>
               <div className={styles.chat}>
                 <button type="button" className={`${styles.RegenerateBtn} btn btn-primary`}>
@@ -94,30 +156,21 @@ const ChatbotPage = () => {
                 </button>
                 <div className={styles.inputBtns}>
                   <button type="button" className="btn btn-primary">이미지</button>
-                  <textarea className="form-control" placeholder="질문을 입력해주세요..." />
-                  <button type="submit" className="btn btn-primary">보내기</button>
+                  <textarea className="form-control" placeholder="질문을 입력해주세요..." value={text}onChange={onChange} />
+                  <button type="submit" className="btn btn-primary" onClick={sendMeesage}>보내기</button>
                 </div>
               </div>
             </div>
             <div className={styles.bottomRight}>
               <div className={`${styles.historys} no-scroll-bar`}>
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
+                {chatDtoList.map((chat, i) => (
+                  <HistoryItem
+                    key={i}
+                    changeRoomId={changeRoomId}
+                    chatRoomId={chat.chatRoomId}
+                    chatRoomName={chat.chatRoomName}
+                  />
+                ))}
               </div>
               <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}>
                 선택 삭제
@@ -126,115 +179,6 @@ const ChatbotPage = () => {
           </div>
         </div>
       </div>
-      {/* <main className="box-wrapper">
-        <section className="box">
-          <div className="top6">
-            <div className="title-parent1">
-              <h1 className="title25">AI Chat Helper</h1>
-              <div className="choice-model">
-                <div className="gpt-4-turbo">GPT 4 Turbo</div>
-                <div className="bxsdown-arrow4">
-                  <img className="vector-icon55" alt="" src="/vector-5.svg" />
-                </div>
-              </div>
-            </div>
-            <div className="history-top">
-              <h2 className="history1">History</h2>
-              <div className="capacity">
-                <div className="div210">6 / 50</div>
-              </div>
-            </div>
-          </div>
-          <div className="data-aggregator1">
-            <div className="content3">
-              <div className="chat-board">
-                <UserChatItem />
-                <BotChatItem />
-                <UserChatItem />
-                <BotChatItem />
-                <UserChatItem />
-                <BotChatItem />
-              </div>
-              <div className="chat">
-                <button className="regenerate">
-                  <div className="icon-park-outlineredo">
-                    <img
-                      className="group-icon3"
-                      loading="lazy"
-                      alt=""
-                      src="/group2.svg"
-                    />
-                  </div>
-                  <div className="regenerate-response">Regenerate response</div>
-                </button>
-                <div className="inputs">
-                  <div className="input-file">
-                    <div className="lucidefile-plus">
-                      <img
-                        className="group-icon4"
-                        loading="lazy"
-                        alt=""
-                        src="/group-11.svg"
-                      />
-                    </div>
-                  </div>
-                  <button className="input-file1">
-                    <div className="f7mic">
-                      <img
-                        className="vector-icon9"
-                        alt=""
-                        src="/vector-42.svg"
-                      />
-                    </div>
-                  </button>
-                  <input
-                    className="inputs-child"
-                    placeholder="질문을 입력해주세요..."
-                    type="text"
-                  />
-                  <div className="input-file2">
-                    <div className="cipaper-plane">
-                      <img
-                        className="vector-icon10"
-                        loading="lazy"
-                        alt=""
-                        src="/vector-52.svg"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="history">
-              <div className="history-list">
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-                <HistoryItem />
-              </div>
-              <div className="history-delete-btn-wrapper">
-                <button className="history-delete-btn">
-                  <div className="octicontrashcan-16">
-                    <img
-                      className="vector-icon11"
-                      alt=""
-                      src="/vector-63.svg"
-                    />
-                  </div>
-                  <div className="div49">선택 삭제</div>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main> */}
     </div>
   );
 };

@@ -89,6 +89,8 @@
 .historys{
   overflow-y: auto;
   flex-grow: 1;
+  width: 14rem;
+  /* width 수정 필요 */
 }
 
 .chat{

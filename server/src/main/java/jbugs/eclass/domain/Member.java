@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 public class Member {
     @Id
+    @GeneratedValue
     @Column(name = "member_id")
     private Long id;
 

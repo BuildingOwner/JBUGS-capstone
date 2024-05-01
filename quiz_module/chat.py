@@ -40,7 +40,7 @@ def chat(chat_id, question, img_path=[]):
     print(f"[{current_file_name}] chat_id: {chat_id}")
     db = getConnection()
     cursor = db.cursor()
-    sql = "SELECT chat_str FROM chat WHERE id = %s"
+    sql = "SELECT chatting_json FROM chat_room WHERE chat_room_id = %s"
     cursor.execute(sql, (chat_id,))
     prev_chat_text = cursor.fetchone()
     
@@ -120,11 +120,11 @@ def chat(chat_id, question, img_path=[]):
     sql_str = ""
     params = ""
     if prev_chat_text is None:
-        sql_str = "INSERT INTO chat (chat_str) VALUES (%s)"
+        sql_str = "INSERT INTO chat_room (chatting_json) VALUES (%s)"
         params = (json.dumps(message, ensure_ascii=False, separators=(',', ':')))
         print(f"[{current_file_name}] db 삽입", end="")
     else:
-        sql_str = "UPDATE chat SET chat_str = %s WHERE id = %s"
+        sql_str = "UPDATE chat_room SET chatting_json = %s WHERE chat_room_id = %s"
         params = (json.dumps(message, ensure_ascii=False, separators=(',', ':')), chat_id)
         print(f"[{current_file_name}]  db 업데이트", end="")
 

@@ -7,7 +7,7 @@ from flask import Flask, Response, request, jsonify, stream_with_context
 from secret.db_connection import getConnection
 import pymysql
 from datetime import datetime, timedelta
-from quiz_module.quiz_module_keyword import gen as keword_gen
+from quiz_module.quiz_module_keyword import gen as keyword_gen
 from quiz_module.quiz_module_image_summary import gen as summary_gen
 from secret.sql_injection_detector import sql_injection_detector
 import json
@@ -57,7 +57,7 @@ def add_quiz_keyword():
 
     # path = '학습자료/3-DL-원리.pdf'
 
-    question = keword_gen(path, int(choice), int(short))
+    question = keyword_gen(path, int(choice), int(short))
 
     sql_strings = [json.dumps(question, ensure_ascii=False)]
     if sql_injection_detector(sql_strings):
@@ -65,8 +65,8 @@ def add_quiz_keyword():
 
     db = getConnection()
     cursor = db.cursor()
-    sql = "INSERT INTO question (deadline, question_name, question) VALUES (%s, %s, %s)"
-    val = (formatted_date, f"{lecture} {week}주차 퀴즈", question)
+    sql = "INSERT INTO quiz (week_id, deadline, quiz_name, json_data) VALUES (%s, %s, %s, %s)"
+    val = (week, formatted_date, f"{lecture} {week}주차 퀴즈", question)
     cursor.execute(sql, val)
 
     db.commit()
@@ -113,8 +113,8 @@ def add_quiz_summary():
 
     db = getConnection()
     cursor = db.cursor()
-    sql = "INSERT INTO question (deadline, question_name, question) VALUES (%s, %s, %s)"
-    val = (formatted_date, f"{lecture} {week}주차 퀴즈", question)
+    sql = "INSERT INTO quiz (week_id, deadline, quiz_name, json_data) VALUES (%s, %s, %s, %s)"
+    val = (week, formatted_date, f"{lecture} {week}주차 퀴즈", question)
     cursor.execute(sql, val)
 
     db.commit()
@@ -128,7 +128,7 @@ def get_quiz(question_id):
     try:
         db = getConnection()
         cursor = db.cursor()
-        sql = "SELECT question FROM question WHERE id = %s"
+        sql = "SELECT quiz FROM quiz_json WHERE id = %s"
         cursor.execute(sql, (question_id,))
         question_row = cursor.fetchone()
         if question_row:
@@ -201,12 +201,6 @@ def chat():
                 save_path = save_path.replace('\\', '/')
                 image.save(save_path)
                 image_paths.append(save_path)
-                
-            # def generate():
-            #     for piece in chat(chat_id, question, image_paths):
-            #         if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
-            #             yield piece.encode("utf-8")
-            # return Response(stream_with_context(generate()))
         
         def generate():
             for piece in mychat(chat_id, question, image_paths):
@@ -219,12 +213,11 @@ def chat():
 @app.route('/get-chat', methods=['post'])
 def get_chat():
     chat_id = request.form.get("chat_id")
-    student_id = request.form.get("student_id")
     print(f"[{current_file_name}] chat_id: {chat_id}")
     db = getConnection()
     cursor = db.cursor()
-    sql = "SELECT chatting_json FROM chat_room WHERE chat_room_id = %s AND student_id = %s"
-    cursor.execute(sql, (chat_id, student_id))
+    sql = "SELECT chatting_json FROM chat_room WHERE chat_room_id = %s"
+    cursor.execute(sql, (chat_id))
     prev_chat_text = cursor.fetchone()
     
     if prev_chat_text:

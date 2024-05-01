@@ -62,10 +62,9 @@ const ChatbotPage = () => {
 
   const fetchChattings = async (chatRoomId) => { // chatRoomId 매개변수 추가
     try {
-      const response = await axios.get(`http://localhost:5000/get-chat/${chatRoomId}`, {
-        withCredentials: true,
-        credentials: 'include',
-      });
+      const formData = new FormData();
+      formData.append('chat_id', chatId);
+      const response = await axios.post(`http://localhost:5000/get-chat`, formData);
 
       const chatData = JSON.parse(response.data.chat_text);
 

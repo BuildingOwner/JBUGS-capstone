@@ -128,16 +128,18 @@ def get_quiz(question_id):
     try:
         db = getConnection()
         cursor = db.cursor()
-        sql = "SELECT quiz FROM quiz_json WHERE id = %s"
+        sql = "SELECT json_data FROM quiz WHERE quiz_id = %s"
         cursor.execute(sql, (question_id,))
         question_row = cursor.fetchone()
         if question_row:
             # 데이터베이스로부터 읽어온 문자열을 다시 Python 딕셔너리로 변환
             question_dict = json.loads(question_row[0])
+            print(question_dict)
             return jsonify(question_dict), 200
         else:
             return "Question not found", 404
     except Exception as e:
+        print(str(e))
         return str(e), 500
     finally:
         cursor.close()

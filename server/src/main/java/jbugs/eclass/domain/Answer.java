@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -25,7 +27,8 @@ public class Answer {
     private Student student;
 
     @ElementCollection
-    @CollectionTable(name = "answer_numbers", joinColumns = @JoinColumn(name = "answer_id"))
-    @Column(name = "answer_number")
-    private List<Integer> answerNumbers;
+    @CollectionTable(name = "answer_details", joinColumns = @JoinColumn(name = "answer_id"))
+    @MapKeyColumn(name = "question_number")
+    @Column(name = "answer")
+    private Map<Integer, String> answers = new HashMap<>();
 }

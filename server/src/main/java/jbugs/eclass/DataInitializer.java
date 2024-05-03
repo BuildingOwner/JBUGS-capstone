@@ -170,20 +170,48 @@ public class DataInitializer implements CommandLineRunner {
         memberService.join(member7);
 
         Member member8 = new Member();
-        member8.setLoginId("1971083");
-        member8.setName("이영재");
-        String encodedPassword8 = passwordEncoder.encode("1234!");
-        member8.setPassword(encodedPassword8);
+        member8.setLoginId("1971233");
+        member8.setName("최재완");
+        member8.setPassword(encodedPassword);
         member8.setMemberType(MemberType.STUDENT);
-
         Student student2 = new Student();
         student2.setFirstTrack("모바일소프트웨어트랙");
         student2.setSecondTrack("웹공학트랙");
-
         member8.setStudent(student2);
         student2.setMember(member8);
-
         memberService.join(member8);
+
+        Member member9 = new Member();
+        member9.setLoginId("1971084");
+        member9.setName("진승원");
+        member9.setPassword(encodedPassword);
+        member9.setMemberType(MemberType.STUDENT);
+        Student student3 = new Student();
+        student3.setFirstTrack("모바일소프트웨어트랙");
+        student3.setSecondTrack("웹공학트랙");
+        member9.setStudent(student3);
+        student3.setMember(member9);
+        memberService.join(member9);
+
+        int memberIndex = 1;
+        String[] studentNames = {"김지훈","박세진", "박서연", "도민준","이하은","장도윤","박지우","이유진","김현우","한수아","신지호", "김예은", "김태현", "김민서", "박준호", "이하윤", "차은우", "박서현", "김지안", "조우진", "박소율", "김민주"};
+        for(String name : studentNames) {
+            Member member10 = new Member();
+            member10.setLoginId("19710" + memberIndex); // 로그인 ID 설정
+            member10.setName(name); // 이름 설정 // 비밀번호 인코딩
+            member10.setPassword(encodedPassword);
+            member10.setMemberType(MemberType.STUDENT); // 멤버 타입 설정
+
+            Student student5 = new Student();
+            student5.setFirstTrack("웹공학트랙"); // 첫 번째 트랙 설정
+            student5.setSecondTrack("모바일소프트웨어트랙"); // 두 번째 트랙 설정
+            member10.setStudent(student5); // 학생 정보 설정
+            student5.setMember(member10); // 멤버 정보 설정
+
+            memberService.join(member10); // 멤버 서비스를 통해 저장
+
+            memberIndex++; // 다음 멤버를 위해 인덱스 증가
+        }
 
         Lecture lecture1 = new Lecture();
         lecture1.setName("알고리즘");

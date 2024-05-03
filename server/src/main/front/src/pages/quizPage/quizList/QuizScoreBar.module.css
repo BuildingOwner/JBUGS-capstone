@@ -9,9 +9,6 @@
 .quizName {
   font-size: var(--font-size-base);
   width: 50px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* 최대 줄 수 */
   overflow: hidden;
   text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
   text-align: center;

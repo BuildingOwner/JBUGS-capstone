@@ -1,0 +1,27 @@
+.quizListItem{
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  gap: var(--gap-xl);
+  padding: 0 var(--padding-16xl);
+}
+
+.idSubmitBox, .text, .feedbackBtn{
+  min-width: 150px;
+}
+
+.title{
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
+  text-align: center;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.idSubmitText, .text, .feedbackBtn, .title, .feedbackText{
+  font-size: var(--font-size-base);
+}

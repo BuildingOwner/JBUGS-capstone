@@ -1,0 +1,74 @@
+.container{
+  background-color: white;
+  padding: var(--padding-xl);
+  width: 300px;
+}
+
+.title{
+  width: 100%;
+  font-size: var(--font-size-xl);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
+  text-align: center;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.duration{
+  display: flex;
+  gap: 10px;
+  color: #777;
+  padding-top: var(--padding-xl);
+}
+
+.duration h3{
+  font-size: var(--font-size-base);
+}
+
+.description{
+  width: 100%;
+  font-size: var(--font-size-base);
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
+  text-align: center;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  margin: 0;
+}
+
+.bottom{
+  
+  padding-top: var(--padding-xl);
+  display: flex;
+  gap: var(--gap-6xl);
+  align-items: end;
+}
+
+.bottomInfo{
+  flex-grow: 1;
+}
+
+.time, .score{
+  display: flex;
+  justify-content: space-between;
+}
+
+.time h3, .score h3{
+  font-size: var(--font-size-sm);
+  color: #777;
+}
+
+.goBtn{
+  display: flex !important;
+  border: none !important;
+}
+
+.goBtn h3{
+  font-size: var(--font-size-sm);
+}

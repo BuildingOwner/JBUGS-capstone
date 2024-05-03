@@ -1,7 +1,7 @@
 import styles from "./QuizScoreBar.module.css"
 import React, { useRef, useEffect } from 'react';
 
-const QuizScoreBar = ({ quizScoreData }) => {
+const QuizScoreBar = (props) => {
 
   const barRef = useRef(null);
 
@@ -9,15 +9,15 @@ const QuizScoreBar = ({ quizScoreData }) => {
     const barElement = barRef.current;
     if (barElement) {
       // Bar의 높이를 quizScoreData.score에 비례하여 설정
-      barElement.style.height = `${quizScoreData.score / 2}%`;
+      barElement.style.height = `${props.quizScore / 2}%`;
     }
-  }, [quizScoreData.score]);
+  }, [props.quizScore]);
 
   return (
     <div className={styles.scoreBarContainer}>
-      <h3 className={styles.score}>{quizScoreData.score}</h3>
+      <h3 className={styles.score}>{props.quizScore}</h3>
         <div ref={barRef} className={styles.Bar}><p> </p></div>
-        <h3 className={styles.quizName}>{quizScoreData.quizName}</h3>
+        <h3 className={styles.quizName}>{props.quizName}</h3>
     </div>
   );
 }

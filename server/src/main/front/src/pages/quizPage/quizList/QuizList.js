@@ -16,10 +16,25 @@ const QuizList = () => {
   const [division, setDivision] = useState()
   const [quizDtoList, setQuizDtoList] = useState()
   const [courseDto, setCourseDto] = useState()
+  const [completeQuizList, setCompleteQuizList] = useState([])
+  const [uncompleteQuizList, setUncompleteQuizList] = useState([])
+
   const fetchQuizList = async () => {
     try {
       const response = await axios.get(`/api/course/${enrollmentId}/quizList`)
       console.log("quizList response : ", response)
+      const quizList = response.data.quizDtoList.map((quiz) => quiz)
+      setQuizDtoList(quizList)
+
+      // useState를 활용하여 완료된 퀴즈와 완료되지 않은 퀴즈 분리
+      const completedQuizzes = quizList.filter(quiz => quiz.quizScore !== null)
+      const uncompletedQuizzes = quizList.filter(quiz => quiz.quizScore === null)
+
+      // 상태 업데이트
+      setQuizDtoList(quizList)
+      setCompleteQuizList(completedQuizzes)
+      setUncompleteQuizList(uncompletedQuizzes)
+
     } catch (error) {
 
     }
@@ -29,28 +44,12 @@ const QuizList = () => {
     fetchQuizList()
   }, [])
 
-  const quizScoreData = [ // 밑에꺼 형식 맞춰야함
-    { "quizName": "AD", "score": 94, },
-    { "quizName": "bc", "score": 78, },
-    { "quizName": "asdf", "score": 100, },
-    { "quizName": "A123wqasdfasdfadfafsdfasdfade", "score": 90, },
-    { "quizName": "hgf", "score": 65, },
-    { "quizName": "pl", "score": 30, },
-    { "quizName": "pl", "score": 30, },
-    { "quizName": "pl", "score": 30, },
-    { "quizName": "pl", "score": 30, },
-    { "quizName": "pl", "score": 30, },
-    { "quizName": "pl", "score": 30, },
-    { "quizName": "pl", "score": 30, },
-  ]
 
   const quizListData = [ // 얘는 안맞춰도 됨
     { "quizName": "AD", "score": 94, },
     { "quizName": "bc", "score": 78, },
     { "quizName": "asdf", "score": 100, }
   ]
-
-  const uncompleteQuizItem = [{ "asdf": "1" }, { asdf: "adsf" }, { asdf: "adsf" }, { asdf: "adsf" }, { asdf: "adsf" }]
 
   return (
     <div className={`background`}>
@@ -61,11 +60,10 @@ const QuizList = () => {
             <div className={styles.myInfo}>
               <h3 className={styles.title}>퀴즈</h3>
               <div className={styles.scoreBoard}>
-                {quizScoreData.map((data, i) => {
-                  return (
-                    <QuizScoreBar quizScoreData={data} key={`quizScoreBar${i}`} />
-                  )
-                })}
+                {completeQuizList?.map((quiz, i) =>
+                  quiz.quizScore === null ? null :
+                    <QuizScoreBar quizName={quiz.quizName} quizScore={quiz.quizScore} key={`quizScoreBar${i}`} />
+                )}
               </div>
               <div className={styles.aveInfo}>
                 <div className={styles.aveScore}>
@@ -89,11 +87,20 @@ const QuizList = () => {
             <div className={styles.topRight}>
               <h3>미응시 퀴즈</h3>
               <div className={styles.uncompleteQuizsContainer}>
-                {uncompleteQuizItem.map((data, i) => {
+                {uncompleteQuizList.map((quiz, i) => {
                   return (
                     <UncompleteQuizItem
-                      data={data}
-                      key={`uncompleteQuizItem${i}`} />
+                      key={`uncompleteQuizItem${i}`}
+                      quizName={quiz.quizName}
+                      description={quiz.description}
+                      deadline={quiz.deadline}
+                      quizType={quiz.quizType}
+                      reflectionRatio={quiz.reflectionRatio}
+                      quizId={quiz.quizId}
+                      timeLimit={quiz.timeLimit}
+                      jsonData={quiz.jsonData}
+                    />
+
                   )
                 })}
               </div>
@@ -126,9 +133,21 @@ const QuizList = () => {
               <h3 className={styles.feedback}>피드백</h3>
             </div>
             <div className={styles.quizListContainer}>
-              {quizListData.map((data, i) => {
+              {quizDtoList.map((quiz, i) => {
                 return (
-                  <QuizListItem data={data} key={`QuizListItem${i}`} />
+                  <QuizListItem
+                    key={`QuizListItem${i}`}
+                    quizName={quiz.quizName}
+                    description={quiz.description}
+                    deadline={quiz.deadline}
+                    quizType={quiz.quizType}
+                    reflectionRatio={quiz.reflectionRatio}
+                    quizId={quiz.quizId}
+                    timeLimit={quiz.timeLimit}
+                    jsonData={quiz.jsonData}
+                    quizScore={quiz.quizScore}
+                    submissionStatus={quiz.submissionStatus}
+                  />
                 )
               })}
             </div>

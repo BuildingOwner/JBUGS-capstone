@@ -9,14 +9,7 @@ import { LuClipboardList } from "react-icons/lu";
 import { MdOutlineQuiz } from "react-icons/md";
 
 const Sidebar = (props) => {
-
-  const [memberInfoDto, setMemberInfoDto] = useState()
-
-  useEffect(() => {
-    console.log("Sidebar의 props : ", props)
-    setMemberInfoDto(props.memberInfoDto)
-  }, [])
-  
+  const enrollmentId = props.enrollmentId
   return (
     <div className={styles.sidebar}>
       <Link to={"/main"} className={styles.logo}>
@@ -44,7 +37,7 @@ const Sidebar = (props) => {
         </div>
         <div className={styles.navBtns}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/qalist"} className={styles.linkBtn}>
+            <Link to={"/qalist"} state={{ enrollmentId: enrollmentId}} className={styles.linkBtn}>
               <FaQuestion size="30" />
               <h3>Q & A</h3>
             </Link>
@@ -56,7 +49,7 @@ const Sidebar = (props) => {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/assignmentlist"} className={styles.linkBtn}>
+            <Link to={"/assignmentlist"} className={styles.linkBtn} state={{ enrollmentId: enrollmentId}}>
               <LuClipboardList size="30" />
               <h3>과제</h3>
             </Link>

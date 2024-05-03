@@ -4,12 +4,14 @@ import YetAssign from "./YetAssign";
 import DoneAssign from "./DoneAssign";
 import AssignListHeader from "./AssignListHeader"
 import "./AssignmentList.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 const AssignmentList = () => {
-  const enrollmentId = useLocation().state
+  const navigate = useNavigate()
+  const location = useLocation()
+  const enrollmentId = location.state.enrollmentId
   const [lectureName, setLectureName] = useState()
   const [division, setDivision] = useState()
   const [assignments, setAssignments] = useState([])
@@ -19,6 +21,7 @@ const AssignmentList = () => {
   useEffect(() => {
     const fetchAssignmentList = async () => {
       try {
+        console.log(location)
         const response = await axios.get(`/api/course/${enrollmentId}/assignment`, {
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
         });
@@ -51,7 +54,7 @@ const AssignmentList = () => {
 
   return (
     <div className="assignmentlist">
-      <Sidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
+      <Sidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} enrollmentId={enrollmentId}/>
       <main className="content-frame">
         <section className="content7">
           <AssignHeader />

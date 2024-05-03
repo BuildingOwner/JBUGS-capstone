@@ -15,7 +15,7 @@ const MainAssignItem = (props) => {
 
   const moveToAssingList = () => {
     navigate("/assignmentlist",
-      { state: props.enrollmentId })
+      { state: props })
   }
 
   return (

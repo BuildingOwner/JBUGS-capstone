@@ -1,4 +1,3 @@
-
 .num {
   align-self: stretch;
   overflow: hidden;
@@ -189,6 +188,124 @@
   flex-direction: row;
   padding: 0 var(--padding-xl) 0 0;
   letter-spacing: normal;
+}
+
+.tab {
+  align-self: stretch;
+  overflow: hidden;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 41.25rem 0 0;
+  row-gap: 20px;
+  white-space: nowrap;
+}
+
+
+.tab-item {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-2xl-5) var(--padding-12xl);
+  background-color: var(--blue3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.tab-item:hover {
+  background-color: var(--color-lightsteelblue);
+}
+
+.tab-item1 {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-2xl-5) 2.563rem;
+  background-color: var(--boder-blue);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.tab-item1:hover {
+  background-color: var(--color-steelblue);
+}
+
+.tab-item2 {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-2xl-5) var(--padding-12xl);
+  background-color: var(--blue3);
+  border-radius: 0 var(--br-3xs) 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.tab-item2:hover {
+  background-color: var(--color-lightsteelblue);
+}
+
+.my {
+  position: relative;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-malgun-gothic);
+  color: var(--color-black);
+  text-align: left;
+  display: inline-block;
+  min-width: 5.5rem;
+}
+
+.my1 {
+  position: relative;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-malgun-gothic);
+  color: var(--color-black);
+  text-align: left;
+  display: inline-block;
+  min-width: 4.25rem;
+}
+
+.my2 {
+  position: relative;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-malgun-gothic);
+  color: var(--color-black);
+  text-align: left;
+  display: inline-block;
+  min-width: 5.5rem;
+}
+
+@media screen and (max-width: 1125px) {
+  .tab {
+    flex-wrap: wrap;
+    padding-right: 20.625rem;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .tab {
+    padding-right: 10.313rem;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .tab {
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
 }
 
 @media screen and (max-width: 1025px) {

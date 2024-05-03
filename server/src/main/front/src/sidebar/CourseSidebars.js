@@ -4,7 +4,12 @@ import CollepsedSidebar from './CollepsedSidebar';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import styles from "./MainSidebars.module.css"
 
-function CourseSidebar(lectureName, division, memberInfoDto) {
+function CourseSidebar(props) {
+  console.log("courseSidebar : ",props)
+  const enrollmentId = props.enrollmentId
+  const memberInfoDto = props.memberInfoDto
+  const lectureName = props.lectureName
+  const division = props.division
   const [showMainSidebar, setShowMainSidebar] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
 
@@ -15,7 +20,8 @@ function CourseSidebar(lectureName, division, memberInfoDto) {
 
   return (
     <div className={`${styles.sidebars} ${collapsed ? styles.collapsed : ''}`}>
-      {showMainSidebar ? <Sidebar/> : <CollepsedSidebar />}
+      {showMainSidebar ? <Sidebar memberInfoDto={memberInfoDto} lectureName={lectureName} division={division} enrollmentId={enrollmentId}/>
+        : <CollepsedSidebar memberInfoDto={memberInfoDto} lectureName={lectureName} division={division} enrollmentId={enrollmentId}/>}
       <div className={showMainSidebar ? styles.colleseBtn : styles.colleseBtnCollepsed}>
         <div className={styles.colleseBtnRight} onClick={toggleSidebar}>
           {showMainSidebar ? <IoIosArrowBack /> : <IoIosArrowForward />}

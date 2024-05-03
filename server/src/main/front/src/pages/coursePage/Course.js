@@ -78,7 +78,7 @@ const Course = () => {
 
   return (
     <div className={`background`}>
-      <CourseSidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
+      <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
           <div className={styles.nav}>

@@ -20,7 +20,7 @@ const ListItem = (props) => {
   }
 
   const moveToAssignmentList = () => {
-    navigate('/assignmentlist', { state: props.enrollmentId })
+    navigate('/assignmentlist', { state: props })
   }
 
   const openQuizmodal = () => {

@@ -14,9 +14,10 @@ const ChatbotPage = () => {
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
   const [chatDtoList, setChatDtoList] = useState([])
   // const [chatRoomId, setChatRoomId] = useState([]) // 챗룸 아이디 배열
-  const [chatId, setChatId] = useState() // 챗룸 아이디 
+  const [chatId, setChatId] = useState(1) // 챗룸 아이디  (초기 챗아이디 변경 필요)*****************
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
+  const [readOnly, setReadOnly] = useState(false)
 
   const chatBoardScoll = () => {
     const chatUl = document.querySelector('#chatBoard');
@@ -29,15 +30,23 @@ const ChatbotPage = () => {
     fetchChattings(selectedId)
   }
 
-  function onChange(e) {
+  const onChange = (e) => {
     setText(e.target.value);
   }
 
+  //  수정 필요
   const newChatting = () => {
-    console.log(chatDtoList)
+    console.log("new Chatting called : ", chatDtoList)
+
   }
 
+  const keyUp = (e) => {
+    if (e.key === 'Enter')
+      sendMeesage()
+  }
   const sendMeesage = async () => {
+    console.log(true)
+    setReadOnly(!readOnly)
     // Axios 구성 생성
     const axiosInstance = axios.create({
       withCredentials: true,
@@ -59,7 +68,9 @@ const ChatbotPage = () => {
       setText('');
       console.log("Response.data :", response.data);
       fetchChattings(chatId)
-      // 여기에서 응답 처리
+
+      console.log(false)
+      setReadOnly(false)
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/")
@@ -67,6 +78,7 @@ const ChatbotPage = () => {
         // 다른 종류의 오류 발생
         console.error(error);
       }
+      
     }
   }
 
@@ -180,7 +192,7 @@ const ChatbotPage = () => {
                 </button>
                 <div className={styles.inputBtns}>
                   <button type="button" className="btn btn-primary">이미지</button>
-                  <textarea className="form-control" placeholder="질문을 입력해주세요..." value={text} onChange={onChange} />
+                  <textarea className="form-control" placeholder="질문을 입력해주세요..." value={text} onChange={onChange} onKeyUp={keyUp} readOnly={readOnly} />
                   <button type="submit" className="btn btn-primary" onClick={sendMeesage}>보내기</button>
                 </div>
               </div>

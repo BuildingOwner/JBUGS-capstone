@@ -1,9 +1,4 @@
 import CourseSidebar from "../../sidebar/CourseSidebars";
-import FileItem from "./FileItem";
-import QuizItem from "./QuizItem";
-import VideoItem from "./VideoItem";
-import AssignmentItem from "./AssignmentItem";
-import WeekItem from "./WeekItem";
 import ListItem from "./ListItem";
 import styles from "./Course.module.css"
 import { useNavigate } from "react-router-dom";
@@ -83,19 +78,19 @@ const Course = () => {
         <section className={`bg ${styles.bg}`}>
           <div className={styles.nav}>
             <div className={styles.courseTitle}>
-              <h3>{lectureName}</h3>
-              <h3>{division}</h3>
+              <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
+              <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
             </div>
             <nav className={styles.weekList}>
               {Array.from({ length: 16 }).map((_, index) => (
-                <button type="button" key={index} className={`btn btn-primary ${styles.weekBtn}`}>{index}</button>
+                <button type="button" key={index} className={`btn btn-primary ${styles.weekBtn}`} style={{ fontWeight: "bold", fontSize: "1.25rem" }}>{index + 1}</button>
               ))}
             </nav>
           </div>
           <div className={styles.container}>
             <div className={styles.listContainer}>
               <div className={styles.name}>
-                <h2>온라인 강의</h2>
+                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom:"1rem" }}>온라인 강의</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {lectureVideos.map((video, i) => (
@@ -111,7 +106,7 @@ const Course = () => {
             </div>
             <div className={styles.listContainer}>
               <div className={styles.name}>
-                <h2>과제</h2>
+                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom:"1rem" }}>과제</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {assignments.map((assignment, i) => (
@@ -131,7 +126,7 @@ const Course = () => {
             </div>
             <div className={styles.listContainer}>
               <div className={styles.name}>
-                <h2>자료</h2>
+                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom:"1rem" }}>자료</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {classFiles.map((file, i) => (
@@ -147,7 +142,7 @@ const Course = () => {
             </div>
             <div className={styles.listContainer}>
               <div className={styles.name}>
-                <h2>퀴즈</h2>
+                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom:"1rem" }}>퀴즈</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {quizs.map((quiz, i) => (

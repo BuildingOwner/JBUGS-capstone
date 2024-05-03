@@ -1,0 +1,7 @@
+.userInfo{
+  flex-direction: column;
+}
+
+.navBtns{
+  width: fit-content;
+}

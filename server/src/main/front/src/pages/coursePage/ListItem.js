@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./ListItem.css"
+import styles from "./ListItem.module.css"
 import { useNavigate } from "react-router-dom";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 
@@ -37,6 +37,8 @@ const ListItem = (props) => {
     // console.log("돼야한다")
   }
 
+  const [fileColor, setfileColor] = useState('');
+
   useEffect(() => {
     if (props.url === "assignmentlist") {
       const dueDate = new Date(props.dueDate);
@@ -53,6 +55,16 @@ const ListItem = (props) => {
       const extension = props.fileName.split('.')
       const last = extension.length - 1
 
+      if (extension[last].includes('pdf')) {
+        setfileColor(styles.yellow);
+      } else if (extension[last].includes('ppt')) {
+        setfileColor(hear = styles.red);
+      } else if (extension[last].includes('xl')) {
+        setfileColor(hear = styles.green);
+      } else if (extension[last].includes('doc') || extension[last].includes('hwp')) {
+        setfileColor(hear = styles.blue);
+      }
+
       setFileExtension(extension[last])
     }
     // if(modalOpen == true) {
@@ -61,72 +73,72 @@ const ListItem = (props) => {
   }, [modalOpen]);
 
   return (
-    <div className="list-item-cjw" onClick={checkURL}>
-      <div className="flex-cjw">
-        <div className="first">
+    <div className={styles.listItem} onClick={checkURL}>
+      <div className={styles.flex}>
+        <div className={styles.first}>
           {props.url === 'assignmentlist' && (
             props.status === "NOT_SUBMITTED" ? (
-              <h4>
+              <h3 className={`${styles.fontSize} ${styles.red}`}>
                 미제출
-              </h4>
+              </h3>
             ) : (
-              <h4>
+              <h3 className={`${styles.fontSize} ${styles.green}`}>
                 제출
-              </h4>
+              </h3>
             )
           )}
           {props.url === 'quizlist' && (
             props.submissionStatus === true ? (
-              <h4>
+              <h3 className={`${styles.fontSize} ${styles.green}`}>
                 응시
-              </h4>
+              </h3>
             ) : (
-              <h4>
+              <h3 className={`${styles.fontSize} ${styles.red}`}>
                 미응시
-              </h4>
+              </h3>
             )
           )}
           {props.url === 'file' && (
 
-            <h4>{fileExtension}</h4>
+            <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
           )}
           {props.url === 'video' && (
-            <h4>length</h4>
+            <h3 className={`${styles.fontSize} ${styles.blue}`}>length</h3>
           )}
 
         </div>
-        <div className="second">
+        <div className={styles.second}>
           {props.url === 'assignmentlist' && (
-            <h4>{props.title}</h4>
+            <h3 className={styles.fontSize}>{props.title}</h3>
           )}
           {props.url === 'quizlist' && (
-            <h4>{props.quizName}</h4>
+            <h3 className={styles.fontSize}>{props.quizName}</h3>
           )}
           {props.url === 'file' && (
-            <h4>{props.fileName}</h4>
+            <h3 className={styles.fontSize}>{props.fileName}</h3>
           )}
           {props.url === 'video' && (
-            <h4>This is a video</h4>
+            <h3 className={styles.fontSize}>This is a video</h3>
           )}
         </div>
-        <div className="third">
+        <div className={styles.third}>
           <div className="prograss-bar"></div>
-          <h4>{props.contents}</h4>
+          <h3 className={styles.fontSize}>{props.contents}</h3>
 
         </div>
       </div>
-      <div className="fourth">
+      <div className={styles.fourth}>
         {props.url === 'assignmentlist' && (
-          <h4>{daysRemaining}일 남음</h4>
+          <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
         {props.url === 'quizlist' && (
-          <h4>{daysRemaining}일 남음</h4>
+          <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
         {props.url === 'file' && (
-          <h4>sizeOfFile</h4>
+          <h3 className={styles.fontSize}>sizeOfFile</h3>
         )}
         {props.url === 'video' && (
-          <h4>progressPercent</h4>
+          <h3 className={styles.fontSize}>progressPercent</h3>
         )}
       </div>
       {modalOpen === true ? <QuizInfoModal

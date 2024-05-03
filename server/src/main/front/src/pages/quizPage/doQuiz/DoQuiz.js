@@ -1,4 +1,4 @@
-import Sidebar from "../../../sidebar/Sidebar";
+import Sidebar from "../../../sidebar/CourseSidebars";
 import QuizInfo from "../quizComponents/QuizInfo";
 import Option1 from "../quizComponents/Option1";
 import styles from "./DoQuiz.module.css";
@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
 import axios from "axios";
 
-const DoQuiz = () => {
+const DoQuiz = (props) => {
   const navigate = useNavigate()
   const data = useLocation().state.props // 이곳에서 사용될 데이터
   const [memberInfoDto, setMemberInfoDto] = useState()
@@ -71,7 +71,7 @@ const DoQuiz = () => {
 
   return (
     <div className={`background`}>
-      <Sidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
+      <Sidebar enrollmentId={props.enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <div className={`mycontainer`}>
         <div className={`bg`}>
           <div className={styles.right}>
@@ -119,8 +119,13 @@ const DoQuiz = () => {
               <h3 className={styles.fontSize31xl}>3 : 17</h3>
             </div>
             <div className={styles.numberNav}>
-              {/* 문제 받아오는 코드 작성 후 만들 예정 */}
-              asd
+              {Array.from({length : questions.length}).map((_, i) => {
+                return(
+                  <div className={styles.quizNavBtn}>
+                    <h3>{i+1}</h3>
+                  </div>
+                )
+              })}
             </div>
             <div className={styles.notice}>
               <h3 className={styles.fontSizeBase}>주의 사항</h3>

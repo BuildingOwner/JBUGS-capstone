@@ -101,11 +101,20 @@ const ChatbotPage = () => {
     try {
       const response = await axios.delete(`/api/chat/${chatId}`)
       console.log("deleteChats reponse", response)
-      const updatedChatIdArray = chatIdArray.filter(id => id !== chatId); // 현재 chatId를 제외한 새 배열 생성
-      setChatIdArray(updatedChatIdArray); // chatIdArray 상태 업데이트
 
-      const newCurrentChatId = updatedChatIdArray.length > 0 ? updatedChatIdArray[updatedChatIdArray.length - 1] : null; // 새로운 현재 chatId 설정
-      setChatId(newCurrentChatId); // chatId 상태 업데이트
+      // chatIdArray에서 현재 chatId를 제거합니다.
+      const updatedChatIdArray = chatIdArray.filter(id => id !== chatId);
+      setChatIdArray(updatedChatIdArray);
+
+      // 현재 chatId의 인덱스를 찾습니다.
+      const currentChatIndex = chatIdArray.findIndex(id => id === chatId);
+
+      // 이전 chatId의 인덱스를 계산합니다. 만약 현재 chatId가 첫 번째였다면, 이전 chatId는 없으므로 0을 반환합니다.
+      const prevChatIndex = currentChatIndex > 0 ? currentChatIndex - 1 : 0;
+
+      // 이전 chatId를 설정합니다. 만약 updatedChatIdArray가 비어 있다면, null을 설정합니다.
+      const newCurrentChatId = updatedChatIdArray[prevChatIndex] || null;
+      setChatId(newCurrentChatId);
 
       if (newCurrentChatId !== null) {
         await fetchChattings(newCurrentChatId); // 새로운 현재 chatId에 해당하는 채팅 데이터 가져오기

@@ -10,10 +10,10 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const ChatbotPage = () => {
   const navigate = useNavigate()
-  // const location = useLocation()
+  const location = useLocation()
+  const [studentId, setStudentId] = useState()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
   const [chatDtoList, setChatDtoList] = useState([])
-  // const [chatRoomId, setChatRoomId] = useState([]) // 챗룸 아이디 배열
   const [chatId, setChatId] = useState(1) // 챗룸 아이디  (초기 챗아이디 변경 필요)*****************
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
@@ -34,10 +34,21 @@ const ChatbotPage = () => {
     setText(e.target.value);
   }
 
-  //  수정 필요
   const newChatting = () => {
     console.log("new Chatting called : ", chatDtoList)
+    makeNewChat()
+    fetchChatData()
+  }
 
+  const makeNewChat = async () => {
+    try {
+      const response = await axios.post("/api/chat", {
+        studentId: studentId
+      })
+      console.log("makeNewChat의 response : ", response)
+    } catch (error) {
+
+    }
   }
 
   const keyUp = (e) => {
@@ -45,7 +56,6 @@ const ChatbotPage = () => {
       sendMeesage()
   }
   const sendMeesage = async () => {
-    console.log(true)
     setReadOnly(!readOnly)
     // Axios 구성 생성
     const axiosInstance = axios.create({
@@ -69,7 +79,6 @@ const ChatbotPage = () => {
       console.log("Response.data :", response.data);
       fetchChattings(chatId)
 
-      console.log(false)
       setReadOnly(false)
     } catch (error) {
       if (error.response.status === 401) {
@@ -78,24 +87,30 @@ const ChatbotPage = () => {
         // 다른 종류의 오류 발생
         console.error(error);
       }
-      
+
     }
   }
+  const deleteChats = async () => {
+    try {
+      const response = await axios.post(`/api/chat/${chatId}`)
+      console.log(response)
+    } catch (error) {
 
+    }
+  }
 
   const fetchChattings = async (chatRoomId) => { // chatRoomId 매개변수 추가
     try {
       const formData = new FormData();
       formData.append('chat_id', chatRoomId);
       const response = await axios.post(`http://localhost:5000/get-chat`, formData);
-      console.log("fetchCahttings.response : ", response)
+      console.log("fetchCahttings response : ", response)
 
       const chatData = JSON.parse(response.data.chat_text);
 
       console.log("Chat data:", chatData);
       // console.log(chatData[0].content[0].text);
       setChats(chatData);
-
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/")
@@ -115,12 +130,10 @@ const ChatbotPage = () => {
       const chatDto = response.data.chatDtoList.map((chat) => chat).flat()
       const chatId = chatDto.map((chat) => chat.chatRoomId).flat()
 
-      console.log("chatBotPage의 response : ", response)
-      console.log("chatDto : ", chatDto)
-      console.log("chatRoomId : ", chatId)
-
       // setChatRoomId(chatId);
       setChatDtoList(chatDto)
+      setStudentId(response.data.studentDto.studentId)
+
       return chatId; // chatId 반환
 
     } catch (error) {
@@ -134,7 +147,6 @@ const ChatbotPage = () => {
   }
 
   const fetchDataAndChattings = async (selectedId) => { // 새로운 함수 추가
-    console.log(selectedId)
     const chatId = await fetchChatData() // fetchChatData 호출 및 chatId 반환 대기
     if (chatId) { // chatId가 유효한 경우에만 fetchChattings 호출
       await fetchChattings(selectedId); // fetchChattings 호출 및 chatId 전달
@@ -154,7 +166,9 @@ const ChatbotPage = () => {
 
   return (
     <div className={`background`}>
-      <Sidebar />
+      <Sidebar
+      // enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto}
+      />
       <div className={`mycontainer`}>
         <div className={`bg ${styles.bg}`}>
           <div className={styles.top}>
@@ -172,19 +186,21 @@ const ChatbotPage = () => {
           <div className={styles.bottom}>
             <div className={styles.bottomLeft}>
               <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`}>
-                {chats.length > 0 && (
-                  chats.map((chat, index) => (
-                    chat.role === 'user' ?
-                      <UserChatItem
-                        key={index}
-                        props={chat.content[0].text}
-                      /> :
-                      <BotChatItem
-                        key={index}
-                        props={chat.content[0].text}
-                      />
-                  ))
-                )}
+                {
+                  // chats.length > 0 && 
+                  (
+                    chats?.map((chat, index) => (
+                      chat.role === 'user' ?
+                        <UserChatItem
+                          key={index}
+                          props={chat.content[0].text}
+                        /> :
+                        <BotChatItem
+                          key={index}
+                          props={chat.content[0].text}
+                        />
+                    ))
+                  )}
               </div>
               <div className={styles.chat}>
                 <button type="button" className={`${styles.RegenerateBtn} btn btn-primary`}>
@@ -212,7 +228,8 @@ const ChatbotPage = () => {
                 onClick={newChatting}>
                 채팅 생성
               </button>
-              <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}>
+              <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}
+                onClick={deleteChats}>
                 선택 삭제
               </button>
             </div>

@@ -15,6 +15,7 @@ public class QnADto {
     private String title;
     private String writer;
     private LocalDateTime createdAt;
+    private String content;
     private int views;
     private QnAStatus qnAStatus;
 
@@ -22,6 +23,7 @@ public class QnADto {
         QnADto dto = new QnADto();
         dto.setQnaId(qna.getId());
         dto.setTitle(qna.getTitle());
+        dto.setContent(qna.getContent());
         dto.setWriter(qna.getWriter());
         dto.setCreatedAt(qna.getCreatedAt());
         dto.setQnAStatus(qna.getQnaStatus());

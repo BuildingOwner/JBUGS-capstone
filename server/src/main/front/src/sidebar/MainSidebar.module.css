@@ -7,8 +7,9 @@
 }
 
 .logo{
-  padding: var(--padding-xl);
+  padding: 20px;
   padding-top: var(--padding-31xl);
+  padding-right: 0;
   display: flex;
   justify-content: center;
 }
@@ -18,7 +19,8 @@
 }
 
 .sidebarContainer{
-  padding: var(--padding-xl);
+  padding: 20px;
+  padding-right: 0;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -28,9 +30,9 @@
 .navBtns{
   display: flex;
   flex-direction: column;
-  gap: var(--gap-6xl);
+  gap: var(--gap-16xl);
   align-items: center;
-  padding: var(--padding-xl) 0 ;
+  padding: var(--padding-xl) 0;
   border-radius: 10px;
 }
 
@@ -38,7 +40,9 @@
   display: flex !important;
   align-items: center;
   border: none !important;
-  background-color: var(--point-blue) !important;
+  /* background-color: var(--point-blue) !important; */
+  background: none !important;
+  width: 60%;
 }
 
 .reactCalendar{
@@ -52,5 +56,5 @@
   text-decoration: none;
   align-items: center;
   gap: var(--gap-mini);
-  color: white;
+  color: black;
 }

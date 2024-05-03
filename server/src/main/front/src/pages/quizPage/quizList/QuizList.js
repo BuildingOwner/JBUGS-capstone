@@ -8,7 +8,21 @@ import UncompleteQuizItem from "./UncompleteQuizItem";
 
 const QuizList = () => {
 
-  const quizScorebarItem = [{ "asdf": "1" }, { asdf: "adsf" }, { asdf: "adsf" }, { asdf: "adsf" }, { asdf: "adsf" }]
+  const quizScoreData = [
+    { "quizName": "AD", "score": 94, "quizNameColor": "hsl(271, 70%, 50%)", },
+    { "quizName": "bc", "score": 78, },
+    { "quizName": "asdf", "score": 100, },
+    { "quizName": "A123wqe", "score": 90, },
+    { "quizName": "hgf", "score": 65, },
+    { "quizName": "pl", "score": 30, },
+    { "quizName": "pl", "score": 30, },
+    { "quizName": "pl", "score": 30, },
+    { "quizName": "pl", "score": 30, },
+    { "quizName": "pl", "score": 30, },
+    { "quizName": "pl", "score": 30, },
+    { "quizName": "pl", "score": 30, },
+  ]
+
   const uncompleteQuizItem = [{ "asdf": "1" }, { asdf: "adsf" }, { asdf: "adsf" }, { asdf: "adsf" }, { asdf: "adsf" }]
   return (
     <div className={`background`}>
@@ -19,11 +33,7 @@ const QuizList = () => {
             <div className={styles.myInfo}>
               <h3 className={styles.title}>퀴즈</h3>
               <div className={styles.scoreBoard}>
-                {quizScorebarItem.map((item) => {
-                  return (
-                    <QuizScoreBar />
-                  )
-                })}
+                <QuizScoreBar data={quizScoreData} />
               </div>
               <div className={styles.aveInfo}>
                 <div className={styles.aveScore}>
@@ -48,9 +58,9 @@ const QuizList = () => {
               <div className={styles.uncompleteQuizs}>
                 <h3>미응시 퀴즈</h3>
                 <div className={styles.uncompleteQuizsContainer}>
-                  {uncompleteQuizItem.map((item) => {
+                  {uncompleteQuizItem.map((item, i) => {
                     return (
-                      <UncompleteQuizItem />
+                      <UncompleteQuizItem key={i} />
                     )
                   })}
                 </div>

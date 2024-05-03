@@ -1,4 +1,4 @@
-.nav,
+/* .nav,
 .weeklist {
   display: flex;
   align-items: flex-start;
@@ -333,23 +333,60 @@
   position: relative;
   background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
   letter-spacing: normal;
+} */
+
+.bg{
+  flex-direction: column;
+  padding: var(--padding-xl);
+  gap: var(--padding-xl);
 }
 
-.container-cjw {
+.courseTitle{
+  display: flex;
+  gap: var(--gap-xl);
+  padding-left: 15px;
+}
+.container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 50%);
-  gap: 20px;
+  gap: var(--gap-xl);
   width: 100%;
   flex-grow: 1;
   background-color: var(--point-bg-blue);
-  padding: 20px;
+  padding: var(--padding-xl);
   border-radius: 10px;
   box-sizing: border-box;
   height: 1%;
 }
 
-.list-container-cjw {
+.nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weekList{
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+  background-color: var(--point-bg-blue);
+  padding: var(--padding-base);
+  border-radius: 10px;
+}
+
+.weekBtn{
+  width: 35px;
+  display: flex !important;
+  justify-content: center;
+  transition: none !important;
+  border: none !important;
+  border-radius: 5px !important;
+  background-color: white !important;
+  color: black !important
+}
+
+.listContainer {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -357,25 +394,25 @@
   padding-bottom: 20px;
 }
 
-.name-cjw h2 {
+.name h2 {
   margin: 0;
   font-size: var(--font-size-11xl);
   height: 70px;
 }
 
-.list-cjw {
+.list {
   flex-grow: 1;
   overflow: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
+/* 
 .h-20 {
   height: 20px;
-}
+} */
 
-@media screen and (max-width: 1025px) {
+/* @media screen and (max-width: 1025px) {
   .weeklist {
     flex-wrap: wrap;
   }
@@ -427,4 +464,4 @@
   .h26 {
     font-size: var(--font-size-lgi);
   }
-}
+} */

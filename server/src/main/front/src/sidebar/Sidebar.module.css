@@ -43,7 +43,8 @@
   display: flex !important;
   align-items: center;
   border: none !important;
-  background-color: var(--point-blue) !important;
+  /* background-color: var(--point-blue) !important; */
+  background: none !important;
   width: 100%;
 }
 
@@ -52,5 +53,5 @@
   text-decoration: none;
   align-items: center;
   gap: var(--gap-mini);
-  color: white;
+  color: black;
 }

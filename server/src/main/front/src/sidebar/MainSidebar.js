@@ -33,7 +33,7 @@ const MainSidebar = (props) => {
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
             <Link to={"/main"} className={styles.linkBtn}>
               <GoHome size="30" />
-              <h3>HOME</h3>
+              <h3>Home</h3>
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>

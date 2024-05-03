@@ -5,7 +5,7 @@ import VideoItem from "./VideoItem";
 import AssignmentItem from "./AssignmentItem";
 import WeekItem from "./WeekItem";
 import ListItem from "./ListItem";
-import "./Course.css";
+import styles from "./Course.module.css"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -36,7 +36,7 @@ const Course = () => {
         const response = await axios.get(`/api/course/${enrollmentId}`, {
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
         });
-        
+
         const lectureName1 = response.data.courseDto.lectureName
         const division1 = response.data.courseDto.division
         const assignmentData = response.data.weeklyContents.map((week) => week.assignments).flat()
@@ -71,23 +71,27 @@ const Course = () => {
   }, []);
 
   return (
-    <div className="course1">
+    <div className={`background`}>
       <CourseSidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
-      <main className="serializer">
-        <section className="content">
-          <div className="nav">
-            <nav className="weeklist">
+      <main className={`mycontainer`}>
+        <section className={`bg ${styles.bg}`}>
+          <div className={styles.nav}>
+            <div className={styles.courseTitle}>
+              <h3>{lectureName}</h3>
+              <h3>{division}</h3>
+            </div>
+            <nav className={styles.weekList}>
               {Array.from({ length: 16 }).map((_, index) => (
-                <WeekItem key={index} weekNumber={index+1}/>
+                <button type="button" key={index} className={`btn btn-primary ${styles.weekBtn}`}>{index}</button>
               ))}
             </nav>
           </div>
-          <div className="container-cjw">
-            <div className="list-container-cjw">
-              <div className="name-cjw">
+          <div className={styles.container}>
+            <div className={styles.listContainer}>
+              <div className={styles.name}>
                 <h2>온라인 강의</h2>
               </div>
-              <div className="list-cjw no-scroll-bar">
+              <div className={`${styles.list} no-scroll-bar`}>
                 {lectureVideos.map((video, i) => (
                   <ListItem
                     key={`lectureVideo${i}`}
@@ -99,11 +103,11 @@ const Course = () => {
                 ))}
               </div>
             </div>
-            <div className="list-container-cjw">
-              <div className="name-cjw">
+            <div className={styles.listContainer}>
+              <div className={styles.name}>
                 <h2>과제</h2>
               </div>
-              <div className="list-cjw no-scroll-bar">
+              <div className={`${styles.list} no-scroll-bar`}>
                 {assignments.map((assignment, i) => (
                   <ListItem
                     key={`assignment${i}`}
@@ -119,11 +123,11 @@ const Course = () => {
                 ))}
               </div>
             </div>
-            <div className="list-container-cjw">
-              <div className="name-cjw">
+            <div className={styles.listContainer}>
+              <div className={styles.name}>
                 <h2>자료</h2>
               </div>
-              <div className="list-cjw no-scroll-bar">
+              <div className={`${styles.list} no-scroll-bar`}>
                 {classFiles.map((file, i) => (
                   <ListItem
                     key={`file${i}`}
@@ -135,11 +139,11 @@ const Course = () => {
                 ))}
               </div>
             </div>
-            <div className="list-container-cjw">
-              <div className="name-cjw">
+            <div className={styles.listContainer}>
+              <div className={styles.name}>
                 <h2>퀴즈</h2>
               </div>
-              <div className="list-cjw no-scroll-bar">
+              <div className={`${styles.list} no-scroll-bar`}>
                 {quizs.map((quiz, i) => (
                   <ListItem
                     key={`quiz${i}`}

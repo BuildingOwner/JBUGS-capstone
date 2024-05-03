@@ -22,14 +22,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class MemberApiController {
 
     private final MemberService memberService;
-//    private final AuthenticationManager authenticationManager;
 
-    //@GetMapping("/api/login")
-    public ModelAndView loginForm(@ModelAttribute("loginForm") LoginRequest form) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login/loginForm");
-        return modelAndView;
-    }
+//    @GetMapping("/api/login")
+//    public ModelAndView loginForm(@ModelAttribute("loginForm") LoginRequest form) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("login/loginForm");
+//        return modelAndView;
+//    }
 
     //HttpSession을 사용
     @PostMapping("/api/login")

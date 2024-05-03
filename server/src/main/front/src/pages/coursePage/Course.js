@@ -13,6 +13,7 @@ import axios from "axios";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 
 const Course = () => {
+  const navigate = useNavigate()
   const location = useLocation()
   const enrollmentId = location.state
 
@@ -63,7 +64,12 @@ const Course = () => {
         // console.log("courseDto : ", courseDto)
       }
       catch (error) {
-        console.error("Error fetching course info:", error);
+        if (error.response.status === 401 || error.response.status === 400) {
+          navigate("/")
+        } else {
+          // 다른 종류의 오류 발생
+          console.error(error);
+        }
       }
     };
 

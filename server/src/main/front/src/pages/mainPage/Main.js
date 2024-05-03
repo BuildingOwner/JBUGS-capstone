@@ -7,13 +7,14 @@ import RightNav from "./RightNav";
 import "./Main.css";
 
 const Main = () => {
+  const navigate = useNavigate()
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [mainLectures, setMainLectures] = useState()
   const [memberName, setMemberName] = useState()
   const [firstTrack, setFirstTrack] = useState()
   const [currentDate, setCurrentDate] = useState('')
   const [currentWeek, setCurrentWeek] = useState()
-  
+
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
 
@@ -26,7 +27,7 @@ const Main = () => {
     return week;
   };
 
-  
+
   useEffect(() => {
     const fetchMainInfo = async () => {
       try {
@@ -60,7 +61,12 @@ const Main = () => {
         // console.log("현재 날짜", currentDate)
       }
       catch (error) {
-        console.error("Error fetching main info:", error);
+        if (error.response.status === 401) {
+          navigate("/")
+        } else {
+          // 다른 종류의 오류 발생
+          console.error(error);
+        }
       }
     };
 
@@ -98,10 +104,10 @@ const Main = () => {
               ))}
             </div>
           </div>
-          <RightNav 
-          memberName={memberName} 
-          firstTrack={firstTrack} 
-          mainLectures={mainLectures} 
+          <RightNav
+            memberName={memberName}
+            firstTrack={firstTrack}
+            mainLectures={mainLectures}
           />
         </section>
       </main>

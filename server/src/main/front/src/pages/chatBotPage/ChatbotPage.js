@@ -6,9 +6,10 @@ import styles from "./ChatbotPage.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const ChatbotPage = () => {
+  const navigate = useNavigate()
   // const location = useLocation()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
   const [chatDtoList, setChatDtoList] = useState([])
@@ -30,6 +31,10 @@ const ChatbotPage = () => {
 
   function onChange(e) {
     setText(e.target.value);
+  }
+
+  const newChatting = () => {
+    console.log(chatDtoList)
   }
 
   const sendMeesage = async () => {
@@ -56,14 +61,16 @@ const ChatbotPage = () => {
       fetchChattings(chatId)
       // 여기에서 응답 처리
     } catch (error) {
-      console.error("Error sending message:", error);
-      // 에러 처리
+      if (error.response.status === 401) {
+        navigate("/")
+      } else {
+        // 다른 종류의 오류 발생
+        console.error(error);
+      }
     }
   }
 
-  const newChatting = () => {
-    console.log(chatDtoList)
-  }
+
   const fetchChattings = async (chatRoomId) => { // chatRoomId 매개변수 추가
     try {
       const formData = new FormData();
@@ -78,7 +85,12 @@ const ChatbotPage = () => {
       setChats(chatData);
 
     } catch (error) {
-      console.error("Error fetching chat data:", error);
+      if (error.response.status === 401) {
+        navigate("/")
+      } else {
+        // 다른 종류의 오류 발생
+        console.error(error);
+      }
     }
   }
 
@@ -96,18 +108,22 @@ const ChatbotPage = () => {
       console.log("chatRoomId : ", chatId)
 
       // setChatRoomId(chatId);
-      setChatDtoList(chatDto);
+      setChatDtoList(chatDto)
       return chatId; // chatId 반환
 
     } catch (error) {
-      console.error("Error fetching chat data:", error);
-      return null; // 에러 발생 시 null 반환
+      if (error.response.status === 401) {
+        navigate("/")
+      } else {
+        // 다른 종류의 오류 발생
+        console.error(error);
+      }
     }
   }
 
   const fetchDataAndChattings = async (selectedId) => { // 새로운 함수 추가
     console.log(selectedId)
-    const chatId = await fetchChatData(); // fetchChatData 호출 및 chatId 반환 대기
+    const chatId = await fetchChatData() // fetchChatData 호출 및 chatId 반환 대기
     if (chatId) { // chatId가 유효한 경우에만 fetchChattings 호출
       await fetchChattings(selectedId); // fetchChattings 호출 및 chatId 전달
     }
@@ -181,7 +197,7 @@ const ChatbotPage = () => {
                 ))}
               </div>
               <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}
-              onClick={newChatting}>
+                onClick={newChatting}>
                 채팅 생성
               </button>
               <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}>

@@ -9,10 +9,10 @@ import UncompleteQuizItem from "./UncompleteQuizItem";
 const QuizList = () => {
 
   const quizScoreData = [
-    { "quizName": "AD", "score": 94, "quizNameColor": "hsl(271, 70%, 50%)", },
+    { "quizName": "AD", "score": 94, },
     { "quizName": "bc", "score": 78, },
     { "quizName": "asdf", "score": 100, },
-    { "quizName": "A123wqe", "score": 90, },
+    { "quizName": "A123wqasdfasdfadfafsdfasdfade", "score": 90, },
     { "quizName": "hgf", "score": 65, },
     { "quizName": "pl", "score": 30, },
     { "quizName": "pl", "score": 30, },
@@ -33,7 +33,11 @@ const QuizList = () => {
             <div className={styles.myInfo}>
               <h3 className={styles.title}>퀴즈</h3>
               <div className={styles.scoreBoard}>
-                <QuizScoreBar data={quizScoreData} />
+                {quizScoreData.map((data, i) => {
+                  return (
+                    <QuizScoreBar quizScoreData={data} key={`quizScoreBar${i}`} />
+                  )
+                })}
               </div>
               <div className={styles.aveInfo}>
                 <div className={styles.aveScore}>
@@ -58,11 +62,6 @@ const QuizList = () => {
               <div className={styles.uncompleteQuizs}>
                 <h3>미응시 퀴즈</h3>
                 <div className={styles.uncompleteQuizsContainer}>
-                  {uncompleteQuizItem.map((item, i) => {
-                    return (
-                      <UncompleteQuizItem key={i} />
-                    )
-                  })}
                 </div>
               </div>
               <div className={styles.weeks}></div>

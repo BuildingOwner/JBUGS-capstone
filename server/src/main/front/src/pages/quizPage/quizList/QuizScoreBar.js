@@ -1,92 +1,24 @@
 import styles from "./QuizScoreBar.module.css"
-import { ResponsiveBar } from '@nivo/bar'
+import React, { useRef, useEffect } from 'react';
 
-const QuizScoreBar = ({ data /* see data tab */ }) => {
-  console.log(data)
+const QuizScoreBar = ({ quizScoreData }) => {
+
+  const barRef = useRef(null);
+
+  useEffect(() => {
+    const barElement = barRef.current;
+    if (barElement) {
+      // Bar의 높이를 quizScoreData.score에 비례하여 설정
+      barElement.style.height = `${quizScoreData.score / 2}%`;
+    }
+  }, [quizScoreData.score]);
+
   return (
-    <ResponsiveBar
-      data={data}
-      keys={[
-        'score',
-      ]}
-      indexBy="quizName"
-      margin={{ top: 30, right: 0, bottom: 30, left: 0 }}
-      padding={0.5}
-      valueScale={{ type: 'linear' }}
-      indexScale={{ type: 'band', round: true }}
-      colors={{ scheme: 'nivo' }}
-      defs={[
-        {
-          id: 'dots',
-          type: 'patternDots',
-          background: 'inherit',
-          color: '#38bcb2',
-          size: 4,
-          padding: 1,
-          stagger: true
-        },
-        {
-          id: 'lines',
-          type: 'patternLines',
-          background: 'inherit',
-          color: '#eed312',
-          rotation: -45,
-          lineWidth: 6,
-          spacing: 10
-        }
-      ]}
-      fill={[
-        {
-          match: {
-            id: 'fries'
-          },
-          id: 'dots'
-        },
-        {
-          match: {
-            id: 'sandwich'
-          },
-          id: 'lines'
-        }
-      ]}
-      borderColor={{
-        from: 'color',
-        modifiers: [
-          [
-            'darker',
-            1.6
-          ]
-        ]
-      }}
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-        tickSize: 0,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: '',
-        legendPosition: 'middle',
-        legendOffset: 32,
-        truncateTickAt: 0
-      }}
-      axisLeft={null}
-      enableGridY={false}
-      enableLabel={false}
-      enableTotals={true}
-      labelTextColor={{
-        from: 'color',
-        modifiers: [
-          [
-            'darker',
-            '3'
-          ]
-        ]
-      }}
-      legends={[]}
-      role="application"
-      ariaLabel="Nivo bar chart demo"
-      barAriaLabel={e => e.id + ": " + e.formattedValue + " in country: " + e.indexValue}
-    />
+    <div className={styles.scoreBarContainer}>
+      <h3 className={styles.score}>{quizScoreData.score}</h3>
+        <div ref={barRef} className={styles.Bar}><p> </p></div>
+        <h3 className={styles.quizName}>{quizScoreData.quizName}</h3>
+    </div>
   );
 }
 

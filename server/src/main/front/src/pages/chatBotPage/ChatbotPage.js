@@ -14,6 +14,7 @@ const ChatbotPage = () => {
   const [studentId, setStudentId] = useState()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
   const [chatDtoList, setChatDtoList] = useState([])
+  const [chatIdArray, setChatIdArray] = useState([]) // 챗룸 아이디의 배열 
   const [chatId, setChatId] = useState(1) // 챗룸 아이디  (초기 챗아이디 변경 필요)*****************
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
@@ -34,10 +35,10 @@ const ChatbotPage = () => {
     setText(e.target.value);
   }
 
-  const newChatting = () => {
+  const newChatting = async () => {
     console.log("new Chatting called : ", chatDtoList)
-    makeNewChat()
-    fetchChatData()
+    await makeNewChat()
+    await fetchChatData()
   }
 
   const makeNewChat = async () => {
@@ -46,6 +47,11 @@ const ChatbotPage = () => {
         studentId: studentId
       })
       console.log("makeNewChat의 response : ", response)
+      await fetchChatData(); // 이 함수가 내부적으로 chatDtoList 상태를 업데이트해야 합니다.
+      const newChatId = response.data.chatRoomId;
+
+      // 새로운 채팅 아이디로 chatId 상태 업데이트
+      setChatId(newChatId)
     } catch (error) {
 
     }
@@ -55,6 +61,7 @@ const ChatbotPage = () => {
     if (e.key === 'Enter')
       sendMeesage()
   }
+
   const sendMeesage = async () => {
     setReadOnly(!readOnly)
     // Axios 구성 생성
@@ -92,8 +99,29 @@ const ChatbotPage = () => {
   }
   const deleteChats = async () => {
     try {
-      const response = await axios.post(`/api/chat/${chatId}`)
-      console.log(response)
+      const response = await axios.delete(`/api/chat/${chatId}`)
+      console.log("deleteChats reponse", response)
+
+      // chatIdArray에서 현재 chatId를 제거합니다.
+      const updatedChatIdArray = chatIdArray.filter(id => id !== chatId);
+      setChatIdArray(updatedChatIdArray);
+
+      // 현재 chatId의 인덱스를 찾습니다.
+      const currentChatIndex = chatIdArray.findIndex(id => id === chatId);
+
+      // 이전 chatId의 인덱스를 계산합니다. 만약 현재 chatId가 첫 번째였다면, 이전 chatId는 없으므로 0을 반환합니다.
+      const prevChatIndex = currentChatIndex > 0 ? currentChatIndex - 1 : 0;
+
+      // 이전 chatId를 설정합니다. 만약 updatedChatIdArray가 비어 있다면, null을 설정합니다.
+      const newCurrentChatId = updatedChatIdArray[prevChatIndex] || null;
+      setChatId(newCurrentChatId);
+
+      if (newCurrentChatId !== null) {
+        await fetchChattings(newCurrentChatId); // 새로운 현재 chatId에 해당하는 채팅 데이터 가져오기
+      } else {
+        setChats([]); // chatIdArray가 비어있다면 chats를 비움
+      }
+
     } catch (error) {
 
     }
@@ -109,7 +137,7 @@ const ChatbotPage = () => {
       const chatData = JSON.parse(response.data.chat_text);
 
       console.log("Chat data:", chatData);
-      // console.log(chatData[0].content[0].text);
+
       setChats(chatData);
     } catch (error) {
       if (error.response.status === 401) {
@@ -127,13 +155,14 @@ const ChatbotPage = () => {
         withCredentials: true,
       })
       console.log("fetchChatData.response : ", response)
-      const chatDto = response.data.chatDtoList.map((chat) => chat).flat()
-      const chatId = chatDto.map((chat) => chat.chatRoomId).flat()
+      const chatDto = response.data.chatDtoList.map((chat) => chat)
+      const chatId = chatDto.map((chat) => chat.chatRoomId)
+      const chatIdArray = chatDto.map((chat) => chat.chatRoomId)
+      console.log("chatIdArray : ", chatIdArray)
 
-      // setChatRoomId(chatId);
       setChatDtoList(chatDto)
       setStudentId(response.data.studentDto.studentId)
-
+      setChatIdArray(chatIdArray)
       return chatId; // chatId 반환
 
     } catch (error) {
@@ -162,6 +191,7 @@ const ChatbotPage = () => {
     } else {
       fetchDataAndChattings(chatId)
     }
+    console.log(chatDtoList)
   }, [chatId]);
 
   return (
@@ -187,7 +217,6 @@ const ChatbotPage = () => {
             <div className={styles.bottomLeft}>
               <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`}>
                 {
-                  // chats.length > 0 && 
                   (
                     chats?.map((chat, index) => (
                       chat.role === 'user' ?

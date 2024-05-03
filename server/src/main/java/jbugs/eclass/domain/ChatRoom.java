@@ -18,7 +18,7 @@ public class ChatRoom {
 
     @Column(length = 50000)
     private String chattingJson;
-    private String ChatRoomName;
+    private String chatRoomName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")

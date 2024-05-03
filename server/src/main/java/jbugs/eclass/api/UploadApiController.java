@@ -53,7 +53,6 @@ public class UploadApiController {
         Lecture lecture = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
         Optional<Week> weekEntityOptional = weekService.findWeekByLectureAndWeekNumber(lecture.getId(), uploadDto.getWeekNumber());
         List<String> uploadedFilePaths = new ArrayList<>();
-        System.out.println("asd1");
         if (weekEntityOptional.isPresent()) {
             Week weekEntity = weekEntityOptional.get();
 
@@ -66,11 +65,8 @@ public class UploadApiController {
             if (uploadDto.getVideoFiles() != null && uploadDto.getVideoFiles().length > 0) {
                 uploadedFilePaths.addAll(uploadFiles(Arrays.asList(uploadDto.getVideoFiles()), weekEntity.getId(), true, uploadDto.getVideoTitle()));
             }
-            System.out.println("asd2");
-            System.out.println(uploadedFilePaths);
             // 파일 경로(들)을 사용하여 추가 처리 수행
             for (String filePath : uploadedFilePaths) {
-                System.out.println("asd3");
                 sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer());
             }
 
@@ -122,8 +118,6 @@ public class UploadApiController {
 
     // 파일 업로드 로직 이후에 추가
     public void sendQuizKeywordRequest(String lecture, String week, String path, String choice, String shortAnswer) {
-        System.out.println("Tlwkf");
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 

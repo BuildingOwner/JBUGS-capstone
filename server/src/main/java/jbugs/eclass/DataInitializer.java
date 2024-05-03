@@ -193,27 +193,6 @@ public class DataInitializer implements CommandLineRunner {
         student3.setMember(member9);
         memberService.join(member9);
 
-        int memberIndex = 1;
-        String[] studentNames = {"김지훈","박세진", "박서연", "도민준","이하은","장도윤","박지우","이유진","김현우","한수아","신지호", "김예은", "김태현", "김민서", "박준호", "이하윤", "차은우", "박서현", "김지안", "조우진", "박소율", "김민주"};
-        for(String name : studentNames) {
-            Member member10 = new Member();
-            member10.setLoginId("19710" + memberIndex); // 로그인 ID 설정
-            member10.setName(name); // 이름 설정 // 비밀번호 인코딩
-            member10.setPassword(encodedPassword);
-            member10.setMemberType(MemberType.STUDENT); // 멤버 타입 설정
-
-            Student student5 = new Student();
-            student5.setFirstTrack("웹공학트랙"); // 첫 번째 트랙 설정
-            student5.setSecondTrack("모바일소프트웨어트랙"); // 두 번째 트랙 설정
-            member10.setStudent(student5); // 학생 정보 설정
-            student5.setMember(member10); // 멤버 정보 설정
-
-            memberService.join(member10); // 멤버 서비스를 통해 저장
-
-            memberIndex++; // 다음 멤버를 위해 인덱스 증가
-        }
-        Member member15 = new Member();
-
         Lecture lecture1 = new Lecture();
         lecture1.setName("알고리즘");
         lecture1.setProfessor(professor2);
@@ -278,6 +257,32 @@ public class DataInitializer implements CommandLineRunner {
         lectureService.saveLecture(lecture6);
         lectureService.saveLecture(lecture7);
 
+        int memberIndex = 1;
+        String[] studentNames = {"김지훈","박세진", "박서연", "도민준","이하은","장도윤","박지우","이유진","김현우","한수아","신지호", "김예은", "김태현", "김민서", "박준호", "이하윤", "차은우", "박서현", "김지안", "조우진", "박소율", "김민주"};
+        for(String name : studentNames) {
+            Member member10 = new Member();
+            member10.setLoginId("19710" + memberIndex); // 로그인 ID 설정
+            member10.setName(name); // 이름 설정 // 비밀번호 인코딩
+            member10.setPassword(encodedPassword);
+            member10.setMemberType(MemberType.STUDENT); // 멤버 타입 설정
+
+            Student student5 = new Student();
+            student5.setFirstTrack("웹공학트랙"); // 첫 번째 트랙 설정
+            student5.setSecondTrack("모바일소프트웨어트랙"); // 두 번째 트랙 설정
+            member10.setStudent(student5); // 학생 정보 설정
+            student5.setMember(member10); // 멤버 정보 설정
+
+            memberService.join(member10); // 멤버 서비스를 통해 저장
+            enrollmentService.enrollStudentInLecture(student5, lecture1);
+            enrollmentService.enrollStudentInLecture(student5, lecture2);
+            enrollmentService.enrollStudentInLecture(student5, lecture3);
+            enrollmentService.enrollStudentInLecture(student5, lecture4);
+            enrollmentService.enrollStudentInLecture(student5, lecture5);
+            enrollmentService.enrollStudentInLecture(student5, lecture6);
+
+            memberIndex++; // 다음 멤버를 위해 인덱스 증가
+        }
+
         enrollmentService.enrollStudentInLecture(student1, lecture1);
         enrollmentService.enrollStudentInLecture(student1, lecture2);
         enrollmentService.enrollStudentInLecture(student1, lecture3);
@@ -288,6 +293,16 @@ public class DataInitializer implements CommandLineRunner {
         enrollmentService.enrollStudentInLecture(student2, lecture1);
         enrollmentService.enrollStudentInLecture(student2, lecture2);
         enrollmentService.enrollStudentInLecture(student2, lecture3);
+        enrollmentService.enrollStudentInLecture(student2, lecture4);
+        enrollmentService.enrollStudentInLecture(student2, lecture5);
+        enrollmentService.enrollStudentInLecture(student2, lecture6);
+
+        enrollmentService.enrollStudentInLecture(student3, lecture1);
+        enrollmentService.enrollStudentInLecture(student3, lecture2);
+        enrollmentService.enrollStudentInLecture(student3, lecture3);
+        enrollmentService.enrollStudentInLecture(student3, lecture4);
+        enrollmentService.enrollStudentInLecture(student3, lecture5);
+        enrollmentService.enrollStudentInLecture(student3, lecture6);
 
         Optional<Week> week1 = weekRepository.findById(1L);
         Optional<Week> week2 = weekRepository.findById(2L);

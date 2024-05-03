@@ -212,6 +212,7 @@ public class DataInitializer implements CommandLineRunner {
 
             memberIndex++; // 다음 멤버를 위해 인덱스 증가
         }
+        Member member15 = new Member();
 
         Lecture lecture1 = new Lecture();
         lecture1.setName("알고리즘");

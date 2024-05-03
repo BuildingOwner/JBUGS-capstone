@@ -7,6 +7,7 @@ import RightNav from "./RightNav";
 import "./Main.css";
 
 const Main = () => {
+  const navigate = useNavigate()
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [mainLectures, setMainLectures] = useState()
   const [memberName, setMemberName] = useState()

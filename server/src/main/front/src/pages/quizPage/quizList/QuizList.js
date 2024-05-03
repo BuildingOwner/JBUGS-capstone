@@ -109,31 +109,31 @@ const QuizList = () => {
           </div>
           <div className={styles.bottom}>
             <div className={styles.choose}>
-              <select class={`form-select form-select-sm`} aria-label="Small select example">
+              <select class={`form-select form-select-sm ${styles.select}`} aria-label="Small select example">
                 <option value={100} selected>전체 보기</option>
                 {Array.from({ length: 16 }).map((_, i) => {
                   return (
-                    <option value={i + 1}>{i + 1} 주차</option>
+                    <option value={i + 1} key={`weekKey${i}`}>{i + 1} 주차</option>
                   )
                 })}
               </select>
-              <select class={`form-select form-select-sm`} aria-label="Small select example">
+              <select class={`form-select form-select-sm ${styles.select}`} aria-label="Small select example">
                 <option value={'exercise'} selected>연습 문제</option>
                 <option value={'practice '} >실습 문제</option>
                 <option value={'exam'} >시험</option>
               </select>
             </div>
             <div className={styles.labels}>
-              <h3 className={styles.isSubmmit}>응시</h3>
-              <h3 className={styles.category}>문제 분류</h3>
-              <h3 className={styles.quizTitle}>제목</h3>
-              <h3 className={styles.timeOut}>제한 시간</h3>
-              <h3 className={styles.score}>점수</h3>
-              <h3 className={styles.duration}>기한</h3>
-              <h3 className={styles.feedback}>피드백</h3>
+              <h3 className={styles.labelText}>응시</h3>
+              <h3 className={styles.labelText}>문제 분류</h3>
+              <h3 className={styles.labelTextTitle}>제목</h3>
+              <h3 className={styles.labelText}>제한 시간</h3>
+              <h3 className={styles.labelText}>점수</h3>
+              <h3 className={styles.labelText}>기한</h3>
+              <h3 className={styles.labelText}>피드백</h3>
             </div>
             <div className={styles.quizListContainer}>
-              {quizDtoList.map((quiz, i) => {
+              {quizDtoList?.map((quiz, i) => {
                 return (
                   <QuizListItem
                     key={`QuizListItem${i}`}

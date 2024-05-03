@@ -4,11 +4,14 @@
   border-radius: 5px;
   display: flex;
   gap: var(--gap-xl);
-  padding: 0 var(--padding-16xl);
+  padding: var(--padding-sm-5) var(--padding-16xl);
+  align-items: center;
 }
 
 .idSubmitBox, .text, .feedbackBtn{
   min-width: 150px;
+  display: flex;
+  justify-content: center;
 }
 
 .title{
@@ -23,5 +26,28 @@
 }
 
 .idSubmitText, .text, .feedbackBtn, .title, .feedbackText{
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-lg);
+}
+
+.idSubmitText, .feedbackText{
+  font-weight: bold;
+}
+
+.feedbackBtn{
+  display: flex !important;
+  justify-content: center;
+  border: none !important;
+}
+
+.done{
+  background-color: var(--point-green);
+}
+
+.yet{
+  background-color: var(--point-red);
+}
+
+.idSubmitBox{
+  border-radius: 10px;
+  padding: var(--padding-sm-5);
 }

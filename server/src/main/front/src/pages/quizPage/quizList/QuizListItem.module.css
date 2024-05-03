@@ -8,10 +8,14 @@
   align-items: center;
 }
 
-.idSubmitBox, .text, .feedbackBtn{
+.idSubmitBox, .text, .feedbackBtn, .deadline{
   min-width: 150px;
   display: flex;
   justify-content: center;
+}
+
+.deadline{
+  min-width: 175px;
 }
 
 .title{
@@ -25,7 +29,7 @@
   -webkit-box-orient: vertical;
 }
 
-.idSubmitText, .text, .feedbackBtn, .title, .feedbackText{
+.idSubmitText, .text, .feedbackBtn, .title, .feedbackText, .deadline{
   font-size: var(--font-size-lg);
 }
 

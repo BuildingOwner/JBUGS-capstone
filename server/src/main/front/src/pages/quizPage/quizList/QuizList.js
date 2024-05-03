@@ -129,7 +129,7 @@ const QuizList = () => {
               <h3 className={styles.labelTextTitle}>제목</h3>
               <h3 className={styles.labelText}>제한 시간</h3>
               <h3 className={styles.labelText}>점수</h3>
-              <h3 className={styles.labelText}>기한</h3>
+              <h3 className={styles.labelTextTimeOut}>기한</h3>
               <h3 className={styles.labelText}>피드백</h3>
             </div>
             <div className={styles.quizListContainer}>

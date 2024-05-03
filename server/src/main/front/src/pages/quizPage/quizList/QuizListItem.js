@@ -15,7 +15,7 @@ const QuizListItem = (props) => {
       <h3 className={styles.title}>{props.quizName}</h3>
       <h3 className={styles.text}>{props.timeLimit}</h3>
       <h3 className={styles.text}>{props.quizScore}</h3>
-      <h3 className={styles.text}>{props.deadline}</h3>
+      <h3 className={styles.deadline}>{props.deadline}</h3>
       <button className={`btn btn-primary ${styles.feedbackBtn}`}>
         <h3 className={styles.feedbackText}>피드백 보기</h3>
       </button>

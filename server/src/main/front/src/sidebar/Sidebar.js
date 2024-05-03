@@ -43,7 +43,7 @@ const Sidebar = (props) => {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/noticelist"} className={styles.linkBtn}>
+            <Link to={"/noticelist"} state={{ enrollmentId: enrollmentId}} className={styles.linkBtn}>
               <TbSpeakerphone size="30" />
               <h3>공지사항</h3>
             </Link>
@@ -55,7 +55,7 @@ const Sidebar = (props) => {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/quizlist"} className={styles.linkBtn}>
+            <Link to={"/quizlist"} state={{ enrollmentId: enrollmentId}} className={styles.linkBtn}>
               <MdOutlineQuiz size="30" />
               <h3>퀴즈</h3>
             </Link>

@@ -5,8 +5,28 @@ import styles from "./QuizList.module.css"
 import QuizScoreBar from "./QuizScoreBar";
 import { LuTriangle } from "react-icons/lu";
 import UncompleteQuizItem from "./UncompleteQuizItem";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const QuizList = () => {
+  const location = useLocation()
+  const enrollmentId = location.state.enrollmentId
+  const [quizDtoList, setQuizDtoList] = useState()
+  const [courseDto, setCourseDto] = useState()
+  const [memberInfoDto, setMemberInfoDto] = useState()
+  const fetchQuizList = async () => {
+    try {
+      const response = await axios.get(`/api/course/${enrollmentId}/quizList`)
+      console.log("quizList response : ", response)
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    fetchQuizList()
+  }, [])
 
   const quizScoreData = [
     { "quizName": "AD", "score": 94, "quizNameColor": "hsl(271, 70%, 50%)", },
@@ -24,6 +44,7 @@ const QuizList = () => {
   ]
 
   const uncompleteQuizItem = [{ "asdf": "1" }, { asdf: "adsf" }, { asdf: "adsf" }, { asdf: "adsf" }, { asdf: "adsf" }]
+
   return (
     <div className={`background`}>
       <Sidebar />

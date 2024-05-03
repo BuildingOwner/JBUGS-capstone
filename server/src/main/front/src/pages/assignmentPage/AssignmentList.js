@@ -37,7 +37,7 @@ const AssignmentList = () => {
         setCourseDto(response.data.courseDto)
       }
       catch (error) {
-        if (error.response.status === 401) {
+        if (error.response.status === 401 || error.response.status === 400) {
           navigate("/")
         } else {
           // 다른 종류의 오류 발생

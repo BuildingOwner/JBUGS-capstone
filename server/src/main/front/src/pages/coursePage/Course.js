@@ -36,7 +36,7 @@ const Course = () => {
         const response = await axios.get(`/api/course/${enrollmentId}`, {
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
         });
-        
+
         const lectureName1 = response.data.courseDto.lectureName
         const division1 = response.data.courseDto.division
         const assignmentData = response.data.weeklyContents.map((week) => week.assignments).flat()
@@ -63,7 +63,12 @@ const Course = () => {
         // console.log("courseDto : ", courseDto)
       }
       catch (error) {
-        console.error("Error fetching course info:", error);
+        if (error.response.status === 401) {
+          navigate("/")
+        } else {
+          // 다른 종류의 오류 발생
+          console.error(error);
+        }
       }
     };
 
@@ -78,7 +83,7 @@ const Course = () => {
           <div className="nav">
             <nav className="weeklist">
               {Array.from({ length: 16 }).map((_, index) => (
-                <WeekItem key={index} weekNumber={index+1}/>
+                <WeekItem key={index} weekNumber={index + 1} />
               ))}
             </nav>
           </div>

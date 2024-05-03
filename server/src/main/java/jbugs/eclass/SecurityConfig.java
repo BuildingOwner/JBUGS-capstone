@@ -32,14 +32,14 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/","/login","/api/login").permitAll()
+                        .requestMatchers("/","/api/login","/api/logout","/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/")
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
-                )
+//                .formLogin(form -> form
+//                        .loginPage("/")
+//                        .defaultSuccessUrl("/", true)
+//                        .permitAll()
+//                )
                 .logout(logout -> logout
                         .logoutUrl("/api/logout")
                         .invalidateHttpSession(true)

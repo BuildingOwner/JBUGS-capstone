@@ -24,7 +24,7 @@ const AssignmentList = () => {
         });
         const assignmentList = response.data.assignmentDtoList
 
-        console.log("memberInfoDto : ",response.data.memberInfoDto)
+        console.log("memberInfoDto : ", response.data.memberInfoDto)
         console.log("assignmentData : ", assignmentList)
         console.log("assignmentList response : ", response)
         const lectureName1 = response.data.courseDto.lectureName
@@ -37,7 +37,12 @@ const AssignmentList = () => {
         setCourseDto(response.data.courseDto)
       }
       catch (error) {
-        console.error("Error fetching assignList info:", error);
+        if (error.response.status === 401) {
+          navigate("/")
+        } else {
+          // 다른 종류의 오류 발생
+          console.error(error);
+        }
       }
     };
 

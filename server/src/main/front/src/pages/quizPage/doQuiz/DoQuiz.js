@@ -52,7 +52,12 @@ const DoQuiz = () => {
         setQuestions(questionData)
       }
       catch (error) {
-        console.error("Error fetching quiz info:", error);
+        if (error.response.status === 401) {
+          navigate("/")
+        } else {
+          // 다른 종류의 오류 발생
+          console.error(error);
+        }
       }
     };
 

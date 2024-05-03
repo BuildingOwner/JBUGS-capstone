@@ -1,10 +1,7 @@
 import Sidebar from "../../../sidebar/Sidebar";
-import FrameComponent1 from "./FrameComponent1";
-import Bottom from "./Bottom";
 import styles from "./QuizList.module.css"
 import QuizScoreBar from "./QuizScoreBar";
 import { LuTriangle } from "react-icons/lu";
-import UncompleteQuizItem from "./UncompleteQuizItem";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -91,15 +88,6 @@ const QuizList = () => {
         </div>
       </div>
     </div>
-    // <div className="quizlist">
-    //   <Sidebar />
-    //   <main className="content-container">
-    //     <section className="content6">
-    //       <FrameComponent1 />
-    //       <Bottom />
-    //     </section>
-    //   </main>
-    // </div>
   );
 };
 

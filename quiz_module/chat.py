@@ -48,7 +48,10 @@ def chat(chat_id, question, img_path=[]):
     urls = []
 
     if prev_chat_text:
-        message = json.loads(prev_chat_text[0])
+        try:
+            message = json.loads(prev_chat_text[0])
+        except:
+            message = []  # 이전 채팅 데이터가 없는 경우 빈 리스트로 초기화
     
         # 메시지 내용에서 이미지 URL을 찾아서 인코딩하고 리스트에 추가
         for msg in message:

@@ -8,9 +8,14 @@ import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
 import axios from "axios";
 
 const DoQuiz = () => {
-  const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
   const navigate = useNavigate()
   const data = useLocation().state.props // 이곳에서 사용될 데이터
+  const [memberInfoDto, setMemberInfoDto] = useState()
+  const [lectureName, setLectureName] = useState()
+  const [division, setDivision] = useState()
+
+  const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
+
   const [indexOfOptions, setIndexOfOptions] = useState(0)
   const quizId = data.quizId
   console.log("DoQuiz의 data : ", data)
@@ -66,7 +71,7 @@ const DoQuiz = () => {
 
   return (
     <div className={`background`}>
-      <Sidebar />
+      <Sidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <div className={`mycontainer`}>
         <div className={`bg`}>
           <div className={styles.right}>

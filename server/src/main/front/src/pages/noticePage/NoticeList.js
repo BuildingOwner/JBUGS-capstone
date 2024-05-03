@@ -9,9 +9,11 @@ import axios from "axios";
 const NoticeList = () => {
   const location = useLocation()
   const enrollmentId = location.state.enrollmentId
+  const [memberInfoDto, setMemberInfoDto] = useState()
+  const [lectureName, setLectureName] = useState()
+  const [division, setDivision] = useState()
   const [noticeDtoList, setNoticeDtoList] = useState()
   const [courseDto, setCourseDto] = useState()
-  const [memberInfoDto, setMemberInfoDto] = useState()
 
   const fetchNoticeList = async () => {
     try {
@@ -31,7 +33,7 @@ const NoticeList = () => {
 
   return (
     <div className="noticelist">
-      <Sidebar />
+      <Sidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto}/>
       <main className="content-wrapper">
         <section className="content2">
           <Top2 />

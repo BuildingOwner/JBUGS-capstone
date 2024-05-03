@@ -4,14 +4,19 @@ import Option1 from "../quizComponents/Option1";
 import InfoPanel from "./InfoPanel";
 import styles from "../doQuiz/DoQuiz.module.css";
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
+import { useLocation } from "react-router-dom";
 
 const QuizAnswer = () => {
-
+  const location = useLocation()
+  const enrollmentId = location.state.enrollmentId
+  const [memberInfoDto, setMemberInfoDto] = useState()
+  const [lectureName, setLectureName] = useState()
+  const [division, setDivision] = useState()
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
 
   return (
     <div className={`background`}>
-      <Sidebar />
+      <Sidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <div className={`mycontainer`}>
         <div className={`bg`}>
           <div className={styles.right}>
@@ -40,7 +45,7 @@ const QuizAnswer = () => {
                 </div>
                 <p className={styles.answerContainer}>해설 생성 가능</p>
                 <div className={styles.buttons}>
-                  <button type="button" className={`btn btn-secondary`} style={{border: 'none'}}>이전 문제</button>
+                  <button type="button" className={`btn btn-secondary`} style={{ border: 'none' }}>이전 문제</button>
                   <button type="button" className={`btn btn-primary ${styles.featureBtn}`}>다음 문제</button>
                 </div>
               </div>

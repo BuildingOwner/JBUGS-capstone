@@ -17,6 +17,7 @@ const Course = () => {
   const location = useLocation()
   const enrollmentId = location.state
 
+  const [memberInfoDto, setMemberInfoDto] = useState()
   const [lectureName, setLectureName] = useState()
   const [division, setDivision] = useState()
   const [assignments, setAssignments] = useState([])
@@ -24,7 +25,6 @@ const Course = () => {
   const [lectureVideos, setLectureVideos] = useState([])
   const [classFiles, setClassFiles] = useState([])
   const [courseDto, setCourseDto] = useState()
-  const [memberInfoDto, setMemberInfoDto] = useState()
 
   const assignmentUrl = "assignmentlist"
   const quizUrl = "quizlist"

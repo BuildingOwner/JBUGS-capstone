@@ -11,9 +11,11 @@ const QaList = () => {
   const location = useLocation()
   console.log("qa location : ", location)
   const enrollmentId = location.state.enrollmentId
+  const [memberInfoDto, setMemberInfoDto] = useState()
+  const [lectureName, setLectureName] = useState()
+  const [division, setDivision] = useState()
   const [qnADtoList, setQnADtoList] = useState()
   const [courseDto, setCourseDto] = useState()
-  const [memberInfoDto, setMemberInfoDto] = useState()
 
   const fetchQaList = async () => {
     try {
@@ -35,7 +37,7 @@ const QaList = () => {
 
   return (
     <div className="qalist">
-      <Sidebar />
+      <Sidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto}/>
       <main className="align-center">
         <section className="content1">
           <QaHeader />

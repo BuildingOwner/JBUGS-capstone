@@ -11,9 +11,11 @@ import QuizListItem from "./QuizListItem";
 const QuizList = () => {
   const location = useLocation()
   const enrollmentId = location.state.enrollmentId
+  const [memberInfoDto, setMemberInfoDto] = useState()
+  const [lectureName, setLectureName] = useState()
+  const [division, setDivision] = useState()
   const [quizDtoList, setQuizDtoList] = useState()
   const [courseDto, setCourseDto] = useState()
-  const [memberInfoDto, setMemberInfoDto] = useState()
   const fetchQuizList = async () => {
     try {
       const response = await axios.get(`/api/course/${enrollmentId}/quizList`)
@@ -52,7 +54,7 @@ const QuizList = () => {
 
   return (
     <div className={`background`}>
-      <Sidebar />
+      <Sidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <div className={`mycontainer ${styles.mycontainer}`}>
         <div className={`bg ${styles.bg}`}>
           <div className={`${styles.top}`}>
@@ -89,7 +91,9 @@ const QuizList = () => {
               <div className={styles.uncompleteQuizsContainer}>
                 {uncompleteQuizItem.map((data, i) => {
                   return (
-                    <UncompleteQuizItem data={data} key={`uncompleteQuizItem${i}`} />
+                    <UncompleteQuizItem
+                      data={data}
+                      key={`uncompleteQuizItem${i}`} />
                   )
                 })}
               </div>
@@ -101,8 +105,8 @@ const QuizList = () => {
               <select class={`form-select form-select-sm`} aria-label="Small select example">
                 <option value={100} selected>전체 보기</option>
                 {Array.from({ length: 16 }).map((_, i) => {
-                  return(
-                    <option value={i+1}>{i+1} 주차</option>
+                  return (
+                    <option value={i + 1}>{i + 1} 주차</option>
                   )
                 })}
               </select>
@@ -123,7 +127,7 @@ const QuizList = () => {
             </div>
             <div className={styles.quizListContainer}>
               {quizListData.map((data, i) => {
-                return(
+                return (
                   <QuizListItem data={data} key={`QuizListItem${i}`} />
                 )
               })}

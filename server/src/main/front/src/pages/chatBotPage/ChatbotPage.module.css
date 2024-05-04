@@ -72,6 +72,9 @@
   background-color: white;
   border-radius: 10px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
 }
 
 .bottomRight {
@@ -105,17 +108,15 @@
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  padding: 30px 0
+  padding: 30px 0;
+  gap: var(--gap-xl);
 }
 
 .inputBtns{
   width: 100%;
   display: flex;
   gap: 20px;
-}
-
-.inputBtns button{
-  width: 100px;
+  align-items: end;
 }
 
 .inputBtns > textarea{
@@ -125,10 +126,19 @@
 .textareaWrapper {
   max-height: 160px; /* 최대 높이 설정 */
   overflow-y: auto; /* 수직 스크롤 활성화 */
+  flex-grow: 1;
+  border-radius: 5px;
 }
 
 .textareaWrapper textarea {
   overflow: hidden; /* 내용이 넘칠 때 가려지도록 설정 */
   resize: none; /* 사용자 크기 조절 금지 */
   height: 1em; /* 초기 높이를 한 줄의 높이로 설정 */
+  border: none;
+}
+
+.RegenerateBtn, .chatBtn, .historyBtn{
+  border: none !important;
+  background-color: var(--point-blue) !important;
+  width: fit-content !important;
 }

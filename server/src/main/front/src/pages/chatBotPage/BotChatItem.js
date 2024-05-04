@@ -1,7 +1,8 @@
 import { useMemo } from "react";
-import "./BotChatItem.css";
+import styles from "./BotchatItem.module.css"
+import { FaUser } from "react-icons/fa";
 
-const ChatItem = ({ propLineHeight, props }) => {
+const ChatItem = ({ propLineHeight, text }) => {
   // console.log(props)
   const divStyle = useMemo(() => {
     return {
@@ -10,18 +11,14 @@ const ChatItem = ({ propLineHeight, props }) => {
   }, [propLineHeight]);
 
   return (
-    <div className="chat-item4">
-      <div className="frame-parent2">
-        <div className="color-palette-wrapper">
-          <div className="color-palette" />
+    <div className={styles.itemContainer}>
+      <div className={styles.profile}>
+        <div className={styles.userIconWrapper}>
+          <FaUser size={25} />
         </div>
-        <div className="ai1">AI 부기</div>
+        <h3 className={styles.name}>AI부기</h3>
       </div>
-      <div className="div211" style={divStyle}>
-        <span>
-          <p className="p124">{props}</p>
-        </span>
-      </div>
+      <h3 className={styles.text} style={divStyle}>{text}</h3>
     </div>
   );
 };

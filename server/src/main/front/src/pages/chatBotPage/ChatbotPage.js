@@ -91,7 +91,7 @@ const ChatbotPage = () => {
   };
 
   const sendMessage = async () => {
-    setReadOnly(!readOnly)
+    setReadOnly(true)
     // Axios 구성 생성
     const axiosInstance = axios.create({
       withCredentials: true,
@@ -113,8 +113,6 @@ const ChatbotPage = () => {
       setText('');
       console.log("Response.data :", response.data);
       fetchChattings(chatId)
-
-      setReadOnly(false)
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/")
@@ -123,6 +121,9 @@ const ChatbotPage = () => {
         console.error(error);
       }
 
+    }finally {
+      // 함수 처리가 완료된 후 readOnly를 false로 설정하여 입력을 다시 가능하게 함
+      setReadOnly(false);
     }
   }
   const deleteChats = async () => {

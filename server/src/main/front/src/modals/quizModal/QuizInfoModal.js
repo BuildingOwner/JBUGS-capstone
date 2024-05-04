@@ -1,13 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Info from "../modalComponents/Info";
 import "./QuizInfoModal.css";
 import Modal from 'react-modal';
 import { Navigate, useNavigate } from "react-router-dom";
 
 const QuizInfoModal = (props) => {
+
+  const [formattedDate, setFormattedDate] = useState()
   const navigate = useNavigate()
   console.log("modal의 props : ", props)
   console.log(props.props.quizScore)
+
+
 
   const closeModal = () => {
     props.modalChange(false)
@@ -21,7 +25,24 @@ const QuizInfoModal = (props) => {
       },
     })
   }
+  
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString().slice(-2); // 연도의 마지막 두 자리
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월
+    const day = date.getDate().toString().padStart(2, '0'); // 일
+    const hours = date.getHours().toString().padStart(2, '0'); // 시간
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // 분
 
+    // 최종 포맷팅된 문자열 생성
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
+
+  useEffect(() => {
+    const inputDate = props.props.deadline
+    const data = formatDate(inputDate);
+    setFormattedDate(data)
+  }, [])
   return (
     <Modal className="quizinfomodal"
       isOpen={props.modalOpen}
@@ -42,7 +63,7 @@ const QuizInfoModal = (props) => {
         <div className="deadline">
           <div className="deadline1">
             <b className="b78">종료 기한</b>
-            <b className="minutes">{props.props.deadline}</b>
+            <b className="minutes">{formattedDate}</b>
           </div>
           <div className="time1">
             <b className="b79">제한 시간</b>

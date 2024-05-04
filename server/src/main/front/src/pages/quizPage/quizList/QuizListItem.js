@@ -1,6 +1,25 @@
 import styles from "./QuizListItem.module.css"
-
+import { useState, useEffect } from "react"
 const QuizListItem = (props) => {
+  const [formattedDate, setFormattedDate] = useState()
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월
+    const day = date.getDate().toString().padStart(2, '0'); // 일
+    const hours = date.getHours().toString().padStart(2, '0'); // 시간
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // 분
+
+    // 포맷팅된 문자열 생성
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
+
+  useEffect(() => {
+    const inputDate = props.deadline
+    const data = formatDate(inputDate);
+    setFormattedDate(data)
+  }, [])
   return (
     <div className={styles.quizListItem}>
       <div className={`${styles.idSubmitBox} ${props.quizScore != undefined ? styles.done : styles.yet}`}>
@@ -15,7 +34,7 @@ const QuizListItem = (props) => {
       <h3 className={styles.title}>{props.quizName}</h3>
       <h3 className={styles.text}>{props.timeLimit}</h3>
       <h3 className={styles.text}>{props.quizScore}</h3>
-      <h3 className={styles.deadline}>{props.deadline}</h3>
+      <h3 className={styles.deadline}>{formattedDate}</h3>
       <button className={`btn btn-primary ${styles.feedbackBtn}`}>
         <h3 className={styles.feedbackText}>피드백 보기</h3>
       </button>

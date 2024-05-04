@@ -1,6 +1,26 @@
 import "./NoticeRow.css";
-
+import { useState, useEffect } from "react";
 const NoticeRow = (props) => {
+  const [formattedDate, setFormattedDate] = useState()
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월
+    const day = date.getDate().toString().padStart(2, '0'); // 일
+    const hours = date.getHours().toString().padStart(2, '0'); // 시간
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // 분
+
+    // 포맷팅된 문자열 생성
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    const inputDate = props.createdAt
+    const data = formatDate(inputDate);
+    setFormattedDate(data)
+  }, [])
+
   return (
     <div className="notice-row2">
       <div className="line14">
@@ -29,7 +49,7 @@ const NoticeRow = (props) => {
           <div className="div205">{props.writer}</div>
         </div>
         <div className="upload-date6">
-          <div className="div206">{props.createdAt}</div>
+          <div className="div206">{formattedDate}</div>
         </div>
         <div className="view8">
           <div className="div207">{props.views}</div>

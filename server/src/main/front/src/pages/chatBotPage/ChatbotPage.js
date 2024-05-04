@@ -22,6 +22,7 @@ const ChatbotPage = () => {
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
   const [readOnly, setReadOnly] = useState(false)
+
   // React 상태 관리를 위한 Hooks
   const [isSending, setIsSending] = useState(false);
 
@@ -89,13 +90,34 @@ const ChatbotPage = () => {
   const keyUp = (e) => {
     // 메시지 전송 중이 아니고, 엔터키가 눌렸으며, shift키가 눌리지 않았을 경우에만 sendMessage 함수를 호출
     if (text.trim() !== "" && !isSending && e.key === "Enter" && !e.shiftKey) {
-      sendMessage();
+      sendMessage()
     }
-    handleResizeHeight();
-  };
+    handleResizeHeight()
+  }
+
+  const regenerateResponse = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('chat_id', chatId);
+      const response = await axios.post("http://localhost:5000/regenerate", formData)
+      console.log(response)
+
+      // 서버로부터 받은 새로운 응답을 기존 chats 배열의 마지막 요소에 반영
+    if (response.data && chats.length > 0) {
+      const newChats = [...chats]
+      const lastIndex = newChats.length - 1
+      if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
+        newChats[lastIndex].content[0].text = response.data
+      }
+      setChats(newChats) // 업데이트된 chats 배열로 상태 업데이트
+    }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const sendMessage = async () => {
-    setIsSending(true);
+    setIsSending(true)
     setReadOnly(true)
     // Axios 구성 생성
     const axiosInstance = axios.create({
@@ -108,28 +130,28 @@ const ChatbotPage = () => {
     console.log("text : ", text)
     console.log("chatRoomId : ", chatId)
     try {
-      const formData = new FormData();
-      formData.append('question', text);
-      formData.append('chat_id', chatId);
-      const response = await axiosInstance.post("http://localhost:5000/chat", formData);
+      const formData = new FormData()
+      formData.append('question', text)
+      formData.append('chat_id', chatId)
+      const response = await axiosInstance.post("http://localhost:5000/chat", formData)
       console.log("sendMessage.response : ", response)
 
       // 텍스트 필드 비워주기
-      setText('');
-      console.log("Response.data :", response.data);
+      setText('')
+      console.log("Response.data :", response.data)
       fetchChattings(chatId)
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/")
       } else {
         // 다른 종류의 오류 발생
-        console.error(error);
+        console.error(error)
       }
 
     } finally {
       // 함수 처리가 완료된 후 readOnly를 false로 설정하여 입력을 다시 가능하게 함
-      setReadOnly(false);
-      setIsSending(false);
+      setReadOnly(false)
+      setIsSending(false)
     }
   }
 
@@ -139,23 +161,23 @@ const ChatbotPage = () => {
       console.log("deleteChats reponse", response)
 
       // chatIdArray에서 현재 chatId를 제거합니다.
-      const updatedChatIdArray = chatIdArray.filter(id => id !== chatId);
-      setChatIdArray(updatedChatIdArray);
+      const updatedChatIdArray = chatIdArray.filter(id => id !== chatId)
+      setChatIdArray(updatedChatIdArray)
 
       // 현재 chatId의 인덱스를 찾습니다.
-      const currentChatIndex = chatIdArray.findIndex(id => id === chatId);
+      const currentChatIndex = chatIdArray.findIndex(id => id === chatId)
 
       // 이전 chatId의 인덱스를 계산합니다. 만약 현재 chatId가 첫 번째였다면, 이전 chatId는 없으므로 0을 반환합니다.
-      const prevChatIndex = currentChatIndex > 0 ? currentChatIndex - 1 : 0;
+      const prevChatIndex = currentChatIndex > 0 ? currentChatIndex - 1 : 0
 
       // 이전 chatId를 설정합니다. 만약 updatedChatIdArray가 비어 있다면, null을 설정합니다.
-      const newCurrentChatId = updatedChatIdArray[prevChatIndex] || null;
+      const newCurrentChatId = updatedChatIdArray[prevChatIndex] || null
       setChatId(newCurrentChatId);
 
       if (newCurrentChatId !== null) {
-        await fetchChattings(newCurrentChatId); // 새로운 현재 chatId에 해당하는 채팅 데이터 가져오기
+        await fetchChattings(newCurrentChatId) // 새로운 현재 chatId에 해당하는 채팅 데이터 가져오기
       } else {
-        setChats([]); // chatIdArray가 비어있다면 chats를 비움
+        setChats([]) // chatIdArray가 비어있다면 chats를 비움
       }
     } catch (error) {
 
@@ -172,7 +194,7 @@ const ChatbotPage = () => {
       const chatData = JSON.parse(response.data.chat_text);
 
       console.log("Chat data:", chatData);
-      
+
       setChats(chatData);
     } catch (error) {
       if (error.response.status === 401) {
@@ -254,21 +276,18 @@ const ChatbotPage = () => {
           <div className={styles.bottom} ref={bottomRef}>
             <div className={styles.bottomLeft}>
               <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`} ref={chatBoardRef}>
-                {
-                  (
-                    chats?.map((chat, index) => (
-                      chat.role === 'user' ?
-                        <UserChatItem
-                          key={index}
-                          text={chat.content[0].text}
-                          memberName={memberName}
-                        /> :
-                        <BotChatItem
-                          key={index}
-                          text={chat.content[0].text}
-                        />
-                    ))
-                  )}
+                { chats?.map((chat, index) => (
+                    chat.role === 'user' ?
+                      <UserChatItem
+                        key={index}
+                        text={chat.content[0].text}
+                        memberName={memberName}
+                      /> :
+                      <BotChatItem
+                        key={index}
+                        text={chat.content[0].text}
+                      />
+                  ))}
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
@@ -292,7 +311,9 @@ const ChatbotPage = () => {
                   ><BsSend size={20} />
                   </button>
                 </div>
-                <button type="button" className={`${styles.RegenerateBtn} btn btn-primary`}>
+                <button type="button"
+                  className={`${styles.RegenerateBtn} btn btn-primary`}
+                  onClick={regenerateResponse}>
                   Regenerate response
                 </button>
               </div>
@@ -309,11 +330,15 @@ const ChatbotPage = () => {
                   />
                 ))}
               </div>
-              <button type="button" className={`btn btn-primary ${styles.historyBtn}`} style={{ height: 'fit-content', width: 'fit-content' }}
+              <button type="button"
+                className={`btn btn-primary ${styles.historyBtn}`}
+                style={{ height: 'fit-content', width: 'fit-content' }}
                 onClick={newChatting}>
                 채팅 생성
               </button>
-              <button type="button" className={`btn btn-primary ${styles.historyBtn}`} style={{ height: 'fit-content', width: 'fit-content' }}
+              <button type="button"
+                className={`btn btn-primary ${styles.historyBtn}`}
+                style={{ height: 'fit-content', width: 'fit-content' }}
                 onClick={deleteChats}>
                 선택 삭제
               </button>

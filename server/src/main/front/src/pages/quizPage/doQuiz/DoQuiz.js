@@ -18,7 +18,6 @@ const DoQuiz = (props) => {
 
   const [indexOfOptions, setIndexOfOptions] = useState(0)
   const quizId = data.quizId
-  console.log("DoQuiz의 data : ", data)
   const [questions, setQuestions] = useState([])
 
   const minusIndex = () => {
@@ -43,31 +42,32 @@ const DoQuiz = (props) => {
   const submitQuiz = () => {
 
   }
+
+  const fetchQuiz = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/get-quiz/${quizId}`, {
+        withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
+        credentials: 'include', // credentials를 포함하는 요청으로 설정
+      });
+      console.log("quiz가 받은 response : ", response)
+
+      const questionData = response.data.questions.map((quiz) => quiz).flat()
+      console.log("questionData : ",questionData)
+      setQuestions(questionData)
+    }
+    catch (error) {
+      if (error.response.status === 401) {
+        navigate("/")
+      } else {
+        // 다른 종류의 오류 발생
+        console.error(error)
+      }
+    }
+  }
+
   useEffect(() => {
-    const fetchQuiz = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/get-quiz/${quizId}`, {
-          withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
-          credentials: 'include', // credentials를 포함하는 요청으로 설정
-        });
-        console.log("quiz가 받은 response : ", response)
-
-        const questionData = response.data.questions.map((quiz) => quiz).flat()
-        console.log(questionData)
-        setQuestions(questionData)
-      }
-      catch (error) {
-        if (error.response.status === 401) {
-          navigate("/")
-        } else {
-          // 다른 종류의 오류 발생
-          console.error(error);
-        }
-      }
-    };
-
-    fetchQuiz();
-  }, [indexOfOptions])
+    fetchQuiz()
+  }, [])
 
   return (
     <div className={`background`}>
@@ -119,10 +119,10 @@ const DoQuiz = (props) => {
               <h3 className={styles.fontSize31xl}>3 : 17</h3>
             </div>
             <div className={styles.numberNav}>
-              {Array.from({length : questions.length}).map((_, i) => {
-                return(
+              {Array.from({ length: questions.length }).map((_, i) => {
+                return (
                   <div className={styles.quizNavBtn}>
-                    <h3>{i+1}</h3>
+                    <h3>{i + 1}</h3>
                   </div>
                 )
               })}

@@ -21,6 +21,8 @@ const ChatbotPage = () => {
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
   const [readOnly, setReadOnly] = useState(false)
+  // React 상태 관리를 위한 Hooks
+  const [isSending, setIsSending] = useState(false);
 
   const textareaRef = useRef(null);
   const chatBoardRef = useRef(null);
@@ -84,13 +86,15 @@ const ChatbotPage = () => {
   }
 
   const keyUp = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    // 메시지 전송 중이 아니고, 엔터키가 눌렸으며, shift키가 눌리지 않았을 경우에만 sendMessage 함수를 호출
+    if (text.trim() !== "" && !isSending && e.key === "Enter" && !e.shiftKey) {
       sendMessage();
     }
     handleResizeHeight();
   };
 
   const sendMessage = async () => {
+    setIsSending(true);
     setReadOnly(true)
     // Axios 구성 생성
     const axiosInstance = axios.create({
@@ -121,9 +125,10 @@ const ChatbotPage = () => {
         console.error(error);
       }
 
-    }finally {
+    } finally {
       // 함수 처리가 완료된 후 readOnly를 false로 설정하여 입력을 다시 가능하게 함
       setReadOnly(false);
+      setIsSending(false);
     }
   }
   const deleteChats = async () => {
@@ -150,7 +155,6 @@ const ChatbotPage = () => {
       } else {
         setChats([]); // chatIdArray가 비어있다면 chats를 비움
       }
-
     } catch (error) {
 
     }
@@ -265,7 +269,7 @@ const ChatbotPage = () => {
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
-                  <button type="button" className={`btn btn-primary ${styles.chatBtn}`}><LuImagePlus size={20}/></button>
+                  <button type="button" className={`btn btn-primary ${styles.chatBtn}`}><LuImagePlus size={20} /></button>
                   <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
                     <textarea
                       ref={textareaRef}
@@ -275,10 +279,15 @@ const ChatbotPage = () => {
                       value={text}
                       onChange={onChange}
                       onKeyUp={keyUp}
+                      readOnly={readOnly} // 이 부분에 readOnly 상태를 적용합니다.
                       style={{ overflowY: "hidden" }} // 세로 스크롤 제거
                     />
                   </div>
-                  <button type="submit" className={`btn btn-primary ${styles.chatBtn}`} onClick={sendMessage}><BsSend size={20} /></button>
+                  <button type="submit"
+                    className={`btn btn-primary ${styles.chatBtn}`}
+                    onClick={sendMessage}
+                  ><BsSend size={20} />
+                  </button>
                 </div>
                 <button type="button" className={`${styles.RegenerateBtn} btn btn-primary`}>
                   Regenerate response

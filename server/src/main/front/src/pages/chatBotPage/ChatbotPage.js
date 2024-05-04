@@ -115,55 +115,185 @@ const ChatbotPage = () => {
       console.log(error)
     }
   }
-
   const sendMessage = async () => {
-    setIsSending(true)
-    setReadOnly(true)
-    // Axios 구성 생성
-    const axiosInstance = axios.create({
-      withCredentials: true,
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    setIsSending(true);
+    setReadOnly(true);
 
     const newChat = {
       role: 'user',
       content: [{ text: text }],
     };
 
-    // chats가 배열이 아니거나 undefined일 때를 대비한 조건 처리
     if (!Array.isArray(chats)) {
-      setChats([newChat]) // chats가 배열이 아니면, 새 채팅으로만 구성된 배열을 세팅
+      setChats([newChat]);
     } else {
-      setChats([...chats, newChat]) // chats가 배열이면, 기존 배열에 새 채팅 추가
+      setChats([...chats, newChat]);
     }
 
-    // 사용자의 채팅을 임시 저장하고 textarea의 값을 바로 비워줌
-    const userText = text
-    setText('')
+    const userText = text;
+    setText('');
 
     try {
-      const formData = new FormData()
-      formData.append('question', userText)
-      formData.append('chat_id', chatId)
-      const response = await axiosInstance.post("http://localhost:5000/chat", formData)
-      fetchChattings(chatId)
-    } catch (error) {
-      if (error.response.status === 401) {
-        navigate("/")
-      } else {
-        // 다른 종류의 오류 발생
-        console.error(error)
+      const formData = new FormData();
+      formData.append('question', userText);
+      formData.append('chat_id', chatId);
+
+      const response = await fetch("http://localhost:5000/chat", {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+
+      const reader = response.body.getReader();
+      let completeMessage = ""; // 누적된 메시지를 저장하기 위한 변수
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const text = new TextDecoder().decode(value);
+
+        setChats((chats) => {
+          // chats 배열이 비어있지 않고 마지막 채팅의 role이 'assistant'인 경우
+          if (chats.length > 0 && chats[chats.length - 1].role === 'assistant') {
+            // 마지막 채팅의 텍스트에 새로운 텍스트 이어 붙임
+            const updatedChat = {
+              ...chats[chats.length - 1],
+              content: [{ text: chats[chats.length - 1].content[0].text + text }],
+            };
+            // 마지막 채팅을 업데이트된 채팅으로 교체
+            return [...chats.slice(0, -1), updatedChat];
+          } else {
+            // 마지막 채팅의 role이 'assistant'가 아니면 새로운 채팅 객체 추가
+            const newChat = {
+              role: 'assistant',
+              content: [{ text: text }],
+            };
+            return [...chats, newChat];
+          }
+        });
       }
 
+    } catch (error) {
+      // 오류 처리...
     } finally {
-      // 함수 처리가 완료된 후 readOnly를 false로 설정하여 입력을 다시 가능하게 함
-      setReadOnly(false)
       setIsSending(false)
+      setReadOnly(false)
     }
   }
+
+
+  // const sendMessage = async () => {
+  //   setIsSending(true);
+  //   setReadOnly(true);
+
+  //   // 새로운 채팅 메시지 구성
+  //   const newChat = {
+  //     role: 'user',
+  //     content: [{ text: text }],
+  //   };
+
+  //   // chats가 배열이 아니거나 undefined일 때를 대비한 조건 처리
+  //   if (!Array.isArray(chats)) {
+  //     setChats([newChat]); // chats가 배열이 아니면, 새 채팅으로만 구성된 배열을 세팅
+  //   } else {
+  //     setChats([...chats, newChat]); // chats가 배열이면, 기존 배열에 새 채팅 추가
+  //   }
+
+  //   // 사용자의 채팅을 임시 저장하고 textarea 값을 비움
+  //   const userText = text;
+  //   setText('');
+
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('question', userText);
+  //     formData.append('chat_id', chatId);
+
+  //     // fetch API 사용
+  //     const response = await fetch("http://localhost:5000/chat", {
+  //       method: 'POST',
+  //       body: formData,
+  //       credentials: 'include',
+  //     });
+
+  //     // 스트림 처리
+  //     const reader = response.body.getReader();
+  //     let completeMessage = ''; // 스트림으로 받은 모든 텍스트를 저장할 변수
+
+  //     while (true) {
+  //       const { done, value } = await reader.read();
+  //       if (done) break;
+
+  //       // value는 Uint8Array. 텍스트로 변환 필요
+  //       const textChunk = new TextDecoder().decode(value);
+  //       completeMessage += textChunk; // 조각난 텍스트를 하나의 메시지로 조합
+  //     }
+
+  //     // 스트림이 완료되면, 조합된 메시지를 채팅 목록에 추가
+  //     const newChat = {
+  //       role: 'assistant',
+  //       content: [{ text: completeMessage }],
+  //     };
+  //     setChats((chats) => [...chats, newChat]);
+
+  //   } catch (error) {
+  //     // 오류 처리...
+  //   } finally {
+  //     // 종료 처리...
+  //     setIsSending(false);
+  //     setReadOnly(false);
+  //   }
+  // }
+
+
+
+  // const sendMessage = async () => {
+  //   setIsSending(true)
+  //   setReadOnly(true)
+  //   // Axios 구성 생성
+  //   const axiosInstance = axios.create({
+  //     withCredentials: true,
+  //     credentials: 'include',
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data'
+  //     }
+  //   })
+
+  //   const newChat = {
+  //     role: 'user',
+  //     content: [{ text: text }],
+  //   };
+
+  //   // chats가 배열이 아니거나 undefined일 때를 대비한 조건 처리
+  //   if (!Array.isArray(chats)) {
+  //     setChats([newChat]) // chats가 배열이 아니면, 새 채팅으로만 구성된 배열을 세팅
+  //   } else {
+  //     setChats([...chats, newChat]) // chats가 배열이면, 기존 배열에 새 채팅 추가
+  //   }
+
+  //   // 사용자의 채팅을 임시 저장하고 textarea의 값을 바로 비워줌
+  //   const userText = text
+  //   setText('')
+
+  //   try {
+  //     const formData = new FormData()
+  //     formData.append('question', userText)
+  //     formData.append('chat_id', chatId)
+  //     const response = await axiosInstance.post("http://localhost:5000/chat", formData)
+  //     fetchChattings(chatId)
+  //   } catch (error) {
+  //     if (error.response.status === 401) {
+  //       navigate("/")
+  //     } else {
+  //       // 다른 종류의 오류 발생
+  //       console.error(error)
+  //     }
+
+  //   } finally {
+  //     // 함수 처리가 완료된 후 readOnly를 false로 설정하여 입력을 다시 가능하게 함
+  //     setReadOnly(false)
+  //     setIsSending(false)
+  //   }
+  // }
 
   const deleteChats = async () => {
     try {

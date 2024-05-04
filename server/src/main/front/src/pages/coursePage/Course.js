@@ -10,7 +10,14 @@ import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 const Course = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const enrollmentId = location.state.enrollmentId
+  let enrollmentId
+  console.log("Course location : ", location)
+
+  if (location.state?.from === '/main') {
+    enrollmentId = location.state.enrollmentId; // enrollmentId를 state에서 직접 가져옵니다.
+  } else {
+    enrollmentId = location.state?.enrollmentId;
+  }
 
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [lectureName, setLectureName] = useState()
@@ -59,12 +66,12 @@ const Course = () => {
         // console.log("courseDto : ", courseDto)
       }
       catch (error) {
-        if (error.response.status === 401 || error.response.status === 400) {
-          navigate("/")
-        } else {
-          // 다른 종류의 오류 발생
-          console.error(error);
-        }
+        // if (error.response.status === 401 || error.response.status === 400) {
+        //   navigate("/")
+        // } else {
+        //   // 다른 종류의 오류 발생
+        //   console.error(error);
+        // }
       }
     };
 
@@ -90,7 +97,7 @@ const Course = () => {
           <div className={styles.container}>
             <div className={styles.listContainer}>
               <div className={styles.name}>
-                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom:"1rem" }}>온라인 강의</h3>
+                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>온라인 강의</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {lectureVideos.map((video, i) => (
@@ -106,7 +113,7 @@ const Course = () => {
             </div>
             <div className={styles.listContainer}>
               <div className={styles.name}>
-                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom:"1rem" }}>과제</h3>
+                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>과제</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {assignments.map((assignment, i) => (
@@ -126,7 +133,7 @@ const Course = () => {
             </div>
             <div className={styles.listContainer}>
               <div className={styles.name}>
-                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom:"1rem" }}>자료</h3>
+                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>자료</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {classFiles.map((file, i) => (
@@ -142,7 +149,7 @@ const Course = () => {
             </div>
             <div className={styles.listContainer}>
               <div className={styles.name}>
-                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom:"1rem" }}>퀴즈</h3>
+                <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>퀴즈</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {quizs.map((quiz, i) => (

@@ -6,8 +6,12 @@ const CourseItem = (props) => {
   const navigate = useNavigate();
 
   const moveToCourse = () => {
-    navigate('/course', { state: props.enrollmentId })
+    // state를 넘겨줄 때 네브바에서 넘어올때와 충돌이 나기 때문에 from으로 state를 보내준 url을 확인
+    console.log("enrollmentId : ", props.enrollmentId) 
+    navigate('/course', { state: { from: '/main', enrollmentId: props.enrollmentId } });
+
   }
+
   return (
     <div className="course-item3" onClick={moveToCourse}>
       <div className="course-left3">

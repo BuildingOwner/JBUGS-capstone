@@ -37,4 +37,5 @@
   border-radius: 5px;
   height: fit-content;
   font-size: var(--font-size-base);
+  white-space:pre-wrap;
 }

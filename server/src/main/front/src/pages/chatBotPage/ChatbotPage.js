@@ -74,7 +74,7 @@ const ChatbotPage = () => {
     handleResizeHeight();
   };
 
-  const sendMeesage = async () => {
+  const sendMessage = async () => {
     setReadOnly(!readOnly)
     // Axios 구성 생성
     const axiosInstance = axios.create({

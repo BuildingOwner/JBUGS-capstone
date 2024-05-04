@@ -103,14 +103,14 @@ const ChatbotPage = () => {
       console.log(response)
 
       // 서버로부터 받은 새로운 응답을 기존 chats 배열의 마지막 요소에 반영
-    if (response.data && chats.length > 0) {
-      const newChats = [...chats]
-      const lastIndex = newChats.length - 1
-      if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
-        newChats[lastIndex].content[0].text = response.data
+      if (response.data && chats.length > 0) {
+        const newChats = [...chats]
+        const lastIndex = newChats.length - 1
+        if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
+          newChats[lastIndex].content[0].text = response.data
+        }
+        setChats(newChats) // 업데이트된 chats 배열로 상태 업데이트
       }
-      setChats(newChats) // 업데이트된 chats 배열로 상태 업데이트
-    }
     } catch (error) {
       console.log(error)
     }
@@ -126,19 +126,25 @@ const ChatbotPage = () => {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    });
-    console.log("text : ", text)
-    console.log("chatRoomId : ", chatId)
+    })
+
+    const newChat = {
+      role: 'user',
+      content: [{ text: text }],
+    };
+
+    // 즉시 채팅 표시
+    setChats([...chats, newChat]);
+
+    // 사용자의 채팅을 임시 저장하고 textarea의 값을 바로 비워줌
+    const userText = text
+    setText('')
+
     try {
       const formData = new FormData()
-      formData.append('question', text)
+      formData.append('question', userText)
       formData.append('chat_id', chatId)
       const response = await axiosInstance.post("http://localhost:5000/chat", formData)
-      console.log("sendMessage.response : ", response)
-
-      // 텍스트 필드 비워주기
-      setText('')
-      console.log("Response.data :", response.data)
       fetchChattings(chatId)
     } catch (error) {
       if (error.response.status === 401) {
@@ -239,7 +245,6 @@ const ChatbotPage = () => {
     }
   }
 
-  // 건들면 죽임
   useEffect(() => {
     if (firstDo == true) { // 처음 실행하면 1번 채팅룸 호출 (수정필요)
       fetchDataAndChattings(1)
@@ -248,7 +253,7 @@ const ChatbotPage = () => {
       fetchDataAndChattings(chatId)
     }
     console.log(chatDtoList)
-  }, [chatId]);
+  }, []);
 
   useEffect(() => {
     chatBoardScoll()
@@ -276,18 +281,18 @@ const ChatbotPage = () => {
           <div className={styles.bottom} ref={bottomRef}>
             <div className={styles.bottomLeft}>
               <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`} ref={chatBoardRef}>
-                { chats?.map((chat, index) => (
-                    chat.role === 'user' ?
-                      <UserChatItem
-                        key={index}
-                        text={chat.content[0].text}
-                        memberName={memberName}
-                      /> :
-                      <BotChatItem
-                        key={index}
-                        text={chat.content[0].text}
-                      />
-                  ))}
+                {chats?.map((chat, index) => (
+                  chat.role === 'user' ?
+                    <UserChatItem
+                      key={index}
+                      text={chat.content[0].text}
+                      memberName={memberName}
+                    /> :
+                    <BotChatItem
+                      key={index}
+                      text={chat.content[0].text}
+                    />
+                ))}
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>

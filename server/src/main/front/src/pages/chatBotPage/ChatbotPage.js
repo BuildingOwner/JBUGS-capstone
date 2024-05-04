@@ -3,7 +3,7 @@ import BotChatItem from "./BotChatItem";
 import UserChatItem from "./UserChatItem"
 import HistoryItem from "./HistoryItem";
 import styles from "./ChatbotPage.module.css";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -19,6 +19,15 @@ const ChatbotPage = () => {
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
   const [readOnly, setReadOnly] = useState(false)
+  const textareaRef = useRef(null);
+
+  const handleResizeHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto"; // height 초기화
+      textarea.style.height = textarea.scrollHeight + "px"; // 스크롤 높이만큼 늘리기
+    }
+  };
 
   const chatBoardScoll = () => {
     console.log("스크롤 왜 안됨?")
@@ -59,9 +68,11 @@ const ChatbotPage = () => {
   }
 
   const keyUp = (e) => {
-    if (e.key === 'Enter')
-      sendMeesage()
-  }
+    if (e.key === "Enter" && !e.shiftKey) {
+      sendMeesage();
+    }
+    handleResizeHeight();
+  };
 
   const sendMeesage = async () => {
     setReadOnly(!readOnly)
@@ -241,7 +252,18 @@ const ChatbotPage = () => {
                 </button>
                 <div className={styles.inputBtns}>
                   <button type="button" className="btn btn-primary">이미지</button>
-                  <textarea className="form-control" placeholder="질문을 입력해주세요..." value={text} onChange={onChange} onKeyUp={keyUp} readOnly={readOnly} />
+                  <div className={styles.textareaWrapper}>
+                    <textarea
+                      ref={textareaRef}
+                      rows={1}
+                      className="form-control"
+                      placeholder="질문을 입력해주세요..."
+                      value={text}
+                      onChange={onChange}
+                      onKeyUp={keyUp}
+                      style={{ overflowY: "hidden" }} // 세로 스크롤 제거
+                    />
+                  </div>
                   <button type="submit" className="btn btn-primary" onClick={sendMeesage}>보내기</button>
                 </div>
               </div>

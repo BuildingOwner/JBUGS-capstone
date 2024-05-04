@@ -15,7 +15,6 @@ from openai import OpenAI
 import json
 from secret.db_connection import getConnection
 from secret.sql_injection_detector import sql_injection_detector
-
 # Get the absolute path of the current Python script
 current_file_path = os.path.abspath(__file__)
 # Extract the file name from the path
@@ -34,8 +33,7 @@ def encode_image(image_path):
         return base64.b64encode(image_file.read()).decode("utf-8")
 
 
-def chat(chat_id, question, img_path=[]):
-    # model = {"vision": "gpt-4-vision-preview", "turbo": "gpt-4-turbo-preview"}
+def chat(chat_id):
     message = []
     print(f"[{current_file_name}] chat_id: {chat_id}")
     db = getConnection()
@@ -50,9 +48,10 @@ def chat(chat_id, question, img_path=[]):
     if prev_chat_text:
         try:
             message = json.loads(prev_chat_text[0])
+            message.pop()
         except:
             message = []  # 이전 채팅 데이터가 없는 경우 빈 리스트로 초기화
-        print("메시지 : ", message)
+        
         # 메시지 내용에서 이미지 URL을 찾아서 인코딩하고 리스트에 추가
         for msg in message:
             for item in msg["content"]:
@@ -66,27 +65,6 @@ def chat(chat_id, question, img_path=[]):
                         urls.pop()
 
     print(f"[{current_file_name}] 이전 대화 이미지 urls: {urls}")
-    msg = {
-            "role": "user",
-            "content": [
-                {
-                    "type": "text",
-                    "text": f"{question}",
-                },
-            ],
-        }
-    message.append(msg)
-
-    print(f"[{current_file_name}] 현재 질문 이미지: {img_path}")
-    if len(img_path) != 0:
-        # base64 문자열 얻기
-        for path in img_path:
-            urls.append(path)
-            img = {
-                "type": "image_url",
-                "image_url": {"url": f"data:image/jpeg;base64,{encode_image(path)}"},
-            }
-            message[-1]["content"].append(img)
     
     response = client.chat.completions.create(
         model="gpt-4-turbo",
@@ -176,7 +154,3 @@ def chat_test2(question, model_name="turbo", img_path=["test/images/test.png"]):
     
     for chunk in response:
         print(chunk.choices[0].delta.content, end="")
-
-
-if __name__ == "__main__":
-    chat_test2("이 그림에 대해 설명해줘", "vision")

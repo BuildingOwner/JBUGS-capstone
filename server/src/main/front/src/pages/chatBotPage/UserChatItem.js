@@ -1,17 +1,16 @@
-import "./UserChatItem.css"
+import styles from "./ChatBoardItem.module.css"
+import { FaUser } from "react-icons/fa";
 
 const UserChatItem = (props) => {
-  // console.log("user chatting : ", props)
+  console.log("user chatting : ", props)
   return (
-    <div className="chat-item">
-      <div className="link-list">
-        <div className="value-filter" />
-        <div className="wrapper13">
-          <div className="div30">진승원</div>
+    <div className={styles.itemContainer}>
+      <h3 className={styles.text}>{props.text}</h3>
+      <div className={styles.profile}>
+        <div className={styles.userIconWrapper}>
+        <FaUser size={25} />
         </div>
-      </div>
-      <div className="div31">
-        <p className="p13">{props.props}</p>
+        <h3 className={styles.name}>진승원</h3>
       </div>
     </div>
   );

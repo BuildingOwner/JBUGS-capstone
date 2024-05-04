@@ -37,7 +37,7 @@ const MainSidebar = (props) => {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"} className={styles.linkBtn}>
+            <Link to={"/chatbotpage"} state={{ memberInfoDto: memberInfoDto }} className={styles.linkBtn}>
               <IoChatbubbleEllipsesOutline size="30" />
               <h3>AI chat</h3>
             </Link>

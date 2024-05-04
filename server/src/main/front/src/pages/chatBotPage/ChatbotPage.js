@@ -7,6 +7,8 @@ import { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { BsSend } from "react-icons/bs";
+import { LuImagePlus } from "react-icons/lu";
 
 const ChatbotPage = () => {
   const navigate = useNavigate()
@@ -24,16 +26,19 @@ const ChatbotPage = () => {
   const chatBoardRef = useRef(null);
   const bottomRef = useRef(null);
   const chatRef = useRef(null);
+  const textareaWrapperRef = useRef(null);
 
   const handleResizeHeight = () => {
     const textarea = textareaRef.current;
     const chatBoard = chatBoardRef.current;
     const bottom = bottomRef.current
     const chat = chatRef.current
+    const textareaWrapper = textareaWrapperRef.current
 
     if (textarea) {
       textarea.style.height = "auto"; // height 초기화
       textarea.style.height = textarea.scrollHeight + "px"; // 스크롤 높이만큼 늘리기
+      textareaWrapper.scrollTop = textareaWrapper.scrollHeight;
       chatBoard.style.height = "auto"
       chatBoard.style.height = bottom.scrollHeight - chat.scrollHeight + "px"; // 스크롤 높이만큼 늘리기
     }
@@ -249,19 +254,19 @@ const ChatbotPage = () => {
                       chat.role === 'user' ?
                         <UserChatItem
                           key={index}
-                          props={chat.content[0].text}
+                          text={chat.content[0].text}
                         /> :
                         <BotChatItem
                           key={index}
-                          props={chat.content[0].text}
+                          text={chat.content[0].text}
                         />
                     ))
                   )}
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
-                  <button type="button" className="btn btn-primary">이미지</button>
-                  <div className={styles.textareaWrapper}>
+                  <button type="button" className={`btn btn-primary ${styles.chatBtn}`}><LuImagePlus size={20}/></button>
+                  <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
                     <textarea
                       ref={textareaRef}
                       rows={1}
@@ -273,7 +278,7 @@ const ChatbotPage = () => {
                       style={{ overflowY: "hidden" }} // 세로 스크롤 제거
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary" onClick={sendMessage}>보내기</button>
+                  <button type="submit" className={`btn btn-primary ${styles.chatBtn}`} onClick={sendMessage}><BsSend size={20} /></button>
                 </div>
                 <button type="button" className={`${styles.RegenerateBtn} btn btn-primary`}>
                   Regenerate response
@@ -292,11 +297,11 @@ const ChatbotPage = () => {
                   />
                 ))}
               </div>
-              <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}
+              <button type="button" className={`btn btn-primary ${styles.historyBtn}`} style={{ height: 'fit-content', width: 'fit-content' }}
                 onClick={newChatting}>
                 채팅 생성
               </button>
-              <button type="button" className={`btn btn-primary deleteHistoryBtn`} style={{ height: 'fit-content', width: 'fit-content' }}
+              <button type="button" className={`btn btn-primary ${styles.historyBtn}`} style={{ height: 'fit-content', width: 'fit-content' }}
                 onClick={deleteChats}>
                 선택 삭제
               </button>

@@ -21,6 +21,7 @@ const ChatbotPage = () => {
   const [readOnly, setReadOnly] = useState(false)
 
   const chatBoardScoll = () => {
+    console.log("스크롤 왜 안됨?")
     const chatUl = document.querySelector('#chatBoard');
     chatUl.scrollTop = chatUl.scrollHeight;
   }
@@ -184,7 +185,6 @@ const ChatbotPage = () => {
 
   // 건들면 죽임
   useEffect(() => {
-    chatBoardScoll()
     if (firstDo == true) { // 처음 실행하면 1번 채팅룸 호출 (수정필요)
       fetchDataAndChattings(1)
       setFirstDo(false)
@@ -193,6 +193,10 @@ const ChatbotPage = () => {
     }
     console.log(chatDtoList)
   }, [chatId]);
+
+  useEffect(() => {
+    chatBoardScoll()
+  }, [chats])
 
   return (
     <div className={`background`}>
@@ -250,6 +254,7 @@ const ChatbotPage = () => {
                     changeRoomId={changeRoomId}
                     chatRoomId={chat.chatRoomId}
                     chatRoomName={chat.chatRoomName}
+                    selectedId={chatId}
                   />
                 ))}
               </div>

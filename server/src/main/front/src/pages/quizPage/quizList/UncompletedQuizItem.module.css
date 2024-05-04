@@ -14,7 +14,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
-  text-align: center;
+  text-align: left;
   word-wrap: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -37,7 +37,7 @@
   font-size: var(--font-size-base);
   overflow: hidden;
   text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
-  text-align: center;
+  text-align: left;
   word-wrap: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 4;

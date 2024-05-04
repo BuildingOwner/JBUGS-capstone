@@ -32,6 +32,7 @@
   align-items: center;
   border-radius: 10px;
   padding: var(--padding-4xs);
+  font-weight: bold;
 }
 
 .second,

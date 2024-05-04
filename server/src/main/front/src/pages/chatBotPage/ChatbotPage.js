@@ -59,12 +59,13 @@ const ChatbotPage = () => {
   }
 
   const keyUp = (e) => {
+    // 만약 enter키가 눌려도 shift + enter면 실행이 안됨
     if (e.key === 'Enter' && !e.shiftKey) {
-      sendMeesage();
+      sendMessage();
     }
   }
 
-  const sendMeesage = async () => {
+  const sendMessage = async () => {
     setReadOnly(!readOnly)
     // Axios 구성 생성
     const axiosInstance = axios.create({
@@ -243,7 +244,7 @@ const ChatbotPage = () => {
                 <div className={styles.inputBtns}>
                   <button type="button" className="btn btn-primary">이미지</button>
                   <textarea className="form-control" placeholder="질문을 입력해주세요..." value={text} onChange={onChange} onKeyUp={keyUp} readOnly={readOnly} />
-                  <button type="submit" className="btn btn-primary" onClick={sendMeesage}>보내기</button>
+                  <button type="submit" className="btn btn-primary" onClick={sendMessage}>보내기</button>
                 </div>
               </div>
             </div>

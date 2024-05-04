@@ -20,6 +20,7 @@ public class QuizDto {
     private Integer quizScore;
     private String timeLimit; // 제한시간
     private String reflectionRatio; //반영비율
+    private int week;
 
     public static QuizDto from(Quiz quiz, QuizInfo quizInfo) {
         QuizDto dto = new QuizDto();
@@ -30,6 +31,7 @@ public class QuizDto {
         dto.setDeadline(quiz.getDeadline());
         dto.setTimeLimit(quiz.getTimeLimit());
         dto.setReflectionRatio(quiz.getReflectionRatio());
+        dto.setWeek(quiz.getWeek().getWeekNumber());
 //        dto.setJsonData(quiz.getJsonData());
 
         if (quizInfo != null) { // QuizInfo 객체가 제공되는 경우에만

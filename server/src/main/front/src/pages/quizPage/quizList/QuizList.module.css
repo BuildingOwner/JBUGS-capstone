@@ -103,7 +103,7 @@
 }
 
 .select{
-  width: 10%;
+  width: 15% !important;
   font-size: var(--font-size-base) !important;
 }
 

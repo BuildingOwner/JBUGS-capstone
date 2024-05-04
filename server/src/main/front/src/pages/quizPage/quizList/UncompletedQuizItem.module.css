@@ -70,6 +70,9 @@
 .goBtn{
   display: flex !important;
   border: none !important;
+  background-color: var(--point-blue) !important;
+  justify-content: center;
+  align-items: center;
 }
 
 .goBtn h3{

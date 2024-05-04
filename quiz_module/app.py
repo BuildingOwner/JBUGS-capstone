@@ -17,6 +17,7 @@ from datetime import datetime
 from chat import chat as mychat
 from erase_folder import erase_folder
 from flask_cors import CORS
+from regenerate_chat import chat as regenerate_chat
 
 # Get the absolute path of the current Python script
 current_file_path = os.path.abspath(__file__)
@@ -159,6 +160,17 @@ def get_explane():
 
     return Response(stream_with_context(generate()))
 
+@app.route('/regenerate', methods=['post'])
+def regenerateChat():
+    if request.method == 'POST':
+        chat_id = request.form.get('chat_id')
+        print(chat_id)
+        def generate():
+            for piece in regenerate_chat(chat_id):
+                if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
+                    yield piece.encode("utf-8")
+        return Response(stream_with_context(generate()))
+    return jsonify({'message': 'Failed to upload file'})
 
 @app.route("/related-quiz", methods=["GET"])
 def get_related_quiz():

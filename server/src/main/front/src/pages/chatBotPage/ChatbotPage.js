@@ -133,8 +133,12 @@ const ChatbotPage = () => {
       content: [{ text: text }],
     };
 
-    // 즉시 채팅 표시
-    setChats([...chats, newChat]);
+    // chats가 배열이 아니거나 undefined일 때를 대비한 조건 처리
+    if (!Array.isArray(chats)) {
+      setChats([newChat]) // chats가 배열이 아니면, 새 채팅으로만 구성된 배열을 세팅
+    } else {
+      setChats([...chats, newChat]) // chats가 배열이면, 기존 배열에 새 채팅 추가
+    }
 
     // 사용자의 채팅을 임시 저장하고 textarea의 값을 바로 비워줌
     const userText = text

@@ -59,7 +59,7 @@ const Course = () => {
       const response = await axios.get(`/api/course/${enrollmentId}`, {
         withCredentials: true // 세션 쿠키를 사용하기 위해 필요
       });
-
+      console.log(response)
       setWeeklyContents(response.data.weeklyContents)
       const lectureName1 = response.data.courseDto.lectureName
       const division1 = response.data.courseDto.division

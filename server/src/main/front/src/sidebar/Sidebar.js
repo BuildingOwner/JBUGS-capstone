@@ -10,25 +10,29 @@ import { PiBooks } from "react-icons/pi";
 import { FaUser } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
 
 const Sidebar = (props) => {
-  const enrollmentId = props.enrollmentId
-  const memberName = props.memberInfoDto.memberName
+  const [enrollmentId, setEnrollmentId] = useState('')
+  const memberName = props.memberInfoDto?.memberName;
+  
   const navigate = useNavigate()
   const handleLogout = () => {
     axios.post('/logout', null, { withCredentials: true }) // withCredentials를 설정하여 쿠키를 서버로 전송합니다.
       .then(response => {
         // 로그아웃 성공 시 처리
         console.log("로그아웃 성공");
-        
+
       })
       .catch(error => {
         // 오류 처리
         console.error("로그아웃 실패", error);
       });
-      navigate("/");
+    navigate("/");
   }
-
+  useEffect(() => {
+    setEnrollmentId(props.enrollmentId)
+  })
   return (
     <div className={styles.sidebar}>
       <Link to={"/main"} className={styles.logo}>
@@ -48,7 +52,9 @@ const Sidebar = (props) => {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"} state={{ memberName: memberName }} className={styles.linkBtn}>
+            <Link to={"/chatbotpage"}
+              state={{ memberName: memberName }}
+              className={styles.linkBtn}>
               <IoChatbubbleEllipsesOutline size="30" />
               <h3>AI chat</h3>
             </Link>

@@ -1,7 +1,7 @@
 package jbugs.eclass.domain;
 
 public enum QuizType {
-    PRACTICE,
+    EXERCISE,
     EXAM,
-    TRAINING
+    PRACTICE
 }

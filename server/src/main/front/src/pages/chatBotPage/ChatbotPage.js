@@ -59,8 +59,9 @@ const ChatbotPage = () => {
   }
 
   const keyUp = (e) => {
-    if (e.key === 'Enter')
-      sendMeesage()
+    if (e.key === 'Enter' && !e.shiftKey) {
+      sendMeesage();
+    }
   }
 
   const sendMeesage = async () => {

@@ -13,6 +13,7 @@ import { LuImagePlus } from "react-icons/lu";
 const ChatbotPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const memberName = location.state.memberName
   const [studentId, setStudentId] = useState()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
   const [chatDtoList, setChatDtoList] = useState([])
@@ -131,6 +132,7 @@ const ChatbotPage = () => {
       setIsSending(false);
     }
   }
+
   const deleteChats = async () => {
     try {
       const response = await axios.delete(`/api/chat/${chatId}`)
@@ -170,7 +172,7 @@ const ChatbotPage = () => {
       const chatData = JSON.parse(response.data.chat_text);
 
       console.log("Chat data:", chatData);
-
+      
       setChats(chatData);
     } catch (error) {
       if (error.response.status === 401) {
@@ -259,6 +261,7 @@ const ChatbotPage = () => {
                         <UserChatItem
                           key={index}
                           text={chat.content[0].text}
+                          memberName={memberName}
                         /> :
                         <BotChatItem
                           key={index}

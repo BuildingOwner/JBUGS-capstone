@@ -253,7 +253,7 @@ const ChatbotPage = () => {
       fetchDataAndChattings(chatId)
     }
     console.log(chatDtoList)
-  }, []);
+  }, [chatId]);
 
   useEffect(() => {
     chatBoardScoll()

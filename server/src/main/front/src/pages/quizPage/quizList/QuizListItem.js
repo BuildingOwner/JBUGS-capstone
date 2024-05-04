@@ -27,7 +27,7 @@ const QuizListItem = (props) => {
           <h3 className={styles.idSubmitText}>응시 완료</h3>
           : <h3 className={styles.idSubmitText}>미응시</h3>}
       </div>
-      {props.quizType === "PRACTICE" ? <h3 className={styles.text}>연습 문제</h3> :
+      {props.quizType === "EXERCISE" ? <h3 className={styles.text}>연습 문제</h3> :
         props.quizType === "EXAM" ? <h3 className={styles.text}>시험</h3> :
           <h3 className={styles.text}>실습 문제</h3>
       }

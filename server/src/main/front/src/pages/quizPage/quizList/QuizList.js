@@ -11,14 +11,26 @@ import QuizListItem from "./QuizListItem";
 const QuizList = () => {
   const location = useLocation()
   const enrollmentId = location.state.enrollmentId
-  const [memberInfoDto, setMemberInfoDto] = useState()
-  const [lectureName, setLectureName] = useState()
-  const [division, setDivision] = useState()
-  const [quizDtoList, setQuizDtoList] = useState()
+  const [memberInfoDto, setMemberInfoDto] = useState('')
+  const [lectureName, setLectureName] = useState('')
+  const [division, setDivision] = useState('')
+  const [quizDtoList, setQuizDtoList] = useState([])
   const [courseDto, setCourseDto] = useState()
   const [completeQuizList, setCompleteQuizList] = useState([])
   const [uncompleteQuizList, setUncompleteQuizList] = useState([])
+  const [averageScore, setAverageScore] = useState("")
+  const [selectedWeek, setSelectedWeek] = useState(100)
+  const [selectedType, setSelectedType] = useState("all")
 
+  const handleWeekChange = (e) => {
+    setSelectedWeek(e.target.value)
+    console.log(e.target.value)
+  }
+
+  const handleTypeChange = (e) => {
+    setSelectedType(e.target.value)
+    console.log(e.target.value)
+  }
   const fetchQuizList = async () => {
     try {
       const response = await axios.get(`/api/course/${enrollmentId}/quizList`)
@@ -29,6 +41,11 @@ const QuizList = () => {
       // useState를 활용하여 완료된 퀴즈와 완료되지 않은 퀴즈 분리
       const completedQuizzes = quizList.filter(quiz => quiz.quizScore !== null)
       const uncompletedQuizzes = quizList.filter(quiz => quiz.quizScore === null)
+
+      // 평균 점수 구하는 로직
+      let scores = 0
+      completeQuizList?.map((quiz) => scores += quiz.quizScore)
+      setAverageScore(scores)
 
       // 상태 업데이트
       setQuizDtoList(quizList)
@@ -43,13 +60,6 @@ const QuizList = () => {
   useEffect(() => {
     fetchQuizList()
   }, [])
-
-
-  const quizListData = [ // 얘는 안맞춰도 됨
-    { "quizName": "AD", "score": 94, },
-    { "quizName": "bc", "score": 78, },
-    { "quizName": "asdf", "score": 100, }
-  ]
 
   return (
     <div className={`background`}>
@@ -68,7 +78,7 @@ const QuizList = () => {
               <div className={styles.aveInfo}>
                 <div className={styles.aveScore}>
                   <h3 className={styles.textSmallGray}>평균 점수</h3>
-                  <h3>40 점</h3>
+                  <h3>{averageScore} 점</h3>
                   <div className={styles.myPosition}>
                     <LuTriangle />
                     <h3>23%</h3>
@@ -100,7 +110,6 @@ const QuizList = () => {
                       timeLimit={quiz.timeLimit}
                       jsonData={quiz.jsonData}
                     />
-
                   )
                 })}
               </div>
@@ -109,18 +118,26 @@ const QuizList = () => {
           </div>
           <div className={styles.bottom}>
             <div className={styles.choose}>
-              <select class={`form-select form-select-sm ${styles.select}`} aria-label="Small select example">
-                <option value={100} selected>주차 전체 보기</option>
+              <select
+                className={`form-select form-select-sm ${styles.select}`}
+                aria-label="Small select example"
+                value={selectedWeek}
+                onChange={handleWeekChange}>
+                <option value={100}>주차 전체 보기</option>
                 {Array.from({ length: 16 }).map((_, i) => {
                   return (
                     <option value={i + 1} key={`weekKey${i}`}>{i + 1} 주차</option>
                   )
                 })}
               </select>
-              <select class={`form-select form-select-sm ${styles.select}`} aria-label="Small select example">
-                <option value={'all'} selected>문제 분류 전체 보기</option>
+              <select
+                className={`form-select form-select-sm ${styles.select}`}
+                aria-label="Small select example"
+                value={selectedType}
+                onChange={handleTypeChange}>
+                <option value={'all'}>문제 분류 전체 보기</option>
                 <option value={'exercise'}>연습 문제</option>
-                <option value={'practice '} >실습 문제</option>
+                <option value={'practice'} >실습 문제</option>
                 <option value={'exam'} >시험</option>
               </select>
             </div>
@@ -134,8 +151,11 @@ const QuizList = () => {
               <h3 className={styles.labelText}>피드백</h3>
             </div>
             <div className={styles.quizListContainer}>
-              {quizDtoList?.map((quiz, i) => {
-                return (
+              {
+                quizDtoList?.filter(quiz =>
+                  (Number(selectedWeek) === 100 || Number(quiz.week) === Number(selectedWeek)) // 주차 조건
+                  && (selectedType === 'all' || quiz.quizType === selectedType) // 타입 조건
+                ).map((quiz, i) => (
                   <QuizListItem
                     key={`QuizListItem${i}`}
                     quizName={quiz.quizName}
@@ -149,8 +169,8 @@ const QuizList = () => {
                     quizScore={quiz.quizScore}
                     submissionStatus={quiz.submissionStatus}
                   />
-                )
-              })}
+                ))
+              }
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 const Course = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const enrollmentId = location.state
+  const enrollmentId = location.state.enrollmentId
 
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [lectureName, setLectureName] = useState()

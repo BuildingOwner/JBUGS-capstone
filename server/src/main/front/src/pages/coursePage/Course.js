@@ -61,7 +61,6 @@ const Course = () => {
       });
 
       setWeeklyContents(response.data.weeklyContents)
-
       const lectureName1 = response.data.courseDto.lectureName
       const division1 = response.data.courseDto.division
       const assignmentData = response.data.weeklyContents.map((week) => week.assignments).flat()
@@ -119,7 +118,13 @@ const Course = () => {
               {Array.from({ length: 16 }).map((_, index) => (
                 <button type="button"
                   key={index}
-                  className={`btn btn-primary ${styles.weekBtn}`}
+                  className={`btn btn-primary ${styles.weekBtn} ${
+                    weeklyContents[index]?.lectureVideos.length>0 ||
+                    weeklyContents[index]?.classFiles.length>0 ||
+                    weeklyContents[index]?.quizzes.length>0 ||
+                    weeklyContents[index]?.assignments.length>0 
+                    ? styles.blue : null
+                  }`}
                   style={{ fontWeight: "bold", fontSize: "1.25rem" }}
                   onClick={() => (changeWeek(index + 1))}
                 >{index + 1}</button>

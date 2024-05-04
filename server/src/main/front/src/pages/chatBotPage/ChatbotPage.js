@@ -3,7 +3,7 @@ import BotChatItem from "./BotChatItem";
 import UserChatItem from "./UserChatItem"
 import HistoryItem from "./HistoryItem";
 import styles from "./ChatbotPage.module.css";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -20,8 +20,28 @@ const ChatbotPage = () => {
   const [firstDo, setFirstDo] = useState(true)
   const [readOnly, setReadOnly] = useState(false)
 
+  const textareaRef = useRef(null);
+  const chatBoardRef = useRef(null);
+  const bottomRef = useRef(null);
+  const chatRef = useRef(null);
+
+  const handleResizeHeight = () => {
+    const textarea = textareaRef.current;
+    const chatBoard = chatBoardRef.current;
+    const bottom = bottomRef.current
+    const chat = chatRef.current
+
+    if (textarea) {
+      textarea.style.height = "auto"; // height 초기화
+      textarea.style.height = textarea.scrollHeight + "px"; // 스크롤 높이만큼 늘리기
+      chatBoard.style.height = "auto"
+      chatBoard.style.height = bottom.scrollHeight - chat.scrollHeight + "px"; // 스크롤 높이만큼 늘리기
+    }
+
+    chatBoardScoll()
+  };
+
   const chatBoardScoll = () => {
-    console.log("스크롤 왜 안됨?")
     const chatUl = document.querySelector('#chatBoard');
     chatUl.scrollTop = chatUl.scrollHeight;
   }
@@ -59,11 +79,11 @@ const ChatbotPage = () => {
   }
 
   const keyUp = (e) => {
-    // 만약 enter키가 눌려도 shift + enter면 실행이 안됨
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       sendMessage();
     }
-  }
+    handleResizeHeight();
+  };
 
   const sendMessage = async () => {
     setReadOnly(!readOnly)
@@ -219,9 +239,9 @@ const ChatbotPage = () => {
               </div>
             </div>
           </div>
-          <div className={styles.bottom}>
+          <div className={styles.bottom} ref={bottomRef}>
             <div className={styles.bottomLeft}>
-              <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`}>
+              <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`} ref={chatBoardRef}>
                 {
                   (
                     chats?.map((chat, index) => (
@@ -237,15 +257,26 @@ const ChatbotPage = () => {
                     ))
                   )}
               </div>
-              <div className={styles.chat}>
+              <div className={styles.chat} ref={chatRef}>
+                <div className={styles.inputBtns}>
+                  <button type="button" className="btn btn-primary">이미지</button>
+                  <div className={styles.textareaWrapper}>
+                    <textarea
+                      ref={textareaRef}
+                      rows={1}
+                      className="form-control"
+                      placeholder="질문을 입력해주세요..."
+                      value={text}
+                      onChange={onChange}
+                      onKeyUp={keyUp}
+                      style={{ overflowY: "hidden" }} // 세로 스크롤 제거
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary" onClick={sendMessage}>보내기</button>
+                </div>
                 <button type="button" className={`${styles.RegenerateBtn} btn btn-primary`}>
                   Regenerate response
                 </button>
-                <div className={styles.inputBtns}>
-                  <button type="button" className="btn btn-primary">이미지</button>
-                  <textarea className="form-control" placeholder="질문을 입력해주세요..." value={text} onChange={onChange} onKeyUp={keyUp} readOnly={readOnly} />
-                  <button type="submit" className="btn btn-primary" onClick={sendMessage}>보내기</button>
-                </div>
               </div>
             </div>
             <div className={styles.bottomRight}>

@@ -5,19 +5,34 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 
 const Course = () => {
   const navigate = useNavigate()
   const location = useLocation()
   let enrollmentId
-  console.log("Course location : ", location)
 
-  if (location.state?.from === '/main') {
-    enrollmentId = location.state.enrollmentId; // enrollmentId를 state에서 직접 가져옵니다.
+  if (location.pathname === '/main') {
+    enrollmentId = location.state.enrollmentId
   } else {
-    enrollmentId = location.state?.enrollmentId;
+    enrollmentId = location.state?.enrollmentId
   }
+
+  const currentDate = new Date();
+  const startDate = new Date('2024-03-01'); // 개강일 적는 곳
+  const calculateWeek = (startDate, endDate) => {
+    const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
+
+    // startDate와 endDate 사이의 경과 일수 계산
+    const diffDays = Math.round((endDate - startDate) / oneDay);
+
+    // 개강일로부터 경과한 일수를 7로 나누어서 주차를 계산
+    const week = Math.ceil(diffDays / 7);
+
+    return week;
+  }
+  const cureentWeek = calculateWeek(startDate, currentDate)
+
+
 
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [lectureName, setLectureName] = useState()
@@ -27,56 +42,68 @@ const Course = () => {
   const [lectureVideos, setLectureVideos] = useState([])
   const [classFiles, setClassFiles] = useState([])
   const [courseDto, setCourseDto] = useState()
+  const [weeklyContents, setWeeklyContents] = useState([])
+  const [selectedWeek, setSelectedWeek] = useState(cureentWeek)
 
   const assignmentUrl = "assignmentlist"
   const quizUrl = "quizlist"
   const videoUrl = "video"
   const fileUrl = "file"
 
+  const changeWeek = (week) => {
+    setSelectedWeek(week)
+  }
+
+  const fetchCourse = async () => {
+    try {
+      const response = await axios.get(`/api/course/${enrollmentId}`, {
+        withCredentials: true // 세션 쿠키를 사용하기 위해 필요
+      });
+
+      setWeeklyContents(response.data.weeklyContents)
+
+      const lectureName1 = response.data.courseDto.lectureName
+      const division1 = response.data.courseDto.division
+      const assignmentData = response.data.weeklyContents.map((week) => week.assignments).flat()
+      const quizData = response.data.weeklyContents.map((week) => week.quizzes).flat()
+      const videoData = response.data.weeklyContents.map((week) => week.lectureVideos).flat()
+      const fileData = response.data.weeklyContents.map((week) => week.classFiles).flat()
+      const memberInfo = response.data.memberInfoDto
+
+      setLectureName(lectureName1)
+      setDivision(division1)
+      setCourseDto(response.data.courseDto)
+      setLectureVideos(videoData)
+      setAssignments(assignmentData)
+      setQuizs(quizData)
+      setClassFiles(fileData)
+      setMemberInfoDto(memberInfo)
+    }
+    catch (error) {
+      if (error.response.status === 401 || error.response.status === 400) {
+        navigate("/")
+      } else {
+        // 다른 종류의 오류 발생
+        console.error(error);
+      }
+    }
+  };
+
+  // 첫 렌더링 시에만 정보를 받아옴
   useEffect(() => {
-    const fetchCourse = async () => {
-      try {
-        const response = await axios.get(`/api/course/${enrollmentId}`, {
-          withCredentials: true // 세션 쿠키를 사용하기 위해 필요
-        });
+    fetchCourse()
+  }, [])
 
-        const lectureName1 = response.data.courseDto.lectureName
-        const division1 = response.data.courseDto.division
-        const assignmentData = response.data.weeklyContents.map((week) => week.assignments).flat()
-        const quizData = response.data.weeklyContents.map((week) => week.quizzes).flat()
-        const videoData = response.data.weeklyContents.map((week) => week.lectureVideos).flat()
-        const fileData = response.data.weeklyContents.map((week) => week.classFiles).flat()
-        const memberInfo = response.data.memberInfoDto
-
-        setLectureName(lectureName1)
-        setDivision(division1)
-        setCourseDto(response.data.courseDto)
-        setLectureVideos(videoData)
-        setAssignments(assignmentData)
-        setQuizs(quizData)
-        setClassFiles(fileData)
-        setMemberInfoDto(memberInfo)
-
-        // console.log("Course response : ", response)
-        // console.log("lectureName : ", lectureName1)
-        // console.log("video Data: ", videoData)
-        // console.log("quiz Data : ", quizData)
-        // console.log("assignmentData : ", assignmentData)
-        // console.log("file Data : ", fileData)
-        // console.log("courseDto : ", courseDto)
-      }
-      catch (error) {
-        // if (error.response.status === 401 || error.response.status === 400) {
-        //   navigate("/")
-        // } else {
-        //   // 다른 종류의 오류 발생
-        //   console.error(error);
-        // }
-      }
-    };
-
-    fetchCourse();
-  }, []);
+  useEffect(() => {
+    const selectedWeekData = weeklyContents.find(week => week.week === selectedWeek);
+    console.log(selectedWeekData)
+    if (selectedWeekData) {
+      setLectureVideos(selectedWeekData.lectureVideos)
+      setAssignments(selectedWeekData.assignments)
+      setQuizs(selectedWeekData.quizzes)
+      setClassFiles(selectedWeekData.classFiles)
+    }
+  }, [selectedWeek, weeklyContents]);
 
   return (
     <div className={`background`}>
@@ -90,7 +117,12 @@ const Course = () => {
             </div>
             <nav className={styles.weekList}>
               {Array.from({ length: 16 }).map((_, index) => (
-                <button type="button" key={index} className={`btn btn-primary ${styles.weekBtn}`} style={{ fontWeight: "bold", fontSize: "1.25rem" }}>{index + 1}</button>
+                <button type="button"
+                  key={index}
+                  className={`btn btn-primary ${styles.weekBtn}`}
+                  style={{ fontWeight: "bold", fontSize: "1.25rem" }}
+                  onClick={() => (changeWeek(index + 1))}
+                >{index + 1}</button>
               ))}
             </nav>
           </div>

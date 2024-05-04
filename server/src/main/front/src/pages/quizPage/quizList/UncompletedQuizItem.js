@@ -41,7 +41,7 @@ const UncompleteQuizItem = (props) => {
           </div>
         </div>
         <button type="button" className={`btn btn-primary ${styles.goBtn}`}>
-          <h3>퀴즈로 가기</h3>
+          <h3 style={{fontWeight:"bold", fontSize:"1.05rem"}}>퀴즈로 가기</h3>
           <FaCaretRight size={20} />
         </button>
       </div>

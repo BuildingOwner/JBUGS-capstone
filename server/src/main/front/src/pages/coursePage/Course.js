@@ -124,7 +124,7 @@ const Course = () => {
                     weeklyContents[index]?.quizzes.length>0 ||
                     weeklyContents[index]?.assignments.length>0 
                     ? styles.blue : null
-                  }`}
+                  } ${selectedWeek == index ? styles.cureentWeek : null}`}
                   style={{ fontWeight: "bold", fontSize: "1.25rem" }}
                   onClick={() => (changeWeek(index + 1))}
                 >{index + 1}</button>

@@ -74,3 +74,8 @@
 .blue{
   background-color: var(--boder-blue) !important;
 }
+
+.cureentWeek{
+  background-color: var(--point-blue) !important;
+  color: white !important;
+}

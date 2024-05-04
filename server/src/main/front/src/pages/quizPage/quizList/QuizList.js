@@ -110,7 +110,7 @@ const QuizList = () => {
           <div className={styles.bottom}>
             <div className={styles.choose}>
               <select class={`form-select form-select-sm ${styles.select}`} aria-label="Small select example">
-                <option value={100} selected>전체 보기</option>
+                <option value={100} selected>주차 전체 보기</option>
                 {Array.from({ length: 16 }).map((_, i) => {
                   return (
                     <option value={i + 1} key={`weekKey${i}`}>{i + 1} 주차</option>
@@ -118,7 +118,8 @@ const QuizList = () => {
                 })}
               </select>
               <select class={`form-select form-select-sm ${styles.select}`} aria-label="Small select example">
-                <option value={'exercise'} selected>연습 문제</option>
+                <option value={'all'} selected>문제 분류 전체 보기</option>
+                <option value={'exercise'}>연습 문제</option>
                 <option value={'practice '} >실습 문제</option>
                 <option value={'exam'} >시험</option>
               </select>

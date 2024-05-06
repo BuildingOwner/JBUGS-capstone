@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -193,6 +194,62 @@ public class AssignmentApiController {
             }
 
             return ResponseEntity.ok().body("과제가 성공적으로 수정되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("세션이 없거나 로그인되어 있지 않습니다.");
+        }
+    }
+
+    // 학생이 과제 제출
+    @PostMapping("/{enrollmentId}/assignment/submit")
+    public ResponseEntity<?> submitAssignment(@PathVariable Long enrollmentId,
+                                              @ModelAttribute AssignmentSubmissionDto assignmentSubmissionDto,
+                                              HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
+            Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+            if (loginMember.getMemberType() != MemberType.STUDENT) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("제출 권한이 없습니다.");
+            }
+
+            // enrollmentId로 Lecture 및 Assignment 찾기
+            Lecture lecture = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
+            if (lecture == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("강의를 찾을 수 없습니다.");
+            }
+
+            // 현재 주차의 과제 찾기
+            LocalDateTime now = LocalDateTime.now();
+            Optional<Assignment> optionalAssignment = assignmentRepository.findByWeekLectureIdAndDueDateAfter(lecture.getId(), now);
+            if (!optionalAssignment.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("제출 기한이 지났거나, 과제가 존재하지 않습니다.");
+            }
+            Assignment assignment = optionalAssignment.get();
+
+            // 과제 제출 상태 변경 및 내용 저장
+            assignment.setStatus(AssignmentStatus.SUBMITTED);
+            assignment.setContent(assignmentSubmissionDto.getContent());
+            assignment = assignmentRepository.save(assignment); // 과제 정보 업데이트
+
+            // 파일 저장
+            if (assignmentSubmissionDto.getAttachFiles() != null && assignmentSubmissionDto.getAttachFiles().length > 0) {
+                for (MultipartFile file : assignmentSubmissionDto.getAttachFiles()) {
+                    if (!file.isEmpty()) {
+                        String fullPath = fileDir + file.getOriginalFilename();
+
+                        log.info("{} 저장 fullPath={}", "파일", fullPath);
+                        file.transferTo(new File(fullPath));
+
+                        Material material = new Material();
+                        material.setFilePath(fullPath);
+                        material.setFileName(file.getOriginalFilename());
+                        material.setAssignment(assignment); // 과제 정보 설정
+                        materialService.join(material);
+                    }
+                }
+            }
+
+            return ResponseEntity.ok().body("과제가 성공적으로 제출되었습니다.");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("세션이 없거나 로그인되어 있지 않습니다.");
         }

@@ -19,7 +19,7 @@ public class AnswerApiController {
     public ResponseEntity<?> submitAnswers(@RequestBody AnswerRequestDto answerRequestDTO) {
         try {
             answerService.saveAnswers(answerRequestDTO);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body("정답이 성공적으로 저장되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

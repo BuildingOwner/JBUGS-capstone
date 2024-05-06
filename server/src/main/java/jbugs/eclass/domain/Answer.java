@@ -30,5 +30,5 @@ public class Answer {
     @CollectionTable(name = "answer_details", joinColumns = @JoinColumn(name = "answer_id"))
     @MapKeyColumn(name = "question_number")
     @Column(name = "answer")
-    private Map<Integer, String> answers = new HashMap<>();
+    private Map<String, String> answers = new HashMap<>();
 }

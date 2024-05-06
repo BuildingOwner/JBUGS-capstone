@@ -40,6 +40,7 @@ public class QnaApiController {
             memberInfoDto.setMemberName(loginMember.getName());
             if (loginMember.getMemberType() == MemberType.STUDENT) {
                 memberInfoDto.setFirstTrack(loginMember.getStudent().getFirstTrack());
+                memberInfoDto.setStudentId(loginMember.getStudent().getId());
             }
             qnAContentDto.setMemberInfoDto(memberInfoDto);
 

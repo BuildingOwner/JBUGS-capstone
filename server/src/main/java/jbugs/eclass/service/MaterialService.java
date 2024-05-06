@@ -1,9 +1,11 @@
 package jbugs.eclass.service;
 
+import jbugs.eclass.domain.Assignment;
 import jbugs.eclass.domain.Material;
 import jbugs.eclass.repository.MaterialRepository;
 import jbugs.eclass.repository.VideoMaterialRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class MaterialService {
     private final MaterialRepository materialRepository;
 
@@ -47,17 +50,18 @@ public class MaterialService {
         }
     }
 
-    public void deleteMaterial(Long materialId) {
-        Material material = materialRepository.findById(materialId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 파일을 찾을 수 없습니다. id=" + materialId));
+    public void deleteMaterialsByAssignment(Assignment assignment) {
+        List<Material> materials = materialRepository.findByAssignment(assignment);
 
-        // 파일 시스템에서 파일 삭제
-        File file = new File(material.getFilePath());
-        if (file.exists()) {
-            file.delete();
+        for (Material material : materials) {
+            File file = new File(material.getFilePath());
+            if (file.exists()) {
+                if (!file.delete()) {
+                    log.error("파일 삭제 실패: {}", material.getFilePath());
+                }
+            }
         }
-
-        // 데이터베이스에서 Material 엔티티 삭제
-        materialRepository.delete(material);
+        materialRepository.deleteAll(materials);
     }
+
 }

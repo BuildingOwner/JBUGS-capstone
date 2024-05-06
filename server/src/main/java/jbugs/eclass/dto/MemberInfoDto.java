@@ -9,4 +9,5 @@ public class MemberInfoDto {
     private String memberName;
     private MemberType memberType;
     private String firstTrack;
+    private Long studentId;
 }

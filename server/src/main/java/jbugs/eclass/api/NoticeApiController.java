@@ -40,6 +40,7 @@ public class NoticeApiController {
             memberInfoDto.setMemberType(loginMember.getMemberType());
             if (loginMember.getMemberType() == MemberType.STUDENT) {
                 memberInfoDto.setFirstTrack(loginMember.getStudent().getFirstTrack());
+                memberInfoDto.setStudentId(loginMember.getStudent().getId());
             }
             noticeContentDto.setMemberInfoDto(memberInfoDto);
 

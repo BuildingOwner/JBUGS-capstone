@@ -52,6 +52,7 @@ public class AssignmentApiController {
             memberInfoDto.setMemberType(loginMember.getMemberType());
             if (loginMember.getMemberType() == MemberType.STUDENT) {
                 memberInfoDto.setFirstTrack(loginMember.getStudent().getFirstTrack());
+                memberInfoDto.setStudentId(loginMember.getStudent().getId());
             }
             assignmentContentDto.setMemberInfoDto(memberInfoDto);
 
@@ -89,7 +90,7 @@ public class AssignmentApiController {
         if (session != null && session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
             Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-            if (loginMember.getMemberType() != MemberType.STUDENT) {
+            if (loginMember.getMemberType() != MemberType.PROFESSOR) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다.");
             }
 
@@ -134,79 +135,67 @@ public class AssignmentApiController {
 
     //교수가 과제 수정
     @PutMapping("/{enrollmentId}/assignment/{assignmentId}")
-    public ResponseEntity<?> updateAssignment(@PathVariable Long enrollmentId,
-                                              @PathVariable Long assignmentId,
-                                              @ModelAttribute AssignmentUpdateDto assignmentUpdateDto,
-                                              HttpServletRequest request) throws IOException {
+    public ResponseEntity<?> updateAssignment(
+            @PathVariable Long enrollmentId,
+            @PathVariable Long assignmentId,
+            @ModelAttribute AssignmentUploadDto assignmentUploadDto,
+            HttpServletRequest request) throws IOException {
+
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
             Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-            if (loginMember.getMemberType() == MemberType.PROFESSOR) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다.");
-            }
-
+            // 강의 존재 여부 체크
             Lecture lecture = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
             if (lecture == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("강의를 찾을 수 없습니다.");
             }
 
-            // 과제 조회
-            Optional<Assignment> optionalAssignment = assignmentRepository.findById(assignmentId);
-            if (!optionalAssignment.isPresent()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("과제를 찾을 수 없습니다.");
+            // 과제 존재 여부 체크
+            Optional<Assignment> existingAssignment = assignmentRepository.findById(assignmentId);
+            if (!existingAssignment.isPresent()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 과제를 찾을 수 없습니다.");
             }
-            Assignment existingAssignment = optionalAssignment.get();
-            Optional<Week> week = weekService.findWeekByLectureAndWeekNumber(lecture.getId(), assignmentUpdateDto.getWeekNumber());
+
+            Assignment assignment = existingAssignment.get();
+            Optional<Week> week = weekService.findWeekByLectureAndWeekNumber(lecture.getId(), assignmentUploadDto.getWeekNumber());
             if (!week.isPresent()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 주차를 찾을 수 없습니다.");
             }
             Week weekEntity = week.get();
+            // 과제 정보 업데이트
+            assignment.setTitle(assignmentUploadDto.getTitle());
+            assignment.setContent(assignmentUploadDto.getContent());
+            assignment.setWeek(weekEntity);
+            assignment.setDueDate(assignmentUploadDto.getDueDate());
+            assignmentRepository.save(assignment);
 
-            // 과제 정보 수정
-            existingAssignment.setTitle(assignmentUpdateDto.getTitle());
-            existingAssignment.setContent(assignmentUpdateDto.getContent());
-            existingAssignment.setWeek(weekEntity);
-            existingAssignment.setDueDate(assignmentUpdateDto.getDueDate());
+            materialService.deleteMaterialsByAssignment(assignment);
 
-            // 기존 파일 처리: 클라이언트에서 요청된 기존 파일 외의 모든 파일 삭제
-            List<Long> fileIdsToDelete = existingAssignment.getMaterials().stream()
-                    .map(Material::getId)
-                    .filter(id -> !assignmentUpdateDto.getExistingFileIds().contains(id))
-                    .collect(Collectors.toList());
-            fileIdsToDelete.forEach(materialService::deleteMaterial);
-
-            // 첨부 파일 추가
-            if (assignmentUpdateDto.getNewFiles() != null && assignmentUpdateDto.getNewFiles().length > 0) {
-                for (MultipartFile file : assignmentUpdateDto.getNewFiles()) {
+            // 새로운 파일 추가 로직
+            if (assignmentUploadDto.getAttachFiles() != null && assignmentUploadDto.getAttachFiles().length > 0) {
+                for (MultipartFile file : assignmentUploadDto.getAttachFiles()) {
                     if (!file.isEmpty()) {
                         String fullPath = fileDir + file.getOriginalFilename();
+
                         log.info("{} 저장 fullPath={}", "파일", fullPath);
                         file.transferTo(new File(fullPath));
 
                         Material material = new Material();
                         material.setFilePath(fullPath);
-                        material.setTitle(assignmentUpdateDto.getFileTitle());
+                        material.setTitle(assignmentUploadDto.getFileTitle());
                         material.setFileName(file.getOriginalFilename());
-                        material.setWeek(weekEntity);
-                        material.setAssignment(existingAssignment); // 과제 정보 설정
+                        material.setWeek(assignment.getWeek());
+                        material.setAssignment(assignment);
                         materialService.join(material);
                     }
                 }
             }
-
-            assignmentRepository.save(existingAssignment);
-
-//            // 첨부 파일 삭제
-//            if (assignmentUpdateDto.getDeletedMaterialIds() != null) {
-//                for (Long materialId : assignmentUpdateDto.getDeletedMaterialIds()) {
-//                    materialService.deleteMaterial(materialId);
-//                }
-//            }
 
             return ResponseEntity.ok().body("과제가 성공적으로 수정되었습니다.");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("세션이 없거나 로그인되어 있지 않습니다.");
         }
     }
+
 }

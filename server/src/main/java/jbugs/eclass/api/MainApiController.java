@@ -57,6 +57,7 @@ public class MainApiController {
             memberInfoDto.setMemberType(loginMember.getMemberType());
             if (loginMember.getMemberType() == MemberType.STUDENT) {
                 memberInfoDto.setFirstTrack(loginMember.getStudent().getFirstTrack());
+                memberInfoDto.setStudentId(loginMember.getStudent().getId());
             }
             mainInfoDto.setMemberInfoDto(memberInfoDto);
 

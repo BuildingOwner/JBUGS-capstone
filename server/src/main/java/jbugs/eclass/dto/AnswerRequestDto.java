@@ -8,5 +8,5 @@ import java.util.Map;
 public class AnswerRequestDto {
     private Long studentId;
     private Long quizId;
-    private Map<Integer, String> answers;
+    private Map<String, String> answers;
 }

@@ -13,6 +13,7 @@ import { LuImagePlus } from "react-icons/lu";
 const ChatbotPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  console.log(location)
   const memberName = location.state.memberName
   const [studentId, setStudentId] = useState()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태

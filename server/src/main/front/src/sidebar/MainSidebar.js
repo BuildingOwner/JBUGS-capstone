@@ -8,15 +8,9 @@ import { GoHome } from "react-icons/go";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-const MainSidebar = (props) => {
+const MainSidebar = ({ memberInfoDto }) => {
   const navigate = useNavigate()
-  const [memberInfoDto, setMemberInfoDto] = useState()
   const [date, setDate] = useState(new Date());
-
-  useEffect(() => {
-    console.log("Mainsidebar의 props : ", props)
-    setMemberInfoDto(props.memberInfoDto)
-  }, [])
 
   return (
     <div className={styles.sidebars}>
@@ -37,7 +31,7 @@ const MainSidebar = (props) => {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"} state={{ memberInfoDto: memberInfoDto }} className={styles.linkBtn}>
+            <Link to={"/chatbotpage"} state={{ memberName: memberInfoDto?.memberName }} className={styles.linkBtn}>
               <IoChatbubbleEllipsesOutline size="30" />
               <h3>AI chat</h3>
             </Link>

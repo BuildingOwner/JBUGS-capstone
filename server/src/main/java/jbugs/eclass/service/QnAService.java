@@ -2,7 +2,7 @@ package jbugs.eclass.service;
 
 import jbugs.eclass.domain.*;
 import jbugs.eclass.repository.LectureRepository;
-import jbugs.eclass.repository.QnARepoisitory;
+import jbugs.eclass.repository.QnARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Transactional
 @RequiredArgsConstructor
 public class QnAService {
-    private final QnARepoisitory qnARepoisitory;
+    private final QnARepository qnARepository;
     private final LectureRepository lectureRepository;
 
     public void createQnA(Long lectureId, String title, String writer, LocalDateTime createdAt, int views, String content, QnAStatus qnAStatus){
@@ -31,6 +31,6 @@ public class QnAService {
         qna.setContent(content);
         qna.setQnaStatus(qnAStatus);
 
-        qnARepoisitory.save(qna);
+        qnARepository.save(qna);
     }
 }

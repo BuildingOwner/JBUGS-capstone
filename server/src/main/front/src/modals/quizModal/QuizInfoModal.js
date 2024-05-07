@@ -11,21 +11,25 @@ const QuizInfoModal = (props) => {
   console.log("modal의 props : ", props)
   console.log(props.props.quizScore)
 
-
-
   const closeModal = () => {
     props.modalChange(false)
   }
 
   const moveToDoQuiz = () => {
-    console.log("전달된 state : ", [props.props.quizId, props.props])
     navigate('/doquiz', {
       state: {
         props: props.props
       },
     })
   }
-  
+
+  const moveToQuizAnswer = () => {
+    navigate('/quizanswer', {
+      state: {
+        props: props.props
+      },
+    })
+  }
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().slice(-2); // 연도의 마지막 두 자리
@@ -82,9 +86,16 @@ const QuizInfoModal = (props) => {
       </main>
       <div className="bottom3">
         <button className='close-btn' onClick={closeModal}>닫기</button>
-        <button className="nav-btn5" onClick={moveToDoQuiz}>
-          <b className="text4">응시 하기</b>
-        </button>
+        {props.props.submissionStatus === true
+          ? <button className="nav-btn5" onClick={moveToQuizAnswer}>
+            <b className="text4">해설 보기</b>
+          </button>
+          : <button className="nav-btn5" onClick={moveToDoQuiz}>
+            <b className="text4">응시 하기</b>
+          </button>
+
+        }
+
       </div>
     </Modal>
   );

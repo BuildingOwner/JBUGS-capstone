@@ -202,6 +202,7 @@ const Course = () => {
                     quizScore={quiz.quizScore}
                     submissionStatus={quiz.submissionStatus}
                     enrollmentId={enrollmentId}
+                    memberInfoDto={memberInfoDto}
                     courseDto={courseDto}
                     url={quizUrl}
                   />

@@ -3,9 +3,9 @@ package jbugs.eclass.api;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.Member;
+import jbugs.eclass.dto.LoginForm;
 import jbugs.eclass.dto.LoginRequest;
 import jbugs.eclass.dto.LoginResponse;
-import jbugs.eclass.login.LoginForm;
 import jbugs.eclass.service.MemberService;
 import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class MemberApiController {
 
     private final MemberService memberService;
-
-//    @GetMapping("/api/login")
-//    public ModelAndView loginForm(@ModelAttribute("loginForm") LoginRequest form) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("login/loginForm");
-//        return modelAndView;
-//    }
 
     //HttpSession을 사용
     @PostMapping("/api/login")
@@ -70,4 +63,3 @@ public class MemberApiController {
         return ResponseEntity.ok().build();
     }
 }
-

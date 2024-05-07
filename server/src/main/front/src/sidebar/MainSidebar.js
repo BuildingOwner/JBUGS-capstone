@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from "moment";
@@ -14,7 +14,7 @@ const MainSidebar = (props) => {
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
-    console.log("sidebar의 props : ", props)
+    console.log("Mainsidebar의 props : ", props)
     setMemberInfoDto(props.memberInfoDto)
   }, [])
 

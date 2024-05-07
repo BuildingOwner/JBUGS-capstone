@@ -90,25 +90,28 @@ const QuizAnswer = () => {
                 <h3 className={styles.questionNumber}>{indexOfOptions + 1} of {questions.length}</h3>
                 <div className={styles.choice}>
                   {questions[indexOfOptions] && questions[indexOfOptions]?.type === "choice" ?
-                      (optionIcon.map((num, i) => {
-                        questions[indexOfOptions].options[i] === questions[indexOfOptions].answer ?
-                          <div className={styles.correct} key={i}>
-                            {num}
-                            {questions[indexOfOptions].options[i] && (
-                              <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
-                            )}
-                          </div>
-                          : <div className={styles.wrong} key={i}>
-                            {num}
-                            {questions[indexOfOptions].options[i] && (
-                              <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
-                            )}
-                          </div>
-                      }))
-                      :
-                      (<textarea
-                        value={answer[questions[indexOfOptions]?.id] || ''}
-                      ></textarea>)
+                    (optionIcon.map((num, i) => {
+                      questions[indexOfOptions].options[i] === questions[indexOfOptions].answer ?
+                      console.log("hi")
+                        // <div className={styles.correct} key={i}>
+                        //   {num}
+                        //   {questions[indexOfOptions].options[i] && (
+                        //     <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
+                        //   )}
+                        // </div>
+                        : 
+                        // : <div className={styles.wrong} key={i}>
+                        //   {num}
+                        //   {questions[indexOfOptions].options[i] && (
+                        //     <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
+                        //   )}
+                        // </div>
+                        console.log("eeee")
+                    }))
+                    :
+                    (<textarea
+                      value={answer[questions[indexOfOptions]?.id] || ''}
+                    ></textarea>)
                   }
                   {/* {i번째 보기가 정답인 경우 style.correct, 
                           오답인 경우 style.wrong 클래스 넣으면 됨 유저가 찍은 답을 먼저 

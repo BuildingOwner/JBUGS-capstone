@@ -18,9 +18,9 @@ const QuizList = () => {
   const [courseDto, setCourseDto] = useState()
   const [completeQuizList, setCompleteQuizList] = useState([])
   const [uncompleteQuizList, setUncompleteQuizList] = useState([])
-  const [averageScore, setAverageScore] = useState("")
+  const [averageScore, setAverageScore] = useState(0)
   const [selectedWeek, setSelectedWeek] = useState(100)
-  const [selectedType, setSelectedType] = useState("all")
+  const [selectedType, setSelectedType] = useState('all')
 
   const handleWeekChange = (e) => {
     setSelectedWeek(e.target.value)
@@ -31,21 +31,25 @@ const QuizList = () => {
     setSelectedType(e.target.value)
     console.log(e.target.value)
   }
+
+  const getAverageScore = (completedQuizzes) => {
+    // 평균 점수 구하는 로직
+    let scores = 0
+    completedQuizzes?.map((quiz) => scores += quiz.quizScore)
+    setAverageScore(scores / completedQuizzes.length) // 비동기 확인 해야함
+  }
+  
   const fetchQuizList = async () => {
     try {
       const response = await axios.get(`/api/course/${enrollmentId}/quizList`)
       console.log("quizList response : ", response)
       const quizList = response.data.quizDtoList.map((quiz) => quiz)
-      setQuizDtoList(quizList)
 
       // useState를 활용하여 완료된 퀴즈와 완료되지 않은 퀴즈 분리
       const completedQuizzes = quizList.filter(quiz => quiz.quizScore !== null)
       const uncompletedQuizzes = quizList.filter(quiz => quiz.quizScore === null)
 
-      // 평균 점수 구하는 로직
-      let scores = 0
-      completeQuizList?.map((quiz) => scores += quiz.quizScore)
-      setAverageScore(scores)
+      getAverageScore(completedQuizzes)
 
       // 상태 업데이트
       setQuizDtoList(quizList)
@@ -136,9 +140,9 @@ const QuizList = () => {
                 value={selectedType}
                 onChange={handleTypeChange}>
                 <option value={'all'}>문제 분류 전체 보기</option>
-                <option value={'exercise'}>연습 문제</option>
-                <option value={'practice'} >실습 문제</option>
-                <option value={'exam'} >시험</option>
+                <option value={"EXERCISE"}>연습 문제</option>
+                <option value={"PRACTICE"} >실습 문제</option>
+                <option value={"EXAM"} >시험</option>
               </select>
             </div>
             <div className={styles.labels}>
@@ -151,25 +155,24 @@ const QuizList = () => {
               <h3 className={styles.labelText}>피드백</h3>
             </div>
             <div className={styles.quizListContainer}>
-              {
-                quizDtoList?.filter(quiz =>
-                  (Number(selectedWeek) === 100 || Number(quiz.week) === Number(selectedWeek)) // 주차 조건
-                  && (selectedType === 'all' || quiz.quizType === selectedType) // 타입 조건
-                ).map((quiz, i) => (
-                  <QuizListItem
-                    key={`QuizListItem${i}`}
-                    quizName={quiz.quizName}
-                    description={quiz.description}
-                    deadline={quiz.deadline}
-                    quizType={quiz.quizType}
-                    reflectionRatio={quiz.reflectionRatio}
-                    quizId={quiz.quizId}
-                    timeLimit={quiz.timeLimit}
-                    jsonData={quiz.jsonData}
-                    quizScore={quiz.quizScore}
-                    submissionStatus={quiz.submissionStatus}
-                  />
-                ))
+              {quizDtoList?.filter(quiz =>
+                (Number(selectedWeek) === 100 || Number(quiz.week) === Number(selectedWeek)) // 주차 조건
+                && (selectedType === 'all' || quiz.quizType === selectedType) // 타입 조건
+              ).map((quiz, i) => (
+                <QuizListItem
+                  key={`QuizListItem${i}`}
+                  quizName={quiz.quizName}
+                  description={quiz.description}
+                  deadline={quiz.deadline}
+                  quizType={quiz.quizType}
+                  reflectionRatio={quiz.reflectionRatio}
+                  quizId={quiz.quizId}
+                  timeLimit={quiz.timeLimit}
+                  jsonData={quiz.jsonData}
+                  quizScore={quiz.quizScore}
+                  submissionStatus={quiz.submissionStatus}
+                />
+              ))
               }
             </div>
           </div>

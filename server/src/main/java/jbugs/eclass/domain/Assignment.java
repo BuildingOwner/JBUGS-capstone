@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class Assignment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "assignment_id")
     private Long id;
 

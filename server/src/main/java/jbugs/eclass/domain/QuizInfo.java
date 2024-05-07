@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 public class QuizInfo {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "quiz_info_id")
     private Long id;

@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 public class Quiz {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id")
     private Long id;
 
@@ -27,6 +27,7 @@ public class Quiz {
     private LocalDateTime updateAt; // 수정 시간
     private String timeLimit; // 제한시간
     private String reflectionRatio; //반영비율
+    private QuizStatus quizStatus; //퀴즈진행상태
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")

@@ -55,7 +55,6 @@
 //        member1.setName("장주찬");
 //        String encodedPassword = passwordEncoder.encode("1234!");
 //        member1.setPassword(encodedPassword);
-////        member1.setPassword("1234!");
 //        member1.setMemberType(MemberType.STUDENT);
 //
 //        Student student1 = new Student();

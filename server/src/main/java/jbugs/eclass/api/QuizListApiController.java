@@ -119,7 +119,12 @@ public class QuizListApiController {
             // 세션이 없거나 로그인 되어있지 않은 경우
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("세션이 없거나 로그인되어 있지 않습니다.");
         }
+    }
 
-
+    @GetMapping("/quizzes/{quizId}")
+    public ResponseEntity<QuizDetailsDto> getQuizDetails(@PathVariable Long quizId) {
+        return quizService.getQuizDetails(quizId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

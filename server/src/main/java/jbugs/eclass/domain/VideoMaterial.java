@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class VideoMaterial {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "video_material_id")
     private Long id;
 

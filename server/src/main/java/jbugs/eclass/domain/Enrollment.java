@@ -11,7 +11,7 @@ import java.util.List;
 @Getter @Setter
 public class Enrollment { //강의를 수강하는 테이블
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "enrollment_id")
     private Long id;
 

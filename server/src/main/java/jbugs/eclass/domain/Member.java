@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 public class Member {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -22,10 +22,6 @@ public class Member {
     private String loginId;
     @NotEmpty
     private String password;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")

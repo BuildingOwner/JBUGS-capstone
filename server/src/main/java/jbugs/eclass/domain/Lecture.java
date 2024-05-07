@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 public class Lecture {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lecture_id")
     private Long id;
 
@@ -39,18 +39,4 @@ public class Lecture {
 
     public Lecture() {
     }
-
-    // 강좌 추가 메서드
-    public void addEnrollment(Enrollment enrollment) {
-        enrollments.add(enrollment);
-        enrollment.setLecture(this);
-    }
-
-    // 강좌 삭제 메서드
-    public void removeEnrollment(Enrollment enrollment) {
-        enrollments.remove(enrollment);
-        enrollment.setLecture(null);
-    }
-
-
 }

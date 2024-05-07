@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class QnA {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "qna_id")
     private Long id;
 

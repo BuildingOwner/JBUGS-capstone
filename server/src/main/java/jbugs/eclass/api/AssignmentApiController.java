@@ -255,4 +255,63 @@ public class AssignmentApiController {
         }
     }
 
+    @PutMapping("/{enrollmentId}/assignment/submit")
+    public ResponseEntity<?> updateAssignment(@PathVariable Long enrollmentId,
+                                              @ModelAttribute AssignmentSubmissionDto assignmentSubmissionDto,
+                                              HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
+            Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+            if (loginMember.getMemberType() != MemberType.STUDENT) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다.");
+            }
+
+            Lecture lecture = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
+            if (lecture == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("강의를 찾을 수 없습니다.");
+            }
+
+            LocalDateTime now = LocalDateTime.now();
+            Optional<Assignment> optionalAssignment = assignmentRepository.findByWeekLectureIdAndDueDateAfter(lecture.getId(), now);
+            if (!optionalAssignment.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("제출 기한이 지났거나, 과제가 존재하지 않습니다.");
+            }
+            Assignment assignment = optionalAssignment.get();
+
+            if (assignment.getStatus() == AssignmentStatus.SUBMITTED) {
+                // 과제 내용 업데이트
+                assignment.setContent(assignmentSubmissionDto.getContent());
+
+                // 기존 파일 삭제
+                materialService.deleteMaterialsByAssignment(assignment);
+
+                // 새로운 파일 저장
+                if (assignmentSubmissionDto.getAttachFiles() != null && assignmentSubmissionDto.getAttachFiles().length > 0) {
+                    for (MultipartFile file : assignmentSubmissionDto.getAttachFiles()) {
+                        if (!file.isEmpty()) {
+                            String fullPath = fileDir + file.getOriginalFilename();
+
+                            log.info("{} 저장 fullPath={}", "파일", fullPath);
+                            file.transferTo(new File(fullPath));
+
+                            Material material = new Material();
+                            material.setFilePath(fullPath);
+                            material.setFileName(file.getOriginalFilename());
+                            material.setAssignment(assignment);
+                            materialService.join(material);
+                        }
+                    }
+                }
+
+                assignmentRepository.save(assignment); // 과제 정보 업데이트
+                return ResponseEntity.ok().body("과제가 성공적으로 수정되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("아직 제출되지 않은 과제입니다.");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("세션이 없거나 로그인되어 있지 않습니다.");
+        }
+    }
+
 }

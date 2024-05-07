@@ -23,6 +23,7 @@ public class QnA {
     private LocalDateTime createdAt;
     private int views;
     private QnAStatus qnaStatus;
+    private String qnaAnswer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")

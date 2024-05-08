@@ -260,3 +260,10 @@ button:hover{
   border-radius: 30px;
   display: flex;
 }
+
+h4{
+  margin: 0 !important;
+  line-height: normal !important;
+  width: max-content;
+  font-size: var(--font-size-xl) !important;
+}

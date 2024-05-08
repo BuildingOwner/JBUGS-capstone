@@ -1,0 +1,17 @@
+.row{
+  display: flex;
+}
+
+.num, .secret, .views, .writer{
+  width: 80px;
+  text-align: center;
+}
+
+.answer, .date{
+  width: 130px;
+  text-align: center;
+}
+
+.title{
+  flex-grow: 1;
+}

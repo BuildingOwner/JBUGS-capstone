@@ -6,7 +6,7 @@
   margin: 0;
   align-self: stretch;
   height: 3rem;
-  font-size: inherit;
+  font-size: var(--font-size-13xl);
   font-weight: 700;
   font-family: inherit;
   display: inline-block;

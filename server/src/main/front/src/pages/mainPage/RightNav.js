@@ -5,6 +5,7 @@ import "./RightNav.css";
 import { useNavigate } from "react-router-dom"
 import { Scheduler } from "@aldabil/react-scheduler";
 import Schedule from "./Schedule"
+import styles from "./RightNav.module.css"
 
 
 const RightNav = (props) => {
@@ -40,52 +41,35 @@ const RightNav = (props) => {
             alt=""
             src="/personicon1.svg"
           />
-          <button type="button" className={`btn btn-primary`} onClick={handleLogout}>
+          <button type="button" className={`btn btn-primary ${styles.logoutBtn}`} onClick={handleLogout}>
             로그아웃
           </button>
         </div>
       </div>
       <div className="homework">
         <div className="hw-top">
-          <h1 className="title17">과제</h1>
+          <h1 className="title17">미제출 과제</h1>
         </div>
         <div className="hw-item no-scroll-bar">
           {mainLectures &&
             mainLectures.map((lecture) => (
-              lecture.assignments.map((assignment) => (
-                <MainAssignItem
-                  lectureName={lecture.lectureName}
-                  key={assignment.id}
-                  title={assignment.title}
-                  contents={assignment.contents}
-                  dueDate={assignment.dueDate}
-                  weekNumber={assignment.weekNumber}
-                  status={assignment.status}
-                  enrollmentId={lecture.enrollmentId}
-                />
-              ))
+              lecture.assignments
+                .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
+                .map((assignment) => (
+                  <MainAssignItem
+                    lectureName={lecture.lectureName}
+                    key={assignment.id}
+                    title={assignment.title}
+                    contents={assignment.contents}
+                    dueDate={assignment.dueDate}
+                    weekNumber={assignment.weekNumber}
+                    status={assignment.status}
+                    enrollmentId={lecture.enrollmentId}
+                  />
+                ))
             ))}
         </div>
-        {/* <Scheduler
-          view="week"
-          events={[
-            {
-              event_id: 1,
-              title: "Event 1",
-              start: new Date("2021/5/2 09:30"),
-              end: new Date("2021/5/2 10:30"),
-            },
-            {
-              event_id: 2,
-              title: "Event 2",
-              start: new Date("2021/5/4 10:00"),
-              end: new Date("2021/5/4 11:00"),
-            },
-          ]}
-          agenda={false}
-          height={500}
-        /> */}
-        <Schedule/>
+        
       </div>
     </div>
   );

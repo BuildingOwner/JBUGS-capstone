@@ -31,21 +31,6 @@ const MainAssignItem = (props) => {
         <div className="star-styles">
           <div className="n9">{daysRemaining}일 남음</div>
         </div>
-        {props.status === "NOT_SUBMITTED" ? (
-          <img
-            className="octiconx-12"
-            loading="lazy"
-            alt=""
-            src="/octiconx12.svg"
-          />
-        ) : (
-          <img
-            className="custom-img"
-            loading="lazy"
-            alt=""
-            src="/custom-img-2.svg"
-          />
-        )}
       </div>
     </div>
   );

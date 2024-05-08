@@ -1,0 +1,5 @@
+.logoutBtn{
+  border: none !important;
+  background-color: var(--point-blue) !important;
+  font-weight: bold !important;
+}

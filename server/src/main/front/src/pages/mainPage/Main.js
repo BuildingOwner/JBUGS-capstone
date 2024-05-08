@@ -75,10 +75,10 @@ const Main = () => {
   if (!memberInfoDto) return <div>로딩 중...</div>;
 
   return (
-    <div className="mainpage">
+    <div className={`background`}>
       <Sidebar memberInfoDto={memberInfoDto} />
-      <main className="mainpage-inner">
-        <section className="course-parent">
+      <main className={`mycontainer`}>
+        <section className={`bg`}>
           <div className="course">
             <div className="courseheader">
               <div className="header-left">

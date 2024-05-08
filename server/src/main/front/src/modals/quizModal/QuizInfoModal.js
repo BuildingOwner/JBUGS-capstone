@@ -5,15 +5,11 @@ import Modal from 'react-modal';
 import { Navigate, useNavigate } from "react-router-dom";
 
 const QuizInfoModal = (props) => {
-
+  Modal.setAppElement('#root');
   const [formattedDate, setFormattedDate] = useState()
   const navigate = useNavigate()
   console.log("modal의 props : ", props)
   console.log(props.props.quizScore)
-
-  const closeModal = () => {
-    props.modalChange(false)
-  }
 
   const moveToDoQuiz = () => {
     navigate('/doquiz', {
@@ -30,6 +26,7 @@ const QuizInfoModal = (props) => {
       },
     })
   }
+  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().slice(-2); // 연도의 마지막 두 자리
@@ -47,14 +44,14 @@ const QuizInfoModal = (props) => {
     const data = formatDate(inputDate);
     setFormattedDate(data)
   }, [])
+
   return (
     <Modal className="quizinfomodal"
-      isOpen={props.modalOpen}
-      onRequestClose={closeModal} // 모달을 닫는 함수를 전달
-      ariaHideApp={false} >
+      isOpen={props.isOpen}
+      onRequestClose={props.onRequestClose}>
       <div className="top7">
         <h3 className="h38">{props.props.quizName}</h3>
-        <div className="heroicons-outlinex27" onClick={closeModal}>
+        <div className="heroicons-outlinex27" onClick={props.onRequestClose}>
           <img
             className="vector-icon74"
             loading="lazy"
@@ -85,7 +82,7 @@ const QuizInfoModal = (props) => {
         </section>
       </main>
       <div className="bottom3">
-        <button className='close-btn' onClick={closeModal}>닫기</button>
+        <button className='close-btn' onClick={props.onRequestClose}>닫기</button>
         {props.props.submissionStatus === true
           ? <button className="nav-btn5" onClick={moveToQuizAnswer}>
             <b className="text4">해설 보기</b>

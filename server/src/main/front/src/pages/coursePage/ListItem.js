@@ -8,33 +8,27 @@ const ListItem = (props) => {
   const [daysRemaining, setDaysRemaining] = useState()
   const [fileExtension, setFileExtension] = useState()
   // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    console.log("닫혀야함")
+    setModalIsOpen(false);
+  }
 
   const checkURL = () => {
     if (props.url === "assignmentlist") {
       moveToAssignmentList();
     } else if (props.url === "quizlist") {
-      openQuizmodal();
+      openModal();
     }
   }
 
   const moveToAssignmentList = () => {
     navigate('/assignmentlist', { state: props })
-  }
-
-  const openQuizmodal = () => {
-    showModal()
-  }
-
-  // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
-  };
-
-  const changeModal = (bool) => {
-    setModalOpen(bool)
-    // console.log("돼야한다")
   }
 
   const [fileColor, setfileColor] = useState('');
@@ -70,10 +64,14 @@ const ListItem = (props) => {
     // if(modalOpen == true) {
     //   changeModal(false)
     // }
-  }, [modalOpen]);
+  }, []);
 
   return (
     <div className={styles.listItem} onClick={checkURL}>
+      <QuizInfoModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props} />
       <div className={styles.flex}>
         <div className={styles.first}>
           {props.url === 'assignmentlist' && (
@@ -141,11 +139,6 @@ const ListItem = (props) => {
           <h3 className={styles.fontSize}>progressPercent</h3>
         )}
       </div>
-      {modalOpen === true ? <QuizInfoModal
-        modalChange={changeModal}
-        modalOpen={modalOpen}
-        props={props}
-      /> : null}
     </div>
   )
 }

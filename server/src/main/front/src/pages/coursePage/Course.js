@@ -1,6 +1,7 @@
 import CourseSidebar from "../../sidebar/CourseSidebars";
 import ListItem from "./ListItem";
 import styles from "./Course.module.css"
+import FileUploadModal from "../../modals/profModal/uploadModal/FileUploadModal";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -11,10 +12,21 @@ const Course = () => {
   const location = useLocation()
   let enrollmentId
 
-  if (location.pathname === '/main') {
+  if (location.state.from === '/main') {
+    console.log("main에서 옴")
     enrollmentId = location.state.enrollmentId
   } else {
     enrollmentId = location.state?.enrollmentId
+  }
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
   }
 
   const currentDate = new Date();
@@ -106,6 +118,7 @@ const Course = () => {
 
   return (
     <div className={`background`}>
+      <FileUploadModal isOpen={modalIsOpen} onRequestClose={closeModal} enrollmentId={enrollmentId}/>
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
@@ -120,17 +133,17 @@ const Course = () => {
                   <button type="button"
                     key={index}
                     className={`btn btn-primary ${styles.weekBtn} ${weeklyContents[index]?.lectureVideos.length > 0 ||
-                        weeklyContents[index]?.classFiles.length > 0 ||
-                        weeklyContents[index]?.quizzes.length > 0 ||
-                        weeklyContents[index]?.assignments.length > 0
-                        ? styles.blue : null
+                      weeklyContents[index]?.classFiles.length > 0 ||
+                      weeklyContents[index]?.quizzes.length > 0 ||
+                      weeklyContents[index]?.assignments.length > 0
+                      ? styles.blue : null
                       } ${selectedWeek - 1 == index ? styles.cureentWeek : null}`}
                     style={{ fontWeight: "bold", fontSize: "1.25rem" }}
                     onClick={() => (changeWeek(index + 1))}
                   >{index + 1}</button>
                 ))}
               </nav>
-              <button type="button" className={`btn btn-primary ${styles.addBtn}`}>
+              <button type="button" className={`btn btn-primary ${styles.addBtn}`} onClick={openModal}>
                 <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
               </button>
             </div>

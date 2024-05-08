@@ -24,7 +24,7 @@ const QnaRow = (props) => {
   }, [])
   return (
     <div className={styles.row}>
-      <h4 className={styles.num}>1</h4> {/*여기 날짜 순으로 번호 매겨놔 */}
+      <h4 className={styles.num}>{props.number + 1}</h4> {/*여기 날짜 순으로 번호 매겨놔 */}
       {props.qnAStatus === "COMPLETE" ?
         <div className={`${styles.answer} ${styles.answerDone}`}>
           <h4>답변 완료</h4>

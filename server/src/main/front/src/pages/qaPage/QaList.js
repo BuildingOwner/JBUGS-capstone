@@ -82,6 +82,7 @@ const QaList = () => {
               {qnADtoList?.map((qna, i) => (
                 <QnaRow
                   key={`qna${i}`}
+                  number={i}
                   createdAt={qna.createdAt}
                   qnAStatus={qna.qnAStatus}
                   title={qna.title}

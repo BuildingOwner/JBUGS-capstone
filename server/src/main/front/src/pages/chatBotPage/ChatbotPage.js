@@ -182,120 +182,6 @@ const ChatbotPage = () => {
     }
   }
 
-
-  // const sendMessage = async () => {
-  //   setIsSending(true);
-  //   setReadOnly(true);
-
-  //   // 새로운 채팅 메시지 구성
-  //   const newChat = {
-  //     role: 'user',
-  //     content: [{ text: text }],
-  //   };
-
-  //   // chats가 배열이 아니거나 undefined일 때를 대비한 조건 처리
-  //   if (!Array.isArray(chats)) {
-  //     setChats([newChat]); // chats가 배열이 아니면, 새 채팅으로만 구성된 배열을 세팅
-  //   } else {
-  //     setChats([...chats, newChat]); // chats가 배열이면, 기존 배열에 새 채팅 추가
-  //   }
-
-  //   // 사용자의 채팅을 임시 저장하고 textarea 값을 비움
-  //   const userText = text;
-  //   setText('');
-
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('question', userText);
-  //     formData.append('chat_id', chatId);
-
-  //     // fetch API 사용
-  //     const response = await fetch("http://localhost:5000/chat", {
-  //       method: 'POST',
-  //       body: formData,
-  //       credentials: 'include',
-  //     });
-
-  //     // 스트림 처리
-  //     const reader = response.body.getReader();
-  //     let completeMessage = ''; // 스트림으로 받은 모든 텍스트를 저장할 변수
-
-  //     while (true) {
-  //       const { done, value } = await reader.read();
-  //       if (done) break;
-
-  //       // value는 Uint8Array. 텍스트로 변환 필요
-  //       const textChunk = new TextDecoder().decode(value);
-  //       completeMessage += textChunk; // 조각난 텍스트를 하나의 메시지로 조합
-  //     }
-
-  //     // 스트림이 완료되면, 조합된 메시지를 채팅 목록에 추가
-  //     const newChat = {
-  //       role: 'assistant',
-  //       content: [{ text: completeMessage }],
-  //     };
-  //     setChats((chats) => [...chats, newChat]);
-
-  //   } catch (error) {
-  //     // 오류 처리...
-  //   } finally {
-  //     // 종료 처리...
-  //     setIsSending(false);
-  //     setReadOnly(false);
-  //   }
-  // }
-
-
-
-  // const sendMessage = async () => {
-  //   setIsSending(true)
-  //   setReadOnly(true)
-  //   // Axios 구성 생성
-  //   const axiosInstance = axios.create({
-  //     withCredentials: true,
-  //     credentials: 'include',
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data'
-  //     }
-  //   })
-
-  //   const newChat = {
-  //     role: 'user',
-  //     content: [{ text: text }],
-  //   };
-
-  //   // chats가 배열이 아니거나 undefined일 때를 대비한 조건 처리
-  //   if (!Array.isArray(chats)) {
-  //     setChats([newChat]) // chats가 배열이 아니면, 새 채팅으로만 구성된 배열을 세팅
-  //   } else {
-  //     setChats([...chats, newChat]) // chats가 배열이면, 기존 배열에 새 채팅 추가
-  //   }
-
-  //   // 사용자의 채팅을 임시 저장하고 textarea의 값을 바로 비워줌
-  //   const userText = text
-  //   setText('')
-
-  //   try {
-  //     const formData = new FormData()
-  //     formData.append('question', userText)
-  //     formData.append('chat_id', chatId)
-  //     const response = await axiosInstance.post("http://localhost:5000/chat", formData)
-  //     fetchChattings(chatId)
-  //   } catch (error) {
-  //     if (error.response.status === 401) {
-  //       navigate("/")
-  //     } else {
-  //       // 다른 종류의 오류 발생
-  //       console.error(error)
-  //     }
-
-  //   } finally {
-  //     // 함수 처리가 완료된 후 readOnly를 false로 설정하여 입력을 다시 가능하게 함
-  //     setReadOnly(false)
-  //     setIsSending(false)
-  //   }
-  // }
-
   const deleteChats = async () => {
     try {
       const response = await axios.delete(`/api/chat/${chatId}`)
@@ -354,14 +240,13 @@ const ChatbotPage = () => {
       })
       console.log("fetchChatData.response : ", response)
       const chatDto = response.data.chatDtoList.map((chat) => chat)
-      const chatId = chatDto.map((chat) => chat.chatRoomId)
       const chatIdArray = chatDto.map((chat) => chat.chatRoomId)
       console.log("chatIdArray : ", chatIdArray)
 
       setChatDtoList(chatDto)
       setStudentId(response.data.studentDto.studentId)
       setChatIdArray(chatIdArray)
-      return chatId; // chatId 반환
+      return chatIdArray; // chatId 배열 반환
 
     } catch (error) {
       if (error.response.status === 401) {
@@ -374,14 +259,16 @@ const ChatbotPage = () => {
   }
 
   const fetchDataAndChattings = async (selectedId) => { // 새로운 함수 추가
-    const chatId = await fetchChatData() // fetchChatData 호출 및 chatId 반환 대기
-    if (chatId) { // chatId가 유효한 경우에만 fetchChattings 호출
-      await fetchChattings(selectedId); // fetchChattings 호출 및 chatId 전달
+    const chatIdArray = await fetchChatData() // fetchChatData 호출 및 chatId 반환 대기
+    if (chatIdArray && chatIdArray.length > 0 && firstDo === true) { // chatId가 유효하고, 배열에 요소가 있는 경우에만 fetchChattings 호출
+      await fetchChattings(chatIdArray[0]); // fetchChattings 호출 및 첫 번째 chatId 전달
+    } else {
+      fetchChattings(selectedId)
     }
   }
 
   useEffect(() => {
-    if (firstDo == true) { // 처음 실행하면 1번 채팅룸 호출 (수정필요)
+    if (firstDo === true) { // 처음 실행하면 1번 채팅룸 호출 (수정필요)
       fetchDataAndChattings(1)
       setFirstDo(false)
     } else {

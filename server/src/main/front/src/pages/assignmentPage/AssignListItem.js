@@ -1,7 +1,8 @@
+import styles from "./AssignListItem.module.css"
 import { useEffect, useState } from "react";
-import "./YetAssign.css";
 
-const ListRow1 = (props) => {
+const AssignListItem = (props) => {
+
   const [formattedDate, setFormattedDate] = useState()
 
   const formatDate = (dateString) => {
@@ -21,24 +22,18 @@ const ListRow1 = (props) => {
     const data = formatDate(inputDate);
     setFormattedDate(data)
   }, [])
+
   return (
-    <div className="list-row2">
-      <button className="submit16">
-        {props.status === "NOT_SUBMITTED" ? (
-          <b className="b224">미제출</b>
-        ) : <b className="b224">제출</b>
-        }
-      </button>
-      <div className="div281">
-        <span>
-          <p className="p182">{props.title}</p>
-        </span>
+    <div className={styles.row}>
+      <div className={styles.submitBox}>
+        {props.status === "NOT_SUBMITTED" ? <h4 className={styles.red}>미제출</h4> : <h4 className={styles.green}>제출 완료</h4>}
       </div>
-      <div className="div282">{props.weekId}주차</div>
-      <div className="div283">{formattedDate}</div>
-      <div className="div284">-</div>
+      <h4 className={styles.title}>{props.title}</h4>
+      <h4>{props.weekId}주차</h4>
+      <h4>{formattedDate}</h4>
+      <h4>-</h4>
     </div>
   );
 };
 
-export default ListRow1;
+export default AssignListItem;

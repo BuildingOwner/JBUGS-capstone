@@ -67,7 +67,7 @@ public class UploadApiController {
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
             for (String filePath : uploadedFilePaths) {
-                sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer(), uploadDto.getDescription());
+                sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer(), uploadDto.getDescription(), uploadDto.getQuizType());
 
             }
 
@@ -125,7 +125,7 @@ public class UploadApiController {
 
 
     // 파일 업로드 로직 이후에 추가
-    public void sendQuizKeywordRequest(String lecture, String week, String path, String choice, String shortAnswer, String description) {
+    public void sendQuizKeywordRequest(String lecture, String week, String path, String choice, String shortAnswer, String description, String quizType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -139,7 +139,14 @@ public class UploadApiController {
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(map, headers);
 
-        String url = "http://localhost:5000/add-quiz-keyword";
+        String url;
+        if ("EXERCISE".equals(quizType)) {
+            url = "http://localhost:5000/add-quiz-keyword";
+        } else if ("PRACTICE".equals(quizType)) {
+            url = "http://localhost:5000/add-quiz-summary";
+        } else {
+            url = "http://localhost:5000/add-quiz-keyword";
+        }
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 

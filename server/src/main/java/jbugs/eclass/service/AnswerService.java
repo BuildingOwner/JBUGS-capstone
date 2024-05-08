@@ -1,5 +1,6 @@
 package jbugs.eclass.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.AnswerDto;
 import jbugs.eclass.dto.AnswerRequestDto;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -49,29 +51,10 @@ public class AnswerService {
         quizInfoRepository.save(quizInfo);
     }
 
-//    public AnswerDto getAnswersByQuizId(Long quizId) {
-//        Quiz quiz = quizRepository.findById(quizId)
-//                .orElseThrow(() -> new RuntimeException("Quiz not found"));
-//
-//        Member currentMember = authenticationFacade.getCurrentMember();
-//        if (currentMember == null || currentMember.getMemberType() != MemberType.STUDENT) {
-//            throw new RuntimeException("Invalid member or member type");
-//        }
-//
-//        Student student = currentMember.getStudent();
-//
-//        Answer answer = answerRepository.findByQuizAndStudent(quiz, student);
-//
-//        if (answer == null) {
-//            return null;
-//        }
-//
-//        AnswerDto answerDto = new AnswerDto();
-//        answerDto.setQuizId(quizId);
-//        answerDto.setScore(quiz.getQuizInfos().get(0).getQuizScore()); // quizInfo에서 점수 가져오기
-//        answerDto.setAnswers(answer.getAnswers());
-//
-//        return answerDto;
-//    }
+    public AnswerDto getAnswersByQuizIdAndStudentId(Long quizId, Long studentId) {
+        // 직접 AnswerDto 객체를 조회
+        return answerRepository.findAnswerDtoByQuizIdAndStudentId(quizId, studentId)
+                .orElseThrow(() -> new EntityNotFoundException("답변을 찾을 수 없습니다."));
+    }
 }
 

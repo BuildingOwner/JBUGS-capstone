@@ -72,13 +72,13 @@ const QaList = () => {
               </button>
             </div>
             <div className={styles.colName}>
-              <h3 className={styles.colNum} style={{ fontSize: "1.5rem" }}>번호</h3>
-              <h3 className={styles.colAnswered} style={{ fontSize: "1.5rem" }}>답변</h3>
-              <h3 className={styles.colSecret} style={{ fontSize: "1.5rem" }}>비밀글</h3>
-              <h3 className={styles.colTitle} style={{ fontSize: "1.5rem" }}>제목</h3>
-              <h3 className={styles.colWriter} style={{ fontSize: "1.5rem" }}>작성자</h3>
-              <h3 className={styles.colDate} style={{ fontSize: "1.5rem" }}>작성일</h3>
-              <h3 className={styles.colView} style={{ fontSize: "1.5rem" }}>조회수</h3>
+              <h3 className={styles.colNum} style={{ fontSize: "1.25rem" }}>번호</h3>
+              <h3 className={styles.colAnswered} style={{ fontSize: "1.25rem" }}>답변</h3>
+              <h3 className={styles.colSecret} style={{ fontSize: "1.25rem" }}>비밀글</h3>
+              <h3 className={styles.colTitle} style={{ fontSize: "1.25rem" }}>제목</h3>
+              <h3 className={styles.colWriter} style={{ fontSize: "1.25rem" }}>작성자</h3>
+              <h3 className={styles.colDate} style={{ fontSize: "1.25rem" }}>작성일</h3>
+              <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
             </div>
             <div className={styles.list}>
               {qnADtoList?.map((qna, i) => (

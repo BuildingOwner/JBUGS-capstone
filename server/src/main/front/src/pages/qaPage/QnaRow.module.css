@@ -1,5 +1,13 @@
 .row{
   display: flex;
+  cursor: pointer;
+  padding: var(--padding-xl) 0;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+}
+
+.row:hover{
+  background-color: #ccc;
 }
 
 .num, .secret, .views, .writer{
@@ -12,6 +20,21 @@
   text-align: center;
 }
 
+.answer{
+  display: flex;
+  justify-content: center;
+  padding: var(--padding-3xs) 0;
+  border-radius: 10px;
+}
+
 .title{
   flex-grow: 1;
+}
+
+.answerDone{
+  background-color: var(--point-green);
+}
+
+.answerYet{
+  background-color: var(--point-yellow);
 }

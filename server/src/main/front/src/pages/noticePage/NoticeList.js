@@ -1,10 +1,10 @@
-import Sidebar from "../../sidebar/Sidebar";
-import Top2 from "./Top2";
+import CourseSidebar from "../../sidebar/CourseSidebars";
 import NoticeRow from "./NoticeRow";
-import "./NoticeList.css";
+import styles from "./NoticeList.module.css";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { GoSearch } from "react-icons/go";
 
 const NoticeList = () => {
   const location = useLocation()
@@ -32,47 +32,57 @@ const NoticeList = () => {
   }, [])
 
   return (
-    <div className="noticelist">
-      <Sidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto}/>
-      <main className="content-wrapper">
-        <section className="content2">
-          <Top2 />
-          <div className="list2">
-            <nav className="tab1">
-              <button className="tab-item3">
-                <div className="my3">전체 공지</div>
+    <div className={`background`}>
+      <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
+      <main className={`mycontainer`}>
+        <section className={`bg ${styles.bg}`}>
+          <div className={styles.header}>
+            <h3 className={styles.title}>공지사항</h3>
+            <div className={styles.right}>
+              <div className={styles.searchContainer}>
+                <select className={`form-select form-select-sm ${styles.select}`} defaultValue={'title'}>
+                  <option value={`title`}>제목</option>
+                  <option value={`writer`}>글쓴이</option>
+                </select>
+                <div className={styles.searchBox}>
+                  <input className={`form-control ${styles.search}`} type="text" placeholder="검색어를 입력하세요..." />
+                  <div className={styles.questionIcon}>
+                    <GoSearch size={20} />
+                  </div>
+                </div>
+              </div>
+              <button type="button" className={`btn btn-primary ${styles.addBtn}`}>
+                <h3 style={{ fontSize: "1.05rem", fontWeight:"bold" }}>질문하기</h3>
               </button>
-              <button className="tab-item4">
-                <div className="my4">시험</div>
-              </button>
-              <button className="tab-item5">
-                <div className="my5">온라인</div>
-              </button>
-              <button className="tab-item6">
-                <div className="my6">대면수업</div>
-              </button>
-            </nav>
-            <div className="col-name1">
-              <div className="num1" />
-              <div className="status1">
-                <div className="div21">구분</div>
-              </div>
-              <div className="pin" />
-              <div className="title4">
-                <div className="div22">제목</div>
-              </div>
-              <div className="writer1">
-                <div className="div23">작성자</div>
-              </div>
-              <div className="upload-date1">
-                <div className="div24">작성일</div>
-              </div>
-              <div className="view1">
-                <div className="div25">조회수</div>
-              </div>
             </div>
-            <div className="table1">
-              {noticeDtoList?.map((notice, i) => (
+          </div>
+
+          <div className={styles.content}>
+            <div className={styles.tabBtns}>
+              <button style={{borderTopLeftRadius:"5px"}} className={`${styles.tabItem} ${styles.currentFilter}`}>
+                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>전체 공지</h3>
+              </button>
+              <button className={`${styles.tabItem}`}>
+                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>시험</h3>
+              </button>
+              <button className={`${styles.tabItem}`}>
+                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>온라인</h3>
+              </button>
+              <button style={{borderTopRightRadius:"5px"}} className={`${styles.tabItem}`}>
+                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>대면수업</h3>
+              </button>
+            </div>
+            <div className={styles.colName}>
+              <h3 className={styles.colNum} style={{ fontSize: "1.25rem" }}>번호</h3>
+              <h3 className={styles.colAnswered} style={{ fontSize: "1.25rem" }}>구분</h3>
+              <h3 className={styles.colSecret} style={{ fontSize: "1.25rem" }}> </h3>
+              <h3 className={styles.colTitle} style={{ fontSize: "1.25rem" }}>제목</h3>
+              <h3 className={styles.colWriter} style={{ fontSize: "1.25rem" }}>작성자</h3>
+              <h3 className={styles.colDate} style={{ fontSize: "1.25rem" }}>작성일</h3>
+              <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
+            </div>
+            <div className={styles.list}>
+            {noticeDtoList?.map((notice, i) => (
                 <NoticeRow
                   content={notice.content}
                   createdAt={notice.createdAt}

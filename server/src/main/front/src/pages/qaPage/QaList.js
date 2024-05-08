@@ -1,6 +1,4 @@
 import CourseSidebar from "../../sidebar/CourseSidebars";
-import QaHeader from "./QaHeader";
-import QnaRow1 from "./QnaRow1";
 import QnaRow from "./QnaRow";
 import styles from "./QaList.module.css"
 import axios from "axios";

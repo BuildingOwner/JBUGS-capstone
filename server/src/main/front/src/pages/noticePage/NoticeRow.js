@@ -1,6 +1,8 @@
-import "./NoticeRow.css";
+import styles from "./NoticeRow.module.css"
 import { useState, useEffect } from "react";
-const NoticeRow = (props) => {
+import { BsPinFill } from "react-icons/bs";
+
+const QnaRow = (props) => {
   const [formattedDate, setFormattedDate] = useState()
 
   const formatDate = (dateString) => {
@@ -20,43 +22,31 @@ const NoticeRow = (props) => {
     const data = formatDate(inputDate);
     setFormattedDate(data)
   }, [])
-
   return (
-    <div className="notice-row2">
-      <div className="line14">
-        <div className="num6">
-          <div className="div204">123</div>
-        </div>
-        <div className="status22">
-          {props.noticeStatus === "EXAM" ?
-            <b className="b199">시험</b> :
-            props.noticeStatus === "ONLINE" ? <b className="b199">온라인</b> :
-             <b className="b199">대면 수업</b>}
-        </div>
-        <div className="secret5">
-          <div className="pin-fill2">
-            <img className="vector-icon51" alt="" src="/vector-71.svg" />
+    <div className={styles.row}>
+      <h4 className={styles.num}>1</h4> {/*여기 날짜 순으로 번호 매겨놔 */}
+      {props.noticeStatus === "EXAM" ?
+        <div className={`${styles.category} ${styles.exam}`}>
+          <h4>시험</h4>
+        </div> :
+        props.noticeStatus === "ONLINE" ?
+          <div className={`${styles.category} ${styles.online}`}>
+            <h4>온라인</h4>
+          </div> :
+          <div className={`${styles.category} ${styles.offline}`}>
+            <h4>대면 수업</h4>
           </div>
-        </div>
-        <div className="title24">
-          <div className="title-text4">
-            <span className="title-text-txt">
-              <p className="p121">{props.title}</p>
-            </span>
-          </div>
-        </div>
-        <div className="writer6">
-          <div className="div205">{props.writer}</div>
-        </div>
-        <div className="upload-date6">
-          <div className="div206">{formattedDate}</div>
-        </div>
-        <div className="view8">
-          <div className="div207">{props.views}</div>
-        </div>
+
+      }
+      <div className={styles.secret}>
+      <BsPinFill size={20}/>
       </div>
+      <h4 className={styles.title}>{props.title}</h4>
+      <h4 className={styles.writer}>{props.writer}</h4>
+      <h4 className={styles.date}>{formattedDate}</h4>
+      <h4 className={styles.views}>{props.views}</h4>
     </div>
   );
 };
 
-export default NoticeRow;
+export default QnaRow;

@@ -42,23 +42,10 @@ public class MemberService {
                 .orElse(null);
     }
 
-    @Transactional
     public Member login(String loginId, String password) {
         return memberRepository.findByLoginId(loginId)
                 .filter(m -> passwordEncoder.matches(password, m.getPassword()))
                 .orElse(null);
-    }
-
-    @Transactional
-    public boolean authenticate(String loginId, String password) {
-        Optional<Member> optionalMember = memberRepository.findByLoginId(loginId);
-        if (optionalMember.isPresent()) {
-            Member member = optionalMember.get();
-            if (passwordEncoder.matches(password, member.getPassword())) {
-                return true;
-            }
-        }
-        return false;
     }
 }
 

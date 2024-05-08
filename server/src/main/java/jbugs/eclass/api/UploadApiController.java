@@ -67,7 +67,7 @@ public class UploadApiController {
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
             for (String filePath : uploadedFilePaths) {
-                sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer());
+                sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer(), uploadDto.getDescription());
             }
 
             // 성공적으로 파일이 저장된 경우
@@ -117,7 +117,7 @@ public class UploadApiController {
 
 
     // 파일 업로드 로직 이후에 추가
-    public void sendQuizKeywordRequest(String lecture, String week, String path, String choice, String shortAnswer) {
+    public void sendQuizKeywordRequest(String lecture, String week, String path, String choice, String shortAnswer, String description) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -127,6 +127,7 @@ public class UploadApiController {
         map.add("path", path);
         map.add("choice", choice);
         map.add("short", shortAnswer);
+        map.add("description", description);
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(map, headers);
 

@@ -19,7 +19,6 @@ public class QuizDto {
     private boolean submissionStatus;
     private Integer quizScore;
     private String timeLimit; // 제한시간
-    private String reflectionRatio; //반영비율
     private int week;
 
     public static QuizDto from(Quiz quiz, QuizInfo quizInfo) {
@@ -30,7 +29,6 @@ public class QuizDto {
         dto.setQuizName(quiz.getQuizName());
         dto.setDeadline(quiz.getDeadline());
         dto.setTimeLimit(quiz.getTimeLimit());
-        dto.setReflectionRatio(quiz.getReflectionRatio());
         dto.setWeek(quiz.getWeek().getWeekNumber());
 //        dto.setJsonData(quiz.getJsonData());
 

@@ -1,6 +1,7 @@
 package jbugs.eclass.service;
 
 import jbugs.eclass.domain.*;
+import jbugs.eclass.dto.AnswerDto;
 import jbugs.eclass.dto.AnswerRequestDto;
 import jbugs.eclass.repository.AnswerRepository;
 import jbugs.eclass.repository.QuizInfoRepository;
@@ -47,5 +48,30 @@ public class AnswerService {
 
         quizInfoRepository.save(quizInfo);
     }
+
+//    public AnswerDto getAnswersByQuizId(Long quizId) {
+//        Quiz quiz = quizRepository.findById(quizId)
+//                .orElseThrow(() -> new RuntimeException("Quiz not found"));
+//
+//        Member currentMember = authenticationFacade.getCurrentMember();
+//        if (currentMember == null || currentMember.getMemberType() != MemberType.STUDENT) {
+//            throw new RuntimeException("Invalid member or member type");
+//        }
+//
+//        Student student = currentMember.getStudent();
+//
+//        Answer answer = answerRepository.findByQuizAndStudent(quiz, student);
+//
+//        if (answer == null) {
+//            return null;
+//        }
+//
+//        AnswerDto answerDto = new AnswerDto();
+//        answerDto.setQuizId(quizId);
+//        answerDto.setScore(quiz.getQuizInfos().get(0).getQuizScore()); // quizInfo에서 점수 가져오기
+//        answerDto.setAnswers(answer.getAnswers());
+//
+//        return answerDto;
+//    }
 }
 

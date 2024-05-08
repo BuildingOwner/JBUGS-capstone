@@ -2,6 +2,7 @@ package jbugs.eclass.service;
 
 import jbugs.eclass.domain.Assignment;
 import jbugs.eclass.domain.AssignmentStatus;
+import jbugs.eclass.domain.Lecture;
 import jbugs.eclass.domain.Week;
 import jbugs.eclass.repository.AssignmentRepository;
 import jbugs.eclass.repository.WeekRepository;

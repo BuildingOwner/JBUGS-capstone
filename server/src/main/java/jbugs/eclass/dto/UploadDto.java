@@ -12,4 +12,5 @@ public class UploadDto {
     private MultipartFile[] videoFiles;
     private String shortAnswer;
     private String choice;
+    private String description;
 }

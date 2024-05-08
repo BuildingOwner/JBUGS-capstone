@@ -24,7 +24,7 @@ public class QuizInfo {
     @JoinColumn(name = "enrollment_id")
     private Enrollment enrollment;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 

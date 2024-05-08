@@ -17,7 +17,7 @@ public class Quiz {
 
     @Column(length = 50000)
     private String jsonData; //퀴즈 생성 json 데이터
-    @Column(length = 50000)
+    @Column(length = 1000)
     private String description; // 설명
 
     private String quizName; // 퀴즈 이름
@@ -26,15 +26,14 @@ public class Quiz {
     private LocalDateTime createdAt; // 생성 시간
     private LocalDateTime updateAt; // 수정 시간
     private String timeLimit; // 제한시간
-    private String reflectionRatio; //반영비율
     private QuizStatus quizStatus; //퀴즈진행상태
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")
     private Week week;
 
-    @OneToOne(mappedBy = "quiz", fetch = FetchType.LAZY)
-    private QuizInfo quizInfo;
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
+    private List<QuizInfo> quizInfos;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();

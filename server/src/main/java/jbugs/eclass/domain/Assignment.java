@@ -31,21 +31,7 @@ public class Assignment {
     @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL)
     private List<Material> materials = new ArrayList<>();
 
-    // 과제 제출
-    public void submitAssignment() {
-        if (status != AssignmentStatus.NOT_SUBMITTED) {
-            throw new IllegalStateException("이미 제출된 과제입니다.");
-        }
-
-        status = AssignmentStatus.SUBMITTED;
-    }
-
-    // 과제 종료
-    public void checkAssignmentStatus() {
-        LocalDateTime now = LocalDateTime.now();
-
-        if (now.isAfter(dueDate)) {
-            status = AssignmentStatus.EXPIRED;
-        }
-    }
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "lecture_id")
+//    private Lecture lecture;
 }

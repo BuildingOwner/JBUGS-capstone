@@ -92,8 +92,8 @@ public class UploadApiController {
                 String safeFileName = UUID.randomUUID().toString() + "_" + originalFileName; // 예시로 UUID 추가
 
                 String currentDirectory = System.getProperty("user.dir");
-                if(currentDirectory.indexOf("JBUGS-capstone/server") == -1){
-                    currentDirectory += "JBUGS-capstone/server/";
+                if(currentDirectory.indexOf("JBUGS-capstone") == -1){
+                    currentDirectory += "/JBUGS-capstone/server/";
                 }
                 String fullPath = currentDirectory + directory + safeFileName;
 

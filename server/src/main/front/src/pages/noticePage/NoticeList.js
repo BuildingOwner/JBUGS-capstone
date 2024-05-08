@@ -51,9 +51,6 @@ const NoticeList = () => {
                   </div>
                 </div>
               </div>
-              <button type="button" className={`btn btn-primary ${styles.addBtn}`}>
-                <h3 style={{ fontSize: "1.05rem", fontWeight:"bold" }}>질문하기</h3>
-              </button>
             </div>
           </div>
 

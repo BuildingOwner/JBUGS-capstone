@@ -49,7 +49,7 @@
   border: none !important;
   /* background-color: var(--point-blue) !important; */
   background: none !important;
-  width: 100%;
+  width: 90%;
 }
 
 .linkBtn {
@@ -102,4 +102,9 @@
   background-color: var(--point-blue) !important;
   display: flex !important;
   justify-content: center;
+}
+
+.text {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
 }

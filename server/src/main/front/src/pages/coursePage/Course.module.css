@@ -49,6 +49,19 @@
   color: black !important
 }
 
+.topRight{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  align-items: end;
+}
+
+.addBtn{
+  height: fit-content !important;
+  background-color: var(--point-blue) !important;
+  border: none !important;
+}
+
 .listContainer {
   height: 100%;
   display: flex;

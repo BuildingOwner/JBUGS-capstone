@@ -114,22 +114,26 @@ const Course = () => {
               <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
               <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
             </div>
-            <nav className={styles.weekList}>
-              {Array.from({ length: 16 }).map((_, index) => (
-                <button type="button"
-                  key={index}
-                  className={`btn btn-primary ${styles.weekBtn} ${
-                    weeklyContents[index]?.lectureVideos.length>0 ||
-                    weeklyContents[index]?.classFiles.length>0 ||
-                    weeklyContents[index]?.quizzes.length>0 ||
-                    weeklyContents[index]?.assignments.length>0 
-                    ? styles.blue : null
-                  } ${selectedWeek - 1 == index ? styles.cureentWeek : null}`}
-                  style={{ fontWeight: "bold", fontSize: "1.25rem" }}
-                  onClick={() => (changeWeek(index + 1))}
-                >{index + 1}</button>
-              ))}
-            </nav>
+            <div className={styles.topRight}>
+              <nav className={styles.weekList}>
+                {Array.from({ length: 16 }).map((_, index) => (
+                  <button type="button"
+                    key={index}
+                    className={`btn btn-primary ${styles.weekBtn} ${weeklyContents[index]?.lectureVideos.length > 0 ||
+                        weeklyContents[index]?.classFiles.length > 0 ||
+                        weeklyContents[index]?.quizzes.length > 0 ||
+                        weeklyContents[index]?.assignments.length > 0
+                        ? styles.blue : null
+                      } ${selectedWeek - 1 == index ? styles.cureentWeek : null}`}
+                    style={{ fontWeight: "bold", fontSize: "1.25rem" }}
+                    onClick={() => (changeWeek(index + 1))}
+                  >{index + 1}</button>
+                ))}
+              </nav>
+              <button type="button" className={`btn btn-primary ${styles.addBtn}`}>
+                <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
+              </button>
+            </div>
           </div>
           <div className={styles.container}>
             <div className={styles.listContainer}>

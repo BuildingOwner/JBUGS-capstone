@@ -47,48 +47,48 @@ const Sidebar = (props) => {
         <div className={styles.navBtns}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
             <Link to={"/main"} className={styles.linkBtn}>
-              <GoHome size="30" />
-              <h3>HOME</h3>
+              <GoHome size="25" />
+              <h3 className={styles.text}>HOME</h3>
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
             <Link to={"/chatbotpage"}
               state={{ memberName: memberName }}
               className={styles.linkBtn}>
-              <IoChatbubbleEllipsesOutline size="30" />
-              <h3>AI chat</h3>
+              <IoChatbubbleEllipsesOutline size="25" />
+              <h3 className={styles.text}>AI chat</h3>
             </Link>
           </button>
         </div>
         <div className={styles.navBtns}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
             <Link to={"/course"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
-              <PiBooks size="30" />
-              <h3>강의 홈</h3>
+              <PiBooks size="25" />
+              <h3 className={styles.text}>강의 홈</h3>
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
             <Link to={"/qalist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
-              <FaQuestion size="30" />
-              <h3>Q & A</h3>
+              <FaQuestion size="25" />
+              <h3 className={styles.text}>Q & A</h3>
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
             <Link to={"/noticelist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
-              <TbSpeakerphone size="30" />
-              <h3>공지사항</h3>
+              <TbSpeakerphone size="25" />
+              <h3 className={styles.text}>공지사항</h3>
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
             <Link to={"/assignmentlist"} className={styles.linkBtn} state={{ enrollmentId: enrollmentId }}>
-              <LuClipboardList size="30" />
-              <h3>과제</h3>
+              <LuClipboardList size="25" />
+              <h3 className={styles.text}>과제</h3>
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
             <Link to={"/quizlist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
-              <MdOutlineQuiz size="30" />
-              <h3>퀴즈</h3>
+              <MdOutlineQuiz size="25" />
+              <h3 className={styles.text}>퀴즈</h3>
             </Link>
           </button>
         </div>

@@ -46,39 +46,39 @@ function CollepsedSidebar(props) {
         <div className={`${styles.navBtns} ${styles3.navBtns}`}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
             <Link to={"/main"} className={styles.linkBtn}>
-              <GoHome size="30" />
+              <GoHome size="25" />
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
             <Link to={"/chatbotpage"} className={styles.linkBtn}>
-              <IoChatbubbleEllipsesOutline size="30" />
+              <IoChatbubbleEllipsesOutline size="25" />
             </Link>
           </button>
         </div>
         <div className={`${styles.navBtns} ${styles3.navBtns}`}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
             <Link to={"/course"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
-              <PiBooks size="30" />
+              <PiBooks size="25" />
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
             <Link to={"/qalist"} className={styles.linkBtn}>
-              <FaQuestion size="30" />
+              <FaQuestion size="25" />
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
             <Link to={"/noticelist"} className={styles.linkBtn}>
-              <TbSpeakerphone size="30" />
+              <TbSpeakerphone size="25" />
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
             <Link to={"/assignmentlist"} className={styles.linkBtn}>
-              <LuClipboardList size="30" />
+              <LuClipboardList size="25" />
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
             <Link to={"/quizlist"} className={styles.linkBtn}>
-              <MdOutlineQuiz size="30" />
+              <MdOutlineQuiz size="25" />
             </Link>
           </button>
         </div>

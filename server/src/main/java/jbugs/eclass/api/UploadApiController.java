@@ -89,7 +89,11 @@ public class UploadApiController {
                 // 파일명 보안 처리
                 String originalFileName = file.getOriginalFilename();
                 String safeFileName = UUID.randomUUID().toString() + "_" + originalFileName; // 예시로 UUID 추가
-                String fullPath = directory + safeFileName;
+
+                String currentDirectory = System.getProperty("user.dir");
+                String fullPath = currentDirectory + directory + safeFileName;
+
+
 
                 log.info("{} 저장 fullPath={}", isVideo ? "비디오" : "파일", fullPath);
                 file.transferTo(new File(fullPath));

@@ -13,4 +13,5 @@ public class UploadDto {
     private String shortAnswer;
     private String choice;
     private String description;
+    private String quizType;
 }

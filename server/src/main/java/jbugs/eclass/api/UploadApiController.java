@@ -63,11 +63,12 @@ public class UploadApiController {
 
             // 비디오 업로드 처리 후 경로(들) 반환
             if (uploadDto.getVideoFiles() != null && uploadDto.getVideoFiles().length > 0) {
-                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(uploadDto.getVideoFiles()), weekEntity.getId(), true, uploadDto.getVideoTitle()));
+                uploadFiles(Arrays.asList(uploadDto.getVideoFiles()), weekEntity.getId(), true, uploadDto.getVideoTitle());
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
             for (String filePath : uploadedFilePaths) {
                 sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer(), uploadDto.getDescription());
+
             }
 
             // 성공적으로 파일이 저장된 경우
@@ -115,8 +116,8 @@ public class UploadApiController {
                     material.setFileName(safeFileName);
                     material.setWeek(weekEntity);
                     materialService.join(material);
+                    filePaths.add(fullPath);
                 }
-                filePaths.add(fullPath);
             }
         }
         return filePaths;

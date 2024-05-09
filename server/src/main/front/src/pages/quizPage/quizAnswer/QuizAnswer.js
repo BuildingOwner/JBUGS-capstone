@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../../../sidebar/Sidebar";
+import Sidebar from "../../../sidebar/CourseSidebars";
 import styles from "../doQuiz/DoQuiz.module.css";
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
 import { useLocation, useNavigate } from "react-router-dom";
@@ -38,6 +38,10 @@ const QuizAnswer = () => {
   const backToPreviousPage = () => {
     sessionStorage.clear() // 페이지 이동시 세션스토리지에 저장된 모든 정보 삭제
     navigate(-1); // 이전 페이지로 이동
+  }
+
+  const changeQuestion = (index) => {
+    setIndexOfOptions(index)
   }
 
   const fetchQuizAnswer = async () => {
@@ -94,7 +98,7 @@ const QuizAnswer = () => {
                       (
                         optionIcon.map((num, i) => {
                           return questions[indexOfOptions].options[i] === questions[indexOfOptions].answer ?
-                            <div className={styles.correct} key={i}>
+                            <div className={`${styles.answerOption} ${styles.correct}`} key={i}>
                               {num}
                               {questions[indexOfOptions].options[i] && (
                                 <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
@@ -135,8 +139,13 @@ const QuizAnswer = () => {
               <h3 className={styles.fontSize31xl}>3 : 17</h3>
             </div>
             <div className={styles.numberNav}>
-              {/* 문제 받아오는 코드 작성 후 만들 예정 */}
-              asd
+              {Array.from({ length: questions.length }).map((_, i) => {
+                return (
+                  <div className={styles.quizNavBtn} onClick={() => changeQuestion(i)}>
+                    <h3>{i + 1}</h3>
+                  </div>
+                )
+              })}
             </div>
             <div className={styles.notice}>
               <h3 className={styles.fontSizeBase}>주의 사항</h3>

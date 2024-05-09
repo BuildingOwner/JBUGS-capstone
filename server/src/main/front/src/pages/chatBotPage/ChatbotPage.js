@@ -13,7 +13,6 @@ import { LuImagePlus } from "react-icons/lu";
 const ChatbotPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  console.log(location)
   const memberName = location.state.memberName
   const [studentId, setStudentId] = useState()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
@@ -90,7 +89,7 @@ const ChatbotPage = () => {
 
   const keyUp = (e) => {
     // 메시지 전송 중이 아니고, 엔터키가 눌렸으며, shift키가 눌리지 않았을 경우에만 sendMessage 함수를 호출
-    if (text.trim() !== "" && !isSending && e.key === "Enter" && !e.shiftKey) {
+    if (text?.trim() !== "" && !isSending && e.key === "Enter" && !e.shiftKey) {
       sendMessage()
     }
     handleResizeHeight()
@@ -116,20 +115,44 @@ const ChatbotPage = () => {
       console.log(error)
     }
   }
+
+  // 이미지 파일을 Base64 문자열로 변환하는 함수
+  const convertImageFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(file);
+    });
+  }
+
   const sendMessage = async () => {
     setIsSending(true);
     setReadOnly(true);
+    let imageChat = {
 
-    const newChat = {
-      role: 'user',
-      content: [{ text: text }],
-    };
+    }
+    const imageInput = document.getElementById('imageInput');
+    if (imageInput.files) {
+      for (let i = 0; i < imageInput.files.length; i++) {
+        // 이미지 파일을 Base64 문자열로 변환
+        const imageBase64 = await convertImageFileToBase64(imageInput.files[i]);
+        // Base64 인코딩된 이미지 문자열을 채팅 객체에 추가
+        imageChat = {
+          role: 'user',
+          content: [{ text: text, image: imageBase64 }],
+        };
+        setChats(chats => [...chats, imageChat]);
+      }
+    }
+
 
     if (!Array.isArray(chats)) {
-      setChats([newChat]);
+      setChats([imageChat]);
     } else {
-      setChats([...chats, newChat]);
+      setChats([...chats, imageChat]);
     }
+
 
     const userText = text;
     setText('');
@@ -139,11 +162,22 @@ const ChatbotPage = () => {
       formData.append('question', userText);
       formData.append('chat_id', chatId);
 
+      // 이미지 파일을 FormData에 추가
+      const imageInput = document.getElementById('imageInput');
+      if (imageInput.files) {
+        for (let i = 0; i < imageInput.files.length; i++) {
+          // 이미지 파일을 'image_0', 'image_1' 등의 키로 추가
+          formData.append(`image_${i}`, imageInput.files[i]);
+        }
+      }
+
       const response = await fetch("http://localhost:5000/chat", {
         method: 'POST',
         body: formData,
         credentials: 'include',
       });
+      // 성공적으로 파일을 전송한 후, 입력 필드 초기화
+      document.getElementById('imageInput').value = '';
 
       const reader = response.body.getReader();
       let completeMessage = ""; // 누적된 메시지를 저장하기 위한 변수
@@ -308,6 +342,7 @@ const ChatbotPage = () => {
                     <UserChatItem
                       key={index}
                       text={chat.content[0].text}
+                      image={chat.content[0].image}
                       memberName={memberName}
                     /> :
                     <BotChatItem
@@ -318,7 +353,11 @@ const ChatbotPage = () => {
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
-                  <button type="button" className={`btn btn-primary ${styles.chatBtn}`}><LuImagePlus size={20} /></button>
+
+                  {/* <button type="button" className={`btn btn-primary ${styles.chatBtn}`}>
+                      <LuImagePlus size={20} />
+                    </button> */}
+                  <input type="file" accept="image/*" id="imageInput" multiple></input>
                   <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
                     <textarea
                       ref={textareaRef}

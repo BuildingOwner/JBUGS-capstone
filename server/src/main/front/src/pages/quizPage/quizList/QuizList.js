@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UncompleteQuizItem from "./UncompletedQuizItem";
 import QuizListItem from "./QuizListItem";
+import NoItem from "../../mainPage/NoItem"
 
 const QuizList = () => {
   const location = useLocation()
@@ -101,7 +102,7 @@ const QuizList = () => {
             <div className={styles.topRight}>
               <h3>미응시 퀴즈</h3>
               <div className={styles.uncompleteQuizsContainer}>
-                {uncompleteQuizList.map((quiz, i) => {
+                {uncompleteQuizList[0] ? uncompleteQuizList.map((quiz, i) => {
                   return (
                     <UncompleteQuizItem
                       key={`uncompleteQuizItem${i}`}
@@ -115,7 +116,7 @@ const QuizList = () => {
                       jsonData={quiz.jsonData}
                     />
                   )
-                })}
+                }) : <NoItem title={"미응시 퀴즈가"}/>}
               </div>
               <div className={styles.weeks}></div>
             </div>
@@ -155,7 +156,7 @@ const QuizList = () => {
               <h3 className={styles.labelText}>피드백</h3>
             </div>
             <div className={styles.quizListContainer}>
-              {quizDtoList?.filter(quiz =>
+              {quizDtoList[0] ? quizDtoList.filter(quiz =>
                 (Number(selectedWeek) === 100 || Number(quiz.week) === Number(selectedWeek)) // 주차 조건
                 && (selectedType === 'all' || quiz.quizType === selectedType) // 타입 조건
               ).map((quiz, i) => (
@@ -172,8 +173,8 @@ const QuizList = () => {
                   quizScore={quiz.quizScore}
                   submissionStatus={quiz.submissionStatus}
                 />
-              ))
-              }
+              )) :
+              <NoItem title={"퀴즈가"}/>}
             </div>
           </div>
         </div>

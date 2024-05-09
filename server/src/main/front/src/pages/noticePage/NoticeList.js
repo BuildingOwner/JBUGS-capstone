@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { GoSearch } from "react-icons/go";
+import NoItem from "../mainPage/NoItem";
 
 const NoticeList = () => {
   const location = useLocation()
@@ -79,7 +80,7 @@ const NoticeList = () => {
               <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
             </div>
             <div className={styles.list}>
-            {noticeDtoList?.map((notice, i) => (
+            {noticeDtoList?.length != 0 ? noticeDtoList?.map((notice, i) => (
                 <NoticeRow
                   content={notice.content}
                   createdAt={notice.createdAt}
@@ -90,7 +91,7 @@ const NoticeList = () => {
                   writer={notice.writer}
                   key={`notice${i}`}
                 />
-              ))}
+              )) : <NoItem title={"공지가"}/>}
             </div>
           </div>
         </section>

@@ -5,6 +5,7 @@
   border-radius: 5px;
   padding: var(--padding-xl);
   justify-content: center;
+  height: fit-content;
 }
 
 .title{

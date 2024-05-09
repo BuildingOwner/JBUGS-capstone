@@ -5,6 +5,7 @@ import styles from "./AssignmentList.module.css"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NoItem from "../mainPage/NoItem";
 
 const AssignmentList = () => {
   const navigate = useNavigate()
@@ -12,7 +13,8 @@ const AssignmentList = () => {
   const enrollmentId = location.state.enrollmentId
   const [lectureName, setLectureName] = useState()
   const [division, setDivision] = useState()
-  const [assignments, setAssignments] = useState([])
+  const [unsubmittedAssignments, setUnsubmittedAssignments] = useState([])
+  const [submittedAssignments, setSubmittedAssignments] = useState([])
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [courseDto, setCourseDto] = useState()
 
@@ -34,7 +36,9 @@ const AssignmentList = () => {
         setLectureName(lectureName1)
         setDivision(division1)
         setMemberInfoDto(response.data.memberInfoDto)
-        setAssignments(assignmentList)
+        // setAssignments(assignmentList)
+        setUnsubmittedAssignments(assignmentList.filter(assignment => assignment.status === "NOT_SUBMITTED"))
+        setSubmittedAssignments(assignmentList.filter(assignment => assignment.status === "SUBMITTED"))
         setCourseDto(response.data.courseDto)
       }
       catch (error) {
@@ -75,8 +79,8 @@ const AssignmentList = () => {
                 <h4>성적</h4>
               </div>
               <div className={`no-scroll-bar ${styles.list}`}>
-                {assignments.map((assignment) =>
-                  assignment.status === "NOT_SUBMITTED" ? (
+                {unsubmittedAssignments.length != 0 ?
+                  unsubmittedAssignments.map((assignment) =>
                     <AssignListItem
                       key={assignment.id}
                       title={assignment.title}
@@ -85,8 +89,7 @@ const AssignmentList = () => {
                       weekId={assignment.weekNumber}
                       status={assignment.status}
                     />
-                  ) : null
-                )}
+                  ) : <NoItem title={"미제출 과제가"} />}
               </div>
             </div>
             <div className={styles.listContainer}>
@@ -98,17 +101,17 @@ const AssignmentList = () => {
                 <h4>성적</h4>
               </div>
               <div className={`no-scroll-bar ${styles.list}`}>
-                {assignments.map((assignment) =>
-                  assignment.status === "SUBMITTED" ? (
+              {submittedAssignments.length != 0 ?
+                  submittedAssignments.map((assignment) =>
                     <AssignListItem
                       key={assignment.id}
                       title={assignment.title}
                       contents={assignment.contents}
                       dueDate={assignment.dueDate}
                       weekId={assignment.weekNumber}
-                      status={assignment.status} />
-                  ) : null
-                )}
+                      status={assignment.status}
+                    />
+                  ) : <NoItem title={"제출한 과제가"} />}
               </div>
             </div>
           </div>

@@ -74,7 +74,7 @@ const AssignmentList = () => {
                 <h4>기한</h4>
                 <h4>성적</h4>
               </div>
-              <div className={styles.list}>
+              <div className={`no-scroll-bar ${styles.list}`}>
                 {assignments.map((assignment) =>
                   assignment.status === "NOT_SUBMITTED" ? (
                     <AssignListItem
@@ -97,7 +97,7 @@ const AssignmentList = () => {
                 <h4>기한</h4>
                 <h4>성적</h4>
               </div>
-              <div className={styles.list}>
+              <div className={`no-scroll-bar ${styles.list}`}>
                 {assignments.map((assignment) =>
                   assignment.status === "SUBMITTED" ? (
                     <AssignListItem

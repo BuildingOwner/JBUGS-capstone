@@ -57,7 +57,6 @@
 }
 .hw-top {
   align-self: stretch;
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -496,7 +495,7 @@
   background-color: var(--blue2);
   padding: var(--padding-xl);
   box-sizing: border-box;
-  gap: var(--gap-6xl);
+  gap: var(--gap-xl);
 }
 .h1,
 .homework,

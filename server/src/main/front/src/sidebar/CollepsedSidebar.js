@@ -87,7 +87,7 @@ function CollepsedSidebar(props) {
         <div className={`${styles.userInfo} ${styles3.userInfo}`}>
           <div className={styles.user}>
             <h3 className={styles.userName}>{props.memberInfoDto?.memberName}</h3>
-            <h3 className={styles.userTrack}>{props.memberInfoDto?.firstTrack}</h3>
+            <h3 className={`${styles.userTrack} ${styles3.userTrack}`}>{props.memberInfoDto?.firstTrack}</h3>
           </div>
           <div className={styles.userImage}>
             <FaUser size={30} />

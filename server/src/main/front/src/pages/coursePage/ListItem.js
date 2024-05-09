@@ -103,7 +103,6 @@ const ListItem = (props) => {
           {props.url === 'video' && (
             <h3 className={`${styles.fontSize} ${styles.blue}`}>length</h3>
           )}
-
         </div>
         <div className={styles.second}>
           {props.url === 'assignmentlist' && (
@@ -120,9 +119,9 @@ const ListItem = (props) => {
           )}
         </div>
         <div className={styles.third}>
-          <div className="prograss-bar"></div>
-          <h3 className={styles.fontSize}>{props.contents}</h3>
-
+          {props.url === 'video' ? 
+          <div className="prograss-bar"></div> :
+          <h3 className={styles.fontSize}>{props.contents}</h3>}
         </div>
       </div>
       <div className={styles.fourth}>

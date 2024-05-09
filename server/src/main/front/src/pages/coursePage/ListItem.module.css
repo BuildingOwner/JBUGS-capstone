@@ -48,6 +48,11 @@
 
 .fontSize {
   font-size: var(--font-size-lg);
+  width: 100%;
+}
+
+.third h3{
+  font-size: var(--font-size-base);
 }
 
 .red {

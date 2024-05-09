@@ -93,7 +93,7 @@ const Main = () => {
               </div>
             </div>
             <div className="scrollframe no-scroll-bar">
-              {mainLectures && mainLectures.map((lecture, index) => (
+              {mainLectures ? mainLectures.map((lecture, index) => (
                 <CourseItem
                   key={index}
                   enrollmentId={lecture.enrollmentId}
@@ -103,7 +103,7 @@ const Main = () => {
                   lectureTime={lecture.lectureTime}
                   classification={lecture.classification}
                 />
-              ))}
+              )) : <NoItem title={"수강중인 강좌가"} />}
             </div>
           </div>
           <RightNav

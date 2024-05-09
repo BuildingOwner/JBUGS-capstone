@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { Scheduler } from "@aldabil/react-scheduler";
 import Schedule from "./Schedule"
 import styles from "./RightNav.module.css"
+import NoItem from "./NoItem";
 
 
 const RightNav = (props) => {
@@ -52,7 +53,7 @@ const RightNav = (props) => {
             <h1 className="title17">미제출 과제</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
-            {mainLectures &&
+            {mainLectures ?
               mainLectures.map((lecture) => (
                 lecture.assignments
                   .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
@@ -68,7 +69,7 @@ const RightNav = (props) => {
                       enrollmentId={lecture.enrollmentId}
                     />
                   ))
-              ))}
+              )) : <NoItem title={"미제출 과제가"}/>}
           </div>
         </div>
         <div className={`homework ${styles.yetContainer}`}>
@@ -76,7 +77,7 @@ const RightNav = (props) => {
             <h1 className="title17">미응시 퀴즈</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
-            {mainLectures &&
+            {mainLectures ?
               mainLectures.map((lecture) => (
                 lecture.assignments
                   .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
@@ -92,7 +93,7 @@ const RightNav = (props) => {
                       enrollmentId={lecture.enrollmentId}
                     />
                   ))
-              ))}
+              )) : <NoItem title={"미응시 퀴즈가"}/>}
           </div>
         </div>
       </div>

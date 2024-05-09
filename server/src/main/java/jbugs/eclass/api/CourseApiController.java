@@ -84,13 +84,7 @@ public class CourseApiController {
                         .collect(Collectors.toList());
                 weeklyContentDto.setClassFiles(fileDtos);
 
-                List<Quiz> quizzes = weekService.findQuizzesByWeekId(week.getId());
-                List<QuizDto> quizDtoList = quizzes.stream().map(quiz -> {
-                    // Quiz에 해당하는 QuizInfo 객체를 조회
-                    Optional<QuizInfo> quizInfoOptional = Optional.ofNullable(quizService.findQuizInfoByQuizId(quiz.getId()));
-                    // QuizInfo 객체가 존재하는 경우 QuizDto 생성, 그렇지 않은 경우 null 반환
-                    return quizInfoOptional.map(quizInfo -> QuizDto.from(quiz, quizInfo)).orElse(null);
-                }).collect(Collectors.toList());
+                List<QuizDto> quizDtoList = quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getId());
                 weeklyContentDto.setQuizzes(quizDtoList);
 
                 return weeklyContentDto;

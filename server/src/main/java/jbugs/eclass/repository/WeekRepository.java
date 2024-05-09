@@ -2,6 +2,7 @@ package jbugs.eclass.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jbugs.eclass.domain.Quiz;
 import jbugs.eclass.domain.Week;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -6,16 +6,23 @@
 
 .contants{
   width: 100%;
-  flex-grow: 1;
+  height: calc(100% - 92px - 0.625rem);
   display: flex;
   flex-direction: column;
   gap: var(--gap-xl);
 }
 
 .yetContainer{
-  height: 50% !important;
+  height: calc((100% - 1.25rem)/2);
 }
 
 .hwItem{
   flex-grow: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
 }

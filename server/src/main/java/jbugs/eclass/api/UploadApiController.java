@@ -139,7 +139,7 @@ public class UploadApiController {
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(map, headers);
 
-        String url = "http://localhost:5000/add-quiz-keyword";
+        String url = "http://43.200.202.59:5000/add-quiz-keyword";
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 

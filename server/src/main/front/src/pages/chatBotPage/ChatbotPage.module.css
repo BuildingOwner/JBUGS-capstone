@@ -123,6 +123,15 @@
   resize: none;
 }
 
+.imageInputBtn:hover{
+  background-color: #ccc !important;
+}
+
+.imageInput{
+  width: 20% !important;
+  display: none;
+}
+
 .textareaWrapper {
   max-height: 160px; /* 최대 높이 설정 */
   overflow-y: auto; /* 수직 스크롤 활성화 */

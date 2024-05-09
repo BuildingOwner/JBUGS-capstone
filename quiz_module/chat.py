@@ -134,7 +134,7 @@ def chat(chat_id, question, img_path=[]):
     sql = "SELECT chat_room_name FROM chat_room WHERE chat_room_id = %s"
     cursor.execute(sql, (chat_id,))
     chat_room_name = cursor.fetchone()
-    if chat_room_name == "생성" or "이름":
+    if chat_room_name == ("생성" or "이름"):
         sql = "UPDATE chat_room SET chat_room_name = %s WHERE chat_room_id = %s"
         cursor.execute(sql, (make_name_by_question(question), chat_id,))
         chat_room_name = cursor.fetchone()

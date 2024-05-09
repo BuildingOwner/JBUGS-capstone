@@ -145,7 +145,7 @@ const ChatbotPage = () => {
           role: 'user',
           content: [{ text: text, image: imageBase64 }],
         };
-        
+
       }
     }
 
@@ -192,7 +192,7 @@ const ChatbotPage = () => {
         setChats((chats) => {
           // chats가 null이면 빈 배열로 처리
           const currentChats = chats || [];
-          
+
           if (currentChats.length > 0 && currentChats[currentChats.length - 1].role === 'assistant') {
             // 기존 로직
             const updatedChat = {
@@ -208,7 +208,7 @@ const ChatbotPage = () => {
             return [...currentChats, newChat];
           }
         });
-        
+
         // setChats((chats) => {
         //   // chats 배열이 비어있지 않고 마지막 채팅의 role이 'assistant'인 경우
         //   if (chats.length > 0 && chats[chats.length - 1].role === 'assistant') {
@@ -398,11 +398,10 @@ const ChatbotPage = () => {
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
-
-                  {/* <button type="button" className={`btn btn-primary ${styles.chatBtn}`}>
+                  <label htmlFor="imageInput" className={`btn btn-primary ${styles.chatBtn} ${styles.imageInputBtn}`}>
                       <LuImagePlus size={20} />
-                    </button> */}
-                  <input type="file" accept="image/*" id="imageInput" multiple></input>
+                  </label>
+                  <input type="file" accept="image/*" id="imageInput" className={`form-control ${styles.imageInput}`} multiple></input>
                   <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
                     <textarea
                       ref={textareaRef}

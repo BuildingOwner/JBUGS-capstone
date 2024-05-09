@@ -12,16 +12,27 @@ const FileUploadModal = (props) => {
   const [attachFiles, setAttachFile] = useState(null)
   const [shortAnswer, setShortAnswer] = useState(null)
   const [choice, setChoice] = useState(null)
+  const [description, setDescription] = useState(null)
+  const [quizType, setQuizType] = useState("")
 
+  const changeDescription = (e) => {
+    setDescription(e.target.value)
+    console.log(e.target.value)
+  }
+
+  const handleTypeChange = (e) => {
+    setQuizType(e.target.value)
+    console.log(e.target.value)
+  }
 
   const handleFileChange = (e) => {
     setAttachFile(e.target.files[0])
-    console.log("attachFile : ",e.target.files[0])
+    console.log("attachFile : ", e.target.files[0])
   }
 
   const handleVideoChange = (e) => {
     setVideoFile(e.target.files[0])
-    console.log("videoFile : ",e.target.files[0])
+    console.log("videoFile : ", e.target.files[0])
   }
 
   const handleWeekChange = (e) => {
@@ -57,6 +68,8 @@ const FileUploadModal = (props) => {
     formData.append("choice", choice)
     formData.append("videoFiles", videoFiles)
     formData.append("attachFiles", attachFiles)
+    formData.append("description", description)
+    formData.append("quizType", quizType)
 
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
@@ -147,6 +160,16 @@ const FileUploadModal = (props) => {
                 )
               })}
             </select>
+            <select
+              aria-label="Small select example"
+              value={quizType}
+              onChange={handleTypeChange}>
+              <option value={null}>문제 유형</option>
+              <option value={"EXERCISE"}>연습 문제</option>
+              <option value={"PRACTICE"} >실습 문제</option>
+            </select>
+            <textarea placeholder="퀴즈 설명" onChange={changeDescription}></textarea>
+
           </div>
           <div className="fileinput1">
             <div className="parent1">

@@ -85,4 +85,5 @@ bower_components
 
 ###python###
 testenv/
+finalenv/
 static/

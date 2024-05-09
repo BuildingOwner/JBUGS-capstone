@@ -8,5 +8,5 @@ import java.util.List;
 public class QuizContentDto {
     private MemberInfoDto memberInfoDto;
     private CourseDto courseDto;
-    private List<QuizDto> quizDtoList;
+    private List<QuizDto> allQuizDtoList;
 }

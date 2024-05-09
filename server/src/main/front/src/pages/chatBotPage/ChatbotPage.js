@@ -26,6 +26,24 @@ const ChatbotPage = () => {
   // React 상태 관리를 위한 Hooks
   const [isSending, setIsSending] = useState(false);
 
+  const [fileDescription, setFileDescription] = useState('');
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    const fileCount = files.length;
+    
+    if (fileCount === 1) {
+      // 파일이 하나만 선택된 경우, 파일 이름을 표시
+      setFileDescription(files[0].name);
+    } else if (fileCount > 1) {
+      // 여러 파일이 선택된 경우, "파일 n개" 형식으로 표시
+      setFileDescription(`이미지 ${fileCount}개`);
+    } else {
+      // 파일이 선택되지 않은 경우
+      setFileDescription('');
+    }
+  };
+
   const textareaRef = useRef(null);
   const chatBoardRef = useRef(null);
   const bottomRef = useRef(null);
@@ -400,8 +418,9 @@ const ChatbotPage = () => {
                 <div className={styles.inputBtns}>
                   <label htmlFor="imageInput" className={`btn btn-primary ${styles.chatBtn} ${styles.imageInputBtn}`}>
                       <LuImagePlus size={20} />
+                      {fileDescription && <span className={styles.fileDescription}>{fileDescription}</span>}
                   </label>
-                  <input type="file" accept="image/*" id="imageInput" className={`form-control ${styles.imageInput}`} multiple></input>
+                  <input type="file" accept="image/*" id="imageInput" className={`form-control ${styles.imageInput}`} onChange={handleFileChange} multiple></input>
                   <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
                     <textarea
                       ref={textareaRef}

@@ -123,6 +123,12 @@
   resize: none;
 }
 
+.imageInputBtn{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
 .imageInputBtn:hover{
   background-color: #ccc !important;
 }

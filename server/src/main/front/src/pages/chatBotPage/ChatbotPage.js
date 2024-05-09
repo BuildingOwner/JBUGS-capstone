@@ -133,6 +133,7 @@ const ChatbotPage = () => {
 
     const userText = text;
     setText('');
+    handleResizeHeight()
 
     try {
       const formData = new FormData();

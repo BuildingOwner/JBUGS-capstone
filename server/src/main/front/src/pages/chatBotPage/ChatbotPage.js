@@ -129,28 +129,30 @@ const ChatbotPage = () => {
   const sendMessage = async () => {
     setIsSending(true);
     setReadOnly(true);
-    let imageChat = {
 
-    }
+    const chattings = {
+      role: 'user',
+      content: [{ text: text}],
+    };
+
     const imageInput = document.getElementById('imageInput');
     if (imageInput.files) {
       for (let i = 0; i < imageInput.files.length; i++) {
         // 이미지 파일을 Base64 문자열로 변환
         const imageBase64 = await convertImageFileToBase64(imageInput.files[i]);
         // Base64 인코딩된 이미지 문자열을 채팅 객체에 추가
-        imageChat = {
+        chattings = {
           role: 'user',
           content: [{ text: text, image: imageBase64 }],
         };
-        setChats(chats => [...chats, imageChat]);
+        setChats(chats => [...chats, chattings]);
       }
     }
 
-
     if (!Array.isArray(chats)) {
-      setChats([imageChat]);
+      setChats([chattings]);
     } else {
-      setChats([...chats, imageChat]);
+      setChats([...chats, chattings]);
     }
 
 
@@ -296,7 +298,10 @@ const ChatbotPage = () => {
     const chatIdArray = await fetchChatData() // fetchChatData 호출 및 chatId 반환 대기
     if (chatIdArray && chatIdArray.length > 0 && firstDo === true) { // chatId가 유효하고, 배열에 요소가 있는 경우에만 fetchChattings 호출
       await fetchChattings(chatIdArray[0]); // fetchChattings 호출 및 첫 번째 chatId 전달
-    } else {
+    } else if (chatIdArray.length === 0) {
+      console.log("채팅방을 생성해주세요")
+    } 
+    else {
       fetchChattings(selectedId)
     }
   }
@@ -337,7 +342,27 @@ const ChatbotPage = () => {
           <div className={styles.bottom} ref={bottomRef}>
             <div className={styles.bottomLeft}>
               <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`} ref={chatBoardRef}>
-                {chats?.map((chat, index) => (
+                {chats?.map((chat, index) => {
+                  // chat.content가 존재하며, 그 길이가 0보다 큰지 확인
+                  const content = chat.content && chat.content.length > 0 ? chat.content[0] : null;
+
+                  return chat.role === 'user' ? (
+                    <UserChatItem
+                      key={index}
+                      // content가 null이 아니면 해당 값을 사용, 그렇지 않으면 안전한 기본값 사용
+                      text={content ? content.text : ""}
+                      image={content ? content.image : null}
+                      memberName={memberName}
+                    />
+                  ) : (
+                    <BotChatItem
+                      key={index}
+                      text={content ? content.text : ""}
+                    />
+                  );
+                })}
+
+                {/* {chats?.map((chat, index) => (
                   chat.role === 'user' ?
                     <UserChatItem
                       key={index}
@@ -349,7 +374,7 @@ const ChatbotPage = () => {
                       key={index}
                       text={chat.content[0].text}
                     />
-                ))}
+                ))} */}
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>

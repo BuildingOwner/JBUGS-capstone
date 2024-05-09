@@ -132,7 +132,7 @@ const ChatbotPage = () => {
 
     let chattings = {
       role: 'user',
-      content: [{ text: text}],
+      content: [{ text: text }],
     };
 
     const imageInput = document.getElementById('imageInput');
@@ -145,7 +145,7 @@ const ChatbotPage = () => {
           role: 'user',
           content: [{ text: text, image: imageBase64 }],
         };
-        setChats(chats => [...chats, chattings]);
+        
       }
     }
 
@@ -188,26 +188,45 @@ const ChatbotPage = () => {
         if (done) break;
 
         const text = new TextDecoder().decode(value);
-
         setChats((chats) => {
-          // chats 배열이 비어있지 않고 마지막 채팅의 role이 'assistant'인 경우
-          if (chats.length > 0 && chats[chats.length - 1].role === 'assistant') {
-            // 마지막 채팅의 텍스트에 새로운 텍스트 이어 붙임
+          // chats가 null이면 빈 배열로 처리
+          const currentChats = chats || [];
+          
+          if (currentChats.length > 0 && currentChats[currentChats.length - 1].role === 'assistant') {
+            // 기존 로직
             const updatedChat = {
-              ...chats[chats.length - 1],
-              content: [{ text: chats[chats.length - 1].content[0].text + text }],
+              ...currentChats[currentChats.length - 1],
+              content: [{ text: currentChats[currentChats.length - 1].content[0].text + text }],
             };
-            // 마지막 채팅을 업데이트된 채팅으로 교체
-            return [...chats.slice(0, -1), updatedChat];
+            return [...currentChats.slice(0, -1), updatedChat];
           } else {
-            // 마지막 채팅의 role이 'assistant'가 아니면 새로운 채팅 객체 추가
             const newChat = {
               role: 'assistant',
               content: [{ text: text }],
             };
-            return [...chats, newChat];
+            return [...currentChats, newChat];
           }
         });
+        
+        // setChats((chats) => {
+        //   // chats 배열이 비어있지 않고 마지막 채팅의 role이 'assistant'인 경우
+        //   if (chats.length > 0 && chats[chats.length - 1].role === 'assistant') {
+        //     // 마지막 채팅의 텍스트에 새로운 텍스트 이어 붙임
+        //     const updatedChat = {
+        //       ...chats[chats.length - 1],
+        //       content: [{ text: chats[chats.length - 1].content[0].text + text }],
+        //     };
+        //     // 마지막 채팅을 업데이트된 채팅으로 교체
+        //     return [...chats.slice(0, -1), updatedChat];
+        //   } else {
+        //     // 마지막 채팅의 role이 'assistant'가 아니면 새로운 채팅 객체 추가
+        //     const newChat = {
+        //       role: 'assistant',
+        //       content: [{ text: text }],
+        //     };
+        //     return [...chats, newChat];
+        //   }
+        // });
       }
 
     } catch (error) {
@@ -300,7 +319,7 @@ const ChatbotPage = () => {
       await fetchChattings(chatIdArray[0]); // fetchChattings 호출 및 첫 번째 chatId 전달
     } else if (chatIdArray.length === 0) {
       console.log("채팅방을 생성해주세요")
-    } 
+    }
     else {
       fetchChattings(selectedId)
     }

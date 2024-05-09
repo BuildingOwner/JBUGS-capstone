@@ -130,7 +130,7 @@ const ChatbotPage = () => {
     setIsSending(true);
     setReadOnly(true);
 
-    const chattings = {
+    let chattings = {
       role: 'user',
       content: [{ text: text}],
     };

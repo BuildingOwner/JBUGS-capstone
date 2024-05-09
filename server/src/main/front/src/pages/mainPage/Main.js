@@ -5,6 +5,7 @@ import Sidebar from "../../sidebar/MainSidebars";
 import CourseItem from "./CourseItem";
 import RightNav from "./RightNav";
 import "./Main.css";
+import styles from "./Main.module.css"
 
 const Main = () => {
   const navigate = useNavigate()
@@ -78,7 +79,7 @@ const Main = () => {
     <div className={`background`}>
       <Sidebar memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
-        <section className={`bg`}>
+        <section className={`bg ${styles.bg}`}>
           <div className="course">
             <div className="courseheader">
               <div className="header-left">

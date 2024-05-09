@@ -206,7 +206,7 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>퀴즈</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {quizs.map((quiz, i) => (
+                {quizs[0] != null ? quizs.map((quiz, i) => (
                   <ListItem
                     key={`quiz${i}`}
                     quizName={quiz.quizName}
@@ -223,7 +223,7 @@ const Course = () => {
                     courseDto={courseDto}
                     url={quizUrl}
                   />
-                ))}
+                )): null}
               </div>
             </div>
           </div>

@@ -9,7 +9,7 @@ const QuizAnswer = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const data = location.state.props // 이곳에서 사용될 데이터
-  console.log(data)
+  console.log("data", data)
   const enrollmentId = data.enrollmentId
   console.log("enrollmentId : ", enrollmentId)
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
@@ -50,7 +50,7 @@ const QuizAnswer = () => {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })
-      const answerResponse = await axios.get(`/api/answer/${quizId}`, {
+      const answerResponse = await axios.get(`/api/answers/${quizId}`, {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
       })
 
@@ -119,6 +119,7 @@ const QuizAnswer = () => {
                       :
                       (<textarea
                         value={answer[questions[indexOfOptions]?.id] || ''}
+                        readOnly
                       ></textarea>)
                   }
                 </div>
@@ -162,7 +163,7 @@ const QuizAnswer = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default QuizAnswer;

@@ -49,9 +49,11 @@ const QuizList = () => {
       // useState를 활용하여 완료된 퀴즈와 완료되지 않은 퀴즈 분리
       const completedQuizzes = quizList.filter(quiz => quiz.quizScore !== null)
       const uncompletedQuizzes = quizList.filter(quiz => quiz.quizScore === null)
+      const courseDto1 = response.data.courseDto
       const lectureName1 = response.data.courseDto.lectureName
       const division1 = response.data.courseDto.division
 
+      setCourseDto(courseDto1)
       setLectureName(lectureName1)
       setDivision(division1)
       setMemberInfoDto(response.data.memberInfoDto)
@@ -177,6 +179,7 @@ const QuizList = () => {
                   jsonData={quiz.jsonData}
                   quizScore={quiz.quizScore}
                   submissionStatus={quiz.submissionStatus}
+                  courseDto={courseDto}
                 />
               )) :
               <NoItem title={"퀴즈가"}/>}

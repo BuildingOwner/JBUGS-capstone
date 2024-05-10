@@ -61,9 +61,6 @@ const ListItem = (props) => {
 
       setFileExtension(extension[last])
     }
-    // if(modalOpen == true) {
-    //   changeModal(false)
-    // }
   }, []);
 
   return (

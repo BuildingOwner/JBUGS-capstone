@@ -8,7 +8,6 @@ const QuizInfoModal = (props) => {
   Modal.setAppElement('#root');
   const [formattedDate, setFormattedDate] = useState()
   const navigate = useNavigate()
-
   const moveToDoQuiz = () => {
     navigate('/doquiz', {
       state: {
@@ -20,7 +19,8 @@ const QuizInfoModal = (props) => {
   const moveToQuizAnswer = () => {
     navigate('/quizanswer', {
       state: {
-        props: props.props
+        props: props.props,
+        courseDto: props.courseDto,
       },
     })
   }

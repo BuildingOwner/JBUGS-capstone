@@ -17,6 +17,12 @@ const AssignmentList = () => {
   const [submittedAssignments, setSubmittedAssignments] = useState([])
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [courseDto, setCourseDto] = useState()
+  const [selectedWeek, setSelectedWeek] = useState(100)
+
+  const handleWeekChange = (e) => {
+    setSelectedWeek(e.target.value)
+    console.log(e.target.value)
+  }
 
   useEffect(() => {
     const fetchAssignmentList = async () => {
@@ -28,7 +34,7 @@ const AssignmentList = () => {
         const assignmentList = response.data.assignmentDtoList
         const lectureName1 = response.data.courseDto.lectureName
         const division1 = response.data.courseDto.division
-
+        console.log(response)
         setLectureName(lectureName1)
         setDivision(division1)
         setMemberInfoDto(response.data.memberInfoDto)
@@ -58,7 +64,9 @@ const AssignmentList = () => {
           <AssignHeader />
           <div className={styles.content}>
             <select
-              className={`form-select form-select ${styles.select}`} defaultValue={100}>
+              className={`form-select form-select ${styles.select}`}
+              value={selectedWeek}
+              onChange={handleWeekChange}>
               <option value={100}>주차 전체 보기</option>
               {Array.from({ length: 16 }).map((_, i) => {
                 return (
@@ -74,9 +82,14 @@ const AssignmentList = () => {
                 <h4>기한</h4>
                 <h4>성적</h4>
               </div>
+              {
+
+              }
               <div className={`no-scroll-bar ${styles.list}`}>
                 {unsubmittedAssignments.length != 0 ?
-                  unsubmittedAssignments.map((assignment) =>
+                  unsubmittedAssignments.filter(assign =>
+                    (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                  ).map((assignment) =>
                     <AssignListItem
                       key={assignment.id}
                       title={assignment.title}
@@ -97,8 +110,10 @@ const AssignmentList = () => {
                 <h4>성적</h4>
               </div>
               <div className={`no-scroll-bar ${styles.list}`}>
-              {submittedAssignments.length != 0 ?
-                  submittedAssignments.map((assignment) =>
+                {submittedAssignments.length != 0 ?
+                  submittedAssignments.filter(assign =>
+                    (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                  ).map((assignment) =>
                     <AssignListItem
                       key={assignment.id}
                       title={assignment.title}

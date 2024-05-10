@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import UncompleteQuizItem from "./UncompletedQuizItem";
 import QuizListItem from "./QuizListItem";
 import NoItem from "../../mainPage/NoItem"
+import LoadingPage from "../../mainPage/LoadingPage";
 
 const QuizList = () => {
   const location = useLocation()
@@ -70,6 +71,8 @@ const QuizList = () => {
   useEffect(() => {
     fetchQuizList()
   }, [])
+
+  if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>

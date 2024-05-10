@@ -4,6 +4,7 @@ import styles from "../doQuiz/DoQuiz.module.css";
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import LoadingPage from "../../mainPage/LoadingPage";
 
 const QuizAnswer = () => {
   const navigate = useNavigate()
@@ -72,6 +73,8 @@ const QuizAnswer = () => {
   useEffect(() => {
     fetchQuizAnswer()
   }, [])
+
+  if (!questions) return <LoadingPage />;
 
   return (
     <div className={`background`}>

@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { GoSearch } from "react-icons/go";
 import NoItem from "../mainPage/NoItem";
+import LoadingPage from "../mainPage/LoadingPage";
 
 const NoticeList = () => {
   const location = useLocation()
@@ -37,6 +38,8 @@ const NoticeList = () => {
   useEffect(() => {
     fetchNoticeList()
   }, [])
+
+  if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>

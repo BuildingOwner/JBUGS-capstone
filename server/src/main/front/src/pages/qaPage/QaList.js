@@ -5,6 +5,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoSearch } from "react-icons/go";
+import NoItem from "../mainPage/NoItem";
 
 const QaList = () => {
   const location = useLocation()
@@ -79,7 +80,7 @@ const QaList = () => {
               <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
             </div>
             <div className={styles.list}>
-              {qnADtoList?.map((qna, i) => (
+              {qnADtoList?.length != 0 ? qnADtoList?.map((qna, i) => (
                 <QnaRow
                   key={`qna${i}`}
                   number={i}
@@ -90,7 +91,7 @@ const QaList = () => {
                   views={qna.views}
                   writer={qna.writer}
                 />
-              ))}
+              )) : <NoItem title={"등록된 질문이"}/>}
             </div>
           </div>
         </section>

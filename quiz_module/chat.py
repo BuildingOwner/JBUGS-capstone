@@ -52,7 +52,7 @@ def chat(chat_id, question, img_path=[]):
             message = json.loads(prev_chat_text[0])
         except:
             message = []  # 이전 채팅 데이터가 없는 경우 빈 리스트로 초기화
-        print("메시지 : ", message)
+        # print("메시지 : ", message)
         # 메시지 내용에서 이미지 URL을 찾아서 인코딩하고 리스트에 추가
         for msg in message:
             for item in msg["content"]:
@@ -130,11 +130,37 @@ def chat(chat_id, question, img_path=[]):
         sql_str = "UPDATE chat_room SET chatting_json = %s WHERE chat_room_id = %s"
         params = (json.dumps(message, ensure_ascii=False, separators=(',', ':')), chat_id)
         print(f"[{current_file_name}]  db 업데이트", end="")
+    
+    sql = "SELECT chat_room_name FROM chat_room WHERE chat_room_id = %s"
+    cursor.execute(sql, (chat_id,))
+    chat_room_name = cursor.fetchone()
+    if chat_room_name[0] == ("생성" or "이름"):
+        sql = "UPDATE chat_room SET chat_room_name = %s WHERE chat_room_id = %s"
+        cursor.execute(sql, (make_name_by_question(question), chat_id,))
+        chat_room_name = cursor.fetchone()
 
     if sql_injection_detector([sql_str]) == False:
         cursor.execute(sql_str, params)
         db.commit()
         print(" 완료")
+
+def make_name_by_question(str):
+    question = f'''
+    {str}
+    
+    이 내용을 바탕으로 채팅방 이름을 지어줘.
+    경어체로 지어줘.
+    방 이라는 글자는 빼줘.
+    '''
+    completion = client.chat.completions.create(
+        model="gpt-4-turbo",
+        messages=[
+            {"role": "system", "content": "You are a name maker"},
+            {"role": "user", "content": question}
+        ]
+    )
+
+    return completion.choices[0].message.content
 
 def chat_test2(question, model_name="turbo", img_path=["test/images/test.png"]):
     image_path = img_path

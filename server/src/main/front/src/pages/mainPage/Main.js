@@ -5,6 +5,7 @@ import Sidebar from "../../sidebar/MainSidebars";
 import CourseItem from "./CourseItem";
 import RightNav from "./RightNav";
 import "./Main.css";
+import styles from "./Main.module.css"
 
 const Main = () => {
   const navigate = useNavigate()
@@ -78,7 +79,7 @@ const Main = () => {
     <div className={`background`}>
       <Sidebar memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
-        <section className={`bg`}>
+        <section className={`bg ${styles.bg}`}>
           <div className="course">
             <div className="courseheader">
               <div className="header-left">
@@ -92,7 +93,7 @@ const Main = () => {
               </div>
             </div>
             <div className="scrollframe no-scroll-bar">
-              {mainLectures && mainLectures.map((lecture, index) => (
+              {mainLectures ? mainLectures.map((lecture, index) => (
                 <CourseItem
                   key={index}
                   enrollmentId={lecture.enrollmentId}
@@ -102,7 +103,7 @@ const Main = () => {
                   lectureTime={lecture.lectureTime}
                   classification={lecture.classification}
                 />
-              ))}
+              )) : <NoItem title={"수강중인 강좌가"} />}
             </div>
           </div>
           <RightNav

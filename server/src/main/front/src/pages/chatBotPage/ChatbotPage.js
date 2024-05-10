@@ -26,6 +26,24 @@ const ChatbotPage = () => {
   // React 상태 관리를 위한 Hooks
   const [isSending, setIsSending] = useState(false);
 
+  const [fileDescription, setFileDescription] = useState('');
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    const fileCount = files.length;
+    
+    if (fileCount === 1) {
+      // 파일이 하나만 선택된 경우, 파일 이름을 표시
+      setFileDescription(files[0].name);
+    } else if (fileCount > 1) {
+      // 여러 파일이 선택된 경우, "파일 n개" 형식으로 표시
+      setFileDescription(`이미지 ${fileCount}개`);
+    } else {
+      // 파일이 선택되지 않은 경우
+      setFileDescription('');
+    }
+  };
+
   const textareaRef = useRef(null);
   const chatBoardRef = useRef(null);
   const bottomRef = useRef(null);
@@ -145,7 +163,7 @@ const ChatbotPage = () => {
           role: 'user',
           content: [{ text: text, image: imageBase64 }],
         };
-        
+
       }
     }
 
@@ -158,6 +176,7 @@ const ChatbotPage = () => {
 
     const userText = text;
     setText('');
+    handleResizeHeight()
 
     try {
       const formData = new FormData();
@@ -191,7 +210,7 @@ const ChatbotPage = () => {
         setChats((chats) => {
           // chats가 null이면 빈 배열로 처리
           const currentChats = chats || [];
-          
+
           if (currentChats.length > 0 && currentChats[currentChats.length - 1].role === 'assistant') {
             // 기존 로직
             const updatedChat = {
@@ -207,7 +226,7 @@ const ChatbotPage = () => {
             return [...currentChats, newChat];
           }
         });
-        
+
         // setChats((chats) => {
         //   // chats 배열이 비어있지 않고 마지막 채팅의 role이 'assistant'인 경우
         //   if (chats.length > 0 && chats[chats.length - 1].role === 'assistant') {
@@ -397,11 +416,11 @@ const ChatbotPage = () => {
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
-
-                  {/* <button type="button" className={`btn btn-primary ${styles.chatBtn}`}>
+                  <label htmlFor="imageInput" className={`btn btn-primary ${styles.chatBtn} ${styles.imageInputBtn}`}>
                       <LuImagePlus size={20} />
-                    </button> */}
-                  <input type="file" accept="image/*" id="imageInput" multiple></input>
+                      {fileDescription && <span className={styles.fileDescription}>{fileDescription}</span>}
+                  </label>
+                  <input type="file" accept="image/*" id="imageInput" className={`form-control ${styles.imageInput}`} onChange={handleFileChange} multiple></input>
                   <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
                     <textarea
                       ref={textareaRef}

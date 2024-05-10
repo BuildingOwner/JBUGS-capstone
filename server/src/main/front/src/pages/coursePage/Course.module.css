@@ -11,7 +11,7 @@
 }
 .container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, calc(50% - 0.625rem));
   grid-template-rows: repeat(2, 50%);
   gap: var(--gap-xl);
   width: 100%;
@@ -60,6 +60,10 @@
   height: fit-content !important;
   background-color: var(--point-blue) !important;
   border: none !important;
+}
+
+.hidden{
+  display: none !important;
 }
 
 .listContainer {

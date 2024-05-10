@@ -17,6 +17,21 @@ const QaList = () => {
   const [division, setDivision] = useState()
   const [qnADtoList, setQnADtoList] = useState()
   const [courseDto, setCourseDto] = useState()
+  const [qaFilter, setQaFilter] = useState("ALL")
+
+  const changeQaFilter = (e) => {
+    if (e === "ME") {
+      setQaFilter(memberInfoDto.memberName)
+      console.log(memberInfoDto.memberName)
+    } else {
+      setQaFilter(e)
+    }
+  }
+
+  // 날짜를 기준으로 오름차순으로 정렬하는 함수
+  const sortedQnaDtoList = qnADtoList?.sort((a, b) => {
+    return new Date(a.createdAt) - new Date(b.createdAt)
+  })
 
   const fetchQaList = async () => {
     try {
@@ -31,8 +46,6 @@ const QaList = () => {
       setDivision(division1)
       setMemberInfoDto(response.data.memberInfoDto)
       setQnADtoList(qnADtoList)
-      // setCourseDto(response.courseDto)
-      // setMemberInfoDto(response.memberInfoDto)
     } catch (error) {
 
     }
@@ -72,10 +85,16 @@ const QaList = () => {
 
           <div className={styles.content}>
             <div className={styles.tabBtns}>
-              <button style={{ borderTopLeftRadius: "5px" }} className={`${styles.tabItem} ${styles.currentFilter}`}>
+              <button style={{ borderTopLeftRadius: "5px" }}
+                className={`${styles.tabItem} ${styles.currentFilter}`}
+                onClick={() => changeQaFilter('ALL')}
+              >
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 질문</h3>
               </button>
-              <button style={{ borderTopRightRadius: "5px" }} className={`${styles.tabItem}`}>
+              <button style={{ borderTopRightRadius: "5px" }}
+                className={`${styles.tabItem}`}
+                onClick={() => changeQaFilter('ME')} // 수정필
+              >
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>내 질문</h3>
               </button>
             </div>
@@ -89,18 +108,20 @@ const QaList = () => {
               <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
             </div>
             <div className={styles.list}>
-              {qnADtoList?.length != 0 ? qnADtoList?.map((qna, i) => (
-                <QnaRow
-                  key={`qna${i}`}
-                  number={i}
-                  createdAt={qna.createdAt}
-                  qnAStatus={qna.qnAStatus}
-                  title={qna.title}
-                  qnaId={qna.qnaId}
-                  views={qna.views}
-                  writer={qna.writer}
-                />
-              )) : <NoItem title={"등록된 질문이"} />}
+              {sortedQnaDtoList?.length !== 0 ?
+                sortedQnaDtoList.filter((qna) => qaFilter === "ALL" ||
+                  qna.writer === qaFilter).map((qna, i) => (
+                    <QnaRow
+                      key={`qna${i}`}
+                      number={i}
+                      createdAt={qna.createdAt}
+                      qnAStatus={qna.qnAStatus}
+                      title={qna.title}
+                      qnaId={qna.qnaId}
+                      views={qna.views}
+                      writer={qna.writer}
+                    />
+                  )) : <NoItem title={"등록된 질문이"} />}
             </div>
           </div>
         </section>

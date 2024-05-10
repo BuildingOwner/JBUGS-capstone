@@ -24,7 +24,7 @@ const QnaRow = (props) => {
   }, [])
   return (
     <div className={styles.row}>
-      <h4 className={styles.num}>{props.number + 1}</h4> {/*여기 날짜 순으로 번호 매겨놔 */}
+      <h4 className={styles.num}>{props.number + 1}</h4>
       {props.qnAStatus === "COMPLETE" ?
         <div className={`${styles.answer} ${styles.answerDone}`}>
           <h4>답변 완료</h4>
@@ -33,7 +33,7 @@ const QnaRow = (props) => {
           <h4>답변 예정</h4>
         </div>}
       <div className={styles.secret}>
-        <FiLock size={20}/>
+        <FiLock size={20} />
       </div>
       <h4 className={styles.title}>{props.title}</h4>
       <h4 className={styles.writer}>{props.writer}</h4>

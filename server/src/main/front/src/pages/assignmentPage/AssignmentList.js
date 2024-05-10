@@ -85,9 +85,6 @@ const AssignmentList = () => {
                 <h4>기한</h4>
                 <h4>성적</h4>
               </div>
-              {
-
-              }
               <div className={`no-scroll-bar ${styles.list}`}>
                 {unsubmittedAssignments.length != 0 ?
                   unsubmittedAssignments.filter(assign =>

@@ -24,7 +24,7 @@ const QnaRow = (props) => {
   }, [])
   return (
     <div className={styles.row}>
-      <h4 className={styles.num}>1</h4> {/*여기 날짜 순으로 번호 매겨놔 */}
+      <h4 className={styles.num}>{props.noticeNumber}</h4>
       {props.noticeStatus === "EXAM" ?
         <div className={`${styles.category} ${styles.exam}`}>
           <h4>시험</h4>

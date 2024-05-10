@@ -251,6 +251,7 @@ button:hover{
   flex-grow: 1;
   padding: 20px;
   padding-left: 0;
+  min-width: 1000px;
 }
 
 .bg{

@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import NoItem from "../mainPage/NoItem";
+import LoadingPage from "../mainPage/LoadingPage";
 
 const AssignmentList = () => {
   const navigate = useNavigate()
@@ -55,6 +56,8 @@ const AssignmentList = () => {
 
     fetchAssignmentList();
   }, []);
+
+  if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>

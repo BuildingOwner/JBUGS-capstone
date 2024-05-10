@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoSearch } from "react-icons/go";
 import NoItem from "../mainPage/NoItem";
+import LoadingPage from "../mainPage/LoadingPage";
 
 const QaList = () => {
   const location = useLocation()
@@ -40,6 +41,8 @@ const QaList = () => {
   useEffect(() => {
     fetchQaList()
   }, [])
+
+  if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>

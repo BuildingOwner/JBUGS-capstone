@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import UncompleteQuizItem from "./UncompletedQuizItem";
 import QuizListItem from "./QuizListItem";
 import NoItem from "../../mainPage/NoItem"
+import LoadingPage from "../../mainPage/LoadingPage";
 
 const QuizList = () => {
   const location = useLocation()
@@ -72,6 +73,8 @@ const QuizList = () => {
   useEffect(() => {
     fetchQuizList()
   }, [])
+
+  if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>
@@ -154,13 +157,13 @@ const QuizList = () => {
               </select>
             </div>
             <div className={styles.labels}>
-              <h3 className={styles.labelText}>응시</h3>
+              <h3 className={`${styles.labelText} ${styles.submmitLable}`}>응시</h3>
               <h3 className={styles.labelText}>문제 분류</h3>
               <h3 className={styles.labelTextTitle}>제목</h3>
               <h3 className={styles.labelText}>제한 시간</h3>
               <h3 className={styles.labelText}>점수</h3>
               <h3 className={styles.labelTextTimeOut}>기한</h3>
-              <h3 className={styles.labelText}>피드백</h3>
+              <h3 className={`${styles.labelText} ${styles.feedbackBtnLable}`}>피드백</h3>
             </div>
             <div className={styles.quizListContainer}>
               {quizDtoList[0] ? quizDtoList.filter(quiz =>

@@ -135,7 +135,7 @@
 
 .imageInput{
   width: 20% !important;
-  display: none;
+  display: none !important;
 }
 
 .textareaWrapper {

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import NoItem from "../mainPage/NoItem";
+import LoadingPage from "../mainPage/LoadingPage";
 
 const Course = () => {
   const navigate = useNavigate()
@@ -114,6 +115,8 @@ const Course = () => {
       setClassFiles(selectedWeekData.classFiles)
     }
   }, [selectedWeek, weeklyContents]);
+
+  if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>

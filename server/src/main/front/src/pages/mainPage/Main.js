@@ -6,6 +6,7 @@ import CourseItem from "./CourseItem";
 import RightNav from "./RightNav";
 import "./Main.css";
 import styles from "./Main.module.css"
+import LoadingPage from "./LoadingPage"
 
 const Main = () => {
   const navigate = useNavigate()
@@ -73,7 +74,7 @@ const Main = () => {
     fetchMainInfo()
   }, [])
   
-  if (!memberInfoDto) return <div>로딩 중...</div>;
+  if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>

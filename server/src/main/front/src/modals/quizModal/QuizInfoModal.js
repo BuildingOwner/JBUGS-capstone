@@ -8,8 +8,6 @@ const QuizInfoModal = (props) => {
   Modal.setAppElement('#root');
   const [formattedDate, setFormattedDate] = useState()
   const navigate = useNavigate()
-  console.log("modal의 props : ", props)
-  console.log(props.props.quizScore)
 
   const moveToDoQuiz = () => {
     navigate('/doquiz', {

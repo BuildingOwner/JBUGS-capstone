@@ -26,10 +26,6 @@ const AssignmentList = () => {
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
         });
         const assignmentList = response.data.assignmentDtoList
-
-        console.log("memberInfoDto : ", response.data.memberInfoDto)
-        console.log("assignmentData : ", assignmentList)
-        console.log("assignmentList response : ", response)
         const lectureName1 = response.data.courseDto.lectureName
         const division1 = response.data.courseDto.division
 

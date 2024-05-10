@@ -23,6 +23,12 @@ const QaList = () => {
       console.log("qa response : ", response)
       const qnADtoList = response.data.qnADtoList.map((qna) => qna).flat()
       console.log(qnADtoList)
+      const lectureName1 = response.data.courseDto.lectureName
+      const division1 = response.data.courseDto.division
+
+      setLectureName(lectureName1)
+      setDivision(division1)
+      setMemberInfoDto(response.data.memberInfoDto)
       setQnADtoList(qnADtoList)
       // setCourseDto(response.courseDto)
       // setMemberInfoDto(response.memberInfoDto)
@@ -56,18 +62,18 @@ const QaList = () => {
                 </div>
               </div>
               <button type="button" className={`btn btn-primary ${styles.addBtn}`}>
-                <h3 style={{ fontSize: "1.05rem", fontWeight:"bold" }}>질문하기</h3>
+                <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>질문하기</h3>
               </button>
             </div>
           </div>
 
           <div className={styles.content}>
             <div className={styles.tabBtns}>
-              <button style={{borderTopLeftRadius:"5px"}} className={`${styles.tabItem} ${styles.currentFilter}`}>
-                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>전체 질문</h3>
+              <button style={{ borderTopLeftRadius: "5px" }} className={`${styles.tabItem} ${styles.currentFilter}`}>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 질문</h3>
               </button>
-              <button style={{borderTopRightRadius:"5px"}} className={`${styles.tabItem}`}>
-                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>내 질문</h3>
+              <button style={{ borderTopRightRadius: "5px" }} className={`${styles.tabItem}`}>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>내 질문</h3>
               </button>
             </div>
             <div className={styles.colName}>
@@ -91,7 +97,7 @@ const QaList = () => {
                   views={qna.views}
                   writer={qna.writer}
                 />
-              )) : <NoItem title={"등록된 질문이"}/>}
+              )) : <NoItem title={"등록된 질문이"} />}
             </div>
           </div>
         </section>

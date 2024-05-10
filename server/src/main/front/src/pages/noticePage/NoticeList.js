@@ -22,6 +22,12 @@ const NoticeList = () => {
       console.log("notice response : ", response)
       const noticeData = response.data.noticeDtoList.map((notice) => notice).flat()
       console.log(noticeData)
+      const lectureName1 = response.data.courseDto.lectureName
+      const division1 = response.data.courseDto.division
+
+      setLectureName(lectureName1)
+      setDivision(division1)
+      setMemberInfoDto(response.data.memberInfoDto)
       setNoticeDtoList(noticeData)
     } catch (error) {
 
@@ -57,17 +63,17 @@ const NoticeList = () => {
 
           <div className={styles.content}>
             <div className={styles.tabBtns}>
-              <button style={{borderTopLeftRadius:"5px"}} className={`${styles.tabItem} ${styles.currentFilter}`}>
-                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>전체 공지</h3>
+              <button style={{ borderTopLeftRadius: "5px" }} className={`${styles.tabItem} ${styles.currentFilter}`}>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 공지</h3>
               </button>
               <button className={`${styles.tabItem}`}>
-                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>시험</h3>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>시험</h3>
               </button>
               <button className={`${styles.tabItem}`}>
-                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>온라인</h3>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>온라인</h3>
               </button>
-              <button style={{borderTopRightRadius:"5px"}} className={`${styles.tabItem}`}>
-                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>대면수업</h3>
+              <button style={{ borderTopRightRadius: "5px" }} className={`${styles.tabItem}`}>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>대면수업</h3>
               </button>
             </div>
             <div className={styles.colName}>
@@ -80,7 +86,7 @@ const NoticeList = () => {
               <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
             </div>
             <div className={styles.list}>
-            {noticeDtoList?.length != 0 ? noticeDtoList?.map((notice, i) => (
+              {noticeDtoList?.length != 0 ? noticeDtoList?.map((notice, i) => (
                 <NoticeRow
                   content={notice.content}
                   createdAt={notice.createdAt}
@@ -91,7 +97,7 @@ const NoticeList = () => {
                   writer={notice.writer}
                   key={`notice${i}`}
                 />
-              )) : <NoItem title={"공지가"}/>}
+              )) : <NoItem title={"공지가"} />}
             </div>
           </div>
         </section>

@@ -44,12 +44,17 @@ const QuizList = () => {
     try {
       const response = await axios.get(`/api/course/${enrollmentId}/quizList`)
       console.log("quizList response : ", response)
-      const quizList = response.data.quizDtoList.map((quiz) => quiz)
+      const quizList = response.data.allQuizDtoList.map((quiz) => quiz)
 
       // useState를 활용하여 완료된 퀴즈와 완료되지 않은 퀴즈 분리
       const completedQuizzes = quizList.filter(quiz => quiz.quizScore !== null)
       const uncompletedQuizzes = quizList.filter(quiz => quiz.quizScore === null)
+      const lectureName1 = response.data.courseDto.lectureName
+      const division1 = response.data.courseDto.division
 
+      setLectureName(lectureName1)
+      setDivision(division1)
+      setMemberInfoDto(response.data.memberInfoDto)
       getAverageScore(completedQuizzes)
 
       // 상태 업데이트

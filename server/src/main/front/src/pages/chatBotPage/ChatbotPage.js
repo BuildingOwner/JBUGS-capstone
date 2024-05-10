@@ -31,7 +31,7 @@ const ChatbotPage = () => {
   const handleFileChange = (event) => {
     const files = event.target.files;
     const fileCount = files.length;
-    
+
     if (fileCount === 1) {
       // 파일이 하나만 선택된 경우, 파일 이름을 표시
       setFileDescription(files[0].name);
@@ -42,7 +42,7 @@ const ChatbotPage = () => {
       // 파일이 선택되지 않은 경우
       setFileDescription('');
     }
-  };
+  }
 
   const textareaRef = useRef(null);
   const chatBoardRef = useRef(null);
@@ -105,10 +105,11 @@ const ChatbotPage = () => {
     }
   }
 
-  const keyUp = (e) => {
+  const keyUp = async (e) => {
     // 메시지 전송 중이 아니고, 엔터키가 눌렸으며, shift키가 눌리지 않았을 경우에만 sendMessage 함수를 호출
     if (text?.trim() !== "" && !isSending && e.key === "Enter" && !e.shiftKey) {
-      sendMessage()
+      await sendMessage()
+      await fetchChatData()
     }
     handleResizeHeight()
   }
@@ -174,8 +175,10 @@ const ChatbotPage = () => {
     }
 
 
-    const userText = text;
-    setText('');
+    const userText = text
+    setText('')
+    // 파일이 선택되지 않은 경우
+    setFileDescription('')
     handleResizeHeight()
 
     try {
@@ -226,26 +229,6 @@ const ChatbotPage = () => {
             return [...currentChats, newChat];
           }
         });
-
-        // setChats((chats) => {
-        //   // chats 배열이 비어있지 않고 마지막 채팅의 role이 'assistant'인 경우
-        //   if (chats.length > 0 && chats[chats.length - 1].role === 'assistant') {
-        //     // 마지막 채팅의 텍스트에 새로운 텍스트 이어 붙임
-        //     const updatedChat = {
-        //       ...chats[chats.length - 1],
-        //       content: [{ text: chats[chats.length - 1].content[0].text + text }],
-        //     };
-        //     // 마지막 채팅을 업데이트된 채팅으로 교체
-        //     return [...chats.slice(0, -1), updatedChat];
-        //   } else {
-        //     // 마지막 채팅의 role이 'assistant'가 아니면 새로운 채팅 객체 추가
-        //     const newChat = {
-        //       role: 'assistant',
-        //       content: [{ text: text }],
-        //     };
-        //     return [...chats, newChat];
-        //   }
-        // });
       }
 
     } catch (error) {
@@ -399,28 +382,19 @@ const ChatbotPage = () => {
                     />
                   );
                 })}
-
-                {/* {chats?.map((chat, index) => (
-                  chat.role === 'user' ?
-                    <UserChatItem
-                      key={index}
-                      text={chat.content[0].text}
-                      image={chat.content[0].image}
-                      memberName={memberName}
-                    /> :
-                    <BotChatItem
-                      key={index}
-                      text={chat.content[0].text}
-                    />
-                ))} */}
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
                   <label htmlFor="imageInput" className={`btn btn-primary ${styles.chatBtn} ${styles.imageInputBtn}`}>
-                      <LuImagePlus size={20} />
-                      {fileDescription && <span className={styles.fileDescription}>{fileDescription}</span>}
+                    <LuImagePlus size={20} />
+                    {fileDescription && <span className={styles.fileDescription}>{fileDescription}</span>}
                   </label>
-                  <input type="file" accept="image/*" id="imageInput" className={`form-control ${styles.imageInput}`} onChange={handleFileChange} multiple></input>
+                  <input type="file"
+                    accept="image/*"
+                    id="imageInput"
+                    className={`form-control ${styles.imageInput}`}
+                    onChange={handleFileChange}
+                    multiple></input>
                   <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
                     <textarea
                       ref={textareaRef}

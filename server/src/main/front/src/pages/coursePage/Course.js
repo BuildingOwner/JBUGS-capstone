@@ -81,7 +81,6 @@ const Course = () => {
       const videoData = response.data.weeklyContents.map((week) => week.lectureVideos).flat()
       const fileData = response.data.weeklyContents.map((week) => week.classFiles).flat()
       const memberInfo = response.data.memberInfoDto
-
       setLectureName(lectureName1)
       setDivision(division1)
       setCourseDto(response.data.courseDto)
@@ -108,7 +107,6 @@ const Course = () => {
 
   useEffect(() => {
     const selectedWeekData = weeklyContents.find(week => week.week === selectedWeek);
-    console.log(selectedWeekData)
     if (selectedWeekData) {
       setLectureVideos(selectedWeekData.lectureVideos)
       setAssignments(selectedWeekData.assignments)

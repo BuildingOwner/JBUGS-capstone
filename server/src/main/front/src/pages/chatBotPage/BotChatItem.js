@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import styles from "./BotchatItem.module.css"
+import React from 'react';
+import ReactMarkdown from 'react-markdown'
 import { FaUser } from "react-icons/fa";
 
 const ChatItem = ({ propLineHeight, text }) => {
@@ -18,7 +20,8 @@ const ChatItem = ({ propLineHeight, text }) => {
         </div>
         <h3 className={styles.name}>AI부기</h3>
       </div>
-      <h3 className={styles.text} style={divStyle}>{text}</h3>
+      
+      <h3 className={styles.text} style={divStyle}><ReactMarkdown>{text}</ReactMarkdown></h3>
     </div>
   );
 };

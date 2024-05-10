@@ -1,7 +1,20 @@
 import styles from "./QuizListItem.module.css"
 import { useState, useEffect } from "react"
+import QuizInfoModal from "../../../modals/quizModal/QuizInfoModal"
 const QuizListItem = (props) => {
   const [formattedDate, setFormattedDate] = useState()
+
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  }
+
+  const closeModal = () => {
+    console.log("닫혀야함")
+    setModalIsOpen(false);
+  }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -22,6 +35,10 @@ const QuizListItem = (props) => {
   }, [])
   return (
     <div className={styles.quizListItem}>
+      <QuizInfoModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props} />
       <div className={`${styles.idSubmitBox} ${props.quizScore != undefined ? styles.done : styles.yet}`}>
         {props.submissionStatus === true ?
           <h3 className={styles.idSubmitText}>응시 완료</h3>
@@ -35,7 +52,7 @@ const QuizListItem = (props) => {
       <h3 className={styles.text}>{props.timeLimit}</h3>
       <h3 className={styles.text}>{props.quizScore}</h3>
       <h3 className={styles.deadline}>{formattedDate}</h3>
-      <button className={`btn btn-primary ${styles.feedbackBtn}`}>
+      <button className={`btn btn-primary ${styles.feedbackBtn}`} onClick={openModal}>
         <h3 className={styles.feedbackText}>피드백 보기</h3>
       </button>
     </div>

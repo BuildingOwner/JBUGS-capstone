@@ -50,9 +50,12 @@ const QuizAnswer = () => {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })
-      // const answerResponse = await axios.get()
+      const answerResponse = await axios.get(`/api/answer/${quizId}`, {
+        withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
+      })
 
       console.log("quizAnswer response : ", quizResponse)
+      console.log("answerResponse : ", answerResponse)
       const questionData = quizResponse.data.questions.map((quiz) => quiz)
       setQuestions(questionData)
       console.log("questionData : ", questionData)

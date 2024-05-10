@@ -16,6 +16,7 @@
   min-width: 150px;
   display: flex;
   justify-content: center;
+  flex-shrink: 1;
 }
 
 .deadline{

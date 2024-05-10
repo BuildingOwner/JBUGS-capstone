@@ -103,7 +103,7 @@
 }
 
 .select{
-  width: 15% !important;
+  width: fit-content !important;
   font-size: var(--font-size-base) !important;
 }
 

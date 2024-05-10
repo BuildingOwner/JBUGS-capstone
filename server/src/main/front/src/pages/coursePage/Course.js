@@ -71,7 +71,7 @@ const Course = () => {
       const response = await axios.get(`/api/course/${enrollmentId}`, {
         withCredentials: true // 세션 쿠키를 사용하기 위해 필요
       });
-      console.log(response)
+      console.log("course의 response", response)
       setWeeklyContents(response.data.weeklyContents)
       const lectureName1 = response.data.courseDto.lectureName
       const division1 = response.data.courseDto.division
@@ -118,7 +118,7 @@ const Course = () => {
 
   return (
     <div className={`background`}>
-      <FileUploadModal isOpen={modalIsOpen} onRequestClose={closeModal} enrollmentId={enrollmentId}/>
+      <FileUploadModal isOpen={modalIsOpen} onRequestClose={closeModal} enrollmentId={enrollmentId} />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
@@ -154,7 +154,7 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>온라인 강의</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {lectureVideos.map((video, i) => (
+                {lectureVideos?.map((video, i) => (
                   <ListItem
                     key={`lectureVideo${i}`}
                     title={video.title}
@@ -170,7 +170,7 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>과제</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {assignments.map((assignment, i) => (
+                {assignments?.map((assignment, i) => (
                   <ListItem
                     key={`assignment${i}`}
                     title={assignment.title}
@@ -190,7 +190,7 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>자료</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {classFiles.map((file, i) => (
+                {classFiles?.map((file, i) => (
                   <ListItem
                     key={`file${i}`}
                     fileName={file.fileName}
@@ -206,24 +206,25 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>퀴즈</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {quizs.map((quiz, i) => (
+                {quizs?.filter(quiz => quiz != null).map((quiz, i) => (
                   <ListItem
                     key={`quiz${i}`}
-                    quizName={quiz.quizName}
-                    quizType={quiz.quizType}
-                    quizId={quiz.quizId}
-                    jsonData={quiz.jsonData}
-                    description={quiz.description}
-                    deadline={quiz.deadline}
-                    weekId={quiz.weekId}
-                    quizScore={quiz.quizScore}
-                    submissionStatus={quiz.submissionStatus}
+                    quizName={quiz?.quizName}
+                    quizType={quiz?.quizType}
+                    quizId={quiz?.quizId}
+                    jsonData={quiz?.jsonData}
+                    description={quiz?.description}
+                    deadline={quiz?.deadline}
+                    weekId={quiz?.weekId}
+                    quizScore={quiz?.quizScore}
+                    submissionStatus={quiz?.submissionStatus}
                     enrollmentId={enrollmentId}
                     memberInfoDto={memberInfoDto}
                     courseDto={courseDto}
                     url={quizUrl}
                   />
                 ))}
+
               </div>
             </div>
           </div>

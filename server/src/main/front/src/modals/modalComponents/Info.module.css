@@ -1,0 +1,17 @@
+.infoContainer{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: var(--gap-8xs);
+}
+
+.name{
+  font-weight: bold;
+  font-size: var(--font-size-xl);
+  color: #777;
+}
+
+.content{
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+}

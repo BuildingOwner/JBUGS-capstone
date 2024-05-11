@@ -27,6 +27,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--gap-xl);
 }
 
 .weekList{
@@ -36,6 +37,7 @@
   background-color: var(--point-bg-blue);
   padding: var(--padding-base);
   border-radius: 10px;
+  flex-wrap: wrap;
 }
 
 .weekBtn{

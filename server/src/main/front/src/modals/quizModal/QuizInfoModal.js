@@ -3,6 +3,7 @@ import Info from "../modalComponents/Info";
 import "./QuizInfoModal.css";
 import Modal from 'react-modal';
 import { Navigate, useNavigate } from "react-router-dom";
+import styles from "./QuizInfoModal.module.css"
 
 const QuizInfoModal = (props) => {
   Modal.setAppElement('#root');
@@ -24,7 +25,7 @@ const QuizInfoModal = (props) => {
       },
     })
   }
-  
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().slice(-2); // 연도의 마지막 두 자리
@@ -44,53 +45,47 @@ const QuizInfoModal = (props) => {
   }, [])
 
   return (
-    <Modal className="quizinfomodal"
+    <Modal className={styles.modalContainer}
+      style={{
+        overlay: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.3)'
+        }
+      }}
       isOpen={props.isOpen}
       onRequestClose={props.onRequestClose}>
-      <div className="top7">
-        <h3 className="h38">{props.props.quizName}</h3>
-        <div className="heroicons-outlinex27" onClick={props.onRequestClose}>
-          <img
-            className="vector-icon74"
-            loading="lazy"
-            alt=""
-            src="/vector1.svg"
-          />
+      <div className={styles.top}>
+        <h3 className={styles.title}>{props.props.quizName}</h3>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn}`}>X</button>
+      </div>
+      <div className={`no-scroll-bar ${styles.gap}`}>
+        <div className={styles.contents}>
+          <Info title={"종료 기한"} content={formattedDate} />
+          <Info title={"제한 시간"} content={"123"} />
+        </div>
+        <div className={styles.contents}>
+          <Info title={"점수"} content={"- 점 / 100점"} />
+          <Info title={"반영 비율"} content={"5% / 20%"} />
+          <Info title={"분류"} content={"연습 문제"} />
+        </div>
+        <div className={styles.contents}>
+          <Info title={"설명"} content={"설명임"} />
         </div>
       </div>
-      <main className="scroll3">
-        <div className="deadline">
-          <div className="deadline1">
-            <b className="b78">종료 기한</b>
-            <b className="minutes">{formattedDate}</b>
-          </div>
-          <div className="time1">
-            <b className="b79">제한 시간</b>
-            <b className="b80">60 분</b>
-          </div>
-        </div>
-        <Info prop="점수"
-          score={props.props.quizScore}
-          props={props.props} />
-        <section className="discription">
-          <b className="b81">설명</b>
-          <b className="b82">
-            <p className="p25">{props.props.description}</p>
-          </b>
-        </section>
-      </main>
-      <div className="bottom3">
-        <button className='close-btn' onClick={props.onRequestClose}>닫기</button>
+      <div className={styles.bottom}>
+        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
         {props.props.submissionStatus === true
-          ? <button className="nav-btn5" onClick={moveToQuizAnswer}>
-            <b className="text4">해설 보기</b>
+          ? <button className={`btn btn-primary ${styles.goBtn}`} onClick={moveToQuizAnswer}>
+            해설 보기
           </button>
-          : <button className="nav-btn5" onClick={moveToDoQuiz}>
-            <b className="text4">응시 하기</b>
+          : <button className={`btn btn-primary ${styles.goBtn}`} onClick={moveToDoQuiz}>
+            응시 하기
           </button>
-
         }
-
       </div>
     </Modal>
   );

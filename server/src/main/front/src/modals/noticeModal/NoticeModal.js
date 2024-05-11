@@ -7,8 +7,9 @@ const NoticeModal = (props) => {
   Modal.setAppElement('#root')
 
   useEffect(() => {
-
+    console.log(props)
   }, [])
+
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -25,7 +26,9 @@ const NoticeModal = (props) => {
       onRequestClose={props.onRequestClose}>
       <div className={styles.top}>
         <h3 className={styles.title}>공지 제목</h3>
-        <button type="button" className={`btn btn-primary ${styles.closeBtn}`} >X</button>
+        <button type="button"
+          className={`btn btn-primary ${styles.closeBtn}`}
+          onClick={props.onRequestClose}>X</button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
@@ -39,8 +42,10 @@ const NoticeModal = (props) => {
         </div>
       </div>
       <div className={styles.bottom}>
-        <button className={`btn btn-primary ${styles.closeBtn}`}>닫기</button>
-        <button className={`btn btn-primary ${styles.goBtn}`}>해설 보기</button>
+        <button className={`btn btn-primary ${styles.closeBtn}`}
+          onClick={props.onRequestClose}>닫기
+        </button>
+        {/* <button className={`btn btn-primary ${styles.goBtn}`}>해설 보기</button> */}
       </div>
     </Modal>
   );

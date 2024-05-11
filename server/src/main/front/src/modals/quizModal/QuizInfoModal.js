@@ -8,6 +8,7 @@ const QuizInfoModal = (props) => {
   Modal.setAppElement('#root');
   const [formattedDate, setFormattedDate] = useState()
   const navigate = useNavigate()
+  const data = props.props
   const moveToDoQuiz = () => {
     navigate('/doquiz', {
       state: {
@@ -41,6 +42,7 @@ const QuizInfoModal = (props) => {
     const inputDate = props.props.deadline
     const data = formatDate(inputDate);
     setFormattedDate(data)
+    console.log(props)
   }, [])
 
   return (
@@ -64,15 +66,22 @@ const QuizInfoModal = (props) => {
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
           <Info title={"종료 기한"} content={formattedDate} />
-          <Info title={"제한 시간"} content={"123"} />
+          <Info title={"제한 시간"} content={data.timeLimit} />
         </div>
         <div className={styles.contents}>
-          <Info title={"점수"} content={"- 점 / 100점"} />
-          <Info title={"반영 비율"} content={"5% / 20%"} />
-          <Info title={"분류"} content={"연습 문제"} />
+          {
+            data.quizScore === undefined ? <Info title={"점수"} content={`- 점 / 100점`} /> :
+              <Info title={"점수"} content={`${data?.quizScore}점 / 100점`} />
+          }
+          <Info title={"반영 비율"} content={`${data.reflectionRatio}% / 20%`} />
+          {
+            data.quizType === "PRACTICE" ? <Info title={"분류"} content={"연습 문제"} /> :
+              data.quizType === "EXAM" ? <Info title={"분류"} content={"시험"} /> :
+                <Info title={"분류"} content={"실습 문제"} />
+          }
         </div>
         <div className={styles.contents}>
-          <Info title={"설명"} content={"설명임"} />
+          <Info title={"설명"} content={data.description} />
         </div>
       </div>
       <div className={styles.bottom}>

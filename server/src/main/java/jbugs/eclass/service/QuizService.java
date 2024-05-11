@@ -1,5 +1,6 @@
 package jbugs.eclass.service;
 
+import jbugs.eclass.domain.Enrollment;
 import jbugs.eclass.domain.Quiz;
 import jbugs.eclass.domain.QuizInfo;
 import jbugs.eclass.domain.Student;
@@ -48,13 +49,13 @@ public class QuizService {
         return quizRepository.findQuizDetailsById(quizId);
     }
 
-    public List<QuizDto> findQuizzesByWeekIdAndStudentId(Long weekId, Long studentId) {
+    public List<QuizDto> findQuizzesByWeekIdAndStudentId(Long weekId, Long studentId, Enrollment enrollment) {
         List<Quiz> quizzes = quizRepository.findQuizzesByWeekId(weekId);
         return quizzes.stream().map(quiz -> {
             Optional<QuizInfo> quizInfoOptional = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId);
             // QuizInfo가 존재하지 않는다면, 기본값을 가지는 새로운 QuizInfo를 생성
             QuizInfo quizInfo = quizInfoOptional.orElseGet(() -> {
-                QuizInfo newQuizInfo = createDefaultQuizInfo(quiz.getId(), studentId);
+                QuizInfo newQuizInfo = createDefaultQuizInfo(quiz.getId(), studentId, enrollment);
                 return quizInfoRepository.save(newQuizInfo); // 데이터베이스에 저장
             });
             // 항상 QuizInfo를 포함하여 QuizDto 생성
@@ -63,7 +64,7 @@ public class QuizService {
     }
 
     // 기본값을 가지는 QuizInfo 객체를 생성하는 메소드
-    private QuizInfo createDefaultQuizInfo(Long quizId, Long studentId) {
+    private QuizInfo createDefaultQuizInfo(Long quizId, Long studentId, Enrollment enrollment) {
         QuizInfo quizInfo = new QuizInfo();
         Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new IllegalArgumentException("Quiz not found with id: " + quizId));
@@ -71,6 +72,7 @@ public class QuizService {
                 .orElseThrow(() -> new IllegalArgumentException("Student not found with id: " + studentId));
         quizInfo.setQuiz(quiz);
         quizInfo.setStudent(student);
+        quizInfo.setEnrollment(enrollment);
         quizInfo.setQuizScore(0);
         quizInfo.setSubmissionStatus(false);
         saveQuizInfo(quizInfo);

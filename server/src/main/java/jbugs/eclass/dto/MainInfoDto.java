@@ -8,4 +8,5 @@ import java.util.List;
 public class MainInfoDto {
     private MemberInfoDto memberInfoDto;
     private List<MainLectureDto> mainLectures;
+    private List<QuizDto> quizDtoList;
 }

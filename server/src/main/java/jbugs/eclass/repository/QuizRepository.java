@@ -22,4 +22,6 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
     Optional<QuizDetailsDto> findQuizDetailsById(@Param("quizId") Long quizId);
 
     List<Quiz> findQuizzesByWeekId(Long weekId);
+
+//    List<Quiz> findAllByLectureId(Long id);
 }

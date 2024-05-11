@@ -71,8 +71,10 @@ public class ChatApiController {
 
     @PostMapping("/chat")
     public ResponseEntity<?> createChatRoom(@RequestBody ChatRoomCreateDto request) {
+
         // 학생 ID로 학생 엔티티 조회
-        Student student = studentRepository.findOne(request.getStudentId());
+        Student student = studentRepository.findById(request.getStudentId())
+                .orElseThrow(() -> new IllegalArgumentException("Student not found with id: " + request.getStudentId()));
 
         // 새 채팅방 생성
         ChatRoom chatRoom = new ChatRoom();

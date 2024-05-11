@@ -35,10 +35,14 @@ const QuizList = () => {
   }
 
   const getAverageScore = (completedQuizzes) => {
-    // 평균 점수 구하는 로직
-    let scores = 0
-    completedQuizzes?.map((quiz) => scores += quiz.quizScore)
-    setAverageScore(scores / completedQuizzes.length) // 비동기 확인 해야함
+    if (completedQuizzes.length === 0) {
+      setAverageScore(0)
+    } else {
+      // 평균 점수 구하는 로직
+      let scores = 0
+      completedQuizzes?.map((quiz) => scores += quiz.quizScore)
+      setAverageScore(scores / completedQuizzes.length) // 비동기 확인 해야함
+    }
   }
 
   const fetchQuizList = async () => {

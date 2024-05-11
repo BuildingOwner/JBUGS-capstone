@@ -52,9 +52,11 @@ const QuizListItem = (props) => {
       <h3 className={styles.text}>{props.timeLimit}</h3>
       <h3 className={styles.text}>{props.quizScore}</h3>
       <h3 className={styles.deadline}>{formattedDate}</h3>
-      <button className={`btn btn-primary ${styles.feedbackBtn}`} onClick={openModal}>
-        <h3 className={styles.feedbackText}>피드백 보기</h3>
-      </button>
+      {props.submissionStatus != 0 ?
+        <button className={`btn btn-primary ${styles.feedbackBtn}`} onClick={openModal}>
+          <h3 className={styles.feedbackText}>피드백 보기</h3>
+        </button> : <h3 style={{ minWidth: "125px", textAlign: "center" }}>-</h3>
+      }
     </div>
   )
 }

@@ -1,6 +1,8 @@
 package jbugs.eclass.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jbugs.eclass.domain.*;
+import jbugs.eclass.dto.AnswerRequestDto;
 import jbugs.eclass.dto.QuizDetailsDto;
 import jbugs.eclass.dto.QuizDto;
 import jbugs.eclass.repository.*;
@@ -8,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,9 +42,9 @@ public class QuizService {
                 .orElseThrow(() -> new IllegalArgumentException("QuizInfo not found for quizId: " + quizId));
     }
 
-    public Optional<QuizDetailsDto> getQuizDetails(Long quizId) {
-        return quizRepository.findQuizDetailsById(quizId);
-    }
+//    public Optional<QuizDetailsDto> getQuizDetails(Long quizId) {
+//        return quizRepository.findQuizDetailsById(quizId);
+//    }
 
     public List<QuizDto> findQuizzesByWeekIdAndStudentId(Long weekId, Long studentId, Enrollment enrollment) {
         List<Quiz> quizzes = quizRepository.findQuizzesByWeekId(weekId);
@@ -94,5 +97,16 @@ public class QuizService {
         }
 
         return quizDtos;
+    }
+
+    public void saveAnswers(AnswerRequestDto answerRequestDTO) {
+        QuizInfo quizInfo = quizInfoRepository.findByQuizIdAndStudentId(answerRequestDTO.getQuizId(), answerRequestDTO.getStudentId())
+                .orElseThrow(() -> new EntityNotFoundException("QuizInfo를 찾을 수 없습니다."));
+
+        quizInfo.setAnswers(answerRequestDTO.getAnswers());
+        quizInfo.setQuizScore(answerRequestDTO.getScore());
+        quizInfo.setSubmittedAt(LocalDateTime.now());
+        quizInfo.setSubmissionStatus(true);
+        quizInfoRepository.save(quizInfo);
     }
 }

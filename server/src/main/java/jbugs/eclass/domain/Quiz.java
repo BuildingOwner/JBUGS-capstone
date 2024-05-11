@@ -38,7 +38,4 @@ public class Quiz {
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<QuizInfo> quizInfos;
-
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
-    private List<Answer> answers = new ArrayList<>();
 }

@@ -6,8 +6,9 @@ import java.util.Map;
 
 @Data
 public class AnswerDto {
+    private Long studentId;
     private Long quizId;
-    private int quizScore;
+    private Integer quizScore;
     private Map<String, String> answers;
 
     public AnswerDto(Long quizId, Integer quizScore, Map<String, String> answers) {

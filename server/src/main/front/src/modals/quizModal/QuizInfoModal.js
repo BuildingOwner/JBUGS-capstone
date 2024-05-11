@@ -3,6 +3,7 @@ import Info from "../modalComponents/Info";
 import Modal from 'react-modal';
 import { Navigate, useNavigate } from "react-router-dom";
 import styles from "./QuizInfoModal.module.css"
+import { IoClose } from "react-icons/io5";
 
 const QuizInfoModal = (props) => {
   Modal.setAppElement('#root');
@@ -59,7 +60,7 @@ const QuizInfoModal = (props) => {
       onRequestClose={props.onRequestClose}>
       <div className={styles.top}>
         <h3 className={styles.title}>{props.props.quizName}</h3>
-        <button type="button" className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>X</button>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={props.onRequestClose}><IoClose /></button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>

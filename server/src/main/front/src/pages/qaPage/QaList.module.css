@@ -113,4 +113,5 @@
   flex-grow: 1;
   overflow-y: auto;
   padding: 0 var(--padding-xl);
+  height: 500px;
 }

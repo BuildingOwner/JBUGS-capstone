@@ -1,77 +1,48 @@
-import "./AssignmentInfoModal.css";
-import FileItem from "./FileItem";
-import Modal from 'react-modal';
+import { useEffect } from "react";
+import Modal from "react-modal"
+import styles from "../quizModal/QuizInfoModal.module.css"
+import Info from "../modalComponents/Info";
 
 const AssignmentInfoModal = (props) => {
-  Modal.setAppElement("#root")
-  console.log("열림, props", props)
-  return (
-    <div className="assignmentinfomodal"
-      // isOpen={props.modalOpen}
-      // onRequestClose={closeModal} // 모달을 닫는 함수를 전달
-      >
-      <div className="header">
-        <h3 className="h3">과제 제목</h3>
-        <div className="scroll">
-          <div className="heroicons-outlinex">
-            <img
-              className="vector-icon"
-              loading="lazy"
-              alt=""
-              src="/vector1.svg"
-            />
-          </div>
-        </div>
-      </div>
-      <main className="scroll1">
-        <div className="date-info">
-          <div className="date">
-            <b className="b">종료 일시</b>
-            <b className="b1">2024-10-10</b>
-          </div>
-          <div className="date1">
-            <b className="b">마감 기한</b>
-            <b className="b1">2024-10-10</b>
-          </div>
-          <div className="date2">
-            <b className="b">최종 수정 일시</b>
-            <b className="b1">2024-10-10</b>
-          </div>
-          <div className="submit-info">
-            <b className="b">제출 현황</b>
-            <b className="b1">-</b>
-          </div>
-        </div>
+  Modal.setAppElement('#root')
 
-        <section className="date-info1">
-          <b className="b">설명</b>
-          <b className="b1">
-            <p className="p">내용</p>
-          </b>
-        </section>
-        <section className="top-parent">
-          <div className="top">
-            <div className="title-wrapper">
-              <b className="title">첨부 파일</b>
-            </div>
-            <button className="upload">
-              <b className="b10">파일 업로드</b>
-            </button>
-          </div>
-          <FileItem />
-          <FileItem />
-          <FileItem />
-        </section>
-      </main>
-      <div className="nav-btn-parent">
-        <button className="nav-btn">
-          <div className="text">취소</div>
-        </button>
-        <button className="nav-btn1">
-          <b className="text1">수정하기</b>
-        </button>
+  useEffect(() => {
+
+  }, [])
+  return (
+    <Modal className={styles.modalContainer}
+      style={{
+        overlay: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.3)'
+        }
+      }}
+      isOpen={props.isOpen}
+      onRequestClose={props.onRequestClose}>
+      <div className={styles.top}>
+        <h3 className={styles.title}>공지 제목</h3>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn}`} >X</button>
       </div>
-    </div>
+      <div className={`no-scroll-bar ${styles.gap}`}>
+        <div className={styles.contents}>
+          <Info title={"작성자"} content={"교수님"} />
+          <Info title={"작성일"} content={"2024-10-10"} />
+          <Info title={"조회수"} content={"50000"} />
+          <Info title={"구분"} content={<h3 className={styles.offline}>대면 수업</h3>} />
+        </div>
+        <div className={styles.contents}>
+          <Info title={"설명"} content={"설명임"} />
+        </div>
+      </div>
+      <div className={styles.bottom}>
+        <button className={`btn btn-primary ${styles.closeBtn}`}>닫기</button>
+        <button className={`btn btn-primary ${styles.goBtn}`}>해설 보기</button>
+      </div>
+    </Modal>
   );
 };
 

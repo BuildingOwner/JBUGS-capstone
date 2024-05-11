@@ -1,14 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal"
 import styles from "../quizModal/QuizInfoModal.module.css"
 import Info from "../modalComponents/Info";
-import { IoClose } from "react-icons/io5";
 
 const NoticeModal = (props) => {
   Modal.setAppElement('#root')
+  const [formattedDate, setFormattedDate] = useState()
+  const data = props.props
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월
+    const day = date.getDate().toString().padStart(2, '0'); // 일
+    const hours = date.getHours().toString().padStart(2, '0'); // 시간
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // 분
+
+    // 포맷팅된 문자열 생성
+    return `${year}-${month}-${day}`;
+  }
 
   useEffect(() => {
     console.log(props)
+    const inputDate = props.props.createdAt
+    const data = formatDate(inputDate)
+    setFormattedDate(data)
   }, [])
 
   return (
@@ -26,20 +42,26 @@ const NoticeModal = (props) => {
       isOpen={props.isOpen}
       onRequestClose={props.onRequestClose}>
       <div className={styles.top}>
-        <h3 className={styles.title}>공지 제목</h3>
+        <h3 className={styles.title}>{data.title}</h3>
         <button type="button"
-          className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`}
-          onClick={props.onRequestClose}><IoClose /></button>
+          className={`btn btn-primary ${styles.closeBtn}`}
+          onClick={props.onRequestClose}>X</button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
-          <Info title={"작성자"} content={"교수님"} />
-          <Info title={"작성일"} content={"2024-10-10"} />
-          <Info title={"조회수"} content={"50000"} />
-          <Info title={"구분"} content={<h3 className={`${styles.box} ${styles.yellow}`}>대면 수업</h3>} />{/*대면은 yellow, 시험은 green, 온라인은 blue*/}
+          <Info title={"작성자"} content={data.writer} />
+          <Info title={"작성일"} content={formattedDate} />
+          <Info title={"조회수"} content={data.views} />
+          {
+            data.noticeStatus === "ONLINE" ?
+              <Info title={"구분"} content={<h3 className={`${styles.box} ${styles.blue}`}>온라인</h3>} />
+              : data.noticeStatus === "EXAM" ?
+                <Info title={"구분"} content={<h3 className={`${styles.box} ${styles.green}`}>시험</h3>} />
+                : <Info title={"구분"} content={<h3 className={`${styles.box} ${styles.yellow}`}>대면 수업</h3>} />
+          }
         </div>
         <div className={styles.contents}>
-          <Info title={"설명"} content={"설명임"} />
+          <Info title={"설명"} content={data.content} />
         </div>
       </div>
       <div className={styles.bottom}>

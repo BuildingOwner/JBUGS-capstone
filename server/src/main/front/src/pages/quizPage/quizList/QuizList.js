@@ -40,12 +40,13 @@ const QuizList = () => {
     completedQuizzes?.map((quiz) => scores += quiz.quizScore)
     setAverageScore(scores / completedQuizzes.length) // 비동기 확인 해야함
   }
-  
+
   const fetchQuizList = async () => {
     try {
       const response = await axios.get(`/api/course/${enrollmentId}/quizList`)
       console.log("quizList response : ", response)
-      const quizList = response.data.allQuizDtoList.map((quiz) => quiz)
+      // 널인 퀴즈 필터링으로 거름
+      const quizList = response.data.allQuizDtoList.filter((quiz) => quiz !== null).map((quiz) => quiz)
 
       // useState를 활용하여 완료된 퀴즈와 완료되지 않은 퀴즈 분리
       const completedQuizzes = quizList.filter(quiz => quiz.quizScore !== null)
@@ -53,17 +54,20 @@ const QuizList = () => {
       const courseDto1 = response.data.courseDto
       const lectureName1 = response.data.courseDto.lectureName
       const division1 = response.data.courseDto.division
+      const memberInfoDto1 = response.data.memberInfoDto
+
 
       setCourseDto(courseDto1)
       setLectureName(lectureName1)
       setDivision(division1)
-      setMemberInfoDto(response.data.memberInfoDto)
       getAverageScore(completedQuizzes)
 
       // 상태 업데이트
       setQuizDtoList(quizList)
       setCompleteQuizList(completedQuizzes)
       setUncompleteQuizList(uncompletedQuizzes)
+
+      setMemberInfoDto(memberInfoDto1)
 
     } catch (error) {
 
@@ -74,7 +78,8 @@ const QuizList = () => {
     fetchQuizList()
   }, [])
 
-  if (!memberInfoDto) return <LoadingPage />;
+  // !memberinfoDto로 하면 무한로딩. 왜그런지는 모르겠음?? 장주찬 페이지는 된다
+  if (!memberInfoDto) return <LoadingPage />
 
   return (
     <div className={`background`}>
@@ -126,7 +131,7 @@ const QuizList = () => {
                       jsonData={quiz.jsonData}
                     />
                   )
-                }) : <NoItem title={"미응시 퀴즈가"}/>}
+                }) : <NoItem title={"미응시 퀴즈가"} />}
               </div>
               <div className={styles.weeks}></div>
             </div>
@@ -185,7 +190,7 @@ const QuizList = () => {
                   courseDto={courseDto}
                 />
               )) :
-              <NoItem title={"퀴즈가"}/>}
+                <NoItem title={"퀴즈가"} />}
             </div>
           </div>
         </div>

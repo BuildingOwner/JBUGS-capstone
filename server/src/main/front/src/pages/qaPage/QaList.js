@@ -57,7 +57,7 @@ const QaList = () => {
       setMemberInfoDto(response.data.memberInfoDto)
       setQnADtoList(qnADtoList)
     } catch (error) {
-
+      console.log(error)
     }
   }
 

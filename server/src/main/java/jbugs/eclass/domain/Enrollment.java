@@ -26,6 +26,5 @@ public class Enrollment { //강의를 수강하는 테이블
     @OneToMany(mappedBy = "enrollment", cascade = CascadeType.ALL)
     private List<QuizInfo> quizInfos = new ArrayList<>();
 
-
     private String grade; //성적
 }

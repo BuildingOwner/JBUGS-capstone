@@ -53,23 +53,25 @@ const RightNav = (props) => {
             <h1 className="title17">미제출 과제</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
-            {mainLectures ?
-              mainLectures.map((lecture) => (
-                lecture.assignments
-                  .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
-                  .map((assignment) => ( // 이거 남은날짜가 적은거 부터 나왔으면 좋겠음 밑에꺼도 똑같이
-                    <MainAssignItem
-                      lectureName={lecture.lectureName}
-                      key={assignment.id}
-                      title={assignment.title}
-                      contents={assignment.contents}
-                      dueDate={assignment.dueDate}
-                      weekNumber={assignment.weekNumber}
-                      status={assignment.status}
-                      enrollmentId={lecture.enrollmentId}
-                    />
-                  ))
-              )) : <NoItem title={"미제출 과제가"}/>}
+            {
+              mainLectures ?
+                mainLectures.map((lecture) => (
+                  lecture.assignments
+                    .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
+                    .map((assignment) => ( // 이거 남은날짜가 적은거 부터 나왔으면 좋겠음 밑에꺼도 똑같이
+                      <MainAssignItem
+                        lectureName={lecture.lectureName}
+                        key={assignment.id}
+                        title={assignment.title}
+                        contents={assignment.contents}
+                        dueDate={assignment.dueDate}
+                        weekNumber={assignment.weekNumber}
+                        status={assignment.status}
+                        enrollmentId={lecture.enrollmentId}
+                      />
+                    ))
+                )) : <NoItem title={"미제출 과제가"} />
+            }
           </div>
         </div>
         <div className={`homework ${styles.yetContainer}`}>
@@ -77,23 +79,25 @@ const RightNav = (props) => {
             <h1 className="title17">미응시 퀴즈</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
-            {mainLectures ?
+            {/* {mainLectures ?
               mainLectures.map((lecture) => (
-                lecture.assignments
-                  .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
-                  .map((assignment) => ( // 여기 미응시 퀴즈들로 채워놔
+                lecture.quizDtoList
+                  .filter((quiz) => quiz.quizScore === null)
+                  .map((quiz) => (
                     <MainAssignItem
                       lectureName={lecture.lectureName}
-                      key={assignment.id}
-                      title={assignment.title}
-                      contents={assignment.contents} // 퀴즈 설명
-                      dueDate={assignment.dueDate}
-                      weekNumber={assignment.weekNumber}
-                      status={assignment.status}
+                      url={"quiz"}
+                      key={quiz.quizId}
+                      title={quiz.quizName}
+                      contents={quiz.description} // 퀴즈 설명
+                      dueDate={quiz.deadline}
+                      weekNumber={quiz.week}
+                      status={quiz.submissionStatus}
                       enrollmentId={lecture.enrollmentId}
+                      timeLimit={quiz.timeLimit}
                     />
                   ))
-              )) : <NoItem title={"미응시 퀴즈가"}/>}
+              )) : <NoItem title={"미응시 퀴즈가"} />} */}
           </div>
         </div>
       </div>

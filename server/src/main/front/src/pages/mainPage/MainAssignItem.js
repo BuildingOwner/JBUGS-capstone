@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./MainAssignItem.css"
-
+import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
+import { useState } from "react";
 const MainAssignItem = (props) => {
   const navigate = useNavigate()
   console.log("MainAssignItem의 props", props)
@@ -12,14 +13,34 @@ const MainAssignItem = (props) => {
   const timeDiff = dueDate.getTime() - currentDate.getTime();
   // 남은 일수를 계산합니다
   const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const moveToAssingList = () => {
+  const openModal = () => {
+    console.log('modal open')
+    setModalIsOpen(true);
+  }
+
+  const closeModal = (event) => {
+    console.log("modal close")
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
+  }
+  const moveToPage = () => {
+    if (props.url === "quiz") {
+      openModal()
+    }
     navigate("/assignmentlist",
       { state: props })
   }
 
   return (
-    <div className="homeworkitem" onClick={moveToAssingList}>
+    <div className="homeworkitem" onClick={moveToPage}>
+      <QuizInfoModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props} />
       <div className="week">
         <div className="div162">{props.weekNumber}주차</div>
       </div>

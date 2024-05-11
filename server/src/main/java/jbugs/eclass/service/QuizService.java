@@ -58,7 +58,7 @@ public class QuizService {
     }
 
     // 기본값을 가지는 QuizInfo 객체를 생성하는 메소드
-    private QuizInfo createDefaultQuizInfo(Long quizId, Long studentId, Enrollment enrollment) {
+    public QuizInfo createDefaultQuizInfo(Long quizId, Long studentId, Enrollment enrollment) {
         QuizInfo quizInfo = new QuizInfo();
         Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new IllegalArgumentException("Quiz not found with id: " + quizId));

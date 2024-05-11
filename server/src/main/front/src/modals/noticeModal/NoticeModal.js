@@ -1,8 +1,12 @@
+import { useEffect } from "react";
 import "./NoticeModal.css";
 import Modal from "react-modal"
 const NoticeModal = (props) => {
-  Modal.setAppElement('#root');
+  Modal.setAppElement('#root')
 
+  useEffect(() => {
+
+  }, [])
   return (
     <Modal className="noticemodal"
       isOpen={props.isOpen}
@@ -59,7 +63,7 @@ const NoticeModal = (props) => {
         </section>
       </main>
       <div className="btunsection">
-        <button className="nav-btn16">
+        <button className="nav-btn16" onClick={props.onRequestClose}>
           <div className="text13">닫기</div>
         </button>
         <button className="nav-btn17">

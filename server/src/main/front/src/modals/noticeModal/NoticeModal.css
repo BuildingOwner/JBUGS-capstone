@@ -8,11 +8,13 @@
   display: flex;
   align-items: center;
 }
+
 .vector-icon28 {
   height: 0.813rem;
   width: 0.813rem;
   position: relative;
 }
+
 .header4,
 .heroicons-outlinex22 {
   overflow: hidden;
@@ -20,6 +22,7 @@
   flex-direction: row;
   align-items: center;
 }
+
 .heroicons-outlinex22 {
   height: 1.563rem;
   justify-content: flex-start;
@@ -27,20 +30,24 @@
   box-sizing: border-box;
   width: 1.563rem;
 }
+
 .header4 {
   align-self: stretch;
   justify-content: space-between;
   padding: var(--padding-11xl) 0;
   gap: var(--gap-xl);
 }
+
 .b128,
 .b129 {
   position: relative;
 }
+
 .b128 {
   display: inline-block;
   min-width: 4.125rem;
 }
+
 .b129 {
   height: 2.938rem;
   font-size: var(--font-size-xl);
@@ -49,6 +56,7 @@
   align-items: center;
   min-width: 3.75rem;
 }
+
 .owner1 {
   overflow: hidden;
   display: flex;
@@ -58,14 +66,17 @@
   padding: 0 var(--padding-76xl) 0 0;
   gap: var(--gap-3xs);
 }
+
 .b130,
 .b131 {
   position: relative;
 }
+
 .b130 {
   display: inline-block;
   min-width: 4.125rem;
 }
+
 .b131 {
   height: 2.938rem;
   font-size: var(--font-size-xl);
@@ -74,6 +85,7 @@
   align-items: center;
   min-width: 6.875rem;
 }
+
 .date10 {
   overflow: hidden;
   display: flex;
@@ -83,14 +95,17 @@
   padding: 0 var(--padding-32xl) 0 0;
   gap: var(--gap-3xs);
 }
+
 .b132,
 .b133 {
   position: relative;
 }
+
 .b132 {
   display: inline-block;
   min-width: 4.125rem;
 }
+
 .b133 {
   height: 2.938rem;
   font-size: var(--font-size-xl);
@@ -99,6 +114,7 @@
   align-items: center;
   min-width: 3.688rem;
 }
+
 .view4 {
   overflow: hidden;
   display: flex;
@@ -108,12 +124,14 @@
   padding: 0 var(--padding-76xl) 0 0;
   gap: var(--gap-3xs);
 }
+
 .b134,
 .b135 {
   position: relative;
   display: inline-block;
   min-width: 2.75rem;
 }
+
 .b135 {
   font-size: var(--font-size-xl);
   font-family: var(--font-roboto);
@@ -121,6 +139,7 @@
   text-align: left;
   min-width: 2.5rem;
 }
+
 .status4 {
   cursor: pointer;
   border: 0;
@@ -131,15 +150,18 @@
   align-items: center;
   justify-content: center;
 }
+
 .status4:hover {
   background-color: var(--color-darkgoldenrod);
 }
+
 .answer3,
 .info7,
 .status4 {
   overflow: hidden;
   display: flex;
 }
+
 .answer3 {
   flex-direction: column;
   align-items: flex-start;
@@ -147,6 +169,7 @@
   padding: 0 var(--padding-32xl) 0 0;
   gap: var(--gap-3xs);
 }
+
 .info7 {
   margin: 0;
   align-self: stretch;
@@ -162,11 +185,13 @@
   color: var(--color-dimgray-100);
   font-family: var(--font-roboto);
 }
+
 .b136 {
   position: relative;
   display: inline-block;
   min-width: 2.75rem;
 }
+
 .blank-line,
 .blank-line1,
 .blank-line2,
@@ -182,6 +207,7 @@
 .p98 {
   margin: 0;
 }
+
 .b137 {
   align-self: stretch;
   height: 32.75rem;
@@ -190,6 +216,7 @@
   display: inline-block;
   color: var(--color-black);
 }
+
 .discription2,
 .scroll8 {
   align-self: stretch;
@@ -199,6 +226,7 @@
   align-items: flex-start;
   justify-content: flex-start;
 }
+
 .discription2 {
   flex-shrink: 0;
   gap: var(--gap-3xs);
@@ -207,10 +235,12 @@
   color: var(--color-dimgray-100);
   font-family: var(--font-roboto);
 }
+
 .scroll8 {
   padding: 0 0 var(--padding-32xl);
   gap: var(--gap-6xl);
 }
+
 .text13 {
   width: 3rem;
   position: relative;
@@ -220,6 +250,7 @@
   text-align: left;
   display: inline-block;
 }
+
 .nav-btn16 {
   cursor: pointer;
   border: 1px solid var(--color-darkgray-100);
@@ -235,12 +266,14 @@
   justify-content: center;
   min-width: 5.875rem;
 }
+
 .nav-btn16:hover,
 .nav-btn17:hover {
   background-color: var(--color-gainsboro-200);
   border: 1px solid var(--color-gray-600);
   box-sizing: border-box;
 }
+
 .text14 {
   width: 6rem;
   position: relative;
@@ -250,6 +283,7 @@
   color: var(--color-white);
   text-align: left;
 }
+
 .nav-btn17 {
   cursor: pointer;
   border: 1px solid var(--point-blue);
@@ -265,16 +299,19 @@
   justify-content: center;
   min-width: 5.875rem;
 }
+
 .nav-btn17:hover {
   background-color: var(--color-cornflowerblue-300);
   border: 1px solid var(--color-cornflowerblue-300);
 }
+
 .btunsection,
 .noticemodal {
   overflow: hidden;
   display: flex;
   align-items: flex-start;
 }
+
 .btunsection {
   align-self: stretch;
   flex-direction: row;
@@ -282,82 +319,97 @@
   padding: 0 0 0 21.5rem;
   gap: var(--gap-3xs);
 }
+
 .noticemodal {
-  width: 100%;
+  background-color: white;
+  width: 40%;
   position: relative;
-  border-radius: var(--br-3xs);
-  background-color: var(--color-white);
+  top: 10%;
+  left: 30%;
+  padding: var(--padding-28xl);
+  border-radius: 10px;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: var(--padding-xl) var(--padding-31xl);
-  box-sizing: border-box;
-  gap: var(--gap-6xl);
-  letter-spacing: normal;
-  text-align: left;
-  font-size: var(--font-size-11xl);
-  color: var(--color-black);
-  font-family: var(--font-roboto);
+  gap: var(--gap-21xl);
+  height: 80%;
 }
+
 @media screen and (max-width: 725px) {
   .scroll8 {
     padding-bottom: var(--padding-14xl);
     box-sizing: border-box;
   }
 }
+
 @media screen and (max-width: 650px) {
   .info7 {
     flex-wrap: wrap;
   }
+
   .nav-btn16,
   .nav-btn17 {
     flex: 1;
   }
+
   .btunsection {
     flex-wrap: wrap;
     padding-left: 10.75rem;
     box-sizing: border-box;
   }
 }
+
 @media screen and (max-width: 450px) {
   .b128 {
     font-size: var(--font-size-lg);
   }
+
   .b129 {
     font-size: var(--font-size-base);
   }
+
   .b130 {
     font-size: var(--font-size-lg);
   }
+
   .b131 {
     font-size: var(--font-size-base);
   }
+
   .b132 {
     font-size: var(--font-size-lg);
   }
+
   .b133 {
     font-size: var(--font-size-base);
   }
+
   .b134 {
     font-size: var(--font-size-lg);
   }
+
   .b135 {
     font-size: var(--font-size-base);
   }
+
   .b136 {
     font-size: var(--font-size-lg);
   }
+
   .b137 {
     font-size: var(--font-size-base);
   }
+
   .text13,
   .text14 {
     font-size: var(--font-size-lgi);
   }
+
   .btunsection,
   .noticemodal {
     padding-left: var(--padding-xl);
     box-sizing: border-box;
   }
+
   .noticemodal {
     padding-right: var(--padding-xl);
   }

@@ -68,7 +68,6 @@ public class UploadApiController {
             // 파일 경로(들)을 사용하여 추가 처리 수행
             for (String filePath : uploadedFilePaths) {
                 sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer(), uploadDto.getDescription(), uploadDto.getQuizType());
-
             }
 
             // 성공적으로 파일이 저장된 경우

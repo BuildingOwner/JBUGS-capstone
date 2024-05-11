@@ -30,7 +30,8 @@ public class AnswerService {
     public void saveAnswers(AnswerRequestDto answerRequestDTO) {
         Quiz quiz = quizRepository.findById(answerRequestDTO.getQuizId())
                 .orElseThrow(() -> new RuntimeException("Quiz not found"));
-        Student student = studentRepository.findOne(answerRequestDTO.getStudentId());
+        Student student = studentRepository.findById(answerRequestDTO.getStudentId())
+                .orElseThrow(() -> new IllegalArgumentException("Student not found with id: " + answerRequestDTO.getStudentId()));
 
         Answer answer = new Answer();
         answer.setQuiz(quiz);

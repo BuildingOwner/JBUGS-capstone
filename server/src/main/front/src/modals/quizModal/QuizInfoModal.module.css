@@ -54,3 +54,14 @@
 .goBtn{
   background-color: var(--point-blue) !important;
 }
+
+.offline{
+  background-color: var(--point-yellow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: var(--font-size-xl);
+  padding: 5px 10px;
+  font-weight: bold;
+}

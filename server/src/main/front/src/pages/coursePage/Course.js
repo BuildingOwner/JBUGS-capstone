@@ -146,7 +146,7 @@ const Course = () => {
                 ))}
               </nav>
               <button type="button" className={`btn btn-primary 
-              ${memberInfoDto?.memberType == "STUDENT" ? styles.hidden : null}
+              ${memberInfoDto?.memberType == "STUDENTs" ? styles.hidden : null}
               ${styles.addBtn}`} onClick={openModal}>
                 <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
               </button>

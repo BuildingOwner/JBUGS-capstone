@@ -53,8 +53,8 @@ const QuizList = () => {
       const quizList = response.data.allQuizDtoList.filter((quiz) => quiz !== null).map((quiz) => quiz)
 
       // useState를 활용하여 완료된 퀴즈와 완료되지 않은 퀴즈 분리
-      const completedQuizzes = quizList.filter(quiz => quiz.quizScore !== null)
-      const uncompletedQuizzes = quizList.filter(quiz => quiz.quizScore === null)
+      const completedQuizzes = quizList.filter(quiz => quiz.submissionStatus == 1)
+      const uncompletedQuizzes = quizList.filter(quiz => quiz.submissionStatus == 0)
       const courseDto1 = response.data.courseDto
       const lectureName1 = response.data.courseDto.lectureName
       const division1 = response.data.courseDto.division

@@ -21,14 +21,16 @@ const UncompleteQuizItem = (props) => {
     const data = formatDate(inputDate);
     setFormattedDate(data)
   }, [])
-  return(
+  return (
     <div className={styles.container}>
       <h3 className={styles.title}>{props.quizName}</h3>
-      <div className={styles.duration}>
-        <h3>기간</h3>
-        <h3>{formattedDate}</h3>
+      <div className={styles.bottomInfo}>
+        <div className={styles.duration}>
+          <h3>기간</h3>
+          <h3>{formattedDate}</h3>
+        </div>
+        <h3 className={styles.description}>{props.description}</h3>
       </div>
-      <h3 className={styles.description}>{props.description}</h3>
       <div className={styles.bottom}>
         <div className={styles.bottomInfo}>
           <div className={styles.time}>
@@ -41,7 +43,7 @@ const UncompleteQuizItem = (props) => {
           </div>
         </div>
         <button type="button" className={`btn btn-primary ${styles.goBtn}`}>
-          <h3 style={{fontWeight:"bold", fontSize:"1.05rem"}}>퀴즈로 가기</h3>
+          <h3 style={{ fontWeight: "bold", fontSize: "1.05rem" }}>퀴즈로 가기</h3>
           <FaCaretRight size={20} />
         </button>
       </div>

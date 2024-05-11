@@ -7,6 +7,7 @@ import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
 import jbugs.eclass.repository.QuizInfoRepository;
 import jbugs.eclass.repository.QuizRepository;
+import jbugs.eclass.service.QuizService;
 import jbugs.eclass.service.WeekService;
 import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class MainApiController {
     private final WeekService weekService;
     private final QuizInfoRepository quizInfoRepository;
     private final QuizRepository quizRepository;
+    private final QuizService quizService;
 
     @GetMapping("/main")
     public ResponseEntity<?> getMainPageInfo(HttpServletRequest request) {
@@ -70,6 +72,9 @@ public class MainApiController {
         List<MainLectureDto> lectureInfos = enrollments.stream().map(this::buildMainLectureDto).collect(Collectors.toList());
         mainInfoDto.setMainLectures(lectureInfos);
 
+        List<QuizDto> unattemptedQuizzes = findUnattemptedQuizzesByStudentId(loginMember.getStudent().getId());
+        mainInfoDto.setQuizDtoList(unattemptedQuizzes);
+
         return mainInfoDto;
     }
 
@@ -87,9 +92,6 @@ public class MainApiController {
                 .map(AssignmentDto::from)
                 .collect(Collectors.toList());
         lectureInfo.setAssignments(assignmentDtos);
-
-        List<QuizDto> unattemptedQuizzes = findUnattemptedQuizzesByStudentId(enrollment.getStudent().getId());
-        lectureInfo.setQuizDtoList(unattemptedQuizzes);
 
         return lectureInfo;
     }
@@ -109,10 +111,17 @@ public class MainApiController {
             List<Quiz> quizzes = quizRepository.findByLectureId(lecture.getId());
             for (Quiz quiz : quizzes) {
                 // 학생의 퀴즈 제출 상태를 조회합니다.
-                Optional<QuizInfo> quizInfo = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId);
-                // 제출하지 않은 퀴즈만 리스트에 추가합니다.
-                if (!quizInfo.isPresent() || !quizInfo.get().isSubmissionStatus()) {
-                    unattemptedQuizzes.add(QuizDto.from(quiz, quizInfo.orElse(null)));
+                Optional<QuizInfo> quizInfoOpt = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId);
+                if (!quizInfoOpt.isPresent()) {
+                    // QuizInfo가 존재하지 않으면, 기본 QuizInfo를 생성하고 저장합니다.
+                    QuizInfo quizInfo = quizService.createDefaultQuizInfo(quiz.getId(), studentId, enrollment);
+                    unattemptedQuizzes.add(QuizDto.from(quiz, quizInfo));
+                } else {
+                    QuizInfo quizInfo = quizInfoOpt.get();
+                    // 제출하지 않은 퀴즈만 리스트에 추가합니다.
+                    if (!quizInfo.isSubmissionStatus()) {
+                        unattemptedQuizzes.add(QuizDto.from(quiz, quizInfo));
+                    }
                 }
             }
         }

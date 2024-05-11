@@ -317,8 +317,9 @@ const ChatbotPage = () => {
 
   const fetchDataAndChattings = async (selectedId) => { // 새로운 함수 추가
     const chatIdArray = await fetchChatData() // fetchChatData 호출 및 chatId 반환 대기
-    if (chatIdArray && chatIdArray.length > 0 && firstDo === true) { // chatId가 유효하고, 배열에 요소가 있는 경우에만 fetchChattings 호출
-      await fetchChattings(chatIdArray[0]); // fetchChattings 호출 및 첫 번째 chatId 전달
+    if (chatIdArray && chatIdArray.length > 0 && firstDo === true) {
+      // chatId가 유효하고, 배열에 요소가 있는 경우에만 fetchChattings 호출
+      await fetchChattings(chatIdArray[0]) // fetchChattings 호출 및 첫 번째 chatId 전달
     } else if (chatIdArray.length === 0) {
       console.log("채팅방을 생성해주세요")
     }
@@ -340,6 +341,8 @@ const ChatbotPage = () => {
   useEffect(() => {
     chatBoardScoll()
   }, [chats])
+
+  if (!chats) return <LoadingPage />;
 
   return (
     <div className={`background`}>

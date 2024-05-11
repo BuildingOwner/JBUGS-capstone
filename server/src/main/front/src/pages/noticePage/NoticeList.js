@@ -17,6 +17,16 @@ const NoticeList = () => {
   const [noticeDtoList, setNoticeDtoList] = useState([])
   const [courseDto, setCourseDto] = useState()
   const [noticeFilter, setNoticeFilter] = useState("ALL")
+  const [searchFilter, setSearchFilter] = useState("title")
+  const [keyword, setKeyword] = useState("")
+
+  const changeKeyword = (e) => {
+    setKeyword(e.target.value)
+  }
+
+  const changeSearchFilter = (e) => {
+    setSearchFilter(e.target.value)
+  }
 
   const changeNoticeFilter = (e) => {
     setNoticeFilter(e)
@@ -63,12 +73,17 @@ const NoticeList = () => {
               <div className={styles.searchContainer}>
                 <select
                   className={`form-select form-select-sm ${styles.select}`}
-                  defaultValue={'title'}>
+                  defaultValue={'title'}
+                  onChange={changeSearchFilter}>
                   <option value={`title`}>제목</option>
                   <option value={`writer`}>글쓴이</option>
                 </select>
                 <div className={styles.searchBox}>
-                  <input className={`form-control ${styles.search}`} type="text" placeholder="검색어를 입력하세요..." />
+                  <input className={`form-control ${styles.search}`}
+                    type="text"
+                    placeholder="검색어를 입력하세요..."
+                    onChange={changeKeyword}
+                  />
                   <div className={styles.questionIcon}>
                     <GoSearch size={20} />
                   </div>
@@ -85,7 +100,7 @@ const NoticeList = () => {
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 공지</h3>
               </button>
               <button className={`${styles.tabItem}`}
-                onClick={() => changeNoticeFilter('EXAM')}>
+                onClick={() => changeNoticeFilter("EXAM")}>
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>시험</h3>
               </button>
               <button className={`${styles.tabItem}`}
@@ -108,21 +123,30 @@ const NoticeList = () => {
               <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
             </div>
             <div className={styles.list}>
-              {sortedNoticeDtoList?.length !== 0 ?
-                sortedNoticeDtoList.filter((notice) => noticeFilter === "ALL" ||
-                  notice.noticeStatus === noticeFilter).map((notice, i) => (
-                    <NoticeRow
-                      noticeNumber={i + 1}
-                      content={notice.content}
-                      createdAt={notice.createdAt}
-                      noticeId={notice.noticeId}
-                      noticeStatus={notice.noticeStatus}
-                      title={notice.title}
-                      views={notice.views}
-                      writer={notice.writer}
-                      key={`notice${i}`}
-                    />
-                  )) : <NoItem title={"공지가 없습니다"} />}
+              {
+                sortedNoticeDtoList?.length !== 0
+                  ? sortedNoticeDtoList
+                    .filter((notice) =>
+                      (noticeFilter === "ALL" || notice.noticeStatus === noticeFilter) &&
+                      (searchFilter === "title"
+                        ? notice.title.toLowerCase().includes(keyword.toLowerCase())
+                        : notice.writer.toLowerCase().includes(keyword.toLowerCase()))
+                    )
+                    .map((notice, i) => (
+                      <NoticeRow
+                        noticeNumber={i + 1}
+                        content={notice.content}
+                        createdAt={notice.createdAt}
+                        noticeId={notice.noticeId}
+                        noticeStatus={notice.noticeStatus}
+                        title={notice.title}
+                        views={notice.views}
+                        writer={notice.writer}
+                        key={`notice${i}`}
+                      />
+                    ))
+                  : <NoItem title={"공지가 없습니다"} />
+              }
             </div>
           </div>
         </section>

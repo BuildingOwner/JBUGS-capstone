@@ -18,6 +18,16 @@ const QaList = () => {
   const [qnADtoList, setQnADtoList] = useState()
   const [courseDto, setCourseDto] = useState()
   const [qaFilter, setQaFilter] = useState("ALL")
+  const [searchFilter, setSearchFilter] = useState("title")
+  const [keyword, setKeyword] = useState("")
+
+  const changeKeyword = (e) => {
+    setKeyword(e.target.value)
+  }
+
+  const changeSearchFilter = (e) => {
+    setSearchFilter(e.target.value)
+  }
 
   const changeQaFilter = (e) => {
     if (e === "ME") {
@@ -66,12 +76,15 @@ const QaList = () => {
             <h3 className={styles.title}>Q & A</h3>
             <div className={styles.right}>
               <div className={styles.searchContainer}>
-                <select className={`form-select form-select-sm ${styles.select}`}>
+                <select className={`form-select form-select-sm ${styles.select}`}
+                  onChange={changeSearchFilter}>
                   <option value={`title`} selected>제목</option>
                   <option value={`writer`}>글쓴이</option>
                 </select>
                 <div className={styles.searchBox}>
-                  <input class={`form-control ${styles.search}`} type="text" placeholder="검색어를 입력하세요..." />
+                  <input class={`form-control ${styles.search}`}
+                    type="text" placeholder="검색어를 입력하세요..."
+                    onChange={changeKeyword} />
                   <div className={styles.questionIcon}>
                     <GoSearch size={20} />
                   </div>
@@ -109,8 +122,13 @@ const QaList = () => {
             </div>
             <div className={styles.list}>
               {sortedQnaDtoList?.length !== 0 ?
-                sortedQnaDtoList.filter((qna) => qaFilter === "ALL" ||
-                  qna.writer === qaFilter).map((qna, i) => (
+                sortedQnaDtoList.filter((qna) => (qaFilter === "ALL" || qna.writer === qaFilter)
+                  && (searchFilter === "title" ?
+                    // 필터가 title일 경우 keyword가 포함되어있는지 확인
+                    qna.title.toLowerCase().includes(keyword.toLowerCase())
+                    // 필터가 writer일 경우 keyword가 포함되어있는지 확인
+                    : qna.writer.toLowerCase().includes(keyword.toLowerCase())
+                  )).map((qna, i) => (
                     <QnaRow
                       key={`qna${i}`}
                       number={i}

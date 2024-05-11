@@ -23,5 +23,5 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
     List<Quiz> findQuizzesByWeekId(Long weekId);
 
-    List<Quiz> findByLectureId(Long id);
+    List<Quiz> findByLectureId(Long lectureId);
 }

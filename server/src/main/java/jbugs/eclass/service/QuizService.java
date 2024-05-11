@@ -74,14 +74,23 @@ public class QuizService {
         return quizInfo;
     }
 
+    public List<QuizDto> findUnsubmittedQuizzesByLectureAndStudent(Long lectureId, Long studentId, Enrollment enrollment) {
+        // 특정 강의에 속한 모든 퀴즈 조회
+        List<Quiz> quizzes = quizRepository.findByLectureId(lectureId);
 
-    public List<QuizDto> findUnsubmittedQuizzes(Long lectureId, Long studentId) {
-        List<QuizInfo> quizInfos = quizInfoRepository.findBySubmissionStatusAndQuiz_LectureIdAndStudentId(false, lectureId, studentId);
         List<QuizDto> quizDtos = new ArrayList<>();
+        for (Quiz quiz : quizzes) {
+            Optional<QuizInfo> quizInfoOptional = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId);
 
-        for (QuizInfo quizInfo : quizInfos) {
-            Quiz quiz = quizInfo.getQuiz(); // QuizInfo로부터 Quiz 객체를 얻어옵니다.
-            quizDtos.add(QuizDto.from(quiz, quizInfo)); // QuizDto 객체를 생성하고 리스트에 추가합니다.
+            // QuizInfo가 존재하지 않거나 제출하지 않은 경우, 기본값을 가지는 새로운 QuizInfo를 생성
+            QuizInfo quizInfo = quizInfoOptional.orElseGet(() -> {
+                // createDefaultQuizInfo 메소드를 이용하여 기본값을 가지는 QuizInfo 객체 생성
+                return createDefaultQuizInfo(quiz.getId(), studentId, enrollment); // 데이터베이스에 저장
+            });
+
+            // 항상 QuizInfo를 포함하여 QuizDto 생성
+            QuizDto quizDto = QuizDto.from(quiz, quizInfo);
+            quizDtos.add(quizDto);
         }
 
         return quizDtos;

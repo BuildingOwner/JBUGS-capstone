@@ -5,8 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
-import jbugs.eclass.repository.QuizInfoRepository;
-import jbugs.eclass.repository.QuizRepository;
 import jbugs.eclass.service.QuizService;
 import jbugs.eclass.service.WeekService;
 import jbugs.eclass.session.SessionConst;
@@ -16,12 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-//@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @RestController
@@ -31,8 +26,6 @@ public class MainApiController {
 
     private final EnrollmentRepository enrollmentRepository;
     private final WeekService weekService;
-    private final QuizInfoRepository quizInfoRepository;
-    private final QuizRepository quizRepository;
     private final QuizService quizService;
 
     @GetMapping("/main")
@@ -67,7 +60,7 @@ public class MainApiController {
         MainInfoDto mainInfoDto = new MainInfoDto();
         mainInfoDto.setMemberInfoDto(memberInfoDto);
 
-        List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(loginMember.getId());
+        List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(loginMember.getStudent().getId());
 
         List<MainLectureDto> lectureInfos = enrollments.stream().map(this::buildMainLectureDto).collect(Collectors.toList());
         mainInfoDto.setMainLectures(lectureInfos);
@@ -90,42 +83,9 @@ public class MainApiController {
                 .collect(Collectors.toList());
         lectureInfo.setAssignments(assignmentDtos);
 
-        List<QuizDto> quizDtos = quizService.findUnsubmittedQuizzes(enrollment.getLecture().getId(), enrollment.getStudent().getId());
+        List<QuizDto> quizDtos = quizService.findUnsubmittedQuizzesByLectureAndStudent(enrollment.getLecture().getId(), enrollment.getStudent().getId(), enrollment);
         lectureInfo.setQuizDtoList(quizDtos);
 
         return lectureInfo;
     }
-
-//    public List<QuizDto> findUnattemptedQuizzesByStudentId(Long studentId) {
-//        // 학생의 수강 정보를 가져옵니다.
-//        List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(studentId);
-//
-//        // 미응시 퀴즈 목록을 저장할 리스트를 초기화합니다.
-//        List<QuizDto> unattemptedQuizzes = new ArrayList<>();
-//
-//        for (Enrollment enrollment : enrollments) {
-//            // 각 수강 정보에 해당하는 강의를 조회합니다.
-//            Lecture lecture = enrollment.getLecture();
-//
-//            // 해당 강의에 속한 퀴즈들을 조회합니다.
-//            List<Quiz> quizzes = quizRepository.findByLectureId(lecture.getId());
-//            for (Quiz quiz : quizzes) {
-//                // 학생의 퀴즈 제출 상태를 조회합니다.
-//                Optional<QuizInfo> quizInfoOpt = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId);
-//                if (!quizInfoOpt.isPresent()) {
-//                    // QuizInfo가 존재하지 않으면, 기본 QuizInfo를 생성하고 저장합니다.
-//                    QuizInfo quizInfo = quizService.createDefaultQuizInfo(quiz.getId(), studentId, enrollment);
-//                    unattemptedQuizzes.add(QuizDto.from(quiz, quizInfo));
-//                } else {
-//                    QuizInfo quizInfo = quizInfoOpt.get();
-//                    // 제출하지 않은 퀴즈만 리스트에 추가합니다.
-//                    if (!quizInfo.isSubmissionStatus()) {
-//                        unattemptedQuizzes.add(QuizDto.from(quiz, quizInfo));
-//                    }
-//                }
-//            }
-//        }
-//
-//        return unattemptedQuizzes;
-//    }
 }

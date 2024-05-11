@@ -9,6 +9,7 @@ import React from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { BsSend } from "react-icons/bs";
 import { LuImagePlus } from "react-icons/lu";
+import LoadingPage from "../mainPage/LoadingPage"
 
 const ChatbotPage = () => {
   const navigate = useNavigate()

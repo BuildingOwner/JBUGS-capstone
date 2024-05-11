@@ -39,7 +39,8 @@ const QnaRow = (props) => {
     <div className={styles.row} onClick={openModal}>
       <NoticeModal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal} />
+        onRequestClose={closeModal}
+        props={props} />
       <h4 className={styles.num}>{props.noticeNumber}</h4>
       {props.noticeStatus === "EXAM" ?
         <div className={`${styles.category} ${styles.exam}`}>

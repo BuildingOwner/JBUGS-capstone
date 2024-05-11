@@ -19,12 +19,14 @@ public class EnrollmentService {
     private final WeekRepository weekRepository;
 
     @Transactional
-    public void enrollStudentInLecture(Student student, Lecture lecture) {
+    public Enrollment enrollStudentInLecture(Student student, Lecture lecture) {
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
         enrollment.setLecture(lecture);
 
         enrollmentRepository.save(enrollment);
+
+        return enrollment;
     }
 
     @Transactional

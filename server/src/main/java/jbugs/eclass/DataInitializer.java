@@ -257,6 +257,27 @@
 //        lectureService.saveLecture(lecture6);
 //        lectureService.saveLecture(lecture7);
 //
+//        Enrollment enrollment1 = enrollmentService.enrollStudentInLecture(student1, lecture1);
+//        Enrollment enrollment2 = enrollmentService.enrollStudentInLecture(student1, lecture2);
+//        Enrollment enrollment3 = enrollmentService.enrollStudentInLecture(student1, lecture3);
+//        Enrollment enrollment4 = enrollmentService.enrollStudentInLecture(student1, lecture4);
+//        Enrollment enrollment5 = enrollmentService.enrollStudentInLecture(student1, lecture5);
+//        Enrollment enrollment6 = enrollmentService.enrollStudentInLecture(student1, lecture6);
+//
+//        enrollmentService.enrollStudentInLecture(student2, lecture1);
+//        enrollmentService.enrollStudentInLecture(student2, lecture2);
+//        enrollmentService.enrollStudentInLecture(student2, lecture3);
+//        enrollmentService.enrollStudentInLecture(student2, lecture4);
+//        enrollmentService.enrollStudentInLecture(student2, lecture5);
+//        enrollmentService.enrollStudentInLecture(student2, lecture6);
+//
+//        enrollmentService.enrollStudentInLecture(student3, lecture1);
+//        enrollmentService.enrollStudentInLecture(student3, lecture2);
+//        enrollmentService.enrollStudentInLecture(student3, lecture3);
+//        enrollmentService.enrollStudentInLecture(student3, lecture4);
+//        enrollmentService.enrollStudentInLecture(student3, lecture5);
+//        enrollmentService.enrollStudentInLecture(student3, lecture6);
+//
 //        int memberIndex = 1;
 //        String[] studentNames = {"김지훈","박세진", "박서연", "도민준","이하은","장도윤","박지우","이유진","김현우","한수아","신지호", "김예은", "김태현", "김민서", "박준호", "이하윤", "차은우", "박서현", "김지안", "조우진", "박소율", "김민주"};
 //        for(String name : studentNames) {
@@ -282,27 +303,6 @@
 //
 //            memberIndex++; // 다음 멤버를 위해 인덱스 증가
 //        }
-//
-//        enrollmentService.enrollStudentInLecture(student1, lecture1);
-//        enrollmentService.enrollStudentInLecture(student1, lecture2);
-//        enrollmentService.enrollStudentInLecture(student1, lecture3);
-//        enrollmentService.enrollStudentInLecture(student1, lecture4);
-//        enrollmentService.enrollStudentInLecture(student1, lecture5);
-//        enrollmentService.enrollStudentInLecture(student1, lecture6);
-//
-//        enrollmentService.enrollStudentInLecture(student2, lecture1);
-//        enrollmentService.enrollStudentInLecture(student2, lecture2);
-//        enrollmentService.enrollStudentInLecture(student2, lecture3);
-//        enrollmentService.enrollStudentInLecture(student2, lecture4);
-//        enrollmentService.enrollStudentInLecture(student2, lecture5);
-//        enrollmentService.enrollStudentInLecture(student2, lecture6);
-//
-//        enrollmentService.enrollStudentInLecture(student3, lecture1);
-//        enrollmentService.enrollStudentInLecture(student3, lecture2);
-//        enrollmentService.enrollStudentInLecture(student3, lecture3);
-//        enrollmentService.enrollStudentInLecture(student3, lecture4);
-//        enrollmentService.enrollStudentInLecture(student3, lecture5);
-//        enrollmentService.enrollStudentInLecture(student3, lecture6);
 //
 //        Optional<Week> week1 = weekRepository.findById(1L);
 //        Optional<Week> week2 = weekRepository.findById(2L);
@@ -352,6 +352,7 @@
 //        quizInfo1.setStudent(student1);
 //        quizInfo1.setSubmissionStatus(true); // 학생이 퀴즈 1을 풀었음
 //        quizInfo1.setSubmittedAt(LocalDateTime.of(2024, 4, 12, 23, 59));
+//        quizInfo1.setEnrollment(enrollment1);
 //        quiz1.setQuizInfos(List.of(quizInfo1));
 //
 //        QuizInfo quizInfo2 = new QuizInfo();
@@ -359,6 +360,7 @@
 //        quizInfo2.setStudent(student1);
 //        quizInfo2.setSubmissionStatus(false);
 //        quizInfo2.setSubmittedAt(null);
+//        quizInfo1.setEnrollment(enrollment1);
 //        quiz2.setQuizInfos(List.of(quizInfo2));
 //
 //        quizService.saveQuiz(quiz1);
@@ -380,15 +382,27 @@
 //        noticeService.createNotice(lecture2.getId(),"기말고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100, "기말고사에 대해 공지하겠습니다.", NoticeStatus.EXAM);
 //
 //        qnAService.createQnA(lecture1.getId(),"이건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"저건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
-//        qnAService.createQnA(lecture1.getId(),"요건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"그건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
-//        qnAService.createQnA(lecture1.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"저건 뭔가요.", "최재완", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+//        qnAService.createQnA(lecture1.getId(),"요건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"그건 뭔가요.", "김지훈", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+//        qnAService.createQnA(lecture1.getId(),"이게 뭘까요.", "이영재", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
 //
-//        qnAService.createQnA(lecture2.getId(),"이건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"모르겠어요.", "이기혁", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"알려주세요.", "이하은", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"교수님.", "박세진", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"질문 있습니다.", "김태현", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"이건 왜이럴까요.", "김예은", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//
+//        qnAService.createQnA(lecture1.getId(),"수업관련 질문입니다.", "차은우", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"오류있습니다.", "박서현", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"과제 질문입니다.", "진승원", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"과제 질문 있습니다.", "장주찬", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"저건 왜이럴까요.", "이영재", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//
+//        qnAService.createQnA(lecture2.getId(),"이건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
 //        qnAService.createQnA(lecture2.getId(),"저건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
-//        qnAService.createQnA(lecture2.getId(),"요건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture2.getId(),"그건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
+//        qnAService.createQnA(lecture2.getId(),"요건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture2.getId(),"그건 뭔가요.", "최재완", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
 //        qnAService.createQnA(lecture2.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
 //
 //        Material material1 = new Material();

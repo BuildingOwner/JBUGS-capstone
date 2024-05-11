@@ -1,15 +1,9 @@
 package jbugs.eclass.service;
 
-import jbugs.eclass.domain.Enrollment;
-import jbugs.eclass.domain.Quiz;
-import jbugs.eclass.domain.QuizInfo;
-import jbugs.eclass.domain.Student;
+import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.QuizDetailsDto;
 import jbugs.eclass.dto.QuizDto;
-import jbugs.eclass.repository.QuizInfoRepository;
-import jbugs.eclass.repository.QuizRepository;
-import jbugs.eclass.repository.StudentRepository;
-import jbugs.eclass.repository.WeekRepository;
+import jbugs.eclass.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +17,6 @@ import java.util.stream.Collectors;
 public class QuizService {
     private final QuizRepository quizRepository;
     private final QuizInfoRepository quizInfoRepository;
-    private final WeekRepository weekRepository;
     private final StudentRepository studentRepository;
 
     @Transactional
@@ -51,6 +44,7 @@ public class QuizService {
 
     public List<QuizDto> findQuizzesByWeekIdAndStudentId(Long weekId, Long studentId, Enrollment enrollment) {
         List<Quiz> quizzes = quizRepository.findQuizzesByWeekId(weekId);
+
         return quizzes.stream().map(quiz -> {
             Optional<QuizInfo> quizInfoOptional = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId);
             // QuizInfo가 존재하지 않는다면, 기본값을 가지는 새로운 QuizInfo를 생성

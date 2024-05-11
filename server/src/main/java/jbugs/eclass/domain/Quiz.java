@@ -32,6 +32,10 @@ public class Quiz {
     @JoinColumn(name = "week_id")
     private Week week;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
+
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<QuizInfo> quizInfos;
 

@@ -84,7 +84,7 @@ public class CourseApiController {
                         .collect(Collectors.toList());
                 weeklyContentDto.setClassFiles(fileDtos);
 
-                List<QuizDto> quizDtoList = quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getId());
+                List<QuizDto> quizDtoList = quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment);
                 weeklyContentDto.setQuizzes(quizDtoList);
 
                 return weeklyContentDto;

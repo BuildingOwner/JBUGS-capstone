@@ -14,7 +14,6 @@ public class QuizDto {
     private QuizType quizType;
     private String quizName;
     private String description;
-    private String jsonData;
     private LocalDateTime deadline; // 종료일시
     private boolean submissionStatus;
     private Integer quizScore;

@@ -1,9 +1,12 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import Header from "./Header";
 import Date1 from "./Date1";
 import "./AssignmentModal.css";
+import Modal from "react-modal"
 
-const AssignmentModal = () => {
+const AssignmentModal = (props) => {
+  Modal.setAppElement("#root")
+
   const onAnswerClick = useCallback(() => {
     const anchor = document.querySelector(
       "[data-scroll-to='commentContainer']"
@@ -13,10 +16,27 @@ const AssignmentModal = () => {
     }
   }, []);
 
+  useEffect(() => {
+
+  }, [])
   return (
-    <div className="assignmentmodal">
-      <Header />
-      <section className="scroll5">
+    <Modal className="assignmentmodal"
+      isOpen={props.isOpen}
+      onRequestClose={props.onRequestClose}>
+      <section className="header9">
+        <h3 className="h39">과제 제목</h3>
+        <div className="content-container1">
+          <div className="heroicons-outlinex28" onClick={props.onRequestClose}>
+            <img
+              className="vector-icon75"
+              loading="lazy"
+              alt=""
+              src="/vector1.svg"
+            />
+          </div>
+        </div>
+      </section>
+      <section className="scroll5" >
         <div className="d-a-t-e-i-n-f-o">
           <div className="date-info2">
             <div className="parent2">
@@ -162,14 +182,14 @@ const AssignmentModal = () => {
         onClick={onAnswerClick}
       />
       <div className="feedback-panel">
-        <button className="nav-btn8">
+        <button className="nav-btn8" onClick={props.onRequestClose}>
           <div className="text6">취소</div>
         </button>
         <button className="nav-btn9">
           <b className="text7">수정 하기</b>
         </button>
       </div>
-    </div>
+    </Modal>
   );
 };
 

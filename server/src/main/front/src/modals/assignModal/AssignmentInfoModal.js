@@ -3,16 +3,13 @@ import FileItem from "./FileItem";
 import Modal from 'react-modal';
 
 const AssignmentInfoModal = (props) => {
+  Modal.setAppElement("#root")
   console.log("열림, props", props)
-
-  const closeModal = () => {
-    props.modalChange(false)
-  }
   return (
-    <Modal className="assignmentinfomodal"
-      isOpen={props.modalOpen}
-      onRequestClose={closeModal} // 모달을 닫는 함수를 전달
-      ariaHideApp={false}>
+    <div className="assignmentinfomodal"
+      // isOpen={props.modalOpen}
+      // onRequestClose={closeModal} // 모달을 닫는 함수를 전달
+      >
       <div className="header">
         <h3 className="h3">과제 제목</h3>
         <div className="scroll">
@@ -74,7 +71,7 @@ const AssignmentInfoModal = (props) => {
           <b className="text1">수정하기</b>
         </button>
       </div>
-    </Modal>
+    </div>
   );
 };
 

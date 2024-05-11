@@ -60,7 +60,7 @@ const QuizInfoModal = (props) => {
       onRequestClose={props.onRequestClose}>
       <div className={styles.top}>
         <h3 className={styles.title}>{props.props.quizName}</h3>
-        <button type="button" className={`btn btn-primary ${styles.closeBtn}`}>X</button>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>X</button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>

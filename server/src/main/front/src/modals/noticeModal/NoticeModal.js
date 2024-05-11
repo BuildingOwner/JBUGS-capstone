@@ -1,11 +1,15 @@
 import "./NoticeModal.css";
+import Modal from "react-modal"
+const NoticeModal = (props) => {
+  Modal.setAppElement('#root');
 
-const NoticeModal = () => {
   return (
-    <div className="noticemodal">
+    <Modal className="noticemodal"
+      isOpen={props.isOpen}
+      onRequestClose={props.onRequestClose}>
       <div className="header4">
         <h3 className="h33">공지사항 제목</h3>
-        <div className="heroicons-outlinex22">
+        <div className="heroicons-outlinex22" onClick={props.onRequestClose}>
           <img
             className="vector-icon28"
             loading="lazy"
@@ -62,7 +66,7 @@ const NoticeModal = () => {
           <b className="text14">작성하기</b>
         </button>
       </div>
-    </div>
+    </Modal>
   );
 };
 

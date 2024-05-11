@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
-import jbugs.eclass.repository.MemberRepository;
 import jbugs.eclass.repository.QuizInfoRepository;
 import jbugs.eclass.repository.QuizRepository;
 import jbugs.eclass.service.WeekService;
@@ -30,7 +29,6 @@ import java.util.stream.Collectors;
 public class MainApiController {
 
     private final EnrollmentRepository enrollmentRepository;
-    private final MemberRepository memberRepository;
     private final WeekService weekService;
     private final QuizInfoRepository quizInfoRepository;
     private final QuizRepository quizRepository;
@@ -90,29 +88,35 @@ public class MainApiController {
                 .collect(Collectors.toList());
         lectureInfo.setAssignments(assignmentDtos);
 
+        List<QuizDto> unattemptedQuizzes = findUnattemptedQuizzesByStudentId(enrollment.getStudent().getId());
+        lectureInfo.setQuizDtoList(unattemptedQuizzes);
+
         return lectureInfo;
     }
 
-//    public List<QuizDto> findUnattemptedQuizzesByStudentId(Long studentId) {
-//        // 학생의 수강 정보를 가져옵니다.
-//        List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(studentId);
-//
-//        // 미응시 퀴즈 목록을 저장할 리스트를 초기화합니다.
-//        List<QuizDto> unattemptedQuizzes = new ArrayList<>();
-//
-//        for (Enrollment enrollment : enrollments) {
-//            // 각 수강 정보에 대해 미응시 퀴즈를 조회합니다.
-//            List<Quiz> quizzes = quizRepository.findAllByLectureId(enrollment.getLecture().getId());
-//            for (Quiz quiz : quizzes) {
-//                // 학생의 퀴즈 제출 상태를 조회합니다.
-//                Optional<QuizInfo> quizInfo = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId);
-//                // 제출하지 않은 퀴즈만 리스트에 추가합니다.
-//                if (quizInfo.isEmpty() || !quizInfo.get().isSubmissionStatus()) {
-//                    unattemptedQuizzes.add(QuizDto.from(quiz, quizInfo.orElse(null)));
-//                }
-//            }
-//        }
-//
-//        return unattemptedQuizzes;
-//    }
+    public List<QuizDto> findUnattemptedQuizzesByStudentId(Long studentId) {
+        // 학생의 수강 정보를 가져옵니다.
+        List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(studentId);
+
+        // 미응시 퀴즈 목록을 저장할 리스트를 초기화합니다.
+        List<QuizDto> unattemptedQuizzes = new ArrayList<>();
+
+        for (Enrollment enrollment : enrollments) {
+            // 각 수강 정보에 해당하는 강의를 조회합니다.
+            Lecture lecture = enrollment.getLecture();
+
+            // 해당 강의에 속한 퀴즈들을 조회합니다.
+            List<Quiz> quizzes = quizRepository.findByLectureId(lecture.getId());
+            for (Quiz quiz : quizzes) {
+                // 학생의 퀴즈 제출 상태를 조회합니다.
+                Optional<QuizInfo> quizInfo = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId);
+                // 제출하지 않은 퀴즈만 리스트에 추가합니다.
+                if (!quizInfo.isPresent() || !quizInfo.get().isSubmissionStatus()) {
+                    unattemptedQuizzes.add(QuizDto.from(quiz, quizInfo.orElse(null)));
+                }
+            }
+        }
+
+        return unattemptedQuizzes;
+    }
 }

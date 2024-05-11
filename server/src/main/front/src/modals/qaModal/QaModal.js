@@ -1,16 +1,19 @@
 
 import "./QaModal.css";
+import Modal from "react-modal"
 
-const QaModal = () => {
+const QaModal = (props) => {
 
   return (
-    <div className="qamodal">
+    <Modal className="qamodal"
+      isOpen={props.isOpen}
+      onRequestClose={props.onRequestClose}>
       <section className="header10">
         <h3 className="qa6">
           Q&A 제목
         </h3>
         <div className="heroicons-outlinex-wrapper">
-          <div className="heroicons-outlinex29">
+          <div className="heroicons-outlinex29" onClick={props.onRequestClose}>
             <img
               className="vector-icon76"
               loading="lazy"
@@ -188,7 +191,7 @@ const QaModal = () => {
           <b className="text10">답변 하기</b>
         </button>
       </div>
-    </div>
+    </Modal >
   );
 };
 

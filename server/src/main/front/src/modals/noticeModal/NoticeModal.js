@@ -1,10 +1,14 @@
+import { useEffect } from "react";
 import Modal from "react-modal"
 import styles from "../quizModal/QuizInfoModal.module.css"
 import Info from "../modalComponents/Info";
 
 const NoticeModal = (props) => {
-  Modal.setAppElement('#root');
+  Modal.setAppElement('#root')
 
+  useEffect(() => {
+
+  }, [])
   return (
     <Modal className={styles.modalContainer}
       style={{

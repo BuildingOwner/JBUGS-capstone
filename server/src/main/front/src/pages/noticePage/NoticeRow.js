@@ -8,12 +8,15 @@ const QnaRow = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
-    setModalIsOpen(true);
+    console.log("open")
+    setModalIsOpen(true)
   }
 
-  const closeModal = () => {
-    console.log("닫혀야함")
-    setModalIsOpen(false);
+  const closeModal = (event) => {
+    console.log("close")
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
   }
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -34,7 +37,8 @@ const QnaRow = (props) => {
   }, [])
   return (
     <div className={styles.row} onClick={openModal}>
-      <NoticeModal isOpen={modalIsOpen}
+      <NoticeModal
+        isOpen={modalIsOpen}
         onRequsetClose={closeModal} />
       <h4 className={styles.num}>{props.noticeNumber}</h4>
       {props.noticeStatus === "EXAM" ?

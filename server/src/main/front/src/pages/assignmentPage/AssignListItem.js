@@ -11,9 +11,10 @@ const AssignListItem = (props) => {
     setModalIsOpen(true)
   }
 
-  const closeModal = () => {
-    console.log("닫혀야함")
+  const closeModal = (event) => {
     setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
   }
 
   const formatDate = (dateString) => {

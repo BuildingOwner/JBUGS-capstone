@@ -39,7 +39,7 @@ const QuizListItem = (props) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         props={props} />
-      <div className={`${styles.idSubmitBox} ${props.quizScore != undefined ? styles.done : styles.yet}`}>
+      <div className={`${styles.idSubmitBox} ${props.submissionStatus != 0 ? styles.done : styles.yet}`}>
         {props.submissionStatus === true ?
           <h3 className={styles.idSubmitText}>응시 완료</h3>
           : <h3 className={styles.idSubmitText}>미응시</h3>}

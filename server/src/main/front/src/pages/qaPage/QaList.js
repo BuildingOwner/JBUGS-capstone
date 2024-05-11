@@ -120,7 +120,7 @@ const QaList = () => {
               <h3 className={styles.colDate} style={{ fontSize: "1.25rem" }}>작성일</h3>
               <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
             </div>
-            <div className={styles.list}>
+            <div className={`${styles.list} no-scroll-bar`}>
               {sortedQnaDtoList?.length !== 0 ?
                 sortedQnaDtoList.filter((qna) => (qaFilter === "ALL" || qna.writer === qaFilter)
                   && (searchFilter === "title" ?

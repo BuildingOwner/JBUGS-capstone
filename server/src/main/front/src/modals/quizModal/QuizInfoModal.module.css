@@ -45,18 +45,24 @@
   font-size: var(--font-size-xl) !important;
   font-weight: bold !important;
   height: fit-content;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
 
 .closeBtn{
   background-color: #aaa !important;
 }
 
+.closeBtn2{
+  padding: 5px !important;
+}
+
 .goBtn{
   background-color: var(--point-blue) !important;
 }
 
-.offline{
-  background-color: var(--point-yellow);
+.box{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,4 +70,20 @@
   font-size: var(--font-size-xl);
   padding: 5px 10px;
   font-weight: bold;
+}
+
+.yellow{
+  background-color: var(--point-yellow);
+}
+
+.blue{
+  background-color: var(--point-blue);
+}
+
+.green{
+  background-color: var(--point-green);
+}
+
+.red{
+  background-color: var(--point-red);
 }

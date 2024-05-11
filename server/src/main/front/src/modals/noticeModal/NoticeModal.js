@@ -57,11 +57,11 @@ const NoticeModal = (props) => {
               <Info title={"구분"} content={<h3 className={`${styles.box} ${styles.blue}`}>온라인</h3>} />
               : data.noticeStatus === "EXAM" ?
                 <Info title={"구분"} content={<h3 className={`${styles.box} ${styles.green}`}>시험</h3>} />
-                : <Info title={"구분"} content={<h3 className={styles.offline}>대면 수업</h3>} />
+                : <Info title={"구분"} content={<h3 className={`${styles.box} ${styles.yellow}`}>대면 수업</h3>} />
           }
         </div>
         <div className={styles.contents}>
-          <Info title={"설명"} content={data.description} />
+          <Info title={"설명"} content={data.content} />
         </div>
       </div>
       <div className={styles.bottom}>

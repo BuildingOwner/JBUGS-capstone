@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 public class QuizDto {
     private Long quizId;
-
+    private Long lectureId;
     private QuizType quizType;
     private String quizName;
     private String description;

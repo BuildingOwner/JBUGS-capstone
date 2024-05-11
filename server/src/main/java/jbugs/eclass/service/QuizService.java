@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,5 +72,18 @@ public class QuizService {
         quizInfo.setSubmissionStatus(false);
         saveQuizInfo(quizInfo);
         return quizInfo;
+    }
+
+
+    public List<QuizDto> findUnsubmittedQuizzes(Long lectureId, Long studentId) {
+        List<QuizInfo> quizInfos = quizInfoRepository.findBySubmissionStatusAndQuiz_LectureIdAndStudentId(false, lectureId, studentId);
+        List<QuizDto> quizDtos = new ArrayList<>();
+
+        for (QuizInfo quizInfo : quizInfos) {
+            Quiz quiz = quizInfo.getQuiz(); // QuizInfo로부터 Quiz 객체를 얻어옵니다.
+            quizDtos.add(QuizDto.from(quiz, quizInfo)); // QuizDto 객체를 생성하고 리스트에 추가합니다.
+        }
+
+        return quizDtos;
     }
 }

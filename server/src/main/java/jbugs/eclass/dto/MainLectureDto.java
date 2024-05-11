@@ -13,4 +13,5 @@ public class MainLectureDto {
     private String lectureTime;
     private String classification;
     private List<AssignmentDto> assignments;
+    private List<QuizDto> quizDtoList;
 }

@@ -76,9 +76,9 @@ const QuizInfoModal = (props) => {
           }
           <Info title={"반영 비율"} content={`${data.reflectionRatio}% / 20%`} />
           {
-            data.quizType === "PRACTICE" ? <Info title={"분류"} content={"연습 문제"} /> :
+            data.quizType === "PRACTICE" ? <Info title={"분류"} content={"실습 문제"} /> :
               data.quizType === "EXAM" ? <Info title={"분류"} content={"시험"} /> :
-                <Info title={"분류"} content={"실습 문제"} />
+                <Info title={"분류"} content={"연습 문제"} />
           }
         </div>
         <div className={styles.contents}>

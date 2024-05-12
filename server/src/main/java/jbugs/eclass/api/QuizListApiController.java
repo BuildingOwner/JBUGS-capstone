@@ -119,11 +119,10 @@ public class QuizListApiController {
         }
     }
 
-// 수정필요
-//    @GetMapping("/quizzes/{quizId}")
-//    public ResponseEntity<QuizDetailsDto> getQuizDetails(@PathVariable Long quizId) {
-//        return quizService.getQuizDetails(quizId)
-//                .map(ResponseEntity::ok)
-//                .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
+    @GetMapping("/quizzes/{quizId}")
+    public ResponseEntity<QuizDetailsDto> getQuizDetails(@PathVariable Long quizId) {
+        return quizService.getQuizDetails(quizId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

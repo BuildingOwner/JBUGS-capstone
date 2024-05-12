@@ -18,8 +18,8 @@ import java.util.Optional;
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findByWeekId(Long weekId);
 
-//    @Query("SELECT new jbugs.eclass.dto.QuizDetailsDto(q.quizName, q.quizType, AVG(qi.quizScore), w.weekNumber, COUNT(qi.quizScore), q.deadline, q.quizStatus) FROM Quiz q JOIN q.week w JOIN q.answers a JOIN q.quizInfos qi WHERE q.id = :quizId GROUP BY q.id")
-//    Optional<QuizDetailsDto> findQuizDetailsById(@Param("quizId") Long quizId);
+    @Query("SELECT new jbugs.eclass.dto.QuizDetailsDto(q.quizName, q.quizType, AVG(qi.quizScore), w.weekNumber, COUNT(qi.quizScore), q.deadline, q.quizStatus) FROM Quiz q JOIN q.week w JOIN q.quizInfos qi WHERE q.id = :quizId GROUP BY q.id")
+    Optional<QuizDetailsDto> findQuizDetailsById(@Param("quizId") Long quizId);
 
     List<Quiz> findQuizzesByWeekId(Long weekId);
 

@@ -8,12 +8,6 @@ import java.util.Map;
 public class AnswerDto {
     private Long studentId;
     private Long quizId;
-    private Integer quizScore;
+    private Integer score;
     private Map<String, String> answers;
-
-    public AnswerDto(Long quizId, Integer quizScore, Map<String, String> answers) {
-        this.quizId = quizId;
-        this.quizScore = quizScore;
-        this.answers = answers;
-    }
 }

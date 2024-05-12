@@ -2,7 +2,7 @@ package jbugs.eclass.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import jbugs.eclass.domain.*;
-import jbugs.eclass.dto.AnswerRequestDto;
+import jbugs.eclass.dto.AnswerDto;
 import jbugs.eclass.dto.QuizDetailsDto;
 import jbugs.eclass.dto.QuizDto;
 import jbugs.eclass.repository.*;
@@ -42,9 +42,9 @@ public class QuizService {
                 .orElseThrow(() -> new IllegalArgumentException("QuizInfo not found for quizId: " + quizId));
     }
 
-//    public Optional<QuizDetailsDto> getQuizDetails(Long quizId) {
-//        return quizRepository.findQuizDetailsById(quizId);
-//    }
+    public Optional<QuizDetailsDto> getQuizDetails(Long quizId) {
+        return quizRepository.findQuizDetailsById(quizId);
+    }
 
     public List<QuizDto> findQuizzesByWeekIdAndStudentId(Long weekId, Long studentId, Enrollment enrollment) {
         List<Quiz> quizzes = quizRepository.findQuizzesByWeekId(weekId);
@@ -99,14 +99,26 @@ public class QuizService {
         return quizDtos;
     }
 
-    public void saveAnswers(AnswerRequestDto answerRequestDTO) {
-        QuizInfo quizInfo = quizInfoRepository.findByQuizIdAndStudentId(answerRequestDTO.getQuizId(), answerRequestDTO.getStudentId())
+    public void saveAnswers(AnswerDto answerDto) {
+        QuizInfo quizInfo = quizInfoRepository.findByQuizIdAndStudentId(answerDto.getQuizId(), answerDto.getStudentId())
                 .orElseThrow(() -> new EntityNotFoundException("QuizInfo를 찾을 수 없습니다."));
 
-        quizInfo.setAnswers(answerRequestDTO.getAnswers());
-        quizInfo.setQuizScore(answerRequestDTO.getScore());
+        quizInfo.setAnswers(answerDto.getAnswers());
+        quizInfo.setQuizScore(answerDto.getScore());
         quizInfo.setSubmittedAt(LocalDateTime.now());
         quizInfo.setSubmissionStatus(true);
         quizInfoRepository.save(quizInfo);
+    }
+
+    public AnswerDto getAnswersByQuizIdAndStudentId(Long quizId, Long studentId) {
+        QuizInfo quizInfo = quizInfoRepository.findByQuizIdAndStudentId(quizId, studentId)
+                .orElseThrow(() -> new EntityNotFoundException("QuizInfo를 찾을 수 없습니다."));
+
+        AnswerDto quizInfoDto = new AnswerDto();
+        quizInfoDto.setQuizId(quizInfo.getQuiz().getId());
+        quizInfoDto.setStudentId(studentId);
+        quizInfoDto.setScore(quizInfo.getQuizScore());
+        quizInfoDto.setAnswers(quizInfo.getAnswers());
+        return quizInfoDto;
     }
 }

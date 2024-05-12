@@ -51,15 +51,20 @@ const QuizAnswer = () => {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })
-      const answerResponse = await axios.get(`/api/answers/${quizId}`, {
+      const userAnswer = await axios.get(`/api/answers/${quizId}`, {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
       })
-
       console.log("quizAnswer response : ", quizResponse)
-      console.log("answerResponse : ", answerResponse)
+      console.log("answerResponse : ", userAnswer)
+
       const questionData = quizResponse.data.questions.map((quiz) => quiz)
+      const answer = userAnswer.data.answerDto.answers
+
+      setAnswer(answer)
       setQuestions(questionData)
+
       console.log("questionData : ", questionData)
+      console.log("userAnswer : ", answer)
 
       setMemberInfoDto(location.state.props.memberInfoDto)
       setDivision(location.state.props.courseDto.division)
@@ -99,11 +104,14 @@ const QuizAnswer = () => {
                 )}
                 <h3 className={styles.questionNumber}>{indexOfOptions + 1} of {questions.length}</h3>
                 <div className={styles.choice}>
+                  {/* 정답 출력하는 부분 */}
                   {
                     questions[indexOfOptions] && questions[indexOfOptions]?.type === "choice" ?
                       (
                         optionIcon.map((num, i) => {
-                          return questions[indexOfOptions].options[i] === questions[indexOfOptions].answer ?
+                          // 현재 옵션이 정답이면 무조건 초록색
+                          return (questions[indexOfOptions].options[i] === questions[indexOfOptions].answer)
+                            ?
                             <div className={`${styles.answerOption} ${styles.correct}`} key={i}>
                               {num}
                               {questions[indexOfOptions].options[i] && (
@@ -111,12 +119,22 @@ const QuizAnswer = () => {
                               )}
                             </div>
                             :
-                            <div className={styles.answerOption} key={i}>
-                              {num}
-                              {questions[indexOfOptions].options[i] && (
-                                <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
-                              )}
-                            </div>
+                            // 정답이 아니고 유저가 고른 답이면 빨간색
+                            questions[indexOfOptions].options[i] === answer[indexOfOptions + 1] ?
+                              <div className={`${styles.answerOption} ${styles.wrong}`} key={i}>
+                                {num}
+                                {questions[indexOfOptions].options[i] && (
+                                  <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
+                                )}
+                              </div>
+                              :
+                              // 그것도 아니면 기본
+                              <div className={styles.answerOption} key={i}>
+                                {num}
+                                {questions[indexOfOptions].options[i] && (
+                                  <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
+                                )}
+                              </div>
                         })
                       )
                       :

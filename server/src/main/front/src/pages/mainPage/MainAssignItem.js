@@ -29,10 +29,15 @@ const MainAssignItem = (props) => {
   }
   const moveToPage = () => {
     if (props.url === "quiz") {
-      openModal()
+      navigate("/quizList", {
+        state: props
+      })
+    } else {
+      navigate("/assignmentlist", {
+        state: props
+      })
     }
-    navigate("/assignmentlist",
-      { state: props })
+
   }
 
   return (

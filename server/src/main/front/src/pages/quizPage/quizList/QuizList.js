@@ -41,7 +41,7 @@ const QuizList = () => {
       // 평균 점수 구하는 로직
       let scores = 0
       completedQuizzes?.map((quiz) => scores += quiz.quizScore)
-      setAverageScore(scores / completedQuizzes.length) // 비동기 확인 해야함
+      setAverageScore(Math.round(scores / completedQuizzes.length)) // 비동기 확인 해야함
     }
   }
 
@@ -133,6 +133,9 @@ const QuizList = () => {
                       quizId={quiz.quizId}
                       timeLimit={quiz.timeLimit}
                       jsonData={quiz.jsonData}
+                      courseDto={courseDto}
+                      memberInfoDto={memberInfoDto}
+                      enrollmentId={enrollmentId}
                     />
                   )
                 }) : <NoItem title={"미응시 퀴즈가"} />}
@@ -192,6 +195,8 @@ const QuizList = () => {
                   quizScore={quiz.quizScore}
                   submissionStatus={quiz.submissionStatus}
                   courseDto={courseDto}
+                  memberInfoDto={memberInfoDto}
+                  enrollmentId={enrollmentId}
                 />
               )) :
                 <NoItem title={"퀴즈가"} />}

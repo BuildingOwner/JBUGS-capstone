@@ -16,7 +16,7 @@ const Main = () => {
   const [firstTrack, setFirstTrack] = useState()
   const [currentDate, setCurrentDate] = useState('')
   const [currentWeek, setCurrentWeek] = useState()
-
+  const [quizDtoList, setQuizDtoList] = useState([])
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000 // 하루의 밀리초 수
 

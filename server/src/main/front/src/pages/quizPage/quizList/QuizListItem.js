@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import QuizInfoModal from "../../../modals/quizModal/QuizInfoModal"
 const QuizListItem = (props) => {
   const [formattedDate, setFormattedDate] = useState()
-
+  console.log(" listitem",props)
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false);
 

@@ -79,10 +79,10 @@ const RightNav = (props) => {
             <h1 className="title17">미응시 퀴즈</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
-            {/* {mainLectures ?
+            {mainLectures ?
               mainLectures.map((lecture) => (
                 lecture.quizDtoList
-                  .filter((quiz) => quiz.quizScore === null)
+                  .filter((quiz) => quiz.submissionStatus === false)
                   .map((quiz) => (
                     <MainAssignItem
                       lectureName={lecture.lectureName}
@@ -97,7 +97,7 @@ const RightNav = (props) => {
                       timeLimit={quiz.timeLimit}
                     />
                   ))
-              )) : <NoItem title={"미응시 퀴즈가"} />} */}
+              )) : <NoItem title={"미응시 퀴즈가"} />}
           </div>
         </div>
       </div>

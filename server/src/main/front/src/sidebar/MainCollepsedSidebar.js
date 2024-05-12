@@ -4,7 +4,7 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import styles from "./MainSidebar.module.css"
 import styles2 from "./MainSidebarCollepsed.module.css"
 
-function CollepsedSidebar() {
+function CollepsedSidebar({memberInfoDto}) {
   return (
     <div className={`${styles.sidebars} ${styles2.sidebars}`}>
       <Link to={"/main"} className={`${styles.logo}`}>
@@ -23,7 +23,7 @@ function CollepsedSidebar() {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"} className={styles.linkBtn}>
+            <Link to={"/chatbotpage"} state={{ memberName: memberInfoDto?.memberName }} className={styles.linkBtn}>
               <IoChatbubbleEllipsesOutline size="30" />
             </Link>
           </button>

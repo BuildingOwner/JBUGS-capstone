@@ -13,9 +13,9 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
 
 const Sidebar = (props) => {
-  const [enrollmentId, setEnrollmentId] = useState('')
+  const enrollmentId = props.enrollmentId
   const memberName = props.memberInfoDto?.memberName;
-  
+
   const navigate = useNavigate()
   const handleLogout = () => {
     axios.post('/logout', null, { withCredentials: true }) // withCredentials를 설정하여 쿠키를 서버로 전송합니다.
@@ -30,9 +30,6 @@ const Sidebar = (props) => {
       });
     navigate("/");
   }
-  useEffect(() => {
-    setEnrollmentId(props.enrollmentId)
-  })
   return (
     <div className={styles.sidebar}>
       <Link to={"/main"} className={styles.logo}>

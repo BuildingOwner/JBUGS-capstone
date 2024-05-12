@@ -95,20 +95,20 @@ const NoticeList = () => {
           <div className={styles.content}>
             <div className={styles.tabBtns}>
               <button style={{ borderTopLeftRadius: "5px" }}
-                className={`${styles.tabItem} ${styles.currentFilter}`}
+                className={`${styles.tabItem} ${noticeFilter === 'ALL' ? styles.currentFilter : ''}`}
                 onClick={() => changeNoticeFilter('ALL')}>
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 공지</h3>
               </button>
-              <button className={`${styles.tabItem}`}
+              <button className={`${styles.tabItem} ${noticeFilter === 'EXAM' ? styles.currentFilter : ''}`}
                 onClick={() => changeNoticeFilter("EXAM")}>
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>시험</h3>
               </button>
-              <button className={`${styles.tabItem}`}
+              <button className={`${styles.tabItem} ${noticeFilter === 'ONLINE' ? styles.currentFilter : ''}`}
                 onClick={() => changeNoticeFilter('ONLINE')}>
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>온라인</h3>
               </button>
               <button style={{ borderTopRightRadius: "5px" }}
-                className={`${styles.tabItem}`}
+                className={`${styles.tabItem} ${noticeFilter === 'FACE_TO_FACE_CLASSES' ? styles.currentFilter : ''}`}
                 onClick={() => changeNoticeFilter('FACE_TO_FACE_CLASSES')}>
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>대면수업</h3>
               </button>

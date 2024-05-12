@@ -99,13 +99,13 @@ const QaList = () => {
           <div className={styles.content}>
             <div className={styles.tabBtns}>
               <button style={{ borderTopLeftRadius: "5px" }}
-                className={`${styles.tabItem} ${styles.currentFilter}`}
+                className={`${styles.tabItem} ${qaFilter === 'ALL' ? styles.currentFilter : ''}`}
                 onClick={() => changeQaFilter('ALL')}
               >
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 질문</h3>
               </button>
               <button style={{ borderTopRightRadius: "5px" }}
-                className={`${styles.tabItem}`}
+                className={`${styles.tabItem} ${qaFilter === `${memberInfoDto.memberName}` ? styles.currentFilter : ''}`}
                 onClick={() => changeQaFilter('ME')} // 수정필
               >
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>내 질문</h3>

@@ -1,16 +1,19 @@
 
+import axios from "axios";
 import "./QaModal.css";
 import Modal from "react-modal"
 
 const QaModal = (props) => {
+  const data = props.props
 
+  
   return (
     <Modal className="qamodal"
       isOpen={props.isOpen}
       onRequestClose={props.onRequestClose}>
       <section className="header10">
         <h3 className="qa6">
-          Q&A 제목
+          {data.title}
         </h3>
         <div className="heroicons-outlinex-wrapper">
           <div className="heroicons-outlinex29" onClick={props.onRequestClose}>
@@ -27,21 +30,28 @@ const QaModal = (props) => {
         <nav className="info5">
           <div className="owner">
             <b className="b110">작성자</b>
-            <b className="b111">김아무개</b>
+            <b className="b111">{data.writer}</b>
           </div>
           <div className="date9">
             <b className="b112">작성일</b>
-            <b className="b113">2024-10-10</b>
+            <b className="b113">{data.createdAt}</b>
           </div>
           <div className="view3">
             <b className="b114">조회수</b>
-            <b className="b115">50000</b>
+            <b className="b115">{data.views}</b>
           </div>
           <div className="answer2">
             <b className="b116">답변 여부</b>
-            <button className="status3">
-              <b className="b117">완료</b>
-            </button>
+            {
+              data.qnAStatus === "RESPONSE_EXPECTED" ?
+                <button className="status3">
+                  <b className="b117">답변 예정</b>
+                </button>
+                : <button className="status3">
+                  <b className="b117">답변 완료</b>
+                </button>
+            }
+
           </div>
           <div className="parent5">
             <b className="b118">비밀글</b>
@@ -56,16 +66,7 @@ const QaModal = (props) => {
         <div className="comment-owner-list">
           <b className="b119">설명</b>
           <b className="b120">
-            <p className="p69">내용</p>
-            <p className="p70">2</p>
-            <p className="p71">3</p>
-            <p className="p72">4</p>
-            <p className="p73">5</p>
-            <p className="p74">6</p>
-            <p className="p75">7</p>
-            <p className="p76">8</p>
-            <p className="p77">9</p>
-            <p className="p78">10</p>
+            <p className="p69">{data.content}</p>
           </b>
         </div>
         <div className="navigation-button">
@@ -101,38 +102,6 @@ const QaModal = (props) => {
             <div className="heroicons-outlinex15">
               <img
                 className="vector-icon21"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-          <div className="file-list15">
-            <div className="l-parent9">
-              <input className="l14" type="checkbox" />
-              <div className="file-item14">
-                <div className="txt15">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex16">
-              <img
-                className="vector-icon22"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-          <div className="file-list16">
-            <div className="l-parent10">
-              <input className="l15" type="checkbox" />
-              <div className="file-item15">
-                <div className="txt16">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex17">
-              <img
-                className="vector-icon23"
                 loading="lazy"
                 alt=""
                 src="/vector1.svg"

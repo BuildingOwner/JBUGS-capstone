@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { GoSearch } from "react-icons/go";
 import NoItem from "../mainPage/NoItem";
 import LoadingPage from "../mainPage/LoadingPage";
+import MakeQaModal from "../../modals/qaModal/MakeQaModal";
 
 const QaList = () => {
   const location = useLocation()
@@ -21,6 +22,18 @@ const QaList = () => {
   const [searchFilter, setSearchFilter] = useState("title")
   const [keyword, setKeyword] = useState("")
 
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
+
+  const closeModal = (event) => {
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
+  }
   const changeKeyword = (e) => {
     setKeyword(e.target.value)
   }
@@ -69,6 +82,11 @@ const QaList = () => {
 
   return (
     <div className={`background`}>
+      <MakeQaModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        memberInfoDto={memberInfoDto}
+      />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
@@ -82,7 +100,7 @@ const QaList = () => {
                   <option value={`writer`}>글쓴이</option>
                 </select>
                 <div className={styles.searchBox}>
-                  <input class={`form-control ${styles.search}`}
+                  <input className={`form-control ${styles.search}`}
                     type="text" placeholder="검색어를 입력하세요..."
                     onChange={changeKeyword} />
                   <div className={styles.questionIcon}>
@@ -90,7 +108,9 @@ const QaList = () => {
                   </div>
                 </div>
               </div>
-              <button type="button" className={`btn btn-primary ${styles.addBtn}`}>
+              <button type="button" 
+              className={`btn btn-primary ${styles.addBtn}`}
+              onClick={openModal}>
                 <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>질문하기</h3>
               </button>
             </div>
@@ -138,6 +158,7 @@ const QaList = () => {
                       qnaId={qna.qnaId}
                       views={qna.views}
                       writer={qna.writer}
+                      content={qna.content}
                     />
                   )) : <NoItem title={"등록된 질문이"} />}
             </div>

@@ -1,14 +1,38 @@
+import { useEffect, useState } from "react";
 import "./MakeQaModal.css";
+import ReactModal from "react-modal";
 
-const MakeQaModal = () => {
+const MakeQaModal = (props) => {
+  ReactModal.setAppElement("#root")
+  const [qnA, setQnA] = useState("")
+  const [title, setTitle] = useState("")
+  const [memberInfoDto, setMemberInfoDto] = useState({})
+  const [memberName, setMemberName] = useState("")
+  const [secret, setSecret] = useState(true)
+
+  const uploadQnA = async () => {
+    try {
+      const response = await axios.post(`api/course/${enrollmentId}/qna/create`)
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    setMemberInfoDto(props.memberInfoDto)
+    setMemberName(props.memberInfoDto.memberName)
+  }, [])
+
   return (
-    <div className="makeqamodal">
+    <ReactModal className="makeqamodal"
+      isOpen={props.isOpen}
+      onRequestClose={props.onRequestClose}>
       <main className="q-a-modal"><section className="header10">
-        <h3 className="qa6" >
-        Q&A 제목
-        </h3>
+        <textarea onChange={(e) => { setTitle(e.target.value) }}>
+
+        </textarea>
         <div className="heroicons-outlinex-wrapper">
-          <div className="heroicons-outlinex29">
+          <div className="heroicons-outlinex29" onClick={props.onRequestClose}>
             <img
               className="vector-icon76"
               loading="lazy"
@@ -31,21 +55,14 @@ const MakeQaModal = () => {
               />
             </div>
           </div>
-          <b className="b124">김아무개</b>
+          <b className="b124">{memberName}</b>
         </section>
         <section className="frame-section">
-          <b className="b125">설명</b>
+          <b className="b125">내용</b>
           <b className="b126">
-            <p className="p79">내용</p>
-            <p className="p80">2</p>
-            <p className="p81">3</p>
-            <p className="p82">4</p>
-            <p className="p83">5</p>
-            <p className="p84">6</p>
-            <p className="p85">7</p>
-            <p className="p86">8</p>
-            <p className="p87">9</p>
-            <p className="p88">10</p>
+            <textarea onChange={(e) => { setQnA(e.target.value) }}>
+
+            </textarea>
           </b>
         </section>
         <section className="files1">
@@ -129,7 +146,7 @@ const MakeQaModal = () => {
           <b className="text12">질문하기</b>
         </button>
       </div>
-    </div>
+    </ReactModal>
   );
 };
 

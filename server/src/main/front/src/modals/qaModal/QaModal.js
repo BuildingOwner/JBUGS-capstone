@@ -4,6 +4,7 @@ import "./QaModal.css";
 import Modal from "react-modal"
 
 const QaModal = (props) => {
+  Modal.setAppElement("#root")
   const data = props.props
 
   

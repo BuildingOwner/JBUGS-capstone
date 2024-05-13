@@ -5,9 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
-import jbugs.eclass.service.EnrollmentService;
-import jbugs.eclass.service.QuizService;
-import jbugs.eclass.service.WeekService;
+import jbugs.eclass.service.*;
 import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +28,9 @@ public class CourseApiController {
     private final WeekService weekService;
     private final EnrollmentRepository enrollmentRepository;
     private final QuizService quizService;
+    private final AssignmentService assignmentService;
+    private final MaterialService materialService;
+    private final VideoMaterialService videoMaterialService;
 
     @GetMapping("/{enrollmentId}")
     public ResponseEntity<?> getCourseInfo(@PathVariable Long enrollmentId, HttpServletRequest request) {
@@ -66,23 +67,14 @@ public class CourseApiController {
                 weeklyContentDto.setWeek(week.getWeekNumber());
 
                 // 각 주차별 동영상, 자료, 퀴즈, 과제 정보 조회 및 설정
-//                List<Assignment> assignments = weekService.findAssignmentsByWeekId(week.getId());
-//                List<AssignmentDto> assignmentDtos = assignments.stream()
-//                        .map(AssignmentDto::from) // 변경된 부분
-//                        .collect(Collectors.toList());
-//                weeklyContentDto.setAssignments(assignmentDtos);
+                List<AssignmentDto> assignmentDtos = assignmentService.findAssignmentsByWeekIdAndLectureId(week.getId(), enrollment.getLecture().getId());
+                weeklyContentDto.setAssignments(assignmentDtos);
 
-//                List<VideoMaterial> videoMaterials = weekService.findVideoMaterialsByWeekId(week.getId());
-//                List<LectureVideoDto> lectureVideoDtos = videoMaterials.stream()
-//                        .map(LectureVideoDto::from)
-//                        .collect(Collectors.toList());
-//                weeklyContentDto.setLectureVideos(lectureVideoDtos);
-//
-//                List<Material> materials = weekService.findMaterialsByWeekId(week.getId());
-//                List<FileDto> fileDtos = materials.stream()
-//                        .map(FileDto::from)
-//                        .collect(Collectors.toList());
-//                weeklyContentDto.setClassFiles(fileDtos);
+                List<LectureVideoDto> lectureVideoDtos = videoMaterialService.findVideoMaterialsByWeekIdAndLectureId(week.getId(), enrollment.getLecture().getId());
+                weeklyContentDto.setLectureVideos(lectureVideoDtos);
+
+                List<FileDto> fileDtos = materialService.findMaterialsByWeekIdAndLectureId(week.getId(), lectureId.getId());
+                weeklyContentDto.setClassFiles(fileDtos);
 
                 List<QuizDto> quizDtoList = quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment);
                 weeklyContentDto.setQuizzes(quizDtoList);

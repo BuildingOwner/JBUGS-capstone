@@ -58,12 +58,12 @@ public class UploadApiController {
 
             // 파일 업로드 처리
             if (uploadDto.getAttachFiles() != null && uploadDto.getAttachFiles().length > 0) {
-                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(uploadDto.getAttachFiles()), weekEntity.getId(), false, uploadDto.getFileTitle()));
+                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(uploadDto.getAttachFiles()), weekEntity.getId(), false, uploadDto.getFileTitle(), lecture));
             }
 
             // 비디오 업로드 처리 후 경로(들) 반환
             if (uploadDto.getVideoFiles() != null && uploadDto.getVideoFiles().length > 0) {
-                uploadFiles(Arrays.asList(uploadDto.getVideoFiles()), weekEntity.getId(), true, uploadDto.getVideoTitle());
+                uploadFiles(Arrays.asList(uploadDto.getVideoFiles()), weekEntity.getId(), true, uploadDto.getVideoTitle(), lecture);
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
             for (String filePath : uploadedFilePaths) {
@@ -79,7 +79,7 @@ public class UploadApiController {
 
     }
 
-    public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title) throws IOException {
+    public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title, Lecture lecture) throws IOException {
         Week weekEntity = weekService.findWeekById(weekId).orElseThrow(() -> new IllegalArgumentException("Invalid weekId"));
         List<String> filePaths = new ArrayList<>();
         String directory = isVideo ? fileDir + "video/" : fileDir;
@@ -107,6 +107,7 @@ public class UploadApiController {
                     videoMaterial.setTitle(title);
                     videoMaterial.setVideoName(originalFileName);
                     videoMaterial.setWeek(weekEntity);
+                    videoMaterial.setLecture(lecture);
                     videoMaterialRepository.save(videoMaterial);
                 } else {
                     Material material = new Material();
@@ -114,6 +115,7 @@ public class UploadApiController {
                     material.setTitle(title);
                     material.setFileName(originalFileName);
                     material.setWeek(weekEntity);
+                    material.setLecture(lecture);
                     materialService.join(material);
                     filePaths.add(fullPath);
                 }

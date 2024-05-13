@@ -18,5 +18,9 @@ public class VideoMaterial {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")
     private Week week;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
 }
 

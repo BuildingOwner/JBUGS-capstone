@@ -58,4 +58,22 @@ public class AssignmentService {
 
         return assignmentDtos;
     }
+
+    public List<AssignmentDto> findAssignmentsByWeekIdAndLectureId(Long weekId, Long lectureId) {
+        List<Assignment> assignments = assignmentRepository.findAssignmentsByWeekIdAndLectureId(weekId, lectureId);
+
+        // Assignment 엔티티 목록을 AssignmentDto 목록으로 변환
+        List<AssignmentDto> assignmentDtos = assignments.stream().map(assignment -> {
+            AssignmentDto dto = new AssignmentDto();
+            dto.setId(assignment.getId());
+            dto.setTitle(assignment.getTitle());
+            dto.setContents(assignment.getContent());
+            dto.setDueDate(assignment.getDueDate());
+            dto.setStatus(assignment.getStatus());
+
+            return dto;
+        }).collect(Collectors.toList());
+
+        return assignmentDtos;
+    }
 }

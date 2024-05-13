@@ -43,6 +43,12 @@ public class Lecture {
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
     private List<Assignment> assignments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
+    private List<Material> materials = new ArrayList<>();
+
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
+    private List<VideoMaterial> videoMaterials = new ArrayList<>();
+
     public Lecture() {
     }
 }

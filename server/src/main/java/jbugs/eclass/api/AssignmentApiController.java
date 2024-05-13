@@ -66,16 +66,6 @@ public class AssignmentApiController {
             courseDto.setDivision(enrollment.getLecture().getDivision());
             assignmentContentDto.setCourseDto(courseDto);
 
-            //enrollmentId에 해당하는 각 주차id가져오기
-//            Lecture lectureId = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
-
-//            List<Assignment> assignments = weekService.findAssignmentsByLectureId(enrollment.getLecture().getId());
-//
-//            List<AssignmentDto> assignmentDtos = assignments.stream()
-//                    .map(AssignmentDto::from)
-//                    .collect(Collectors.toList());
-//            assignmentContentDto.setAssignmentDtoList(assignmentDtos);
-
             List<AssignmentDto> assignmentDtos = assignmentService.findAssignmentsByLecture(enrollment.getLecture().getId());
             assignmentContentDto.setAssignmentDtoList(assignmentDtos);
 

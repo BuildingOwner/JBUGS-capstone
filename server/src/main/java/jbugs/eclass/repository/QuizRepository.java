@@ -24,4 +24,12 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findQuizzesByWeekId(Long weekId);
 
     List<Quiz> findByLectureId(Long lectureId);
+
+    @Query("SELECT q FROM Quiz q LEFT JOIN FETCH q.quizInfos qi WHERE q.week = :weekId AND qi.student.id = :studentId")
+    List<Quiz> findQuizzesWithQuizInfoByWeekIdAndStudentId(@Param("weekId") Long weekId, @Param("studentId") Long studentId);
+
+    // QuizRepository.java에 추가
+    @Query("SELECT q FROM Quiz q LEFT JOIN FETCH q.quizInfos qi WHERE q.lecture.id = :lectureId AND qi.student.id = :studentId AND qi.submissionStatus = false")
+    List<Quiz> findUnsubmittedQuizzesWithQuizInfoByLectureIdAndStudentId(@Param("lectureId") Long lectureId, @Param("studentId") Long studentId);
+
 }

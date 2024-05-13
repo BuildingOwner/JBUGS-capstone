@@ -121,4 +121,13 @@ public class QuizService {
         quizInfoDto.setAnswers(quizInfo.getAnswers());
         return quizInfoDto;
     }
+
+    public List<Quiz> findQuizzesWithQuizInfoByWeekIdAndStudentId(Long weekId, Long studentId) {
+        return quizRepository.findQuizzesWithQuizInfoByWeekIdAndStudentId(weekId, studentId);
+    }
+
+    // 제출되지 않은 퀴즈를 lectureId와 studentId로 조회
+    public List<Quiz> findUnsubmittedQuizzesWithQuizInfoByLectureIdAndStudentId(Long lectureId, Long studentId) {
+        return quizRepository.findUnsubmittedQuizzesWithQuizInfoByLectureIdAndStudentId(lectureId, studentId);
+    }
 }

@@ -40,8 +40,8 @@ public class Lecture {
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
     private List<Quiz> quizList = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
-//    private List<Assignment> assignments = new ArrayList<>();
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL)
+    private List<Assignment> assignments = new ArrayList<>();
 
     public Lecture() {
     }

@@ -6,6 +6,7 @@ import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.AssignmentRepository;
 import jbugs.eclass.repository.EnrollmentRepository;
+import jbugs.eclass.service.AssignmentService;
 import jbugs.eclass.service.MaterialService;
 import jbugs.eclass.service.WeekService;
 import jbugs.eclass.session.SessionConst;
@@ -36,6 +37,7 @@ public class AssignmentApiController {
     private final EnrollmentRepository enrollmentRepository;
     private final AssignmentRepository assignmentRepository;
     private final MaterialService materialService;
+    private final AssignmentService assignmentService;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -65,13 +67,16 @@ public class AssignmentApiController {
             assignmentContentDto.setCourseDto(courseDto);
 
             //enrollmentId에 해당하는 각 주차id가져오기
-            Lecture lectureId = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
+//            Lecture lectureId = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
 
-            List<Assignment> assignments = weekService.findAssignmentsByLectureId(enrollment.getLecture().getId());
+//            List<Assignment> assignments = weekService.findAssignmentsByLectureId(enrollment.getLecture().getId());
+//
+//            List<AssignmentDto> assignmentDtos = assignments.stream()
+//                    .map(AssignmentDto::from)
+//                    .collect(Collectors.toList());
+//            assignmentContentDto.setAssignmentDtoList(assignmentDtos);
 
-            List<AssignmentDto> assignmentDtos = assignments.stream()
-                    .map(AssignmentDto::from)
-                    .collect(Collectors.toList());
+            List<AssignmentDto> assignmentDtos = assignmentService.findAssignmentsByLecture(enrollment.getLecture().getId());
             assignmentContentDto.setAssignmentDtoList(assignmentDtos);
 
             return ResponseEntity.ok(assignmentContentDto);
@@ -106,7 +111,7 @@ public class AssignmentApiController {
             }
             Week weekEntity = week.get();
 
-            Assignment assignment = assignmentUploadDto.toEntity(weekEntity);
+            Assignment assignment = assignmentUploadDto.toEntity(weekEntity, lecture);
             assignment = assignmentRepository.save(assignment); // 과제 정보 먼저 저장
 
             if (assignmentUploadDto.getAttachFiles() != null && assignmentUploadDto.getAttachFiles().length > 0) {

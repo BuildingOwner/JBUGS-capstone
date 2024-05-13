@@ -94,7 +94,7 @@ public class UploadApiController {
                 if(currentDirectory.indexOf("JBUGS-capstone") == -1){
                     currentDirectory += "/JBUGS-capstone/server/";
                 }
-                String fullPath = currentDirectory + directory + safeFileName;
+                String fullPath = currentDirectory + directory + originalFileName;
 
 
 
@@ -105,14 +105,14 @@ public class UploadApiController {
                     VideoMaterial videoMaterial = new VideoMaterial();
                     videoMaterial.setVideoPath(fullPath);
                     videoMaterial.setTitle(title);
-                    videoMaterial.setVideoName(safeFileName);
+                    videoMaterial.setVideoName(originalFileName);
                     videoMaterial.setWeek(weekEntity);
                     videoMaterialRepository.save(videoMaterial);
                 } else {
                     Material material = new Material();
                     material.setFilePath(fullPath);
                     material.setTitle(title);
-                    material.setFileName(safeFileName);
+                    material.setFileName(originalFileName);
                     material.setWeek(weekEntity);
                     materialService.join(material);
                     filePaths.add(fullPath);

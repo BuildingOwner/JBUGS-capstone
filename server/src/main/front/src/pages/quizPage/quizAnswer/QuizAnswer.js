@@ -1,32 +1,33 @@
-import { useEffect, useState } from "react";
-import Sidebar from "../../../sidebar/CourseSidebars";
-import styles from "../doQuiz/DoQuiz.module.css";
+import { useEffect, useState } from "react"
+import Sidebar from "../../../sidebar/CourseSidebars"
+import styles from "../doQuiz/DoQuiz.module.css"
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import LoadingPage from "../../mainPage/LoadingPage";
+import { useLocation, useNavigate } from "react-router-dom"
+import axios from "axios"
+import LoadingPage from "../../mainPage/LoadingPage"
+import ReactMarkdown from 'react-markdown'
 
 const QuizAnswer = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const data = location.state.props // 이곳에서 사용될 데이터
-  console.log("data", data)
   const enrollmentId = data.enrollmentId
-  console.log("enrollmentId : ", enrollmentId)
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
   const quizId = location.state.props.quizId
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [lectureName, setLectureName] = useState()
   const [division, setDivision] = useState()
-  const [indexOfOptions, setIndexOfOptions] = useState(0)
+  const [indexOfOptions, setIndexOfOptions] = useState(0) // 문제 번호
   const [questions, setQuestions] = useState([])
   const [answer, setAnswer] = useState({})
+  const [explane, setExplane] = useState("")
 
   const minusIndex = () => {
     if (indexOfOptions == 0) {
     } else {
       setIndexOfOptions(indexOfOptions - 1)
     }
+    setExplane("") // 설명 초기화
   }
 
   const plusIndex = () => {
@@ -34,6 +35,7 @@ const QuizAnswer = () => {
     } else {
       setIndexOfOptions(indexOfOptions + 1)
     }
+    setExplane("") // 설명 초기화
   }
 
   const backToPreviousPage = () => {
@@ -45,6 +47,43 @@ const QuizAnswer = () => {
     setIndexOfOptions(index)
   }
 
+  const getExplane = async () => {
+    setExplane("해설 생성 중..")
+    try {
+      const formData = new FormData()
+      const question = {
+        answer: questions[indexOfOptions].answer,
+        id: questions[indexOfOptions].id,
+        options: questions[indexOfOptions].options,
+        question: questions[indexOfOptions].question,
+        type: questions[indexOfOptions].type,
+      }
+      formData.append("question", JSON.stringify(question))
+      const response = await axios.post(`http://localhost:5000/get-explane`, formData)
+      setExplane(response.data)
+    } catch (error) {
+      console.log(error)
+      setExplane("오류가 발생했습니다.")
+    }
+  }
+
+  const getRelatedQuiz = async () => {
+    try {
+      const formData = new FormData()
+      const question = {
+        answer: questions[indexOfOptions].answer,
+        id: questions[indexOfOptions].id,
+        options: questions[indexOfOptions].options,
+        question: questions[indexOfOptions].question,
+        type: questions[indexOfOptions].type,
+      }
+      formData.append("question", JSON.stringify(question))
+      const response = await axios.post(`http://localhost:5000/related-quiz`, formData)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const fetchQuizAnswer = async () => {
     try {
       const quizResponse = await axios.get(`http://localhost:5000/get-quiz/${quizId}`, {
@@ -144,7 +183,8 @@ const QuizAnswer = () => {
                       ></textarea>)
                   }
                 </div>
-                <p className={styles.answerContainer}>해설 생성 가능</p>
+                {explane === "" ? <p className={styles.answerContainer}>해설 생성 가능</p> :
+                  <ReactMarkdown className={styles.answerContainer}>{explane}</ReactMarkdown>}
                 <div className={styles.buttons}>
 
                   <button type="button"
@@ -177,8 +217,8 @@ const QuizAnswer = () => {
               <h3 className={styles.fontSizeBase}>asdf</h3>
             </div>
             <div className={styles.answerFeatureBtns}>
-              <button type="button" className={`btn btn-primary ${styles.featureBtn}`}>해설 생성</button>
-              <button type="button" className={`btn btn-primary ${styles.featureBtn}`}>관련 문제 더 풀어보기</button>
+              <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={getExplane}>해설 생성</button>
+              <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={getRelatedQuiz}>관련 문제 더 풀어보기</button>
             </div>
           </div>
         </div>

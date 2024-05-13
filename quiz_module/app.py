@@ -172,7 +172,7 @@ def get_quiz(question_id):
         db.close()
 
 
-@app.route("/get-explane", methods=["GET"])
+@app.route("/get-explane", methods=["post"])
 def get_explane():
     print(f"[{current_file_name}] #get-explane\n")
     question = request.form.get("question")
@@ -198,7 +198,7 @@ def regenerateChat():
         return Response(stream_with_context(generate()))
     return jsonify({'message': 'Failed to upload file'})
 
-@app.route("/related-quiz", methods=["GET"])
+@app.route("/related-quiz", methods=["post"])
 def get_related_quiz():
     question = request.form.get("question")
     print(f"[{current_file_name}] #related-quiz quiz: {question}\n")

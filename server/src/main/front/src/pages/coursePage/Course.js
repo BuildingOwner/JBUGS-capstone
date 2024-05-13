@@ -24,11 +24,11 @@ const Course = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function openModal() {
-    setModalIsOpen(true);
+    setModalIsOpen(true)
   }
 
   function closeModal() {
-    setModalIsOpen(false);
+    setModalIsOpen(false)
   }
 
   const currentDate = new Date();
@@ -45,8 +45,6 @@ const Course = () => {
     return week;
   }
   const cureentWeek = calculateWeek(startDate, currentDate)
-
-
 
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [lectureName, setLectureName] = useState()
@@ -82,6 +80,7 @@ const Course = () => {
       const videoData = response.data.weeklyContents.map((week) => week.lectureVideos).flat()
       const fileData = response.data.weeklyContents.map((week) => week.classFiles).flat()
       const memberInfo = response.data.memberInfoDto
+
       setLectureName(lectureName1)
       setDivision(division1)
       setCourseDto(response.data.courseDto)
@@ -107,14 +106,15 @@ const Course = () => {
   }, [])
 
   useEffect(() => {
-    const selectedWeekData = weeklyContents.find(week => week.week === selectedWeek);
+    const selectedWeekData = weeklyContents.find(week => week.week === selectedWeek)
+    console.log(selectedWeekData)
     if (selectedWeekData) {
       setLectureVideos(selectedWeekData.lectureVideos)
       setAssignments(selectedWeekData.assignments)
       setQuizs(selectedWeekData.quizzes)
       setClassFiles(selectedWeekData.classFiles)
     }
-  }, [selectedWeek, weeklyContents]);
+  }, [selectedWeek, weeklyContents])
 
   if (!memberInfoDto) return <LoadingPage />;
 

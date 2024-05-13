@@ -59,6 +59,8 @@ public class AssignmentService {
         return assignmentDtos;
     }
 
+
+
     public List<AssignmentDto> findAssignmentsByWeekIdAndLectureId(Long weekId, Long lectureId) {
         List<Assignment> assignments = assignmentRepository.findAssignmentsByWeekIdAndLectureId(weekId, lectureId);
 

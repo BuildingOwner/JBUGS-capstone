@@ -99,6 +99,24 @@ public class QuizService {
         return quizDtos;
     }
 
+    public List<QuizDto> findAllQuizzesByLectureAndStudent(Long lectureId, Long studentId, Enrollment enrollment) {
+        // 특정 강의에 속한 모든 퀴즈 조회
+        List<Quiz> quizzes = quizRepository.findByLectureId(lectureId);
+
+        List<QuizDto> quizDtos = new ArrayList<>();
+        for (Quiz quiz : quizzes) {
+            // 퀴즈와 학생 ID를 기반으로 QuizInfo 조회. 없으면 기본값을 가지는 새로운 QuizInfo 생성
+            QuizInfo quizInfo = quizInfoRepository.findByQuizIdAndStudentId(quiz.getId(), studentId)
+                    .orElseGet(() -> createDefaultQuizInfo(quiz.getId(), studentId, enrollment)); // 이 부분은 데이터베이스에 저장할 필요가 없거나, 필요에 따라 저장
+
+            // QuizDto 생성 시 제출 여부와 상관없이 모든 퀴즈 정보 포함
+            QuizDto quizDto = QuizDto.from(quiz, quizInfo);
+            quizDtos.add(quizDto);
+        }
+
+        return quizDtos;
+    }
+
     public void saveAnswers(AnswerDto answerDto) {
         QuizInfo quizInfo = quizInfoRepository.findByQuizIdAndStudentId(answerDto.getQuizId(), answerDto.getStudentId())
                 .orElseThrow(() -> new EntityNotFoundException("QuizInfo를 찾을 수 없습니다."));

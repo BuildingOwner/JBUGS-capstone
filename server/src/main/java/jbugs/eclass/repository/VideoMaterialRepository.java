@@ -14,4 +14,6 @@ public interface VideoMaterialRepository extends JpaRepository<VideoMaterial, Lo
 
     @Query("SELECT v FROM VideoMaterial v WHERE v.week.id = :weekId AND v.lecture.id = :lectureId")
     List<VideoMaterial> findVideoMaterialsByWeekIdAndLectureId(Long weekId, Long lectureId);
+
+    List<VideoMaterial> findByLectureId(Long lectureId);
 }

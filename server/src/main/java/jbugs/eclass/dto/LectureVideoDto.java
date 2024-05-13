@@ -11,6 +11,8 @@ public class LectureVideoDto {
     private String videoName;
     private String videoPath;
 
+//    private int weekNumber;
+
     public static LectureVideoDto from(VideoMaterial videoMaterial){
         LectureVideoDto dto = new LectureVideoDto();
         dto.setVideoId(videoMaterial.getId());

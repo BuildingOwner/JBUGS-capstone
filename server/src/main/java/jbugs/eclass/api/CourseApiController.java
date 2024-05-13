@@ -56,10 +56,23 @@ public class CourseApiController {
             courseDto.setDivision(enrollment.getLecture().getDivision());
             courseContentDto.setCourseDto(courseDto);
 
-            //enrollmentId에 해당하는 각 주차id가져오기
-            Lecture lectureId = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
-
-            List<Week> weeks = weekService.findWeeksByLectureId(lectureId.getId());
+            // ----------------TEST
+//            TestDto testDto = new TestDto();
+//            List<AssignmentDto> assignmentDtoList = assignmentService.findAssignmentsByLecture(enrollment.getLecture().getId());
+//            testDto.setAssignments(assignmentDtoList);
+//
+//            List<QuizDto> quizDtoList = quizService.findAllQuizzesByLectureAndStudent(enrollment.getLecture().getId(), enrollment.getStudent().getId(), enrollment);
+//            testDto.setQuizDtoList(quizDtoList);
+//
+//            List<FileDto> fileDtoList = materialService.findMaterialsByLecture(enrollment.getLecture().getId());
+//            testDto.setClassFiles(fileDtoList);
+//
+//            List<LectureVideoDto> lectureVideoDtoList = videoMaterialService.findVideoMaterialsByLecture(enrollment.getLecture().getId());
+//            testDto.setLectureVideos(lectureVideoDtoList);
+//
+//            courseContentDto.setTestDto(testDto);
+            // -----------------
+            List<Week> weeks = weekService.findWeeksByLectureId(enrollment.getLecture().getId());
 
             // 기존 getCourseInfo 메소드 내부에서 주석 처리된 부분 뒤에 이어서 추가합니다.
             List<WeeklyContentDto> weeklyContents = weeks.stream().map(week -> {
@@ -73,7 +86,7 @@ public class CourseApiController {
                 List<LectureVideoDto> lectureVideoDtos = videoMaterialService.findVideoMaterialsByWeekIdAndLectureId(week.getId(), enrollment.getLecture().getId());
                 weeklyContentDto.setLectureVideos(lectureVideoDtos);
 
-                List<FileDto> fileDtos = materialService.findMaterialsByWeekIdAndLectureId(week.getId(), lectureId.getId());
+                List<FileDto> fileDtos = materialService.findMaterialsByWeekIdAndLectureId(week.getId(), enrollment.getLecture().getId());
                 weeklyContentDto.setClassFiles(fileDtos);
 
                 List<QuizDto> quizDtoList = quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment);

@@ -81,4 +81,20 @@ public class MaterialService {
         return fileDtos;
     }
 
+    public List<FileDto> findMaterialsByLecture(Long lectureId) {
+        List<Material> materials = materialRepository.findByLectureId(lectureId);
+
+        List<FileDto> fileDtoList = materials.stream()
+                .map(material -> {
+                    FileDto dto = new FileDto();
+                    dto.setFileId(material.getId());
+                    dto.setTitle(material.getTitle());
+                    dto.setFileName(material.getFileName());
+                    dto.setFilePath(material.getFilePath());
+                    dto.setWeekNumber(material.getWeek().getWeekNumber());
+
+                    return dto;
+                }).collect(Collectors.toList());
+        return fileDtoList;
+    }
 }

@@ -1,8 +1,10 @@
 package jbugs.eclass.service;
 
 import jbugs.eclass.domain.Assignment;
+import jbugs.eclass.domain.Material;
 import jbugs.eclass.domain.VideoMaterial;
 import jbugs.eclass.dto.AssignmentDto;
+import jbugs.eclass.dto.FileDto;
 import jbugs.eclass.dto.LectureVideoDto;
 import jbugs.eclass.repository.VideoMaterialRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +34,23 @@ public class VideoMaterialService {
         }).collect(Collectors.toList());
 
         return videoDtos;
+    }
+
+    public List<LectureVideoDto> findVideoMaterialsByLecture(Long lectureId) {
+
+        List<VideoMaterial> videoMaterials = videoMaterialRepository.findByLectureId(lectureId);
+
+        List<LectureVideoDto> lectureVideoDtoList = videoMaterials.stream()
+                .map(videoMaterial -> {
+                    LectureVideoDto dto = new LectureVideoDto();
+                    dto.setVideoId(videoMaterial.getId());
+                    dto.setTitle(videoMaterial.getTitle());
+                    dto.setVideoName(videoMaterial.getVideoName());
+                    dto.setVideoPath(videoMaterial.getVideoPath());
+                    dto.setWeekNumber(videoMaterial.getWeek().getWeekNumber());
+
+                    return dto;
+                }).collect(Collectors.toList());
+        return lectureVideoDtoList;
     }
 }

@@ -13,5 +13,7 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
     List<Assignment> findByWeekId(Long weekId);
 
+    List<Assignment> findByLectureId(Long lectureId);
+
     Optional<Assignment> findByWeekLectureIdAndDueDateAfter(Long weekLectureId, LocalDateTime dueDate);
 }

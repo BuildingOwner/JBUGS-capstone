@@ -33,10 +33,4 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
-
-    public UserDetails toUserDetails() {
-        return User.withUsername(loginId)
-                .password(password)
-                .build();
-    }
 }

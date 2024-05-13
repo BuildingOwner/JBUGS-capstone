@@ -20,13 +20,14 @@ public class AssignmentUploadDto {
     private int weekNumber;
     private MultipartFile[] attachFiles;
 
-    public Assignment toEntity(Week week) throws IOException {
+    public Assignment toEntity(Week week, Lecture lecture) throws IOException {
         Assignment assignment = new Assignment();
         assignment.setTitle(this.getTitle());
         assignment.setContent(this.getContent());
         assignment.setDueDate(this.getDueDate());
         assignment.setStatus(AssignmentStatus.NOT_SUBMITTED);
         assignment.setWeek(week);
+        assignment.setLecture(lecture);
 
         return assignment;
     }

@@ -23,7 +23,7 @@ const QuizAnswer = () => {
   const [answer, setAnswer] = useState({})
   const [explane, setExplane] = useState("")
   const [relatedQuiz, setRelatedQuiz] = useState({})
-  
+
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
@@ -35,6 +35,7 @@ const QuizAnswer = () => {
   const closeModal = (event) => {
     console.log("close")
     setModalIsOpen(false)
+    setRelatedQuiz({}) // 관련 퀴즈 누를 때 마다 다른 퀴즈 나옴
     // 이벤트 버블링을 막음
     event.stopPropagation()
   }
@@ -76,7 +77,7 @@ const QuizAnswer = () => {
         type: questions[indexOfOptions].type,
       }
       formData.append("question", JSON.stringify(question))
-      const response = await axios.post(`http://localhost:5000/get-explane`, formData)
+      const response = await axios.post(`http://43.200.202.59:5000/aimodule/get-explane`, formData)
       setExplane(response.data)
     } catch (error) {
       console.log(error)
@@ -85,6 +86,7 @@ const QuizAnswer = () => {
   }
 
   const getRelatedQuiz = async () => {
+    openModal()
     try {
       const formData = new FormData()
       const question = {
@@ -95,18 +97,17 @@ const QuizAnswer = () => {
         type: questions[indexOfOptions].type,
       }
       formData.append("question", JSON.stringify(question))
-      const response = await axios.post(`http://localhost:5000/related-quiz`, formData)
+      const response = await axios.post(`http://43.200.202.59:5000/aimodule/related-quiz`, formData)
       console.log(response)
       setRelatedQuiz(response.data)
     } catch (error) {
       console.log(error.response)
     }
-    openModal()
   }
 
   const fetchQuizAnswer = async () => {
     try {
-      const quizResponse = await axios.get(`http://localhost:5000/get-quiz/${quizId}`, {
+      const quizResponse = await axios.get(`http://43.200.202.59:5000/aimodule/get-quiz/${quizId}`, {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })
@@ -207,8 +208,10 @@ const QuizAnswer = () => {
                       ></textarea>)
                   }
                 </div>
-                {explane === "" ? <p className={styles.answerContainer}>해설 생성 가능</p> :
-                  <ReactMarkdown className={styles.answerContainer}>{explane}</ReactMarkdown>}
+                <div className={styles.answerContainer}>
+                  {explane === "" ? <p>해설 생성 가능</p> :
+                    <ReactMarkdown >{explane}</ReactMarkdown>}
+                </div>
                 <div className={styles.buttons}>
 
                   <button type="button"
@@ -230,7 +233,7 @@ const QuizAnswer = () => {
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {
                 return (
-                  <div className={styles.quizNavBtn} onClick={() => changeQuestion(i)}>
+                  <div className={`${styles.quizNavBtn}`} onClick={() => changeQuestion(i)}>
                     <h3>{i + 1}</h3>
                   </div>
                 )
@@ -238,7 +241,7 @@ const QuizAnswer = () => {
             </div>
             <div className={styles.notice}>
               <h3 className={styles.fontSizeBase}>주의 사항</h3>
-              <h3 className={styles.fontSizeBase}>asdf</h3>
+              <h3 className={styles.fontSizeBase}></h3>
             </div>
             <div className={styles.answerFeatureBtns}>
               <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={getExplane}>해설 생성</button>

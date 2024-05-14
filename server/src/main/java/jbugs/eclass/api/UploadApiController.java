@@ -102,8 +102,7 @@ public class UploadApiController {
                     currentDirectory += "/JBUGS-capstone/server/";
                 }
                 String fullPath = currentDirectory + directory + originalFileName;
-
-
+                long fileSize = file.getSize();
 
                 log.info("{} 저장 fullPath={}", isVideo ? "비디오" : "파일", fullPath);
                 file.transferTo(new File(fullPath));
@@ -114,6 +113,7 @@ public class UploadApiController {
                     videoMaterial.setTitle(title);
                     videoMaterial.setVideoName(originalFileName);
                     videoMaterial.setWeek(weekEntity);
+                    videoMaterial.setFileSize(fileSize);
                     videoMaterial.setLecture(lecture);
                     videoMaterialRepository.save(videoMaterial);
                 } else {
@@ -122,6 +122,7 @@ public class UploadApiController {
                     material.setTitle(title);
                     material.setFileName(originalFileName);
                     material.setWeek(weekEntity);
+                    material.setFileSize(fileSize);
                     material.setLecture(lecture);
                     materialService.join(material);
                     filePaths.add(fullPath);

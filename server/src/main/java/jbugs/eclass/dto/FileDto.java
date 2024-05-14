@@ -10,6 +10,7 @@ public class FileDto {
     private String title;
     private String fileName;
     private String filePath;
+    private Long fileSize;
 
 //    private int weekNumber;
 

@@ -84,6 +84,8 @@ const QuizAnswer = () => {
 
   const changeQuestion = (index) => {
     setIndexOfOptions(index)
+    const explanation = index in explanes ? explanes[index] : "";
+    setExplane(explanation);
   }
 
   const getExplane = async () => {

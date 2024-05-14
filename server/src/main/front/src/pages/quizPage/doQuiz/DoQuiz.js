@@ -256,7 +256,7 @@ const DoQuiz = (props) => {
             </div>
             <div className={styles.notice}>
               <h3 className={styles.fontSizeBase}>주의 사항</h3>
-              <h3 className={styles.fontSizeBase}>asdf</h3>
+              <h3 className={styles.fontSizeBase}></h3>
             </div>
           </div>
         </div>

@@ -1,9 +1,16 @@
-import { useEffect, useState } from "react";
-import "./MakeQaModal.css";
-import ReactModal from "react-modal";
+import { useCallback, useEffect, useState } from "react";
+import Modal from "react-modal";
+import styles from "../quizModal/QuizInfoModal.module.css"
+import styles2 from "../assignModal/AssignmentModal.module.css"
+import styles3 from "./QaModal.module.css"
+import Info from "../modalComponents/Info";
+import { LuFilePlus2 } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
+import { RxLockClosed } from "react-icons/rx";
+import { RxLockOpen2 } from "react-icons/rx";
 
 const MakeQaModal = (props) => {
-  ReactModal.setAppElement("#root")
+  Modal.setAppElement("#root")
   const [qnA, setQnA] = useState("")
   const [title, setTitle] = useState("")
   const [memberInfoDto, setMemberInfoDto] = useState({})
@@ -23,130 +30,81 @@ const MakeQaModal = (props) => {
     setMemberName(props.memberInfoDto.memberName)
   }, [])
 
+  useEffect(() => {
+    console.log(title)
+    console.log(qnA)
+    console.log(secret)
+  }, [title, qnA, secret])
+
   return (
-    <ReactModal className="makeqamodal"
+    <Modal className={styles.modalContainer}
+      style={{
+        overlay: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.3)'
+        }
+      }}
       isOpen={props.isOpen}
       onRequestClose={props.onRequestClose}>
-      <main className="q-a-modal"><section className="header10">
-        <textarea onChange={(e) => { setTitle(e.target.value) }}>
-
-        </textarea>
-        <div className="heroicons-outlinex-wrapper">
-          <div className="heroicons-outlinex29" onClick={props.onRequestClose}>
-            <img
-              className="vector-icon76"
-              loading="lazy"
-              alt=""
-              src="/vector1.svg"
-            />
-          </div>
+      <div className={styles.top}>
+        <h3 className={styles.title}>질문 하기</h3>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={props.onRequestClose}><IoClose /></button>
+      </div>
+      <div className={`no-scroll-bar ${styles.gap}`}>
+        <div className={styles.contents}>
+          <Info title={"제목"} content={
+            <input type="text" className={`form-control ${styles3.title}`} onChange={(e) => { setTitle(e.target.value) }} />
+          } />
         </div>
-      </section>
-        <section className="info6">
-          <div className="parent6">
-            <b className="b122">작성자</b>
-            <div className="private-message">
-              <b className="b123">비밀글</b>
-              <img
-                className="icround-lock-icon1"
-                loading="lazy"
-                alt=""
-                src="/icroundlock1.svg"
-              />
-            </div>
+        <div className={styles.contents}>
+          <Info title={"공개 여부"} content={
+            <button type="button" className={`btn btn-primary ${styles3.secretBtn} ${secret ? styles3.on : styles3.off}`} onClick={() => { setSecret(!secret) }}>{secret ?
+              <span>
+                <RxLockClosed size={20} />
+                비밀글
+              </span> :
+              <span>
+                <RxLockOpen2 size={20} />
+                공개글
+              </span>}
+            </button>
+          } />
+        </div>
+        <div className={styles.contents}>
+          <Info title={"질문 내용"} content={
+            <textarea className={`form-control ${styles3.content}`} onChange={(e) => { setQnA(e.target.value) }} rows={5}/>
+          } />
+        </div>
+        <div className={styles2.contents}>
+          <div className={styles2.fileTop}>
+            <h3 className={styles2.title}>첨부 파일</h3>
+            <label htmlFor="fileInput" className={`btn btn-primary ${styles2.fileBtn}`}>
+              <LuFilePlus2 size={20} />
+            </label>
+            <input type="file"
+              accept="*"
+              id="fileInput"
+              className={`form-control ${styles.imageInput}`}
+              style={{ display: "none" }}
+              multiple></input>
           </div>
-          <b className="b124">{memberName}</b>
-        </section>
-        <section className="frame-section">
-          <b className="b125">내용</b>
-          <b className="b126">
-            <textarea onChange={(e) => { setQnA(e.target.value) }}>
-
-            </textarea>
-          </b>
-        </section>
-        <section className="files1">
-          <div className="title-group">
-            <b className="title13">첨부 파일</b>
-            <button className="upload5">
-              <b className="b127">파일 업로드</b>
+          <div className={styles2.fileItem}>
+            <h3 style={{ fontSize: "1.25rem" }}>L 파일 이름</h3>
+            <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
+              <IoClose size={20} />
             </button>
           </div>
-          <div className="file-list17">
-            <div className="file-list18">
-              <input className="l16" type="checkbox" />
-              <div className="file-item16">
-                <div className="txt17">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex18">
-              <img
-                className="vector-icon24"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-          <div className="file-list19">
-            <div className="l-parent11">
-              <input className="l17" type="checkbox" />
-              <div className="file-item17">
-                <div className="txt18">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex19">
-              <img
-                className="vector-icon25"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-          <div className="file-list20">
-            <div className="l-parent12">
-              <input className="l18" type="checkbox" />
-              <div className="file-item18">
-                <div className="txt19">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex20">
-              <img
-                className="vector-icon26"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-          <div className="file-list21">
-            <div className="l-parent13">
-              <input className="l19" type="checkbox" />
-              <div className="file-item19">
-                <div className="txt20">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex21">
-              <img
-                className="vector-icon27"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-        </section>
-      </main>
-      <div className="nav-btn-parent1">
-        <button className="nav-btn14">
-          <div className="text11">취소</div>
-        </button>
-        <button className="nav-btn15">
-          <b className="text12">질문하기</b>
-        </button>
+        </div>
       </div>
-    </ReactModal>
+      <div className={styles.bottom}>
+        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
+        <button className={`btn btn-primary ${styles.goBtn}`}>등록 하기</button>
+      </div>
+    </Modal>
   );
 };
 

@@ -27,7 +27,7 @@ current_file_name = os.path.basename(current_file_path)
 app = Flask(__name__)
 CORS(app, supports_credentials=True)  # CORS를 활성화하고 credentials를 허용합니다.
 
-@app.route("/add-quiz-keyword", methods=["POST"])
+@app.route("/api/aimodule/add-quiz-keyword", methods=["POST"])
 def add_quiz_keyword():
     lecture = request.form.get("lecture")
     lecture_id = request.form.get("lectureId")
@@ -90,7 +90,7 @@ def add_quiz_keyword():
     return "Quiz added successfully", 200
 
 
-@app.route("/add-quiz-summary", methods=["POST"])
+@app.route("/api/aimodule/add-quiz-summary", methods=["POST"])
 def add_quiz_summary():
     lecture = request.form.get("lecture")
     lecture_id = request.form.get("lectureId")
@@ -153,7 +153,7 @@ def add_quiz_summary():
     return "Quiz added successfully", 200
 
 
-@app.route("/get-quiz/<int:question_id>", methods=["GET"])
+@app.route("/api/aimodule/get-quiz/<int:question_id>", methods=["GET"])
 def get_quiz(question_id):
     print(f"[{current_file_name}] #get-quiz id: {question_id}\n")
     try:
@@ -176,7 +176,7 @@ def get_quiz(question_id):
         db.close()
 
 
-@app.route("/get-explane", methods=["post"])
+@app.route("/api/aimodule/get-explane", methods=["post"])
 def get_explane():
     print(f"[{current_file_name}] #get-explane\n")
     question = request.form.get("question")
@@ -190,7 +190,7 @@ def get_explane():
 
     return Response(stream_with_context(generate()))
 
-@app.route('/regenerate', methods=['post'])
+@app.route('/api/aimodule/regenerate', methods=['post'])
 def regenerateChat():
     if request.method == 'POST':
         chat_id = request.form.get('chat_id')
@@ -202,7 +202,7 @@ def regenerateChat():
         return Response(stream_with_context(generate()))
     return jsonify({'message': 'Failed to upload file'})
 
-@app.route("/related-quiz", methods=["post"])
+@app.route("/api/aimodule/related-quiz", methods=["post"])
 def get_related_quiz():
     question = request.form.get("question")
     print(f"[{current_file_name}] #related-quiz quiz: {question}\n")
@@ -212,7 +212,7 @@ def get_related_quiz():
     related_question = related_question_gen(question)
     return related_question, 200
 
-@app.route('/chat', methods=['POST'])
+@app.route('/api/aimodule/chat', methods=['POST'])
 def chat():
     if request.method == 'POST':
 
@@ -253,7 +253,7 @@ def chat():
 
     return jsonify({'message': 'Failed to upload file'})
 
-@app.route('/get-chat', methods=['post'])
+@app.route('/api/aimodule/get-chat', methods=['post'])
 def get_chat():
     chat_id = request.form.get("chat_id")
     print(f"[{current_file_name}] chat_id: {chat_id}")

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
@@ -97,12 +98,21 @@ public class QnaApiController {
             qna.setQnaStatus(QnAStatus.RESPONSE_EXPECTED);
             qna.setLecture(enrollmentRepository.findLectureByEnrollmentId(enrollmentId));
             qna.setSecret(qnACreationDto.isSecret());
+            qnARepository.save(qna); // QnA 정보 저장
 
             // 파일 저장
             if (qnACreationDto.getAttachFiles() != null && qnACreationDto.getAttachFiles().length > 0) {
                 for (MultipartFile file : qnACreationDto.getAttachFiles()) {
                     if (!file.isEmpty()) {
-                        String fullPath = fileDir + file.getOriginalFilename();
+                        String originalFileName = file.getOriginalFilename();
+                        String safeFileName = UUID.randomUUID().toString() + "_" + originalFileName; // 예시로 UUID 추가
+
+                        String currentDirectory = System.getProperty("user.dir");
+                        if(currentDirectory.indexOf("JBUGS-capstone") == -1){
+                            currentDirectory += "/JBUGS-capstone/server/";
+                        }
+                        String fullPath = currentDirectory + fileDir + originalFileName;
+                        long fileSize = file.getSize();
 
                         log.info("{} 저장 fullPath={}", "파일", fullPath);
                         file.transferTo(new File(fullPath));
@@ -110,13 +120,12 @@ public class QnaApiController {
                         Material material = new Material();
                         material.setFilePath(fullPath);
                         material.setFileName(file.getOriginalFilename());
+                        material.setFileSize(fileSize);
                         material.setQna(qna); // QnA 정보 설정
                         materialService.join(material); // 파일 정보 저장
                     }
                 }
             }
-
-            qnARepository.save(qna); // QnA 정보 저장
 
             return ResponseEntity.ok().body("QnA가 성공적으로 작성되었습니다.");
         } else {

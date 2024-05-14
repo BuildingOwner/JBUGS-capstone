@@ -315,45 +315,6 @@ const ChatbotPage = () => {
       }
     }
   }
-
-  const fetchDataAndChattings = async (selectedId) => { // 새로운 함수 추가
-    const chatIdArray = await fetchChatData() // fetchChatData 호출 및 chatId 반환 대기
-    if (chatIdArray && chatIdArray.length > 0 && firstDo === true) {
-      // chatId가 유효하고, 배열에 요소가 있는 경우에만 fetchChattings 호출
-      await fetchChattings(chatIdArray[0]) // fetchChattings 호출 및 첫 번째 chatId 전달
-    } else if (chatIdArray.length === 0) {
-      console.log("채팅방을 생성해주세요")
-    }
-    else {
-      fetchChattings(selectedId)
-    }
-  }
-
-  // useEffect(() => {
-  //   if (firstDo === true) { // 처음 실행하면 1번 채팅룸 호출 (수정필요)
-  //     fetchDataAndChattings(1)
-  //     setFirstDo(false)
-  //   } else {
-  //     fetchDataAndChattings(chatId)
-  //   }
-  //   console.log(chatDtoList)
-  // }, [chatId]);
-  // useEffect(() => {
-  //   const fetchDataAndChattings = async () => {
-  //     const chatIdArray = await fetchChatData(); // chatId 배열을 가져옴
-  //     if (chatIdArray && chatIdArray.length > 0) {
-  //       // chatId가 유효하고, 배열에 요소가 있는 경우에만 첫 번째 요소를 chatId로 설정
-  //       setChatId(chatIdArray[0]);
-  //       await fetchChattings(chatIdArray[0]); // 해당 chatId에 대한 채팅 데이터 가져오기
-  //     } else {
-  //       console.log("채팅방을 생성해주세요");
-  //     }
-  //   };
-
-  //   fetchDataAndChattings(); // fetchDataAndChattings 함수 호출
-
-  //   console.log(chatDtoList);
-  // }, [chatId]);
   useEffect(() => {
     const fetchDataAndChattings = async () => {
       const chatIdArray = await fetchChatData(); // chatId 배열을 가져옴

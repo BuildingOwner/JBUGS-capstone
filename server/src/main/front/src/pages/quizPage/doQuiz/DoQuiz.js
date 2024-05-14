@@ -20,6 +20,7 @@ const DoQuiz = (props) => {
   const [questions, setQuestions] = useState([])
   const [answer, setAnswer] = useState({})
   const [score, setScore] = useState()
+  const [checked, setChecked] = useState({});
 
   const minusIndex = () => {
     if (indexOfOptions == 0) {
@@ -44,7 +45,7 @@ const DoQuiz = (props) => {
     navigate(-1); // 이전 페이지로 이동
   }
 
-  const changeAnswer = (e) => {
+  const changeAnswer = (e, i) => {
     let updatedAnswer;
     if (questions[indexOfOptions].type === "choice") {
       // 선택지를 클릭한 경우
@@ -53,6 +54,10 @@ const DoQuiz = (props) => {
         [questions[indexOfOptions].id]: e.target.textContent,
       };
       console.log("questions id : ", questions[indexOfOptions].id)
+      setChecked(prevChecked => ({
+        ...prevChecked,
+        [indexOfOptions]: i
+      }))
     } else {
       // textarea에서 입력한 경우
       updatedAnswer = {
@@ -60,10 +65,15 @@ const DoQuiz = (props) => {
         [questions[indexOfOptions].id]: e.target.value,
       }
       console.log("questions id : ", questions[indexOfOptions].id)
+      setChecked(prevChecked => ({
+        ...prevChecked,
+        [indexOfOptions]: "ok"
+      }))
     }
 
     console.log("updatedAnswer : ", updatedAnswer)
     setAnswer(updatedAnswer)
+
   }
 
   const submitQuiz = async () => {
@@ -200,7 +210,7 @@ const DoQuiz = (props) => {
                     questions[indexOfOptions] && questions[indexOfOptions].type === "choice" ?
                       (optionIcon.map((num, i) => {
                         return (
-                          <div className={styles.option} key={i} onClick={(e) => changeAnswer(e, i)}>
+                          <div className={`${styles.option} ${indexOfOptions in checked && checked[indexOfOptions] == i ? styles.checked : null}`} key={i} onClick={(e) => changeAnswer(e, i)}>
                             {num}
                             {questions[indexOfOptions].options[i] && (
                               <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
@@ -221,7 +231,7 @@ const DoQuiz = (props) => {
                     onClick={minusIndex}>이전 문제</button>
                   {indexOfOptions === questions.length - 1 ?
                     <button type="button"
-                      className={`btn btn-primary ${styles.featureBtn}`}
+                      className={`btn btn-primary ${styles.featureBtn} ${styles.done}`}
                       onClick={submitQuiz}>퀴즈 제출</button>
                     : <button type="button"
                       className={`btn btn-primary ${styles.featureBtn}`}
@@ -238,7 +248,7 @@ const DoQuiz = (props) => {
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {
                 return (
-                  <div className={styles.quizNavBtn} onClick={() => changeQuestion(i)}>
+                  <div className={`${styles.quizNavBtn} ${i in checked ? styles.checked : null}`} onClick={() => changeQuestion(i)}>
                     <h3>{i + 1}</h3>
                   </div>
                 )
@@ -246,7 +256,7 @@ const DoQuiz = (props) => {
             </div>
             <div className={styles.notice}>
               <h3 className={styles.fontSizeBase}>주의 사항</h3>
-              <h3 className={styles.fontSizeBase}>asdf</h3>
+              <h3 className={styles.fontSizeBase}></h3>
             </div>
           </div>
         </div>

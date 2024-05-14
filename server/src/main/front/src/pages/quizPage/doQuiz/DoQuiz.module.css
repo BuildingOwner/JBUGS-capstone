@@ -54,6 +54,11 @@
   border: 1px solid #ccc;
 }
 
+.option:hover{
+  background-color: #ccc;
+  cursor: pointer;
+}
+
 .buttons{
   display: flex;
   justify-content: space-between;
@@ -149,14 +154,6 @@
   border: none !important;
 }
 
-.correct{
-  background-color: var(--point-green);
-}
-
-.wrong{
-  background-color: var(--point-red);
-}
-
 .numberNav{
   display: flex;
   flex-wrap: wrap;
@@ -174,10 +171,22 @@
   border-radius: 5px;
 }
 
+.correct{
+  background-color: var(--point-green) !important;
+}
+
+.wrong{
+  background-color: var(--point-red) !important;
+}
+
 .quizNavBtn:hover{
   background-color: #ddd;
 }
 
 .checked{
-  background-color: var(--boder-blue);
+  background-color: var(--point-yellow);
+}
+
+.done{
+  background-color: var(--point-green) !important;
 }

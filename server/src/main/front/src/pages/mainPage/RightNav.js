@@ -3,8 +3,6 @@ import MainAssignItem from "./MainAssignItem"
 import axios from "axios";
 import "./RightNav.css";
 import { useNavigate } from "react-router-dom"
-import { Scheduler } from "@aldabil/react-scheduler";
-import Schedule from "./Schedule"
 import styles from "./RightNav.module.css"
 import NoItem from "./NoItem";
 

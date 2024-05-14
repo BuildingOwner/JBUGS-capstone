@@ -30,6 +30,7 @@ public class VideoMaterialService {
             dto.setTitle(videoMaterial.getTitle());
             dto.setVideoName(videoMaterial.getVideoName());
             dto.setVideoPath(videoMaterial.getVideoPath());
+            dto.setFileSize(videoMaterial.getFileSize());
             return dto;
         }).collect(Collectors.toList());
 
@@ -47,6 +48,7 @@ public class VideoMaterialService {
                     dto.setTitle(videoMaterial.getTitle());
                     dto.setVideoName(videoMaterial.getVideoName());
                     dto.setVideoPath(videoMaterial.getVideoPath());
+                    dto.setFileSize(videoMaterial.getFileSize());
 //                    dto.setWeekNumber(videoMaterial.getWeek().getWeekNumber());
 
                     return dto;

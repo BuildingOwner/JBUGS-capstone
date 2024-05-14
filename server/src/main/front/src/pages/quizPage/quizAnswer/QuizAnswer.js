@@ -23,7 +23,8 @@ const QuizAnswer = () => {
   const [answer, setAnswer] = useState({})
   const [explane, setExplane] = useState("")
   const [relatedQuiz, setRelatedQuiz] = useState({})
-  
+  const [explanes, setExplanes] = useState({}); // explanes를 상태로 관리
+
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
@@ -35,25 +36,46 @@ const QuizAnswer = () => {
   const closeModal = (event) => {
     console.log("close")
     setModalIsOpen(false)
+    setRelatedQuiz({}) // 관련 퀴즈 누를 때 마다 다른 퀴즈 나옴
     // 이벤트 버블링을 막음
     event.stopPropagation()
   }
 
+  // const minusIndex = () => {
+  //   if (indexOfOptions == 0) {
+  //   } else {
+  //     setIndexOfOptions(indexOfOptions - 1)
+  //   }
+  //   setExplane(explanes.get(indexOfOptions -1)) // 설명 초기화
+  // }
+
+  // const plusIndex = () => {
+  //   if (indexOfOptions == questions.length - 1) {
+  //   } else {
+  //     setIndexOfOptions(indexOfOptions + 1)
+  //   }
+  //   setExplane(explanes.get(indexOfOptions + 1)) // 설명 초기화
+  // }
+
   const minusIndex = () => {
-    if (indexOfOptions == 0) {
-    } else {
-      setIndexOfOptions(indexOfOptions - 1)
+    if (indexOfOptions > 0) {
+      const newIndex = indexOfOptions - 1;
+      setIndexOfOptions(newIndex);
+      // explanes 객체에서 newIndex 키의 존재를 검사하고 값을 설정
+      const explanation = newIndex in explanes ? explanes[newIndex] : "";
+      setExplane(explanation);
     }
-    setExplane("") // 설명 초기화
-  }
+  };
 
   const plusIndex = () => {
-    if (indexOfOptions == questions.length - 1) {
-    } else {
-      setIndexOfOptions(indexOfOptions + 1)
+    if (indexOfOptions < questions.length - 1) {
+      const newIndex = indexOfOptions + 1;
+      setIndexOfOptions(newIndex);
+      // explanes 객체에서 newIndex 키의 존재를 검사하고, 값을 설정
+      const explanation = newIndex in explanes ? explanes[newIndex] : "";
+      setExplane(explanation);
     }
-    setExplane("") // 설명 초기화
-  }
+  };
 
   const backToPreviousPage = () => {
     sessionStorage.clear() // 페이지 이동시 세션스토리지에 저장된 모든 정보 삭제
@@ -62,6 +84,8 @@ const QuizAnswer = () => {
 
   const changeQuestion = (index) => {
     setIndexOfOptions(index)
+    const explanation = index in explanes ? explanes[index] : "";
+    setExplane(explanation);
   }
 
   const getExplane = async () => {
@@ -76,8 +100,12 @@ const QuizAnswer = () => {
         type: questions[indexOfOptions].type,
       }
       formData.append("question", JSON.stringify(question))
-      const response = await axios.post(`http://localhost:5000/get-explane`, formData)
+      const response = await axios.post(`http://43.200.202.59:5000/aimodule/get-explane`, formData)
       setExplane(response.data)
+      setExplanes(prevExplanes => ({
+        ...prevExplanes,
+        [indexOfOptions]: response.data
+      })); // 상태 업데이트
     } catch (error) {
       console.log(error)
       setExplane("오류가 발생했습니다.")
@@ -85,6 +113,7 @@ const QuizAnswer = () => {
   }
 
   const getRelatedQuiz = async () => {
+    openModal()
     try {
       const formData = new FormData()
       const question = {
@@ -95,18 +124,17 @@ const QuizAnswer = () => {
         type: questions[indexOfOptions].type,
       }
       formData.append("question", JSON.stringify(question))
-      const response = await axios.post(`http://localhost:5000/related-quiz`, formData)
+      const response = await axios.post(`http://43.200.202.59:5000/aimodule/related-quiz`, formData)
       console.log(response)
       setRelatedQuiz(response.data)
     } catch (error) {
       console.log(error.response)
     }
-    openModal()
   }
 
   const fetchQuizAnswer = async () => {
     try {
-      const quizResponse = await axios.get(`http://localhost:5000/get-quiz/${quizId}`, {
+      const quizResponse = await axios.get(`http://43.200.202.59:5000/aimodule/get-quiz/${quizId}`, {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })
@@ -201,14 +229,20 @@ const QuizAnswer = () => {
                         })
                       )
                       :
-                      (<textarea
+                      (<>
+                      <textarea
                         value={answer[questions[indexOfOptions]?.id] || ''}
                         readOnly
-                      ></textarea>)
+                        className={`${questions[indexOfOptions]?.answer === answer[indexOfOptions] ? styles.correct : styles.wrong}`}
+                      ></textarea>
+                      <h4>정답 : {answer[indexOfOptions]}</h4>
+                      </>)
                   }
                 </div>
-                {explane === "" ? <p className={styles.answerContainer}>해설 생성 가능</p> :
-                  <ReactMarkdown className={styles.answerContainer}>{explane}</ReactMarkdown>}
+                <div className={styles.answerContainer}>
+                  {explane === "" ? <p>해설 생성 가능</p> :
+                    <ReactMarkdown >{explane}</ReactMarkdown>}
+                </div>
                 <div className={styles.buttons}>
 
                   <button type="button"
@@ -230,7 +264,7 @@ const QuizAnswer = () => {
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {
                 return (
-                  <div className={styles.quizNavBtn} onClick={() => changeQuestion(i)}>
+                  <div className={`${styles.quizNavBtn} ${questions[indexOfOptions].answer === answer[indexOfOptions] ? styles.correct : styles.wrong}`} onClick={() => changeQuestion(i)}>
                     <h3>{i + 1}</h3>
                   </div>
                 )
@@ -238,7 +272,7 @@ const QuizAnswer = () => {
             </div>
             <div className={styles.notice}>
               <h3 className={styles.fontSizeBase}>주의 사항</h3>
-              <h3 className={styles.fontSizeBase}>asdf</h3>
+              <h3 className={styles.fontSizeBase}></h3>
             </div>
             <div className={styles.answerFeatureBtns}>
               <button type="button" className={`btn btn-primary ${styles.featureBtn}`} onClick={getExplane}>해설 생성</button>

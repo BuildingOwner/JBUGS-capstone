@@ -87,3 +87,34 @@
 .red{
   background-color: var(--point-red);
 }
+
+.question {
+  font-weight: bold;
+  word-wrap: break-word;
+  width: 100%;
+  font-size: var(--font-size-7xl) !important;
+  background-color: var(--point-bg-blue);
+  padding: var(--padding-mini);
+  border-radius: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-5xs);
+}
+
+.option{
+  border: 1px solid #aaa;
+  padding: 10px;
+  display: flex;
+  gap: var(--gap-5xs);
+  align-items: center;
+  border-radius: 5px;
+  font-size: var(--font-size-xl);
+}
+
+.option:hover{
+  background-color: #ccc;
+  cursor: pointer;
+}

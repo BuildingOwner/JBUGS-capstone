@@ -53,6 +53,7 @@ public class QnADto {
             materialDto.setTitle(material.getTitle());
             materialDto.setFileName(material.getFileName());
             materialDto.setFilePath(material.getFilePath());
+            materialDto.setFileSize(material.getFileSize());
             return materialDto;
         }).collect(Collectors.toList());
 

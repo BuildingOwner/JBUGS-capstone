@@ -89,16 +89,20 @@ const AssignmentList = () => {
                 {unsubmittedAssignments.length != 0 ?
                   unsubmittedAssignments.filter(assign =>
                     (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
-                  ).map((assignment) =>
-                    <AssignListItem
-                      key={assignment.id}
-                      title={assignment.title}
-                      contents={assignment.contents}
-                      dueDate={assignment.dueDate}
-                      weekId={assignment.weekNumber}
-                      status={assignment.status}
-                    />
-                  ) : <NoItem title={"미제출 과제가"} />}
+                  ).length != 0 ?
+                    unsubmittedAssignments.filter(assign =>
+                      (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                    ).map((assignment) =>
+                      <AssignListItem
+                        key={assignment.id}
+                        title={assignment.title}
+                        contents={assignment.contents}
+                        dueDate={assignment.dueDate}
+                        weekId={assignment.weekNumber}
+                        status={assignment.status}
+                      />
+                    ) : <NoItem title={"미제출 과제가"} />
+                  : <NoItem title={"미제출 과제가"} />}
               </div>
             </div>
             <div className={styles.listContainer}>
@@ -113,16 +117,20 @@ const AssignmentList = () => {
                 {submittedAssignments.length != 0 ?
                   submittedAssignments.filter(assign =>
                     (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
-                  ).map((assignment) =>
-                    <AssignListItem
-                      key={assignment.id}
-                      title={assignment.title}
-                      contents={assignment.contents}
-                      dueDate={assignment.dueDate}
-                      weekId={assignment.weekNumber}
-                      status={assignment.status}
-                    />
-                  ) : <NoItem title={"제출한 과제가"} />}
+                  ).length != 0 ?
+                    submittedAssignments.filter(assign =>
+                      (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                    ).map((assignment) =>
+                      <AssignListItem
+                        key={assignment.id}
+                        title={assignment.title}
+                        contents={assignment.contents}
+                        dueDate={assignment.dueDate}
+                        weekId={assignment.weekNumber}
+                        status={assignment.status}
+                      />
+                    ) : <NoItem title={"제출한 과제가"} />
+                  : <NoItem title={"제출한 과제가"} />}
               </div>
             </div>
           </div>

@@ -8,4 +8,5 @@ public class MaterialDto {
     private String title;
     private String fileName;
     private String filePath;
+    private Long fileSize;
 }

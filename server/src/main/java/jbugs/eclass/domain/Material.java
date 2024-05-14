@@ -16,6 +16,7 @@ public class Material {
     private String title;
     private String fileName; //제목
     private String filePath;
+    private Long fileSize;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")

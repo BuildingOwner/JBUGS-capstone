@@ -117,6 +117,8 @@ const ChatbotPage = () => {
 
   const regenerateResponse = async () => {
     try {
+      setIsSending(true)
+      setReadOnly(true)
       const formData = new FormData();
       formData.append('chat_id', chatId);
       const response = await axios.post("http://43.200.202.59:5000/aimodule/regenerate", formData)
@@ -133,6 +135,9 @@ const ChatbotPage = () => {
       }
     } catch (error) {
       console.log(error)
+    } finally{
+      setIsSending(false)
+      setReadOnly(false)
     }
   }
 
@@ -178,9 +183,9 @@ const ChatbotPage = () => {
 
     const userText = text
     setText('')
+    handleResizeHeight()
     // 파일이 선택되지 않은 경우
     setFileDescription('')
-    handleResizeHeight()
 
     try {
       const formData = new FormData();
@@ -337,9 +342,9 @@ const ChatbotPage = () => {
   }, [chatId, firstDo]); // chatId 또는 firstDo가 변경될 때마다 useEffect를 실행
 
 
-  // useEffect(() => {
-  //   chatBoardScoll()
-  // }, [chats])
+  useEffect(() => {
+    chatBoardScoll()
+  }, [chats])
 
   // if (!chats) return <LoadingPage />;
 
@@ -387,14 +392,14 @@ const ChatbotPage = () => {
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
-                  <label htmlFor="imageInput" className={`btn btn-primary ${styles.chatBtn} ${styles.imageInputBtn}`}>
+                  <label htmlFor="imageInput" className={`btn btn-primary ${styles.chatBtn} ${styles.imageInputBtn} ${readOnly ? "disabled" : null}`}>
                     <LuImagePlus size={20} />
                     {fileDescription && <span className={styles.fileDescription}>{fileDescription}</span>}
                   </label>
                   <input type="file"
                     accept="image/*"
                     id="imageInput"
-                    className={`form-control ${styles.imageInput}`}
+                    className={`form-control ${styles.imageInput} ${readOnly ? "disabled" : null}`}
                     onChange={handleFileChange}
                     multiple></input>
                   <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
@@ -411,13 +416,13 @@ const ChatbotPage = () => {
                     />
                   </div>
                   <button type="submit"
-                    className={`btn btn-primary ${styles.chatBtn}`}
+                    className={`btn btn-primary ${styles.chatBtn} ${readOnly ? "disabled" : null}`}
                     onClick={sendMessage}
                   ><BsSend size={20} />
                   </button>
                 </div>
                 <button type="button"
-                  className={`${styles.RegenerateBtn} btn btn-primary`}
+                  className={`${styles.RegenerateBtn} btn btn-primary ${readOnly ? "disabled" : null}`}
                   onClick={regenerateResponse}>
                   Regenerate response
                 </button>

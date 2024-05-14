@@ -10,6 +10,7 @@ public class LectureVideoDto {
     private String title;
     private String videoName;
     private String videoPath;
+    private Long fileSize;
 
 //    private int weekNumber;
 

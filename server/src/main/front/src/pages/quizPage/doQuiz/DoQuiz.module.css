@@ -54,6 +54,11 @@
   border: 1px solid #ccc;
 }
 
+.option:hover{
+  background-color: #ccc;
+  cursor: pointer;
+}
+
 .buttons{
   display: flex;
   justify-content: space-between;
@@ -179,5 +184,5 @@
 }
 
 .checked{
-  background-color: var(--boder-blue);
+  background-color: var(--point-yellow);
 }

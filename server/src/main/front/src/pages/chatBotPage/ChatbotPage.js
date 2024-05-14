@@ -119,7 +119,7 @@ const ChatbotPage = () => {
     try {
       const formData = new FormData();
       formData.append('chat_id', chatId);
-      const response = await axios.post("http://localhost:5000/regenerate", formData)
+      const response = await axios.post("http://43.200.202.59:5000/aimodule/regenerate", formData)
       console.log(response)
 
       // 서버로부터 받은 새로운 응답을 기존 chats 배열의 마지막 요소에 반영
@@ -196,7 +196,7 @@ const ChatbotPage = () => {
         }
       }
 
-      const response = await fetch("http://localhost:5000/chat", {
+      const response = await fetch("http://43.200.202.59:5000/aimodule/chat", {
         method: 'POST',
         body: formData,
         credentials: 'include',
@@ -273,7 +273,7 @@ const ChatbotPage = () => {
     try {
       const formData = new FormData();
       formData.append('chat_id', chatRoomId);
-      const response = await axios.post(`http://localhost:5000/get-chat`, formData);
+      const response = await axios.post(`http://43.200.202.59:5000/aimodule/get-chat`, formData);
       console.log("fetchCahttings response : ", response)
 
       const chatData = JSON.parse(response.data.chat_text);
@@ -352,7 +352,7 @@ const ChatbotPage = () => {
         <div className={`bg ${styles.bg}`}>
           <div className={styles.top}>
             <div className={styles.topLeft}>
-              <h3>AI Chat Hellper AI부기</h3>
+              <h3 style={{fontWeight:"bold"}}>AI 부기</h3>
               <div className={styles.selectedModel}>GPT 4 Turbo</div>
             </div>
             <div className={styles.topRight}>

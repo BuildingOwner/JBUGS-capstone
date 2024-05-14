@@ -177,7 +177,7 @@ const QuizList = () => {
               <h3 className={styles.labelTextTimeOut}>기한</h3>
               <h3 className={`${styles.labelText} ${styles.feedbackBtnLable}`}>피드백</h3>
             </div>
-            <div className={styles.quizListContainer}>
+            <div className={`${styles.quizListContainer} no-scroll-bar`}>
               {quizDtoList[0] ? quizDtoList.filter(quiz =>
                 (Number(selectedWeek) === 100 || Number(quiz.week) === Number(selectedWeek)) // 주차 조건
                 && (selectedType === 'all' || quiz.quizType === selectedType) // 타입 조건

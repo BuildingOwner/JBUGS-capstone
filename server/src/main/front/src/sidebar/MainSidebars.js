@@ -7,7 +7,6 @@ import styles from "./MainSidebars.module.css"
 function Sidebar({ memberInfoDto }) {
   const [showMainSidebar, setShowMainSidebar] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
-  console.log("MainSidebars의 memberInfoDto : ", memberInfoDto)
 
   const toggleSidebar = () => {
     setShowMainSidebar(!showMainSidebar);

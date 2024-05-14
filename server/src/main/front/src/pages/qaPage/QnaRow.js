@@ -1,9 +1,23 @@
 import styles from "./QnaRow.module.css"
 import { useState, useEffect } from "react";
 import { FiLock } from "react-icons/fi";
-
+import QaModal from "../../modals/qaModal/QaModal";
 const QnaRow = (props) => {
   const [formattedDate, setFormattedDate] = useState()
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    console.log("open")
+    setModalIsOpen(true)
+  }
+
+  const closeModal = (event) => {
+    console.log("close")
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
+  }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -23,8 +37,11 @@ const QnaRow = (props) => {
     setFormattedDate(data)
   }, [])
   return (
-    <div className={styles.row}>
-      <h4 className={styles.num}>{props.number + 1}</h4> {/*여기 날짜 순으로 번호 매겨놔 */}
+    <div className={styles.row} onClick={openModal}>
+      <QaModal isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props} />
+      <h4 className={styles.num}>{props.number + 1}</h4>
       {props.qnAStatus === "COMPLETE" ?
         <div className={`${styles.answer} ${styles.answerDone}`}>
           <h4>답변 완료</h4>
@@ -33,7 +50,7 @@ const QnaRow = (props) => {
           <h4>답변 예정</h4>
         </div>}
       <div className={styles.secret}>
-        <FiLock size={20}/>
+        <FiLock size={20} />
       </div>
       <h4 className={styles.title}>{props.title}</h4>
       <h4 className={styles.writer}>{props.writer}</h4>

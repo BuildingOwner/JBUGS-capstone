@@ -1,9 +1,21 @@
 import styles from "./AssignListItem.module.css"
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
+import AssignmentModal from "../../modals/assignModal/AssignmentModal"
 
 const AssignListItem = (props) => {
-
   const [formattedDate, setFormattedDate] = useState()
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
+
+  const closeModal = (event) => {
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
+  }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -24,7 +36,13 @@ const AssignListItem = (props) => {
   }, [])
 
   return (
-    <div className={styles.row}>
+    <div className={styles.row} onClick={openModal}>
+      <AssignmentModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props}
+      />
+
       <div className={styles.submitBox}>
         {props.status === "NOT_SUBMITTED" ? <h4 className={styles.red}>미제출</h4> : <h4 className={styles.green}>제출 완료</h4>}
       </div>

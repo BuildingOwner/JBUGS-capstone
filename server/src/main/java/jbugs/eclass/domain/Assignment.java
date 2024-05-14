@@ -31,7 +31,7 @@ public class Assignment {
     @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL)
     private List<Material> materials = new ArrayList<>();
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "lecture_id")
-//    private Lecture lecture;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
 }

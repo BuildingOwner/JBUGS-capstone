@@ -57,7 +57,6 @@
 }
 .hw-top {
   align-self: stretch;
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -489,25 +488,14 @@
   justify-content: flex-start;
   max-width: 100%;
 }
-.hw-item {
-  width: 100%;
-  height: 18.813rem;
-  overflow-x: auto;
-  flex-shrink: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--gap-3xs);
-  font-size: var(--font-size-lg);
-  color: var(--color-black);
-  font-family: var(--font-malgun-gothic);
-}
+
 .homework {
   align-self: stretch;
   border-radius: var(--br-3xs);
   background-color: var(--blue2);
   padding: var(--padding-xl);
   box-sizing: border-box;
-  gap: var(--gap-6xl);
+  gap: var(--gap-xl);
 }
 .h1,
 .homework,

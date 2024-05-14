@@ -11,6 +11,8 @@ public class FileDto {
     private String fileName;
     private String filePath;
 
+//    private int weekNumber;
+
     public static FileDto from(Material material){
         FileDto dto = new FileDto();
         dto.setFileId(material.getId());

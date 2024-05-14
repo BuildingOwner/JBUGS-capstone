@@ -5,6 +5,9 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoSearch } from "react-icons/go";
+import NoItem from "../mainPage/NoItem";
+import LoadingPage from "../mainPage/LoadingPage";
+import MakeQaModal from "../../modals/qaModal/MakeQaModal";
 
 const QaList = () => {
   const location = useLocation()
@@ -15,6 +18,43 @@ const QaList = () => {
   const [division, setDivision] = useState()
   const [qnADtoList, setQnADtoList] = useState()
   const [courseDto, setCourseDto] = useState()
+  const [qaFilter, setQaFilter] = useState("ALL")
+  const [searchFilter, setSearchFilter] = useState("title")
+  const [keyword, setKeyword] = useState("")
+
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
+
+  const closeModal = (event) => {
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
+  }
+  const changeKeyword = (e) => {
+    setKeyword(e.target.value)
+  }
+
+  const changeSearchFilter = (e) => {
+    setSearchFilter(e.target.value)
+  }
+
+  const changeQaFilter = (e) => {
+    if (e === "ME") {
+      setQaFilter(memberInfoDto.memberName)
+      console.log(memberInfoDto.memberName)
+    } else {
+      setQaFilter(e)
+    }
+  }
+
+  // 날짜를 기준으로 오름차순으로 정렬하는 함수
+  const sortedQnaDtoList = qnADtoList?.sort((a, b) => {
+    return new Date(a.createdAt) - new Date(b.createdAt)
+  })
 
   const fetchQaList = async () => {
     try {
@@ -22,11 +62,15 @@ const QaList = () => {
       console.log("qa response : ", response)
       const qnADtoList = response.data.qnADtoList.map((qna) => qna).flat()
       console.log(qnADtoList)
-      setQnADtoList(qnADtoList)
-      // setCourseDto(response.courseDto)
-      // setMemberInfoDto(response.memberInfoDto)
-    } catch (error) {
+      const lectureName1 = response.data.courseDto.lectureName
+      const division1 = response.data.courseDto.division
 
+      setLectureName(lectureName1)
+      setDivision(division1)
+      setMemberInfoDto(response.data.memberInfoDto)
+      setQnADtoList(qnADtoList)
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -34,8 +78,15 @@ const QaList = () => {
     fetchQaList()
   }, [])
 
+  if (!memberInfoDto) return <LoadingPage />;
+
   return (
     <div className={`background`}>
+      <MakeQaModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        memberInfoDto={memberInfoDto}
+      />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
@@ -43,30 +94,41 @@ const QaList = () => {
             <h3 className={styles.title}>Q & A</h3>
             <div className={styles.right}>
               <div className={styles.searchContainer}>
-                <select className={`form-select form-select-sm ${styles.select}`}>
+                <select className={`form-select form-select-sm ${styles.select}`}
+                  onChange={changeSearchFilter}>
                   <option value={`title`} selected>제목</option>
                   <option value={`writer`}>글쓴이</option>
                 </select>
                 <div className={styles.searchBox}>
-                  <input class={`form-control ${styles.search}`} type="text" placeholder="검색어를 입력하세요..." />
+                  <input className={`form-control ${styles.search}`}
+                    type="text" placeholder="검색어를 입력하세요..."
+                    onChange={changeKeyword} />
                   <div className={styles.questionIcon}>
                     <GoSearch size={20} />
                   </div>
                 </div>
               </div>
-              <button type="button" className={`btn btn-primary ${styles.addBtn}`}>
-                <h3 style={{ fontSize: "1.05rem", fontWeight:"bold" }}>질문하기</h3>
+              <button type="button" 
+              className={`btn btn-primary ${styles.addBtn}`}
+              onClick={openModal}>
+                <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>질문하기</h3>
               </button>
             </div>
           </div>
 
           <div className={styles.content}>
             <div className={styles.tabBtns}>
-              <button style={{borderTopLeftRadius:"5px"}} className={`${styles.tabItem} ${styles.currentFilter}`}>
-                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>전체 질문</h3>
+              <button style={{ borderTopLeftRadius: "5px" }}
+                className={`${styles.tabItem} ${qaFilter === 'ALL' ? styles.currentFilter : ''}`}
+                onClick={() => changeQaFilter('ALL')}
+              >
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 질문</h3>
               </button>
-              <button style={{borderTopRightRadius:"5px"}} className={`${styles.tabItem}`}>
-                <h3 style={{fontSize:"1.25rem", fontWeight: "bold"}}>내 질문</h3>
+              <button style={{ borderTopRightRadius: "5px" }}
+                className={`${styles.tabItem} ${qaFilter === `${memberInfoDto.memberName}` ? styles.currentFilter : ''}`}
+                onClick={() => changeQaFilter('ME')} // 수정필
+              >
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>내 질문</h3>
               </button>
             </div>
             <div className={styles.colName}>
@@ -78,19 +140,27 @@ const QaList = () => {
               <h3 className={styles.colDate} style={{ fontSize: "1.25rem" }}>작성일</h3>
               <h3 className={styles.colView} style={{ fontSize: "1.25rem" }}>조회수</h3>
             </div>
-            <div className={styles.list}>
-              {qnADtoList?.map((qna, i) => (
-                <QnaRow
-                  key={`qna${i}`}
-                  number={i}
-                  createdAt={qna.createdAt}
-                  qnAStatus={qna.qnAStatus}
-                  title={qna.title}
-                  qnaId={qna.qnaId}
-                  views={qna.views}
-                  writer={qna.writer}
-                />
-              ))}
+            <div className={`${styles.list} no-scroll-bar`}>
+              {sortedQnaDtoList?.length !== 0 ?
+                sortedQnaDtoList.filter((qna) => (qaFilter === "ALL" || qna.writer === qaFilter)
+                  && (searchFilter === "title" ?
+                    // 필터가 title일 경우 keyword가 포함되어있는지 확인
+                    qna.title.toLowerCase().includes(keyword.toLowerCase())
+                    // 필터가 writer일 경우 keyword가 포함되어있는지 확인
+                    : qna.writer.toLowerCase().includes(keyword.toLowerCase())
+                  )).map((qna, i) => (
+                    <QnaRow
+                      key={`qna${i}`}
+                      number={i}
+                      createdAt={qna.createdAt}
+                      qnAStatus={qna.qnAStatus}
+                      title={qna.title}
+                      qnaId={qna.qnaId}
+                      views={qna.views}
+                      writer={qna.writer}
+                      content={qna.content}
+                    />
+                  )) : <NoItem title={"등록된 질문이"} />}
             </div>
           </div>
         </section>

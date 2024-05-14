@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import NoItem from "../mainPage/NoItem";
+import LoadingPage from "../mainPage/LoadingPage";
 
 const Course = () => {
   const navigate = useNavigate()
@@ -22,11 +24,11 @@ const Course = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function openModal() {
-    setModalIsOpen(true);
+    setModalIsOpen(true)
   }
 
   function closeModal() {
-    setModalIsOpen(false);
+    setModalIsOpen(false)
   }
 
   const currentDate = new Date();
@@ -43,8 +45,6 @@ const Course = () => {
     return week;
   }
   const cureentWeek = calculateWeek(startDate, currentDate)
-
-
 
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [lectureName, setLectureName] = useState()
@@ -71,7 +71,7 @@ const Course = () => {
       const response = await axios.get(`/api/course/${enrollmentId}`, {
         withCredentials: true // 세션 쿠키를 사용하기 위해 필요
       });
-      console.log(response)
+      console.log("course의 response", response)
       setWeeklyContents(response.data.weeklyContents)
       const lectureName1 = response.data.courseDto.lectureName
       const division1 = response.data.courseDto.division
@@ -106,7 +106,7 @@ const Course = () => {
   }, [])
 
   useEffect(() => {
-    const selectedWeekData = weeklyContents.find(week => week.week === selectedWeek);
+    const selectedWeekData = weeklyContents.find(week => week.week === selectedWeek)
     console.log(selectedWeekData)
     if (selectedWeekData) {
       setLectureVideos(selectedWeekData.lectureVideos)
@@ -114,11 +114,13 @@ const Course = () => {
       setQuizs(selectedWeekData.quizzes)
       setClassFiles(selectedWeekData.classFiles)
     }
-  }, [selectedWeek, weeklyContents]);
+  }, [selectedWeek, weeklyContents])
+
+  if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>
-      <FileUploadModal isOpen={modalIsOpen} onRequestClose={closeModal} enrollmentId={enrollmentId}/>
+      <FileUploadModal isOpen={modalIsOpen} onRequestClose={closeModal} enrollmentId={enrollmentId} />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
@@ -143,7 +145,9 @@ const Course = () => {
                   >{index + 1}</button>
                 ))}
               </nav>
-              <button type="button" className={`btn btn-primary ${styles.addBtn}`} onClick={openModal}>
+              <button type="button" className={`btn btn-primary 
+              ${memberInfoDto?.memberType == "STUDENTs" ? styles.hidden : null}
+              ${styles.addBtn}`} onClick={openModal}>
                 <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
               </button>
             </div>
@@ -154,7 +158,7 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>온라인 강의</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {lectureVideos.map((video, i) => (
+                {lectureVideos[0] ? lectureVideos.map((video, i) => (
                   <ListItem
                     key={`lectureVideo${i}`}
                     title={video.title}
@@ -162,7 +166,7 @@ const Course = () => {
                     videoPath={video.videoPath}
                     url={videoUrl}
                   />
-                ))}
+                )) : <NoItem title={"온라인 강의가"} />}
               </div>
             </div>
             <div className={styles.listContainer}>
@@ -170,7 +174,7 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>과제</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {assignments.map((assignment, i) => (
+                {assignments[0] ? assignments.map((assignment, i) => (
                   <ListItem
                     key={`assignment${i}`}
                     title={assignment.title}
@@ -182,7 +186,7 @@ const Course = () => {
                     courseDto={courseDto}
                     url={assignmentUrl}
                   />
-                ))}
+                )) : <NoItem title={"과제가"} />}
               </div>
             </div>
             <div className={styles.listContainer}>
@@ -190,7 +194,7 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>자료</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {classFiles.map((file, i) => (
+                {classFiles[0] ? classFiles.map((file, i) => (
                   <ListItem
                     key={`file${i}`}
                     fileName={file.fileName}
@@ -198,7 +202,7 @@ const Course = () => {
                     title={file.title}
                     url={fileUrl}
                   />
-                ))}
+                )) : <NoItem title={"자료가"} />}
               </div>
             </div>
             <div className={styles.listContainer}>
@@ -206,24 +210,24 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "1.6rem", paddingBottom: "1rem" }}>퀴즈</h3>
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
-                {quizs.map((quiz, i) => (
+                {quizs[0] ? quizs.map((quiz, i) => (
                   <ListItem
                     key={`quiz${i}`}
-                    quizName={quiz.quizName}
-                    quizType={quiz.quizType}
-                    quizId={quiz.quizId}
-                    jsonData={quiz.jsonData}
-                    description={quiz.description}
-                    deadline={quiz.deadline}
-                    weekId={quiz.weekId}
-                    quizScore={quiz.quizScore}
-                    submissionStatus={quiz.submissionStatus}
+                    quizName={quiz?.quizName}
+                    quizType={quiz?.quizType}
+                    quizId={quiz?.quizId}
+                    jsonData={quiz?.jsonData}
+                    description={quiz?.description}
+                    deadline={quiz?.deadline}
+                    weekId={quiz?.weekId}
+                    quizScore={quiz?.quizScore}
+                    submissionStatus={quiz?.submissionStatus}
                     enrollmentId={enrollmentId}
                     memberInfoDto={memberInfoDto}
                     courseDto={courseDto}
                     url={quizUrl}
                   />
-                ))}
+                )) : <NoItem title={"퀴즈가"} />}
               </div>
             </div>
           </div>

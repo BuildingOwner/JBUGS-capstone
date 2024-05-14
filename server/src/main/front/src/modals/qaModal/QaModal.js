@@ -1,194 +1,117 @@
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import Modal from "react-modal"
+import styles from "../quizModal/QuizInfoModal.module.css"
+import styles2 from "../assignModal/AssignmentModal.module.css"
+import Info from "../modalComponents/Info";
+import { LuFilePlus2 } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 
-import "./QaModal.css";
+const QaModal = (props) => {
+  Modal.setAppElement("#root")
+  const [fileDescription, setFileDescription] = useState('');
 
-const QaModal = () => {
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    const fileCount = files.length;
 
+    if (fileCount === 1) {
+      // 파일이 하나만 선택된 경우, 파일 이름을 표시
+      setFileDescription(files[0].name);
+    } else if (fileCount > 1) {
+      // 여러 파일이 선택된 경우, "파일 n개" 형식으로 표시
+      setFileDescription(`이미지 ${fileCount}개`);
+    } else {
+      // 파일이 선택되지 않은 경우
+      setFileDescription('');
+    }
+  }
+
+  const onAnswerClick = useCallback(() => {
+    const anchor = document.querySelector(
+      "[data-scroll-to='commentContainer']"
+    );
+    if (anchor) {
+      anchor.scrollIntoView({ block: "start", behavior: "smooth" });
+    }
+  }, []);
+
+  useEffect(() => {
+
+  }, [])
   return (
-    <div className="qamodal">
-      <section className="header10">
-        <h3 className="qa6">
-          Q&A 제목
-        </h3>
-        <div className="heroicons-outlinex-wrapper">
-          <div className="heroicons-outlinex29">
-            <img
-              className="vector-icon76"
-              loading="lazy"
-              alt=""
-              src="/vector1.svg"
-            />
-          </div>
-        </div>
-      </section>
-      <section className="scroll7">
-        <nav className="info5">
-          <div className="owner">
-            <b className="b110">작성자</b>
-            <b className="b111">김아무개</b>
-          </div>
-          <div className="date9">
-            <b className="b112">작성일</b>
-            <b className="b113">2024-10-10</b>
-          </div>
-          <div className="view3">
-            <b className="b114">조회수</b>
-            <b className="b115">50000</b>
-          </div>
-          <div className="answer2">
-            <b className="b116">답변 여부</b>
-            <button className="status3">
-              <b className="b117">완료</b>
-            </button>
-          </div>
-          <div className="parent5">
-            <b className="b118">비밀글</b>
-            <img
-              className="icround-lock-icon"
-              loading="lazy"
-              alt=""
-              src="/icroundlock1.svg"
-            />
-          </div>
-        </nav>
-        <div className="comment-owner-list">
-          <b className="b119">설명</b>
-          <b className="b120">
-            <p className="p69">내용</p>
-            <p className="p70">2</p>
-            <p className="p71">3</p>
-            <p className="p72">4</p>
-            <p className="p73">5</p>
-            <p className="p74">6</p>
-            <p className="p75">7</p>
-            <p className="p76">8</p>
-            <p className="p77">9</p>
-            <p className="p78">10</p>
-          </b>
-        </div>
-        <div className="navigation-button">
-          <div className="title-parent">
-            <b className="title11">첨부 파일</b>
-            <button className="upload4">
-              <b className="b121">파일 업로드</b>
-            </button>
-          </div>
-          <div className="file-list13">
-            <div className="list-files">
-              <input className="l12" type="checkbox" />
-              <div className="file-item12">
-                <div className="txt13">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex14">
-              <img
-                className="vector-icon20"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-          <div className="file-list14">
-            <div className="l-parent8">
-              <input className="l13" type="checkbox" />
-              <div className="file-item13">
-                <div className="txt14">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex15">
-              <img
-                className="vector-icon21"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-          <div className="file-list15">
-            <div className="l-parent9">
-              <input className="l14" type="checkbox" />
-              <div className="file-item14">
-                <div className="txt15">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex16">
-              <img
-                className="vector-icon22"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-          <div className="file-list16">
-            <div className="l-parent10">
-              <input className="l15" type="checkbox" />
-              <div className="file-item15">
-                <div className="txt16">파일이름임.txt</div>
-              </div>
-            </div>
-            <div className="heroicons-outlinex17">
-              <img
-                className="vector-icon23"
-                loading="lazy"
-                alt=""
-                src="/vector1.svg"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="comment2" data-scroll-to="commentContainer">
-          <div className="title12">
-            <input className="input2" placeholder="댓글" type="text" />
-          </div>
-          <div className="commentlist2">
-            <div className="commentitem6">
-              <div className="commentowner6">
-                <div className="div70">{`교수님 : `}</div>
-              </div>
-              <div className="div71">이렇게 해보세요1</div>
-            </div>
-            <div className="commentitem7">
-              <div className="commentowner7">
-                <div className="div72">{`교수님 : `}</div>
-              </div>
-              <div className="div73">이렇게 해보세요2</div>
-            </div>
-            <div className="commentitem8">
-              <div className="commentowner8">
-                <div className="div74">{`교수님 : `}</div>
-              </div>
-              <div className="div75">이렇게 해보세요3</div>
-            </div>
-            <div className="commentitem9">
-              <div className="commentowner9">
-                <div className="div76">{`교수님 : `}</div>
-              </div>
-              <div className="div77">이렇게 해보세요4</div>
-            </div>
-            <div className="commentitem10">
-              <div className="commentowner10">
-                <div className="div78">{`교수님 : `}</div>
-              </div>
-              <div className="div79">이렇게 해보세요5</div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <input
-        className="qamodal-child"
-        placeholder="답변을 해주세요..."
-        type="text"
-      />
-      <div className="main-navbar">
-        <button className="nav-btn12">
-          <div className="global-navbar">취소</div>
-        </button>
-        <button className="nav-btn13">
-          <b className="text10">답변 하기</b>
-        </button>
+    <Modal className={styles.modalContainer}
+      style={{
+        overlay: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.3)'
+        }
+      }}
+      isOpen={props.isOpen}
+      onRequestClose={props.onRequestClose}>
+      <div className={styles.top}>
+        <h3 className={styles.title}>공지 제목</h3>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={props.onRequestClose}><IoClose /></button>
       </div>
-    </div>
+      <div className={`no-scroll-bar ${styles.gap}`}>
+        <div className={styles.contents}>
+          <Info title={"작성자"} content={"주종찬"} />
+          <Info title={"작성일"} content={"2024-10-10"} />
+        </div>
+        <div className={styles.contents}>
+          <Info title={"답변 여부"} content={<h3 className={`${styles.box} ${styles.green}`}>답변 완료</h3>} /> {/*답변예정은 yellow, 답변완료는 green*/}
+          <Info title={"공개 여부"} content={"비밀글"} />
+          <Info title={"조회수"} content={"50000"} />
+        </div>
+        <div className={styles.contents}>
+          <Info title={"설명"} content={"설명임"} />
+        </div>
+        <div className={styles2.contents}>
+          <div className={styles2.fileTop}>
+            <h3 className={styles2.title}>첨부 파일</h3>
+            <label htmlFor="fileInput" className={`btn btn-primary ${styles2.fileBtn}`}>
+              <LuFilePlus2 size={20} />
+              {fileDescription && <span>{fileDescription}</span>}
+            </label>
+            <input type="file"
+              accept="*"
+              id="fileInput"
+              className={`form-control ${styles.imageInput}`}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+              multiple></input>
+          </div>
+          <div className={styles2.fileItem}>
+            <h3 style={{ fontSize: "1.25rem" }}>L 파일 이름</h3>
+            <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
+              <IoClose size={20} />
+            </button>
+          </div>
+        </div>
+        <div className={styles2.contents}>
+          <div className={styles2.fileTop}>
+            <h3 className={styles2.title}>댓글</h3>
+          </div>
+          <div className={styles2.commentList}>
+            <h3 className={styles2.comment}>댓글이여asdfasdfasdfadsfasdfasdfasdfdsfasdfadfadsfasdfasdfasdfdsfasdfadfadsfasdfasdfasdfdsfasdfadafas</h3>
+          </div>
+        </div>
+      </div>
+      <textarea
+        rows={1}
+        className="form-control"
+        placeholder="댓글을 입력하세요..."
+        style={{ overflowY: "hidden" }} // 세로 스크롤 제거
+      />
+      <div className={styles.bottom}>
+        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
+        <button className={`btn btn-primary ${styles.goBtn}`}>수정 하기</button>
+      </div>
+    </Modal>
   );
 };
 

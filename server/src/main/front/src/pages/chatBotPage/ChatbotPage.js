@@ -9,11 +9,11 @@ import React from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { BsSend } from "react-icons/bs";
 import { LuImagePlus } from "react-icons/lu";
+import LoadingPage from "../mainPage/LoadingPage";
 
 const ChatbotPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  console.log(location)
   const memberName = location.state.memberName
   const [studentId, setStudentId] = useState()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
@@ -26,6 +26,24 @@ const ChatbotPage = () => {
 
   // React 상태 관리를 위한 Hooks
   const [isSending, setIsSending] = useState(false);
+
+  const [fileDescription, setFileDescription] = useState('');
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    const fileCount = files.length;
+
+    if (fileCount === 1) {
+      // 파일이 하나만 선택된 경우, 파일 이름을 표시
+      setFileDescription(files[0].name);
+    } else if (fileCount > 1) {
+      // 여러 파일이 선택된 경우, "파일 n개" 형식으로 표시
+      setFileDescription(`이미지 ${fileCount}개`);
+    } else {
+      // 파일이 선택되지 않은 경우
+      setFileDescription('');
+    }
+  }
 
   const textareaRef = useRef(null);
   const chatBoardRef = useRef(null);
@@ -52,7 +70,7 @@ const ChatbotPage = () => {
   };
 
   const chatBoardScoll = () => {
-    const chatUl = document.querySelector('#chatBoard');
+    const chatUl = chatBoardRef.current;
     chatUl.scrollTop = chatUl.scrollHeight;
   }
 
@@ -88,10 +106,11 @@ const ChatbotPage = () => {
     }
   }
 
-  const keyUp = (e) => {
+  const keyUp = async (e) => {
     // 메시지 전송 중이 아니고, 엔터키가 눌렸으며, shift키가 눌리지 않았을 경우에만 sendMessage 함수를 호출
-    if (text.trim() !== "" && !isSending && e.key === "Enter" && !e.shiftKey) {
-      sendMessage()
+    if (text?.trim() !== "" && !isSending && e.key === "Enter" && !e.shiftKey) {
+      await sendMessage()
+      await fetchChatData()
     }
     handleResizeHeight()
   }
@@ -116,34 +135,74 @@ const ChatbotPage = () => {
       console.log(error)
     }
   }
+
+  // 이미지 파일을 Base64 문자열로 변환하는 함수
+  const convertImageFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(file);
+    });
+  }
+
   const sendMessage = async () => {
     setIsSending(true);
     setReadOnly(true);
 
-    const newChat = {
+    let chattings = {
       role: 'user',
       content: [{ text: text }],
     };
 
-    if (!Array.isArray(chats)) {
-      setChats([newChat]);
-    } else {
-      setChats([...chats, newChat]);
+    const imageInput = document.getElementById('imageInput');
+    if (imageInput.files) {
+      for (let i = 0; i < imageInput.files.length; i++) {
+        // 이미지 파일을 Base64 문자열로 변환
+        const imageBase64 = await convertImageFileToBase64(imageInput.files[i]);
+        // Base64 인코딩된 이미지 문자열을 채팅 객체에 추가
+        chattings = {
+          role: 'user',
+          content: [{ text: text, image: imageBase64 }],
+        };
+
+      }
     }
 
-    const userText = text;
-    setText('');
+    if (!Array.isArray(chats)) {
+      setChats([chattings]);
+    } else {
+      setChats([...chats, chattings]);
+    }
+
+
+    const userText = text
+    setText('')
+    // 파일이 선택되지 않은 경우
+    setFileDescription('')
+    handleResizeHeight()
 
     try {
       const formData = new FormData();
       formData.append('question', userText);
       formData.append('chat_id', chatId);
 
+      // 이미지 파일을 FormData에 추가
+      const imageInput = document.getElementById('imageInput');
+      if (imageInput.files) {
+        for (let i = 0; i < imageInput.files.length; i++) {
+          // 이미지 파일을 'image_0', 'image_1' 등의 키로 추가
+          formData.append(`image_${i}`, imageInput.files[i]);
+        }
+      }
+
       const response = await fetch("http://localhost:5000/chat", {
         method: 'POST',
         body: formData,
         credentials: 'include',
       });
+      // 성공적으로 파일을 전송한 후, 입력 필드 초기화
+      document.getElementById('imageInput').value = '';
 
       const reader = response.body.getReader();
       let completeMessage = ""; // 누적된 메시지를 저장하기 위한 변수
@@ -152,24 +211,23 @@ const ChatbotPage = () => {
         if (done) break;
 
         const text = new TextDecoder().decode(value);
-
         setChats((chats) => {
-          // chats 배열이 비어있지 않고 마지막 채팅의 role이 'assistant'인 경우
-          if (chats.length > 0 && chats[chats.length - 1].role === 'assistant') {
-            // 마지막 채팅의 텍스트에 새로운 텍스트 이어 붙임
+          // chats가 null이면 빈 배열로 처리
+          const currentChats = chats || [];
+
+          if (currentChats.length > 0 && currentChats[currentChats.length - 1].role === 'assistant') {
+            // 기존 로직
             const updatedChat = {
-              ...chats[chats.length - 1],
-              content: [{ text: chats[chats.length - 1].content[0].text + text }],
+              ...currentChats[currentChats.length - 1],
+              content: [{ text: currentChats[currentChats.length - 1].content[0].text + text }],
             };
-            // 마지막 채팅을 업데이트된 채팅으로 교체
-            return [...chats.slice(0, -1), updatedChat];
+            return [...currentChats.slice(0, -1), updatedChat];
           } else {
-            // 마지막 채팅의 role이 'assistant'가 아니면 새로운 채팅 객체 추가
             const newChat = {
               role: 'assistant',
               content: [{ text: text }],
             };
-            return [...chats, newChat];
+            return [...currentChats, newChat];
           }
         });
       }
@@ -260,9 +318,13 @@ const ChatbotPage = () => {
 
   const fetchDataAndChattings = async (selectedId) => { // 새로운 함수 추가
     const chatIdArray = await fetchChatData() // fetchChatData 호출 및 chatId 반환 대기
-    if (chatIdArray && chatIdArray.length > 0 && firstDo === true) { // chatId가 유효하고, 배열에 요소가 있는 경우에만 fetchChattings 호출
-      await fetchChattings(chatIdArray[0]); // fetchChattings 호출 및 첫 번째 chatId 전달
-    } else {
+    if (chatIdArray && chatIdArray.length > 0 && firstDo === true) {
+      // chatId가 유효하고, 배열에 요소가 있는 경우에만 fetchChattings 호출
+      await fetchChattings(chatIdArray[0]) // fetchChattings 호출 및 첫 번째 chatId 전달
+    } else if (chatIdArray.length === 0) {
+      console.log("채팅방을 생성해주세요")
+    }
+    else {
       fetchChattings(selectedId)
     }
   }
@@ -277,9 +339,11 @@ const ChatbotPage = () => {
     console.log(chatDtoList)
   }, [chatId]);
 
-  useEffect(() => {
-    chatBoardScoll()
-  }, [chats])
+  // useEffect(() => {
+  //   chatBoardScoll()
+  // }, [chats])
+
+  // if (!chats) return <LoadingPage />;
 
   return (
     <div className={`background`}>
@@ -303,22 +367,38 @@ const ChatbotPage = () => {
           <div className={styles.bottom} ref={bottomRef}>
             <div className={styles.bottomLeft}>
               <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`} ref={chatBoardRef}>
-                {chats?.map((chat, index) => (
-                  chat.role === 'user' ?
+                {chats?.map((chat, index) => {
+                  // chat.content가 존재하며, 그 길이가 0보다 큰지 확인
+                  const content = chat.content && chat.content.length > 0 ? chat.content[0] : null;
+
+                  return chat.role === 'user' ? (
                     <UserChatItem
                       key={index}
-                      text={chat.content[0].text}
+                      // content가 null이 아니면 해당 값을 사용, 그렇지 않으면 안전한 기본값 사용
+                      text={content ? content.text : ""}
+                      image={content ? content.image : null}
                       memberName={memberName}
-                    /> :
+                    />
+                  ) : (
                     <BotChatItem
                       key={index}
-                      text={chat.content[0].text}
+                      text={content ? content.text : ""}
                     />
-                ))}
+                  );
+                })}
               </div>
               <div className={styles.chat} ref={chatRef}>
                 <div className={styles.inputBtns}>
-                  <button type="button" className={`btn btn-primary ${styles.chatBtn}`}><LuImagePlus size={20} /></button>
+                  <label htmlFor="imageInput" className={`btn btn-primary ${styles.chatBtn} ${styles.imageInputBtn}`}>
+                    <LuImagePlus size={20} />
+                    {fileDescription && <span className={styles.fileDescription}>{fileDescription}</span>}
+                  </label>
+                  <input type="file"
+                    accept="image/*"
+                    id="imageInput"
+                    className={`form-control ${styles.imageInput}`}
+                    onChange={handleFileChange}
+                    multiple></input>
                   <div className={styles.textareaWrapper} ref={textareaWrapperRef}>
                     <textarea
                       ref={textareaRef}

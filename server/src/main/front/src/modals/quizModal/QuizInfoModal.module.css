@@ -1,0 +1,89 @@
+.modalContainer{
+  background-color: white;
+  width: 40%;
+  position: relative;
+  top: 10%;
+  left: 30%;
+  padding: var(--padding-28xl);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-21xl);
+  height: 80%;
+}
+
+.top{
+  display: flex;
+  justify-content: space-between;
+}
+
+.title{
+  font-size: var(--font-size-13xl);
+  font-weight: bold;
+}
+
+.gap{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-11xl);
+  flex-grow: 1;
+}
+
+.contents{
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom{
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-xl);
+}
+
+.closeBtn, .goBtn{
+  border: none !important;
+  font-size: var(--font-size-xl) !important;
+  font-weight: bold !important;
+  height: fit-content;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.closeBtn{
+  background-color: #aaa !important;
+}
+
+.closeBtn2{
+  padding: 5px !important;
+}
+
+.goBtn{
+  background-color: var(--point-blue) !important;
+}
+
+.box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: var(--font-size-xl);
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+.yellow{
+  background-color: var(--point-yellow);
+}
+
+.blue{
+  background-color: var(--point-blue);
+}
+
+.green{
+  background-color: var(--point-green);
+}
+
+.red{
+  background-color: var(--point-red);
+}

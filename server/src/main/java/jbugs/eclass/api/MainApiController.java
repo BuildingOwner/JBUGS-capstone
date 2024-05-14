@@ -2,16 +2,11 @@ package jbugs.eclass.api;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jbugs.eclass.domain.Assignment;
-import jbugs.eclass.domain.Enrollment;
-import jbugs.eclass.domain.Member;
-import jbugs.eclass.domain.MemberType;
-import jbugs.eclass.dto.AssignmentDto;
-import jbugs.eclass.dto.MainInfoDto;
-import jbugs.eclass.dto.MainLectureDto;
-import jbugs.eclass.dto.MemberInfoDto;
+import jbugs.eclass.domain.*;
+import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
-import jbugs.eclass.repository.MemberRepository;
+import jbugs.eclass.service.AssignmentService;
+import jbugs.eclass.service.QuizService;
 import jbugs.eclass.service.WeekService;
 import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @RestController
 @Slf4j
@@ -32,8 +26,9 @@ import java.util.stream.Collectors;
 public class MainApiController {
 
     private final EnrollmentRepository enrollmentRepository;
-    private final MemberRepository memberRepository;
     private final WeekService weekService;
+    private final QuizService quizService;
+    private final AssignmentService assignmentService;
 
     @GetMapping("/main")
     public ResponseEntity<?> getMainPageInfo(HttpServletRequest request) {
@@ -67,7 +62,7 @@ public class MainApiController {
         MainInfoDto mainInfoDto = new MainInfoDto();
         mainInfoDto.setMemberInfoDto(memberInfoDto);
 
-        List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(loginMember.getId());
+        List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(loginMember.getStudent().getId());
 
         List<MainLectureDto> lectureInfos = enrollments.stream().map(this::buildMainLectureDto).collect(Collectors.toList());
         mainInfoDto.setMainLectures(lectureInfos);
@@ -84,13 +79,12 @@ public class MainApiController {
         lectureInfo.setClassification(enrollment.getLecture().getClassification());
         lectureInfo.setLectureTime(enrollment.getLecture().getLectureTime());
 
-        List<Assignment> assignments = weekService.findValidAssignmentsByLectureId(enrollment.getLecture().getId());
-        List<AssignmentDto> assignmentDtos = assignments.stream()
-                .map(AssignmentDto::from)
-                .collect(Collectors.toList());
+        List<AssignmentDto> assignmentDtos = assignmentService.findAssignmentsByLecture(enrollment.getLecture().getId());
         lectureInfo.setAssignments(assignmentDtos);
+
+        List<QuizDto> quizDtos = quizService.findUnsubmittedQuizzesByLectureAndStudent(enrollment.getLecture().getId(), enrollment.getStudent().getId(), enrollment);
+        lectureInfo.setQuizDtoList(quizDtos);
 
         return lectureInfo;
     }
-
 }

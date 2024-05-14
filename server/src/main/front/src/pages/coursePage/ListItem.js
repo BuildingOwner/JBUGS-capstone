@@ -10,13 +10,16 @@ const ListItem = (props) => {
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  function openModal() {
+  const openModal = () => {
+    console.log('modal open')
     setModalIsOpen(true);
   }
 
-  function closeModal() {
-    console.log("닫혀야함")
-    setModalIsOpen(false);
+  const closeModal = (event) => {
+    console.log("modal close")
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
   }
 
   const checkURL = () => {
@@ -61,9 +64,6 @@ const ListItem = (props) => {
 
       setFileExtension(extension[last])
     }
-    // if(modalOpen == true) {
-    //   changeModal(false)
-    // }
   }, []);
 
   return (
@@ -103,7 +103,6 @@ const ListItem = (props) => {
           {props.url === 'video' && (
             <h3 className={`${styles.fontSize} ${styles.blue}`}>length</h3>
           )}
-
         </div>
         <div className={styles.second}>
           {props.url === 'assignmentlist' && (
@@ -120,9 +119,9 @@ const ListItem = (props) => {
           )}
         </div>
         <div className={styles.third}>
-          <div className="prograss-bar"></div>
-          <h3 className={styles.fontSize}>{props.contents}</h3>
-
+          {props.url === 'video' ?
+            <div className="prograss-bar"></div> :
+            <h3 className={styles.fontSize}>{props.contents}</h3>}
         </div>
       </div>
       <div className={styles.fourth}>

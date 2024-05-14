@@ -6,7 +6,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import LoginPage from "./pages/loginPage/LoginPage";
-import AssignmentInfoModal from "./modals//assignModal/AssignmentInfoModal";
 import Main from "./pages/mainPage/Main";
 import Course from "./pages/coursePage/Course";
 import QaList from "./pages/qaPage/QaList";
@@ -17,18 +16,18 @@ import QuizAnswer from "./pages/quizPage/quizAnswer/QuizAnswer";
 import QuizList from "./pages/quizPage/quizList/QuizList";
 import FileUploadModal from "./modals/profModal/uploadModal/FileUploadModal";
 import QuizInfoModal from "./modals/quizModal/QuizInfoModal";
-import ProfEditQuizModal from "./modals/profModal/profQuizModal/ProfEditQuizModal";
 import AssignmentModal from "./modals//assignModal/AssignmentModal";
-import ProfAssignmentModal from "./modals/profModal/profAssignModal/ProfAssignmentModal";
 import QaModal from "./modals/qaModal/QaModal";
 import MakeQaModal from "./modals/qaModal/MakeQaModal";
 import NoticeModal from "./modals/noticeModal/NoticeModal";
 import MakeAssignmentModal from "./modals/profModal/profAssignModal/MakeAssignmentModal";
 import AssignmentList from "./pages/assignmentPage/AssignmentList";
-import ProfStudentQuizInfo from "./pages/profPage/profQuizPage/info/ProfStudentQuizInfo";
-import ProfStudentAssignInfo from "./pages/profPage/profAssignPage/info/ProfStudentAssignInfo";
-import ProfStudentQuizScore from "./pages/profPage/profQuizPage/score/ProfStudentQuizScore";
-import ProfStudentAssignScore from "./pages/profPage/profAssignPage/score/ProfStudentAssignScore";
+// import ProfEditQuizModal from "./modals/profModal/profQuizModal/ProfEditQuizModal";
+// import ProfAssignmentModal from "./modals/profModal/profAssignModal/ProfAssignmentModal";
+// import ProfStudentQuizInfo from "./pages/profPage/profQuizPage/info/ProfStudentQuizInfo";
+// import ProfStudentAssignInfo from "./pages/profPage/profAssignPage/info/ProfStudentAssignInfo";
+// import ProfStudentQuizScore from "./pages/profPage/profQuizPage/score/ProfStudentQuizScore";
+// import ProfStudentAssignScore from "./pages/profPage/profAssignPage/score/ProfStudentAssignScore";
 
 function App() {
   const action = useNavigationType();
@@ -161,7 +160,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />
-      <Route path="/assignmentinfomodal" element={<AssignmentInfoModal />} />
+      {/* <Route path="/assignmentinfomodal" element={<AssignmentInfoModal />} /> */}
       <Route path="/main" element={<Main />} />
       <Route path="/course" element={<Course />} />
       <Route path="/qalist" element={<QaList />} />
@@ -172,14 +171,14 @@ function App() {
       <Route path="/quizlist" element={<QuizList />} />
       <Route path="/fileuploadmodal" element={<FileUploadModal />} />
       <Route path="/quizinfomodal" element={<QuizInfoModal />} />
-      <Route path="/profeditquizmodal" element={<ProfEditQuizModal />} />
       <Route path="/assignmentmodal" element={<AssignmentModal />} />
-      <Route path="/profassignmentmodal" element={<ProfAssignmentModal />} />
       <Route path="/qamodal" element={<QaModal />} />
       <Route path="/makeqamodal" element={<MakeQaModal />} />
       <Route path="/noticemodal" element={<NoticeModal />} />
-      <Route path="/makeassignmentmodal" element={<MakeAssignmentModal />} />
       <Route path="/assignmentlist" element={<AssignmentList />} />
+      <Route path="/makeassignmentmodal" element={<MakeAssignmentModal />} />
+      {/* <Route path="/profeditquizmodal" element={<ProfEditQuizModal />} />
+      <Route path="/profassignmentmodal" element={<ProfAssignmentModal />} />
       <Route path="/profstudentquizinfo" element={<ProfStudentQuizInfo />} />
       <Route
         path="/profstudentassigninfo"
@@ -189,7 +188,7 @@ function App() {
       <Route
         path="/profstudentassignscore"
         element={<ProfStudentAssignScore />}
-      />
+      /> */}
     </Routes>
   );
 }

@@ -16,20 +16,22 @@ import { useNavigate } from "react-router-dom"
 
 function CollepsedSidebar(props) {
   const enrollmentId = props.enrollmentId
-  const navigate = useNavigate()
+  const memberName = props.memberInfoDto?.memberName;
 
-  const handleLogout = () => {
-    axios.post('/logout', null, { withCredentials: true }) // withCredentials를 설정하여 쿠키를 서버로 전송합니다.
+  const navigate = useNavigate()
+  console.log(enrollmentId)
+  const handleLogout = async () => {
+    await axios.post('/logout', null, { withCredentials: true }) // withCredentials를 설정하여 쿠키를 서버로 전송합니다.
       .then(response => {
         // 로그아웃 성공 시 처리
         console.log("로그아웃 성공");
-        
+
       })
       .catch(error => {
         // 오류 처리
         console.error("로그아웃 실패", error);
       });
-      navigate("/");
+    navigate("/");
   }
 
   return (
@@ -50,7 +52,7 @@ function CollepsedSidebar(props) {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"} className={styles.linkBtn}>
+            <Link to={"/chatbotpage"} state={{ memberName: memberName }} className={styles.linkBtn}>
               <IoChatbubbleEllipsesOutline size="25" />
             </Link>
           </button>
@@ -62,22 +64,22 @@ function CollepsedSidebar(props) {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/qalist"} className={styles.linkBtn}>
+            <Link to={"/qalist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
               <FaQuestion size="25" />
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/noticelist"} className={styles.linkBtn}>
+            <Link to={"/noticelist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
               <TbSpeakerphone size="25" />
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/assignmentlist"} className={styles.linkBtn}>
+            <Link to={"/assignmentlist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
               <LuClipboardList size="25" />
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/quizlist"} className={styles.linkBtn}>
+            <Link to={"/quizlist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
               <MdOutlineQuiz size="25" />
             </Link>
           </button>
@@ -87,7 +89,7 @@ function CollepsedSidebar(props) {
         <div className={`${styles.userInfo} ${styles3.userInfo}`}>
           <div className={styles.user}>
             <h3 className={styles.userName}>{props.memberInfoDto?.memberName}</h3>
-            <h3 className={styles.userTrack}>{props.memberInfoDto?.firstTrack}</h3>
+            <h3 className={`${styles.userTrack} ${styles3.userTrack}`}>{props.memberInfoDto?.firstTrack}</h3>
           </div>
           <div className={styles.userImage}>
             <FaUser size={30} />

@@ -57,16 +57,14 @@ public class QuizListApiController {
 
             //enrollmentId에 해당하는 각 주차id가져오기
             Lecture lectureId = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
+            List<Week> weeks = weekService.findWeeksByLectureId(lectureId.getId());
 
-            List<Quiz> quizzes = weekService.findQuizByLectureId(enrollment.getLecture().getId());
+            // 모든 퀴즈를 주차 정보와 함께 단일 리스트로 반환
+            List<QuizDto> allQuizDtoList = weeks.stream()
+                    .flatMap(week -> quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment).stream())
+                    .collect(Collectors.toList());
 
-            // 퀴즈 목록을 QuizDto로 변환
-            List<QuizDto> quizDtos = quizzes.stream().map(quiz -> {
-                QuizInfo quizInfo = quizService.findQuizInfoByQuizId(quiz.getId()); // QuizService를 사용하여 QuizInfo 조회
-                return QuizDto.from(quiz, quizInfo); // QuizInfo를 포함하여 QuizDto 생성
-            }).collect(Collectors.toList());
-
-            quizContentDto.setQuizDtoList(quizDtos);
+            quizContentDto.setAllQuizDtoList(allQuizDtoList);
 
             return ResponseEntity.ok(quizContentDto);
         }

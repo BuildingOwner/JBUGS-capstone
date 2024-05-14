@@ -245,12 +245,14 @@ button:hover{
 .background{
   display: flex;
   background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
+  min-width: 1340px;
 }
 
 .mycontainer{
   flex-grow: 1;
   padding: 20px;
   padding-left: 0;
+  min-width: 1000px;
 }
 
 .bg{

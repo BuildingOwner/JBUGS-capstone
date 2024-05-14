@@ -2,8 +2,8 @@ package jbugs.eclass.service;
 
 import jbugs.eclass.domain.Assignment;
 import jbugs.eclass.domain.Material;
+import jbugs.eclass.dto.FileDto;
 import jbugs.eclass.repository.MaterialRepository;
-import jbugs.eclass.repository.VideoMaterialRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -64,4 +65,36 @@ public class MaterialService {
         materialRepository.deleteAll(materials);
     }
 
+    public List<FileDto> findMaterialsByWeekIdAndLectureId(Long weekId, Long lectureId) {
+        List<Material> materials = materialRepository.findMaterialsByWeekIdAndLectureId(weekId, lectureId);
+
+        List<FileDto> fileDtos = materials.stream().map(material -> {
+            FileDto dto = new FileDto();
+            dto.setFileId(material.getId());
+            dto.setTitle(material.getTitle());
+            dto.setFileName(material.getFileName());
+            dto.setFilePath(material.getFilePath());
+
+            return dto;
+        }).collect(Collectors.toList());
+
+        return fileDtos;
+    }
+
+    public List<FileDto> findMaterialsByLecture(Long lectureId) {
+        List<Material> materials = materialRepository.findByLectureId(lectureId);
+
+        List<FileDto> fileDtoList = materials.stream()
+                .map(material -> {
+                    FileDto dto = new FileDto();
+                    dto.setFileId(material.getId());
+                    dto.setTitle(material.getTitle());
+                    dto.setFileName(material.getFileName());
+                    dto.setFilePath(material.getFilePath());
+//                    dto.setWeekNumber(material.getWeek().getWeekNumber());
+
+                    return dto;
+                }).collect(Collectors.toList());
+        return fileDtoList;
+    }
 }

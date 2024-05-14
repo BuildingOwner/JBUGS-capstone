@@ -1,7 +1,21 @@
 import styles from "./QuizListItem.module.css"
 import { useState, useEffect } from "react"
+import QuizInfoModal from "../../../modals/quizModal/QuizInfoModal"
 const QuizListItem = (props) => {
   const [formattedDate, setFormattedDate] = useState()
+  console.log(" listitem",props)
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  }
+
+  const closeModal = (event) => {
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
+  }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -22,7 +36,11 @@ const QuizListItem = (props) => {
   }, [])
   return (
     <div className={styles.quizListItem}>
-      <div className={`${styles.idSubmitBox} ${props.quizScore != undefined ? styles.done : styles.yet}`}>
+      <QuizInfoModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props} />
+      <div className={`${styles.idSubmitBox} ${props.submissionStatus != 0 ? styles.done : styles.yet}`}>
         {props.submissionStatus === true ?
           <h3 className={styles.idSubmitText}>응시 완료</h3>
           : <h3 className={styles.idSubmitText}>미응시</h3>}
@@ -35,9 +53,11 @@ const QuizListItem = (props) => {
       <h3 className={styles.text}>{props.timeLimit}</h3>
       <h3 className={styles.text}>{props.quizScore}</h3>
       <h3 className={styles.deadline}>{formattedDate}</h3>
-      <button className={`btn btn-primary ${styles.feedbackBtn}`}>
-        <h3 className={styles.feedbackText}>피드백 보기</h3>
-      </button>
+      {props.submissionStatus != 0 ?
+        <button className={`btn btn-primary ${styles.feedbackBtn}`} onClick={openModal}>
+          <h3 className={styles.feedbackText}>피드백 보기</h3>
+        </button> : <h3 style={{ minWidth: "125px", textAlign: "center" }}>-</h3>
+      }
     </div>
   )
 }

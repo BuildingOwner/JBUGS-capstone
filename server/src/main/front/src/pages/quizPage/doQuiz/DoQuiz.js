@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
 import axios from "axios";
+import LoadingPage from "../../mainPage/LoadingPage";
 
 const DoQuiz = (props) => {
   const navigate = useNavigate()
   const data = useLocation().state.props // 이곳에서 사용될 데이터
+  console.log("data", data)
   const enrollmentId = data.enrollmentId
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
   const [memberInfoDto, setMemberInfoDto] = useState()
@@ -77,10 +79,18 @@ const DoQuiz = (props) => {
       }
       console.log("보내는 객체 : ", dataToSend)
       // axios를 사용하여 서버로 데이터 전송
-      const response = await axios.post("/api/answers", dataToSend)
+      const response = await axios.post(`/api/answers/${quizId}`, dataToSend, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       console.log("response answer : ", response)
     } catch (error) {
-      console.error("Quiz 제출 중 에러 발생:", error)
+      console.error("Quiz 제출 중 에러 발생:", error);
+      if (error.response) {
+        // 서버로부터의 응답이 에러에 포함되어 있는 경우
+        console.error("Server response:", error.response);
+      }
     }
     navigate("/quizlist", { state: { enrollmentId: enrollmentId } })
   }
@@ -102,10 +112,11 @@ const DoQuiz = (props) => {
 
     // 최종 점수 계산 및 출력
     const finalScore = 100.00 / questions.length * scoreCount
+    const finalScoreInt = Math.round(finalScore);
+    console.log("점수 : ", finalScoreInt)
+    setScore(finalScoreInt)
 
-    console.log("점수 : ", finalScore)
-    setScore(finalScore)
-    return finalScore
+    return finalScoreInt
   }
 
   function shuffleArray(array) {
@@ -160,6 +171,8 @@ const DoQuiz = (props) => {
     fetchQuiz()
   }, [])
 
+  if (!questions) return <LoadingPage />;
+
   return (
     <div className={`background`}>
       <Sidebar enrollmentId={data.enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
@@ -169,7 +182,7 @@ const DoQuiz = (props) => {
             <div className={styles.quizInfo}>
               <h3 className={styles.fontSize5xl}>{data.quizName}</h3>
               <div className={styles.quizInfoRight}>
-                <h3 className={styles.fontSize5xl}>{data.courseDto.lectureName}</h3>
+                <h3 className={styles.fontSize5xl}>{data?.courseDto.lectureName}</h3>
                 <h3 className={styles.fontSize5xl}>{division}</h3>
                 <button type="button"
                   onClick={backToPreviousPage}

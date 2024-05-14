@@ -16,4 +16,12 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     List<Material> findByWeekIds(@Param("weekIds") List<Long> weekIds);
 
     List<Material> findByAssignment(Assignment assignment);
+
+//    @Query("SELECT m FROM Material m WHERE m.week.id = :weekId AND m.lecture.id = :lectureId")
+    List<Material> findByWeekIdAndLectureId(Long weekId, Long lectureId);
+
+    @Query("SELECT m FROM Material m WHERE m.week.id = :weekId AND m.lecture.id = :lectureId")
+    List<Material> findMaterialsByWeekIdAndLectureId(Long weekId, Long lectureId);
+
+    List<Material> findByLectureId(Long lectureId);
 }

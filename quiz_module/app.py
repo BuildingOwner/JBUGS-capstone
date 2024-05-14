@@ -30,6 +30,7 @@ CORS(app, supports_credentials=True)  # CORS를 활성화하고 credentials를 �
 @app.route("/add-quiz-keyword", methods=["POST"])
 def add_quiz_keyword():
     lecture = request.form.get("lecture")
+    lecture_id = request.form.get("lectureId")
     week = request.form.get("week")
     path = request.form.get("path")
     choice = request.form.get("choice")
@@ -57,6 +58,7 @@ def add_quiz_keyword():
 
     print(f"[{current_file_name}] #add-quiz-keyword")
     print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] lecture id: {lecture_id}")
     print(f"[{current_file_name}] week: {week}")
     print(f"[{current_file_name}] path: {path}")
     print(f"[{current_file_name}] choice: {choice}")
@@ -79,8 +81,8 @@ def add_quiz_keyword():
 
     db = getConnection()
     cursor = db.cursor()
-    sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    val = ("1", now, formatted_date, now, week, title, time_limit, description, question)
+    sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data, lecture_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    val = ("1", now, formatted_date, now, week, title, time_limit, description, question, lecture_id)
     cursor.execute(sql, val)
 
     db.commit()
@@ -91,6 +93,7 @@ def add_quiz_keyword():
 @app.route("/add-quiz-summary", methods=["POST"])
 def add_quiz_summary():
     lecture = request.form.get("lecture")
+    lecture_id = request.form.get("lectureId")
     week = request.form.get("week")
     path = request.form.get("path")
     choice = request.form.get("choice")
@@ -118,6 +121,7 @@ def add_quiz_summary():
 
     print(f"[{current_file_name}] #add-quiz-keyword")
     print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] lecture id: {lecture_id}")
     print(f"[{current_file_name}] week: {week}")
     print(f"[{current_file_name}] path: {path}")
     print(f"[{current_file_name}] choice: {choice}")
@@ -140,8 +144,8 @@ def add_quiz_summary():
 
     db = getConnection()
     cursor = db.cursor()
-    sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    val = ("2", now, formatted_date, now, week, title, time_limit, description, question)
+    sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data, lecture_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    val = ("1", now, formatted_date, now, week, title, time_limit, description, question, lecture_id)
     cursor.execute(sql, val)
 
     db.commit()
@@ -172,7 +176,7 @@ def get_quiz(question_id):
         db.close()
 
 
-@app.route("/get-explane", methods=["GET"])
+@app.route("/get-explane", methods=["post"])
 def get_explane():
     print(f"[{current_file_name}] #get-explane\n")
     question = request.form.get("question")
@@ -198,7 +202,7 @@ def regenerateChat():
         return Response(stream_with_context(generate()))
     return jsonify({'message': 'Failed to upload file'})
 
-@app.route("/related-quiz", methods=["GET"])
+@app.route("/related-quiz", methods=["post"])
 def get_related_quiz():
     question = request.form.get("question")
     print(f"[{current_file_name}] #related-quiz quiz: {question}\n")

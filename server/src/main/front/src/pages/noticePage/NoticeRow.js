@@ -1,10 +1,23 @@
 import styles from "./NoticeRow.module.css"
 import { useState, useEffect } from "react";
 import { BsPinFill } from "react-icons/bs";
-
+import NoticeModal from "../../modals/noticeModal/NoticeModal"
 const QnaRow = (props) => {
   const [formattedDate, setFormattedDate] = useState()
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  const openModal = () => {
+    console.log("open")
+    setModalIsOpen(true)
+  }
+
+  const closeModal = (event) => {
+    console.log("close")
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
+  }
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
@@ -23,8 +36,12 @@ const QnaRow = (props) => {
     setFormattedDate(data)
   }, [])
   return (
-    <div className={styles.row}>
-      <h4 className={styles.num}>1</h4> {/*여기 날짜 순으로 번호 매겨놔 */}
+    <div className={styles.row} onClick={openModal}>
+      <NoticeModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props} />
+      <h4 className={styles.num}>{props.noticeNumber}</h4>
       {props.noticeStatus === "EXAM" ?
         <div className={`${styles.category} ${styles.exam}`}>
           <h4>시험</h4>
@@ -39,7 +56,7 @@ const QnaRow = (props) => {
 
       }
       <div className={styles.secret}>
-      <BsPinFill size={20}/>
+        <BsPinFill size={20} />
       </div>
       <h4 className={styles.title}>{props.title}</h4>
       <h4 className={styles.writer}>{props.writer}</h4>

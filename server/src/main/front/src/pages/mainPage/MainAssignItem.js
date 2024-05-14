@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./MainAssignItem.css"
-
+import { useState } from "react";
 const MainAssignItem = (props) => {
   const navigate = useNavigate()
   console.log("MainAssignItem의 props", props)
@@ -13,13 +13,21 @@ const MainAssignItem = (props) => {
   // 남은 일수를 계산합니다
   const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-  const moveToAssingList = () => {
-    navigate("/assignmentlist",
-      { state: props })
+  const moveToPage = () => {
+    if (props.url === "quiz") {
+      navigate("/quizList", {
+        state: props
+      })
+    } else {
+      navigate("/assignmentlist", {
+        state: props
+      })
+    }
+
   }
 
   return (
-    <div className="homeworkitem" onClick={moveToAssingList}>
+    <div className="homeworkitem" onClick={moveToPage}>
       <div className="week">
         <div className="div162">{props.weekNumber}주차</div>
       </div>

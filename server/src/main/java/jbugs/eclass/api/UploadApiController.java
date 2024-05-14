@@ -44,29 +44,37 @@ public class UploadApiController {
     }
 
     @PostMapping("/{enrollmentId}/upload")
-    public ResponseEntity<?> uploadFile(@ModelAttribute UploadDto uploadDto,
+    public ResponseEntity<?> uploadFile(@RequestParam("fileTitle") String fileTitle,
+                                        @RequestParam("videoTitle") String videoTitle,
+                                        @RequestParam("weekNumber") int weekNumber,
+                                        @RequestParam("attachFiles") MultipartFile[] attachFiles,
+                                        @RequestParam("videoFiles") MultipartFile[] videoFiles,
+                                        @RequestParam("shortAnswer") String shortAnswer,
+                                        @RequestParam("choice") String choice,
+                                        @RequestParam("description") String description,
+                                        @RequestParam("quizType") String quizType,
                                         @PathVariable Long enrollmentId, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession(false); // 기존 세션 가져오기
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         Lecture lecture = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
-        Optional<Week> weekEntityOptional = weekService.findWeekByLectureAndWeekNumber(lecture.getId(), uploadDto.getWeekNumber());
+        Optional<Week> weekEntityOptional = weekService.findWeekByLectureAndWeekNumber(lecture.getId(), weekNumber);
         List<String> uploadedFilePaths = new ArrayList<>();
         if (weekEntityOptional.isPresent()) {
             Week weekEntity = weekEntityOptional.get();
 
             // 파일 업로드 처리
-            if (uploadDto.getAttachFiles() != null && uploadDto.getAttachFiles().length > 0) {
-                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(uploadDto.getAttachFiles()), weekEntity.getId(), false, uploadDto.getFileTitle(), lecture));
+            if (attachFiles != null && attachFiles.length > 0) {
+                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(attachFiles), weekEntity.getId(), false, fileTitle, lecture));
             }
 
             // 비디오 업로드 처리 후 경로(들) 반환
-            if (uploadDto.getVideoFiles() != null && uploadDto.getVideoFiles().length > 0) {
-                uploadFiles(Arrays.asList(uploadDto.getVideoFiles()), weekEntity.getId(), true, uploadDto.getVideoTitle(), lecture);
+            if (videoFiles != null && videoFiles.length > 0) {
+                uploadFiles(Arrays.asList(videoFiles), weekEntity.getId(), true, videoTitle, lecture);
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
             for (String filePath : uploadedFilePaths) {
-                sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer(), uploadDto.getDescription(), uploadDto.getQuizType());
+                sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
             }
 
             // 성공적으로 파일이 저장된 경우

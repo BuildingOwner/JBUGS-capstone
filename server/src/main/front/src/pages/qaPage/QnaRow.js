@@ -35,7 +35,9 @@ const QnaRow = (props) => {
     setFormattedDate(data)
   }, [])
   return (
-    <div className={styles.row} onClick={openModal}>
+    <div className={styles.row}
+    // secret이 true인 경우에는 작성자와 현재 멤버 이름을 비교후 같으면 onClick 활성화
+      onClick={props.secret ? (props.writer === props.memberName ? openModal : null) : openModal}>
       <QaModal isOpen={modalIsOpen}
         onRequestClose={closeModal}
         props={props} />
@@ -48,7 +50,7 @@ const QnaRow = (props) => {
           <h4>답변 예정</h4>
         </div>}
       <div className={styles.secret}>
-        {props.secret === true ? <FiLock size={20} />: null}
+        {props.secret === true ? <FiLock size={20} /> : null}
       </div>
       <h4 className={styles.title}>{props.title}</h4>
       <h4 className={styles.writer}>{props.writer}</h4>

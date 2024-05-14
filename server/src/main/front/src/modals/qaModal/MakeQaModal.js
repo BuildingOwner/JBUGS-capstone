@@ -17,9 +17,8 @@ const MakeQaModal = (props) => {
   const [memberInfoDto, setMemberInfoDto] = useState({})
   const [memberName, setMemberName] = useState("")
   const [secret, setSecret] = useState(true)
-  const [attachFiles, setAttachFiles] = useState(null)
+  const [attachFiles, setAttachFiles] = useState("")
   const [fileDescription, setFileDescription] = useState('');
-
   const [title, setTitle] = useState("")
 
   const handleFileChange = (e) => {
@@ -62,6 +61,8 @@ const MakeQaModal = (props) => {
     } catch (error) {
       console.log(error)
     }
+    props.reRender()
+    props.onRequestClose(null)
   }
 
   useEffect(() => {

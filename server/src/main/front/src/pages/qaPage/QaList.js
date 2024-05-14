@@ -14,6 +14,7 @@ const QaList = () => {
   console.log("qa location : ", location)
   const enrollmentId = location.state.enrollmentId
   const [memberInfoDto, setMemberInfoDto] = useState()
+  const [memberName, setMemberName] = useState("")
   const [lectureName, setLectureName] = useState()
   const [division, setDivision] = useState()
   const [qnADtoList, setQnADtoList] = useState()
@@ -21,7 +22,8 @@ const QaList = () => {
   const [qaFilter, setQaFilter] = useState("ALL")
   const [searchFilter, setSearchFilter] = useState("title")
   const [keyword, setKeyword] = useState("")
-
+  // reRender를 위한 상태
+  const [reRenderFlag, setReRenderFlag] = useState(false);
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
@@ -30,9 +32,10 @@ const QaList = () => {
   }
 
   const closeModal = (event) => {
-    setModalIsOpen(false)
-    // 이벤트 버블링을 막음
-    event.stopPropagation()
+    if (event) {
+      event.stopPropagation();
+    }
+    setModalIsOpen(false);
   }
   const changeKeyword = (e) => {
     setKeyword(e.target.value)
@@ -56,6 +59,10 @@ const QaList = () => {
     return new Date(a.createdAt) - new Date(b.createdAt)
   })
 
+  const reRender = () => {
+    setReRenderFlag(prevFlag => !prevFlag)
+  }
+
   const fetchQaList = async () => {
     try {
       const response = await axios.get(`/api/course/${enrollmentId}/qna`, {
@@ -69,6 +76,7 @@ const QaList = () => {
 
       setLectureName(lectureName1)
       setDivision(division1)
+      setMemberName(response.data.memberInfoDto.memberName)
       setMemberInfoDto(response.data.memberInfoDto)
       setQnADtoList(qnADtoList)
     } catch (error) {
@@ -77,8 +85,8 @@ const QaList = () => {
   }
 
   useEffect(() => {
-    fetchQaList()
-  }, [])
+    fetchQaList();
+  }, [reRenderFlag])
 
   if (!memberInfoDto) return <LoadingPage />;
 
@@ -89,6 +97,7 @@ const QaList = () => {
         onRequestClose={closeModal}
         memberInfoDto={memberInfoDto}
         enrollmentId={enrollmentId}
+        reRender={reRender}
       />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
@@ -163,6 +172,7 @@ const QaList = () => {
                       writer={qna.writer}
                       content={qna.content}
                       secret={qna.secret}
+                      memberName={memberName}
                     />
                   )) : <NoItem title={"등록된 질문이"} />}
             </div>

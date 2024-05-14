@@ -7,5 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class QnACreationDto {
     private String title;
     private String description; // QnA 설명
-    private MultipartFile[] attachFiles; // 첨부 파일
+    private boolean secret;
+    private MultipartFile[] attachFiles = new MultipartFile[0]; // 첨부 파일
 }

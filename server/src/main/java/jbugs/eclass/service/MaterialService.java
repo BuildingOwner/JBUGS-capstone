@@ -74,6 +74,7 @@ public class MaterialService {
             dto.setTitle(material.getTitle());
             dto.setFileName(material.getFileName());
             dto.setFilePath(material.getFilePath());
+            dto.setFileSize(material.getFileSize());
 
             return dto;
         }).collect(Collectors.toList());
@@ -91,6 +92,7 @@ public class MaterialService {
                     dto.setTitle(material.getTitle());
                     dto.setFileName(material.getFileName());
                     dto.setFilePath(material.getFilePath());
+                    dto.setFileSize(material.getFileSize());
 //                    dto.setWeekNumber(material.getWeek().getWeekNumber());
 
                     return dto;

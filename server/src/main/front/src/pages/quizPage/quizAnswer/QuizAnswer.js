@@ -149,7 +149,6 @@ const QuizAnswer = () => {
 
       setAnswer(answer)
       setQuestions(questionData)
-      console.log(explanes)
 
       console.log("questionData : ", questionData)
       console.log("userAnswer : ", answer)
@@ -230,10 +229,14 @@ const QuizAnswer = () => {
                         })
                       )
                       :
-                      (<textarea
+                      (<>
+                      <textarea
                         value={answer[questions[indexOfOptions]?.id] || ''}
                         readOnly
-                      ></textarea>)
+                        className={`${questions[indexOfOptions]?.answer === answer[indexOfOptions] ? styles.correct : styles.wrong}`}
+                      ></textarea>
+                      <h4>정답 : {answer[indexOfOptions]}</h4>
+                      </>)
                   }
                 </div>
                 <div className={styles.answerContainer}>
@@ -261,7 +264,7 @@ const QuizAnswer = () => {
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {
                 return (
-                  <div className={`${styles.quizNavBtn}`} onClick={() => changeQuestion(i)}>
+                  <div className={`${styles.quizNavBtn} ${questions[indexOfOptions].answer === answer[indexOfOptions] ? styles.correct : styles.wrong}`} onClick={() => changeQuestion(i)}>
                     <h3>{i + 1}</h3>
                   </div>
                 )

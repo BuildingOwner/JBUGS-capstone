@@ -231,7 +231,7 @@ const DoQuiz = (props) => {
                     onClick={minusIndex}>이전 문제</button>
                   {indexOfOptions === questions.length - 1 ?
                     <button type="button"
-                      className={`btn btn-primary ${styles.featureBtn}`}
+                      className={`btn btn-primary ${styles.featureBtn} ${styles.done}`}
                       onClick={submitQuiz}>퀴즈 제출</button>
                     : <button type="button"
                       className={`btn btn-primary ${styles.featureBtn}`}

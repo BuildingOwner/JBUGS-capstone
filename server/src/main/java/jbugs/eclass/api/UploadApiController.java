@@ -151,11 +151,11 @@ public class UploadApiController {
 
         String url;
         if ("EXERCISE".equals(quizType)) {
-            url = "43.200.202.59:5000/add-quiz-keyword";
+            url = "http://43.200.202.59:5000/aimodule/add-quiz-keyword";
         } else if ("PRACTICE".equals(quizType)) {
-            url = "43.200.202.59:5000/add-quiz-summary";
+            url = "http://43.200.202.59:5000/aimodule/add-quiz-summary";
         } else {
-            url = "43.200.202.59:5000/add-quiz-keyword";
+            url = "http://43.200.202.59:5000/aimodule/add-quiz-keyword";
         }
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);

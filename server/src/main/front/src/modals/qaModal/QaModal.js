@@ -10,7 +10,7 @@ import { IoClose } from "react-icons/io5";
 const QaModal = (props) => {
   Modal.setAppElement("#root")
   const [fileDescription, setFileDescription] = useState('');
-
+  const data = props.props
   const handleFileChange = (event) => {
     const files = event.target.files;
     const fileCount = files.length;
@@ -37,8 +37,9 @@ const QaModal = (props) => {
   }, []);
 
   useEffect(() => {
-
+    console.log(props)
   }, [])
+  
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -54,21 +55,39 @@ const QaModal = (props) => {
       isOpen={props.isOpen}
       onRequestClose={props.onRequestClose}>
       <div className={styles.top}>
-        <h3 className={styles.title}>공지 제목</h3>
+        <h3 className={styles.title}>{data.title}</h3>
         <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={props.onRequestClose}><IoClose /></button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
-          <Info title={"작성자"} content={"주종찬"} />
-          <Info title={"작성일"} content={"2024-10-10"} />
+          <Info title={"작성자"} content={data.writer} />
+          <Info title={"작성일"} content={data.createdAt} />
         </div>
         <div className={styles.contents}>
-          <Info title={"답변 여부"} content={<h3 className={`${styles.box} ${styles.green}`}>답변 완료</h3>} /> {/*답변예정은 yellow, 답변완료는 green*/}
-          <Info title={"공개 여부"} content={"비밀글"} />
-          <Info title={"조회수"} content={"50000"} />
+          {/*답변예정은 yellow, 답변완료는 green*/}
+          {
+            data.qnAStatus === "RESPONSE_EXPECTED" ?
+              <Info title={"답변 여부"}
+                content={
+                  <h3 className={`${styles.box} ${styles.yellow}`}>
+                    답변 예정
+                  </h3>} />
+              : <Info title={"답변 여부"}
+                content={
+                  <h3 className={`${styles.box} ${styles.green}`}>
+                    답변 완료
+                  </h3>} />
+          }
+          {/* 비밀글 받고 출력 */}
+          {
+            data.secret === true ? <Info title={"공개 여부"} content={"비밀글"} />
+              : <Info title={"공개 여부"} content={"공개글"} />
+          }
+
+          <Info title={"조회수"} content={data.views} />
         </div>
         <div className={styles.contents}>
-          <Info title={"설명"} content={"설명임"} />
+          <Info title={"설명"} content={data.content} />
         </div>
         <div className={styles2.contents}>
           <div className={styles2.fileTop}>
@@ -106,6 +125,7 @@ const QaModal = (props) => {
         className="form-control"
         placeholder="댓글을 입력하세요..."
         style={{ overflowY: "hidden" }} // 세로 스크롤 제거
+        onClick={onAnswerClick}
       />
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>

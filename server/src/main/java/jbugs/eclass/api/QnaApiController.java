@@ -48,6 +48,7 @@ public class QnaApiController {
             MemberInfoDto memberInfoDto = new MemberInfoDto();
             memberInfoDto.setMemberId(loginMember.getId());
             memberInfoDto.setMemberName(loginMember.getName());
+            memberInfoDto.setMemberType(loginMember.getMemberType());
             if (loginMember.getMemberType() == MemberType.STUDENT) {
                 memberInfoDto.setFirstTrack(loginMember.getStudent().getFirstTrack());
                 memberInfoDto.setStudentId(loginMember.getStudent().getId());
@@ -95,6 +96,7 @@ public class QnaApiController {
             qna.setWriter(loginMember.getName());
             qna.setQnaStatus(QnAStatus.RESPONSE_EXPECTED);
             qna.setLecture(enrollmentRepository.findLectureByEnrollmentId(enrollmentId));
+            qna.setSecret(qnACreationDto.isSecret());
 
             // 파일 저장
             if (qnACreationDto.getAttachFiles() != null && qnACreationDto.getAttachFiles().length > 0) {

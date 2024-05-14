@@ -101,10 +101,7 @@ public class UploadApiController {
                 if(currentDirectory.indexOf("JBUGS-capstone") == -1){
                     currentDirectory += "/JBUGS-capstone/server/";
                 }
-                if(currentDirectory.indexOf("libs") != -1){
-                    currentDirectory = currentDirectory.substring(0, currentDirectory.length() - 11);
-                }
-                String fullPath = currentDirectory + directory + safeFileName;
+                String fullPath = currentDirectory + directory + originalFileName;
 
 
 
@@ -153,11 +150,11 @@ public class UploadApiController {
 
         String url;
         if ("EXERCISE".equals(quizType)) {
-            url = "http://localhost:5000/add-quiz-keyword";
+            url = "43.200.202.59:5000/add-quiz-keyword";
         } else if ("PRACTICE".equals(quizType)) {
-            url = "http://localhost:5000/add-quiz-summary";
+            url = "43.200.202.59:5000/add-quiz-summary";
         } else {
-            url = "http://localhost:5000/add-quiz-keyword";
+            url = "43.200.202.59:5000/add-quiz-keyword";
         }
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);

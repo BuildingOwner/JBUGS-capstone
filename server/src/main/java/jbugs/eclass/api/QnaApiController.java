@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
+import jbugs.eclass.repository.MaterialRepository;
 import jbugs.eclass.repository.QnARepository;
 import jbugs.eclass.service.MaterialService;
 import jbugs.eclass.service.WeekService;
@@ -35,6 +36,7 @@ public class QnaApiController {
     private final EnrollmentRepository enrollmentRepository;
     private final QnARepository qnARepository;
     private final MaterialService materialService;
+    private final MaterialRepository materialRepository;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -68,9 +70,10 @@ public class QnaApiController {
 
             List<QnA> qnAList = qnARepository.findQnAsByLecture(lectureId);
 
-            List<QnADto> qnADtoList = qnAList.stream()
-                    .map(QnADto::from)
-                    .collect(Collectors.toList());
+            List<QnADto> qnADtoList = qnAList.stream().map(qna -> {
+                List<Material> materials = materialRepository.findByQnaId(qna.getId()); // QnA ID에 해당하는 Material 조회
+                return QnADto.from(qna, materials); // Material 정보를 포함하여 QnADto 생성
+            }).collect(Collectors.toList());
             qnAContentDto.setQnADtoList(qnADtoList);
 
             return ResponseEntity.ok(qnAContentDto);
@@ -84,25 +87,28 @@ public class QnaApiController {
     // 학생 Q&A 질문하기
     @PostMapping("/{enrollmentId}/qna/create")
     public ResponseEntity<?> createQnA(@PathVariable Long enrollmentId,
-                                       @ModelAttribute QnACreationDto qnACreationDto,
+                                       @RequestParam("title") String title,
+                                       @RequestParam("description") String description,
+                                       @RequestParam("secret") boolean secret,
+                                       @RequestParam(value = "attachFiles", required = false) MultipartFile[] attachFiles,
                                        HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
             Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
             QnA qna = new QnA();
-            qna.setTitle(qnACreationDto.getTitle());
-            qna.setContent(qnACreationDto.getDescription());
+            qna.setTitle(title);
+            qna.setContent(description);
             qna.setCreatedAt(LocalDateTime.now());
             qna.setWriter(loginMember.getName());
             qna.setQnaStatus(QnAStatus.RESPONSE_EXPECTED);
             qna.setLecture(enrollmentRepository.findLectureByEnrollmentId(enrollmentId));
-            qna.setSecret(qnACreationDto.isSecret());
+            qna.setSecret(secret);
             qnARepository.save(qna); // QnA 정보 저장
 
             // 파일 저장
-            if (qnACreationDto.getAttachFiles() != null && qnACreationDto.getAttachFiles().length > 0) {
-                for (MultipartFile file : qnACreationDto.getAttachFiles()) {
+            if (attachFiles != null && attachFiles.length > 0) {
+                for (MultipartFile file : attachFiles) {
                     if (!file.isEmpty()) {
                         String originalFileName = file.getOriginalFilename();
                         String safeFileName = UUID.randomUUID().toString() + "_" + originalFileName; // 예시로 UUID 추가

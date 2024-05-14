@@ -24,4 +24,6 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     List<Material> findMaterialsByWeekIdAndLectureId(Long weekId, Long lectureId);
 
     List<Material> findByLectureId(Long lectureId);
+
+    List<Material> findByQnaId(Long qnaId);
 }

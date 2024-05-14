@@ -58,7 +58,9 @@ const QaList = () => {
 
   const fetchQaList = async () => {
     try {
-      const response = await axios.get(`/api/course/${enrollmentId}/qna`)
+      const response = await axios.get(`/api/course/${enrollmentId}/qna`, {
+        withCredentials: true // 세션 쿠키를 사용하기 위해 필요
+      })
       console.log("qa response : ", response)
       const qnADtoList = response.data.qnADtoList.map((qna) => qna).flat()
       console.log(qnADtoList)
@@ -86,6 +88,7 @@ const QaList = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         memberInfoDto={memberInfoDto}
+        enrollmentId={enrollmentId}
       />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
@@ -108,9 +111,9 @@ const QaList = () => {
                   </div>
                 </div>
               </div>
-              <button type="button" 
-              className={`btn btn-primary ${styles.addBtn}`}
-              onClick={openModal}>
+              <button type="button"
+                className={`btn btn-primary ${styles.addBtn}`}
+                onClick={openModal}>
                 <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>질문하기</h3>
               </button>
             </div>

@@ -23,6 +23,7 @@ const QuizAnswer = () => {
   const [answer, setAnswer] = useState({})
   const [explane, setExplane] = useState("")
   const [relatedQuiz, setRelatedQuiz] = useState({})
+  const [explanes, setExplanes] = useState({}); // explanes를 상태로 관리
 
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -40,21 +41,41 @@ const QuizAnswer = () => {
     event.stopPropagation()
   }
 
+  // const minusIndex = () => {
+  //   if (indexOfOptions == 0) {
+  //   } else {
+  //     setIndexOfOptions(indexOfOptions - 1)
+  //   }
+  //   setExplane(explanes.get(indexOfOptions -1)) // 설명 초기화
+  // }
+
+  // const plusIndex = () => {
+  //   if (indexOfOptions == questions.length - 1) {
+  //   } else {
+  //     setIndexOfOptions(indexOfOptions + 1)
+  //   }
+  //   setExplane(explanes.get(indexOfOptions + 1)) // 설명 초기화
+  // }
+
   const minusIndex = () => {
-    if (indexOfOptions == 0) {
-    } else {
-      setIndexOfOptions(indexOfOptions - 1)
+    if (indexOfOptions > 0) {
+      const newIndex = indexOfOptions - 1;
+      setIndexOfOptions(newIndex);
+      // explanes 객체에서 newIndex 키의 존재를 검사하고 값을 설정
+      const explanation = newIndex in explanes ? explanes[newIndex] : "";
+      setExplane(explanation);
     }
-    setExplane("") // 설명 초기화
-  }
+  };
 
   const plusIndex = () => {
-    if (indexOfOptions == questions.length - 1) {
-    } else {
-      setIndexOfOptions(indexOfOptions + 1)
+    if (indexOfOptions < questions.length - 1) {
+      const newIndex = indexOfOptions + 1;
+      setIndexOfOptions(newIndex);
+      // explanes 객체에서 newIndex 키의 존재를 검사하고, 값을 설정
+      const explanation = newIndex in explanes ? explanes[newIndex] : "";
+      setExplane(explanation);
     }
-    setExplane("") // 설명 초기화
-  }
+  };
 
   const backToPreviousPage = () => {
     sessionStorage.clear() // 페이지 이동시 세션스토리지에 저장된 모든 정보 삭제
@@ -79,6 +100,10 @@ const QuizAnswer = () => {
       formData.append("question", JSON.stringify(question))
       const response = await axios.post(`http://43.200.202.59:5000/aimodule/get-explane`, formData)
       setExplane(response.data)
+      setExplanes(prevExplanes => ({
+        ...prevExplanes,
+        [indexOfOptions]: response.data
+      })); // 상태 업데이트
     } catch (error) {
       console.log(error)
       setExplane("오류가 발생했습니다.")
@@ -122,6 +147,7 @@ const QuizAnswer = () => {
 
       setAnswer(answer)
       setQuestions(questionData)
+      console.log(explanes)
 
       console.log("questionData : ", questionData)
       console.log("userAnswer : ", answer)

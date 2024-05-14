@@ -91,17 +91,12 @@ public class ChatApiController {
         );
     }
 
-    @DeleteMapping("/chat/{chatRoomId}")
-    public ResponseEntity<?> deleteChatRoom(@PathVariable Long chatRoomId) {
-        // 채팅방 존재 여부 확인
-        ChatRoom chatRoom = chatRepository.findById(chatRoomId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "ChatRoom not found with id: " + chatRoomId));
-
-        // 채팅방 삭제
-        chatRepository.delete(chatRoom);
+    @DeleteMapping("/chat")
+    public ResponseEntity<?> deleteChatRooms(@RequestBody List<Long> chatRoomIds) {
+        // chatRoomIds의 모든 ID에 대한 채팅방 삭제
+        chatRepository.deleteAllById(chatRoomIds);
 
         // 성공 응답 반환
-        return ResponseEntity.ok().body("ChatRoom with id: " + chatRoomId + " was deleted successfully.");
+        return ResponseEntity.ok().body("ChatRooms with ids: " + chatRoomIds + " were deleted successfully.");
     }
 }

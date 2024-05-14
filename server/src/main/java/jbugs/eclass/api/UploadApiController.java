@@ -95,6 +95,9 @@ public class UploadApiController {
                 if(currentDirectory.indexOf("JBUGS-capstone") == -1){
                     currentDirectory += "/JBUGS-capstone/server/";
                 }
+                if(currentDirectory.indexOf("libs") != -1){
+                    currentDirectory = currentDirectory.substring(0, currentDirectory.length() - 11);
+                }
                 String fullPath = currentDirectory + directory + safeFileName;
 
 

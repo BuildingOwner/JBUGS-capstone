@@ -117,7 +117,7 @@ def generator(keyword, quiz_type, questions=[]):
         print(f"[{current_file_name}] #generator JSON 형식이 잘못되었습니다. 다시 생성합니다.")
         return generator(keyword, quiz_type, questions=[])  # 재귀 호출로 다시 생성
 
-    print(f"[{current_file_name}] #generator type: {json.loads(result)["type"]}")
+    # print(f"[{current_file_name}] #generator type: {json.loads(result)["type"]}")
     return json.loads(result)
 
 

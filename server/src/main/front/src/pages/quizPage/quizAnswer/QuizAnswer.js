@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
 import LoadingPage from "../../mainPage/LoadingPage"
 import ReactMarkdown from 'react-markdown'
+import RelatedQuizModal from "../../../modals/quizModal/RelatedQuizModal"
 
 const QuizAnswer = () => {
   const navigate = useNavigate()
@@ -21,6 +22,22 @@ const QuizAnswer = () => {
   const [questions, setQuestions] = useState([])
   const [answer, setAnswer] = useState({})
   const [explane, setExplane] = useState("")
+  const [relatedQuiz, setRelatedQuiz] = useState({})
+  
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const openModal = () => {
+    console.log("open")
+    setModalIsOpen(true)
+  }
+
+  const closeModal = (event) => {
+    console.log("close")
+    setModalIsOpen(false)
+    // 이벤트 버블링을 막음
+    event.stopPropagation()
+  }
 
   const minusIndex = () => {
     if (indexOfOptions == 0) {
@@ -80,10 +97,13 @@ const QuizAnswer = () => {
       formData.append("question", JSON.stringify(question))
       const response = await axios.post(`http://localhost:5000/related-quiz`, formData)
       console.log(response)
+      setRelatedQuiz(response.data)
     } catch (error) {
-      console.log(error)
+      console.log(error.response)
     }
+    openModal()
   }
+
   const fetchQuizAnswer = async () => {
     try {
       const quizResponse = await axios.get(`http://localhost:5000/get-quiz/${quizId}`, {
@@ -122,6 +142,10 @@ const QuizAnswer = () => {
 
   return (
     <div className={`background`}>
+      <RelatedQuizModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        relatedQuiz={relatedQuiz} />
       <Sidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <div className={`mycontainer`}>
         <div className={`bg`}>

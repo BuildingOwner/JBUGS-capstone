@@ -5,10 +5,10 @@ const QuizListItem = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   console.log(" listitem",props)
   // 모달창 노출 여부 state
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   const openModal = () => {
-    setModalIsOpen(true);
+    setModalIsOpen(true)
   }
 
   const closeModal = (event) => {

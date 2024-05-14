@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
@@ -67,7 +66,7 @@ public class UploadApiController {
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
             for (String filePath : uploadedFilePaths) {
-                sendQuizKeywordRequest(lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer(), uploadDto.getDescription(), uploadDto.getQuizType());
+                sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, uploadDto.getChoice(), uploadDto.getShortAnswer(), uploadDto.getDescription(), uploadDto.getQuizType());
             }
 
             // 성공적으로 파일이 저장된 경우
@@ -126,11 +125,12 @@ public class UploadApiController {
 
 
     // 파일 업로드 로직 이후에 추가
-    public void sendQuizKeywordRequest(String lecture, String week, String path, String choice, String shortAnswer, String description, String quizType) {
+    public void sendQuizKeywordRequest(Long lectureId, String lecture, String week, String path, String choice, String shortAnswer, String description, String quizType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("lectureId", String.valueOf(lectureId));
         map.add("lecture", lecture);
         map.add("week", week);
         map.add("path", path);

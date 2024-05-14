@@ -20,6 +20,7 @@ const MakeQaModal = (props) => {
   const uploadQnA = async () => {
     try {
       const response = await axios.post(`api/course/${enrollmentId}/qna/create`)
+      console.log(response)
     } catch (error) {
 
     }
@@ -76,7 +77,7 @@ const MakeQaModal = (props) => {
         </div>
         <div className={styles.contents}>
           <Info title={"질문 내용"} content={
-            <textarea className={`form-control ${styles3.content}`} onChange={(e) => { setQnA(e.target.value) }} rows={5}/>
+            <textarea className={`form-control ${styles3.content}`} onChange={(e) => { setQnA(e.target.value) }} rows={5} />
           } />
         </div>
         <div className={styles2.contents}>

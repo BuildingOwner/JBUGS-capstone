@@ -19,7 +19,7 @@ const ChatbotPage = () => {
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
   const [chatDtoList, setChatDtoList] = useState([])
   const [chatIdArray, setChatIdArray] = useState([]) // 챗룸 아이디의 배열 
-  const [chatId, setChatId] = useState(1) // 챗룸 아이디  (초기 챗아이디 변경 필요)*****************
+  const [chatId, setChatId] = useState() // 챗룸 아이디  (초기 챗아이디 변경 필요)*****************
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
   const [readOnly, setReadOnly] = useState(false)
@@ -329,15 +329,31 @@ const ChatbotPage = () => {
     }
   }
 
+  // useEffect(() => {
+  //   if (firstDo === true) { // 처음 실행하면 1번 채팅룸 호출 (수정필요)
+  //     fetchDataAndChattings(1)
+  //     setFirstDo(false)
+  //   } else {
+  //     fetchDataAndChattings(chatId)
+  //   }
+  //   console.log(chatDtoList)
+  // }, [chatId]);
   useEffect(() => {
-    if (firstDo === true) { // 처음 실행하면 1번 채팅룸 호출 (수정필요)
-      fetchDataAndChattings(1)
-      setFirstDo(false)
-    } else {
-      fetchDataAndChattings(chatId)
-    }
-    console.log(chatDtoList)
-  }, [chatId]);
+    const fetchDataAndChattings = async () => {
+      const chatIdArray = await fetchChatData(); // chatId 배열을 가져옴
+      if (chatIdArray && chatIdArray.length > 0) {
+        // chatId가 유효하고, 배열에 요소가 있는 경우에만 첫 번째 요소를 chatId로 설정
+        setChatId(chatIdArray[0]);
+        await fetchChattings(chatIdArray[0]); // 해당 chatId에 대한 채팅 데이터 가져오기
+      } else {
+        console.log("채팅방을 생성해주세요");
+      }
+    };
+
+    fetchDataAndChattings(); // fetchDataAndChattings 함수 호출
+
+    console.log(chatDtoList);
+  }, []);
 
   // useEffect(() => {
   //   chatBoardScoll()

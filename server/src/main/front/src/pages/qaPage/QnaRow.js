@@ -8,12 +8,10 @@ const QnaRow = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
-    console.log("open")
     setModalIsOpen(true)
   }
 
   const closeModal = (event) => {
-    console.log("close")
     setModalIsOpen(false)
     // 이벤트 버블링을 막음
     event.stopPropagation()
@@ -50,7 +48,7 @@ const QnaRow = (props) => {
           <h4>답변 예정</h4>
         </div>}
       <div className={styles.secret}>
-        <FiLock size={20} />
+        {props.secret === true ? <FiLock size={20} />: null}
       </div>
       <h4 className={styles.title}>{props.title}</h4>
       <h4 className={styles.writer}>{props.writer}</h4>

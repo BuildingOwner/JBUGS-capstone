@@ -24,6 +24,7 @@ public class QnA {
     private int views;
     private QnAStatus qnaStatus;
     private String qnaAnswer;
+    private boolean secret;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")

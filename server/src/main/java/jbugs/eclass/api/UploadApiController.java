@@ -44,11 +44,11 @@ public class UploadApiController {
     }
 
     @PostMapping("/{enrollmentId}/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("fileTitle") String fileTitle,
-                                        @RequestParam("videoTitle") String videoTitle,
+    public ResponseEntity<?> uploadFile(@RequestParam(value = "fileTitle", required = false, defaultValue = "") String fileTitle,
+                                        @RequestParam(value = "videoTitle", required = false, defaultValue = "") String videoTitle,
                                         @RequestParam("weekNumber") int weekNumber,
-                                        @RequestParam("attachFiles") MultipartFile[] attachFiles,
-                                        @RequestParam("videoFiles") MultipartFile[] videoFiles,
+                                        @RequestParam(value = "attachFiles", required = false) MultipartFile[] attachFiles,
+                                        @RequestParam(value = "videoFiles", required = false) MultipartFile[] videoFiles,
                                         @RequestParam("shortAnswer") String shortAnswer,
                                         @RequestParam("choice") String choice,
                                         @RequestParam("description") String description,

@@ -20,6 +20,7 @@ public class FileDto {
         dto.setTitle(material.getTitle());
         dto.setFileName(material.getFileName());
         dto.setFilePath(material.getFilePath());
+        dto.setFileSize(material.getFileSize());
         return dto;
     }
 }

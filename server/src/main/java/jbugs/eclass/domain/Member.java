@@ -7,6 +7,9 @@ import lombok.Setter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -33,4 +36,7 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Enrollment> enrollments = new ArrayList<>();
 }

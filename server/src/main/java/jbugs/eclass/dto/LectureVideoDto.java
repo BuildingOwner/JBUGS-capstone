@@ -20,6 +20,7 @@ public class LectureVideoDto {
         dto.setTitle(videoMaterial.getTitle());
         dto.setVideoName(videoMaterial.getVideoName());
         dto.setVideoPath(videoMaterial.getVideoPath());
+        dto.setFileSize(videoMaterial.getFileSize());
         return dto;
     }
 }

@@ -13,15 +13,21 @@ import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @CrossOrigin(origins = "*")
@@ -163,5 +169,45 @@ public class UploadApiController {
         // 필요하다면 응답 처리
         log.info("Status Code: {}", responseEntity.getStatusCode());
         log.info("Response Body: {}", responseEntity.getBody());
+    }
+
+    @GetMapping("/files/download/{filename:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request) throws UnsupportedEncodingException {
+
+        String currentDirectory = System.getProperty("user.dir");
+        if(currentDirectory.indexOf("JBUGS-capstone") == -1){
+            currentDirectory += "/JBUGS-capstone/server/";
+        }
+        String fullPath = currentDirectory + fileDir + filename;
+        // 파일의 전체 경로 생성
+
+        // 파일 시스템에서 리소스 로드
+        Resource resource = new FileSystemResource(fullPath);
+        if (!resource.exists()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found " + filename);
+        }
+
+        String contentType = null;
+        try {
+            // 파일의 MIME 타입 결정 시도
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            // MIME 타입을 결정할 수 없는 경우 기본값 사용
+            log.info("Could not determine file type.");
+        }
+
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        // 파일 이름 인코딩
+        String encodedFileName = URLEncoder.encode(filename, StandardCharsets.UTF_8.toString()).replaceAll("\\+", "%20");
+        String contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFileName);
+
+        // ResponseEntity에 파일 리소스, 인코딩된 파일 이름과 헤더 설정
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .body(resource);
     }
 }

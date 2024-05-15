@@ -21,11 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
@@ -118,6 +115,7 @@ public class AssignmentApiController {
                         material.setFileName(file.getOriginalFilename());
                         material.setWeek(weekEntity);
                         material.setAssignment(assignment); // 과제 정보 설정
+                        material.setFileSize(file.getSize());
                         materialService.join(material);
                     }
                 }
@@ -183,6 +181,7 @@ public class AssignmentApiController {
                         material.setFileName(file.getOriginalFilename());
                         material.setWeek(assignment.getWeek());
                         material.setAssignment(assignment);
+                        material.setFileSize(file.getSize());
                         materialService.join(material);
                     }
                 }
@@ -239,6 +238,7 @@ public class AssignmentApiController {
                         material.setFilePath(fullPath);
                         material.setFileName(file.getOriginalFilename());
                         material.setAssignment(assignment); // 과제 정보 설정
+                        material.setFileSize(file.getSize());
                         materialService.join(material);
                     }
                 }
@@ -294,6 +294,7 @@ public class AssignmentApiController {
                             material.setFilePath(fullPath);
                             material.setFileName(file.getOriginalFilename());
                             material.setAssignment(assignment);
+                            material.setFileSize(file.getSize());
                             materialService.join(material);
                         }
                     }

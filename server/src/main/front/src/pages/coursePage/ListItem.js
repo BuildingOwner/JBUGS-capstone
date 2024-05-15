@@ -9,7 +9,8 @@ const ListItem = (props) => {
   const [fileExtension, setFileExtension] = useState()
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
+  const [fileColor, setfileColor] = useState('');
+  const [byte, setByte] = useState(0)
   const openModal = () => {
     console.log('modal open')
     setModalIsOpen(true);
@@ -34,7 +35,22 @@ const ListItem = (props) => {
     navigate('/assignmentlist', { state: props })
   }
 
-  const [fileColor, setfileColor] = useState('');
+  const calcByte = () => {
+    let byte = props.fileSize
+    let count = 0
+    while (byte > 1000) {
+      if (byte > 1000) {
+        byte /= 1000
+        count += 1
+      }
+    }
+    if (count === 1) {
+      setByte(`${Math.round(byte * 10) / 10}KB`)
+    } else if (count === 2) {
+      setByte(`${Math.round(byte * 10) / 10}MB`)
+    }
+
+  }
 
   useEffect(() => {
     if (props.url === "assignmentlist") {
@@ -64,6 +80,7 @@ const ListItem = (props) => {
 
       setFileExtension(extension[last])
     }
+    calcByte()
   }, []);
 
   return (
@@ -97,7 +114,6 @@ const ListItem = (props) => {
             )
           )}
           {props.url === 'file' && (
-
             <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
           )}
           {props.url === 'video' && (
@@ -112,10 +128,10 @@ const ListItem = (props) => {
             <h3 className={styles.fontSize}>{props.quizName}</h3>
           )}
           {props.url === 'file' && (
-            <h3 className={styles.fontSize}>{props.fileName}</h3>
+            <h3 className={styles.fontSize}>{props.title}</h3>
           )}
           {props.url === 'video' && (
-            <h3 className={styles.fontSize}>This is a video</h3>
+            <h3 className={styles.fontSize}>{props.title}</h3>
           )}
         </div>
         <div className={styles.third}>
@@ -132,10 +148,11 @@ const ListItem = (props) => {
           <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
         {props.url === 'file' && (
-          <h3 className={styles.fontSize}>sizeOfFile</h3>
+          <h3 className={styles.fontSize}>{byte}
+          </h3>
         )}
         {props.url === 'video' && (
-          <h3 className={styles.fontSize}>progressPercent</h3>
+          <h3 className={styles.fontSize}>{byte}</h3>
         )}
       </div>
     </div>

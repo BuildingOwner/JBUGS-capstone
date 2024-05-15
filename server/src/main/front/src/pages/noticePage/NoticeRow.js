@@ -18,6 +18,7 @@ const QnaRow = (props) => {
     // 이벤트 버블링을 막음
     event.stopPropagation()
   }
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리

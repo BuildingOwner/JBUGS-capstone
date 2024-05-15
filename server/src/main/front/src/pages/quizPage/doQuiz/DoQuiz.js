@@ -150,7 +150,7 @@ const DoQuiz = (props) => {
 
   const fetchQuiz = async () => {
     try {
-      const response = await axios.get(`http://43.200.202.59:5000/aimodule/get-quiz/${quizId}`, {
+      const response = await axios.get(`http://localhost:5000/aimodule/get-quiz/${quizId}`, {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })

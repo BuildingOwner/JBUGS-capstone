@@ -37,8 +37,10 @@ const QuizAnswer = () => {
     console.log("close")
     setModalIsOpen(false)
     setRelatedQuiz({}) // 관련 퀴즈 누를 때 마다 다른 퀴즈 나옴
-    // 이벤트 버블링을 막음
-    event.stopPropagation()
+    if (event) {
+      // 이벤트 버블링을 막음
+      event.stopPropagation()
+    }
   }
 
   // const minusIndex = () => {
@@ -89,28 +91,50 @@ const QuizAnswer = () => {
   }
 
   const getExplane = async () => {
-    setExplane("해설 생성 중..")
+    setExplane("해설 생성 중..");
     try {
-      const formData = new FormData()
       const question = {
         answer: questions[indexOfOptions].answer,
         id: questions[indexOfOptions].id,
         options: questions[indexOfOptions].options,
         question: questions[indexOfOptions].question,
         type: questions[indexOfOptions].type,
+      };
+      console.log("sending question : ", question)
+      const response = await fetch(`http://localhost:5000/aimodule/get-explane`, {
+        method: 'POST',
+        body: JSON.stringify(question),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const reader = response.body.getReader();
+      let explaneText = '';
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) {
+          break;
+        }
+        const chunk = new TextDecoder().decode(value);
+        for (let char of chunk) {
+          explaneText += char;
+          setExplane(explaneText); // 화면에 한 글자씩 출력
+          await new Promise(resolve => setTimeout(resolve, 100)); // 글자 사이의 딜레이
+        }
       }
-      formData.append("question", JSON.stringify(question))
-      const response = await axios.post(`http://43.200.202.59:5000/aimodule/get-explane`, formData)
-      setExplane(response.data)
+
       setExplanes(prevExplanes => ({
         ...prevExplanes,
-        [indexOfOptions]: response.data
+        [indexOfOptions]: explaneText
       })); // 상태 업데이트
     } catch (error) {
-      console.log(error)
-      setExplane("오류가 발생했습니다.")
+      console.log(error);
+      setExplane("오류가 발생했습니다.");
     }
-  }
+  };
+
 
   const getRelatedQuiz = async () => {
     openModal()
@@ -124,7 +148,7 @@ const QuizAnswer = () => {
         type: questions[indexOfOptions].type,
       }
       formData.append("question", JSON.stringify(question))
-      const response = await axios.post(`http://43.200.202.59:5000/aimodule/related-quiz`, formData)
+      const response = await axios.post(`http://localhost:5000/aimodule/related-quiz`, formData)
       console.log(response)
       setRelatedQuiz(response.data)
     } catch (error) {
@@ -134,7 +158,7 @@ const QuizAnswer = () => {
 
   const fetchQuizAnswer = async () => {
     try {
-      const quizResponse = await axios.get(`http://43.200.202.59:5000/aimodule/get-quiz/${quizId}`, {
+      const quizResponse = await axios.get(`http://localhost:5000/aimodule/get-quiz/${quizId}`, {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })
@@ -160,7 +184,6 @@ const QuizAnswer = () => {
       console.log(error)
     }
   }
-
 
   useEffect(() => {
     fetchQuizAnswer()
@@ -201,15 +224,13 @@ const QuizAnswer = () => {
                       (
                         optionIcon.map((num, i) => {
                           // 현재 옵션이 정답이면 무조건 초록색
-                          return (questions[indexOfOptions].options[i] === questions[indexOfOptions].answer)
-                            ?
+                          return (questions[indexOfOptions].options[i] === questions[indexOfOptions].answer) ?
                             <div className={`${styles.answerOption} ${styles.correct}`} key={i}>
                               {num}
                               {questions[indexOfOptions].options[i] && (
                                 <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
                               )}
-                            </div>
-                            :
+                            </div> :
                             // 정답이 아니고 유저가 고른 답이면 빨간색
                             questions[indexOfOptions].options[i] === answer[indexOfOptions + 1] ?
                               <div className={`${styles.answerOption} ${styles.wrong}`} key={i}>
@@ -217,8 +238,7 @@ const QuizAnswer = () => {
                                 {questions[indexOfOptions].options[i] && (
                                   <h3 className={styles.optionText}>{questions[indexOfOptions].options[i]}</h3>
                                 )}
-                              </div>
-                              :
+                              </div> :
                               // 그것도 아니면 기본
                               <div className={styles.answerOption} key={i}>
                                 {num}
@@ -230,12 +250,13 @@ const QuizAnswer = () => {
                       )
                       :
                       (<>
-                      <textarea
-                        value={answer[questions[indexOfOptions]?.id] || ''}
-                        readOnly
-                        className={`${questions[indexOfOptions]?.answer === answer[indexOfOptions] ? styles.correct : styles.wrong}`}
-                      ></textarea>
-                      <h4>정답 : {answer[indexOfOptions]}</h4>
+                        <textarea
+                          value={answer[questions[indexOfOptions]?.id] || ''}
+                          readOnly
+                          className={`${questions[indexOfOptions]?.answer === answer[indexOfOptions + 1] ?
+                            styles.correct : styles.wrong}`}
+                        ></textarea>
+                        <h4>정답 : {questions[indexOfOptions]?.answer}</h4>
                       </>)
                   }
                 </div>
@@ -264,7 +285,9 @@ const QuizAnswer = () => {
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {
                 return (
-                  <div className={`${styles.quizNavBtn} ${questions[indexOfOptions].answer === answer[indexOfOptions] ? styles.correct : styles.wrong}`} onClick={() => changeQuestion(i)}>
+                  <div className={`${styles.quizNavBtn} ${questions[i].answer === answer[i + 1] ?
+                    styles.correct : styles.wrong}`}
+                    onClick={() => changeQuestion(i)}>
                     <h3>{i + 1}</h3>
                   </div>
                 )

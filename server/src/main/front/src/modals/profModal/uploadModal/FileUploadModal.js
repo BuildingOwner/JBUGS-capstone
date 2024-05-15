@@ -121,6 +121,10 @@ const FileUploadModal = (props) => {
       console.log(error);
       alert('파일 업로드에 실패했습니다.'); // 사용자에게 알림
     }
+    // 부모 컴포넌트를 다시 렌더링
+    props.reRender()
+    // 프로세스가 끝나면 모달 닫기
+    props.onRequestClose(null)
   }
 
   return (

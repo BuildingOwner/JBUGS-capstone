@@ -61,7 +61,9 @@ const MakeQaModal = (props) => {
     } catch (error) {
       console.log(error)
     }
+    // 부모 컴포넌트를 다시 렌더링
     props.reRender()
+    // 프로세스가 끝나면 모달 닫기
     props.onRequestClose(null)
   }
 
@@ -69,12 +71,6 @@ const MakeQaModal = (props) => {
     setMemberInfoDto(props.memberInfoDto)
     setMemberName(props.memberInfoDto.memberName)
   }, [])
-
-  // useEffect(() => {
-  //   console.log(title)
-  //   console.log(qnA)
-  //   console.log(secret)
-  // }, [title, qnA, secret])
 
   return (
     <Modal className={styles.modalContainer}

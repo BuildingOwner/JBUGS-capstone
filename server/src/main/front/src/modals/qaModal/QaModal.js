@@ -9,8 +9,22 @@ import { IoClose } from "react-icons/io5";
 
 const QaModal = (props) => {
   Modal.setAppElement("#root")
-  const [fileDescription, setFileDescription] = useState('');
+  const [fileDescription, setFileDescription] = useState('')
+  const [formattedDate, setFormattedDate] = useState()
   const data = props.props
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월
+    const day = date.getDate().toString().padStart(2, '0'); // 일
+    const hours = date.getHours().toString().padStart(2, '0'); // 시간
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // 분
+
+    // 포맷팅된 문자열 생성
+    return `${year}-${month}-${day}`;
+  }
+
   const handleFileChange = (event) => {
     const files = event.target.files;
     const fileCount = files.length;
@@ -37,9 +51,11 @@ const QaModal = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(props)
+    const inputDate = data?.createdAt
+    const data1 = formatDate(inputDate);
+    setFormattedDate(data1)
   }, [])
-  
+
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -61,7 +77,7 @@ const QaModal = (props) => {
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
           <Info title={"작성자"} content={data.writer} />
-          <Info title={"작성일"} content={data.createdAt} />
+          <Info title={"작성일"} content={formattedDate} />
         </div>
         <div className={styles.contents}>
           {/*답변예정은 yellow, 답변완료는 green*/}
@@ -105,10 +121,18 @@ const QaModal = (props) => {
               multiple></input>
           </div>
           <div className={styles2.fileItem}>
-            <h3 style={{ fontSize: "1.25rem" }}>L 파일 이름</h3>
-            <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
-              <IoClose size={20} />
-            </button>
+            {
+              data.materials?.map((material) => (
+              <>
+                <h3 style={{ fontSize: "1.25rem" }}>L {material.fileName}</h3>
+                <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
+                  <IoClose size={20} />
+                </button>
+              </>
+
+              ))
+            }
+
           </div>
         </div>
         <div className={styles2.contents}>

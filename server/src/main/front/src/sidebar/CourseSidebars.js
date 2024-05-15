@@ -5,7 +5,6 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import styles from "./MainSidebars.module.css"
 
 function CourseSidebar(props) {
-  console.log("courseSidebar : ",props)
   const enrollmentId = props.enrollmentId
   const memberInfoDto = props.memberInfoDto
   const lectureName = props.lectureName

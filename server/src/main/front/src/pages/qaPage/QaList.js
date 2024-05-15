@@ -23,7 +23,7 @@ const QaList = () => {
   const [searchFilter, setSearchFilter] = useState("title")
   const [keyword, setKeyword] = useState("")
   // reRender를 위한 상태
-  const [reRenderFlag, setReRenderFlag] = useState(false);
+  const [reRenderFlag, setReRenderFlag] = useState(false)
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
@@ -173,6 +173,7 @@ const QaList = () => {
                       content={qna.content}
                       secret={qna.secret}
                       memberName={memberName}
+                      materials={qna.materials}
                     />
                   )) : <NoItem title={"등록된 질문이"} />}
             </div>

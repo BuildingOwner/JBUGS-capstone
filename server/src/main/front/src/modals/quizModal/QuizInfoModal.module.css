@@ -81,11 +81,11 @@
 }
 
 .green{
-  background-color: var(--point-green);
+  background-color: var(--point-green) !important;
 }
 
 .red{
-  background-color: var(--point-red);
+  background-color: var(--point-red)!important;
 }
 
 .question {

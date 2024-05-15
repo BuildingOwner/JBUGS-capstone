@@ -10,8 +10,41 @@ import NoItem from "../mainPage/NoItem";
 import LoadingPage from "../mainPage/LoadingPage";
 
 const Course = () => {
+  const currentDate = new Date();
+  const startDate = new Date('2024-03-01'); // 개강일 적는 곳
+  const calculateWeek = (startDate, endDate) => {
+    const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
+
+    // startDate와 endDate 사이의 경과 일수 계산
+    const diffDays = Math.round((endDate - startDate) / oneDay);
+
+    // 개강일로부터 경과한 일수를 7로 나누어서 주차를 계산
+    const week = Math.ceil(diffDays / 7);
+
+    return week;
+  }
+  const cureentWeek = calculateWeek(startDate, currentDate)
+
   const navigate = useNavigate()
   const location = useLocation()
+  const [memberInfoDto, setMemberInfoDto] = useState()
+  const [lectureName, setLectureName] = useState()
+  const [division, setDivision] = useState()
+  const [assignments, setAssignments] = useState([])
+  const [quizs, setQuizs] = useState([])
+  const [lectureVideos, setLectureVideos] = useState([])
+  const [classFiles, setClassFiles] = useState([])
+  const [courseDto, setCourseDto] = useState()
+  const [weeklyContents, setWeeklyContents] = useState([])
+  const [selectedWeek, setSelectedWeek] = useState(cureentWeek)
+  // reRender를 위한 상태
+  const [reRenderFlag, setReRenderFlag] = useState(false)
+
+  const assignmentUrl = "assignmentlist"
+  const quizUrl = "quizlist"
+  const videoUrl = "video"
+  const fileUrl = "file"
+
   let enrollmentId
 
   if (location.state.from === '/main') {
@@ -31,39 +64,13 @@ const Course = () => {
     setModalIsOpen(false)
   }
 
-  const currentDate = new Date();
-  const startDate = new Date('2024-03-01'); // 개강일 적는 곳
-  const calculateWeek = (startDate, endDate) => {
-    const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
-
-    // startDate와 endDate 사이의 경과 일수 계산
-    const diffDays = Math.round((endDate - startDate) / oneDay);
-
-    // 개강일로부터 경과한 일수를 7로 나누어서 주차를 계산
-    const week = Math.ceil(diffDays / 7);
-
-    return week;
-  }
-  const cureentWeek = calculateWeek(startDate, currentDate)
-
-  const [memberInfoDto, setMemberInfoDto] = useState()
-  const [lectureName, setLectureName] = useState()
-  const [division, setDivision] = useState()
-  const [assignments, setAssignments] = useState([])
-  const [quizs, setQuizs] = useState([])
-  const [lectureVideos, setLectureVideos] = useState([])
-  const [classFiles, setClassFiles] = useState([])
-  const [courseDto, setCourseDto] = useState()
-  const [weeklyContents, setWeeklyContents] = useState([])
-  const [selectedWeek, setSelectedWeek] = useState(cureentWeek)
-
-  const assignmentUrl = "assignmentlist"
-  const quizUrl = "quizlist"
-  const videoUrl = "video"
-  const fileUrl = "file"
 
   const changeWeek = (week) => {
     setSelectedWeek(week)
+  }
+
+  const reRender = () => {
+    setReRenderFlag(prevFlag => !prevFlag)
   }
 
   const fetchCourse = async () => {
@@ -95,15 +102,14 @@ const Course = () => {
         navigate("/")
       } else {
         // 다른 종류의 오류 발생
-        console.error(error);
+        console.error(error)
       }
     }
-  };
+  }
 
-  // 첫 렌더링 시에만 정보를 받아옴
   useEffect(() => {
-    fetchCourse()
-  }, [])
+    fetchCourse();
+  }, [reRenderFlag])
 
   useEffect(() => {
     const selectedWeekData = weeklyContents.find(week => week.week === selectedWeek)
@@ -120,7 +126,11 @@ const Course = () => {
 
   return (
     <div className={`background`}>
-      <FileUploadModal isOpen={modalIsOpen} onRequestClose={closeModal} enrollmentId={enrollmentId} />
+      <FileUploadModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        enrollmentId={enrollmentId}
+        reRender={reRender} />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
@@ -165,6 +175,7 @@ const Course = () => {
                     videoName={video.videoName}
                     videoPath={video.videoPath}
                     url={videoUrl}
+                    fileSize={video.fileSize}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>
@@ -201,6 +212,7 @@ const Course = () => {
                     filePath={file.filePath}
                     title={file.title}
                     url={fileUrl}
+                    fileSize={file.fileSize}
                   />
                 )) : <NoItem title={"자료가"} />}
               </div>

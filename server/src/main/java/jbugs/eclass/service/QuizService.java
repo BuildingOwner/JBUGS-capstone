@@ -148,4 +148,9 @@ public class QuizService {
     public List<Quiz> findUnsubmittedQuizzesWithQuizInfoByLectureIdAndStudentId(Long lectureId, Long studentId) {
         return quizRepository.findUnsubmittedQuizzesWithQuizInfoByLectureIdAndStudentId(lectureId, studentId);
     }
+
+    public void deleteQuiz(Long quizId) {
+        // Quiz 엔터티를 찾아서 삭제. 연결된 QuizInfo도 함께 삭제됩니다.
+        quizRepository.deleteById(quizId);
+    }
 }

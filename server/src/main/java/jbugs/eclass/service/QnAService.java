@@ -16,7 +16,7 @@ public class QnAService {
     private final QnARepository qnARepository;
     private final LectureRepository lectureRepository;
 
-    public void createQnA(Long lectureId, String title, String writer, LocalDateTime createdAt, int views, String content, QnAStatus qnAStatus){
+    public void createQnA(Long lectureId, String title, String writer, LocalDateTime createdAt, int views, String content, QnAStatus qnAStatus, boolean secret){
         Lecture lecture = lectureRepository.findOne(lectureId);
         if (lecture == null) {
             throw new IllegalArgumentException("강의 정보를 찾을 수 없습니다.");
@@ -30,6 +30,7 @@ public class QnAService {
         qna.setViews(views);
         qna.setContent(content);
         qna.setQnaStatus(qnAStatus);
+        qna.setSecret(secret);
 
         qnARepository.save(qna);
     }

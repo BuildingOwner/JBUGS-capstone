@@ -22,7 +22,7 @@ public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final WeekService weekService;
 
-    public void createAssignment(Long weekId, String title, String content, LocalDateTime dueDate) {
+    public void createAssignment(Lecture lecture,Long weekId, String title, String content, LocalDateTime dueDate) {
         Week week = weekService.findOne(weekId);
         if (week == null) {
             throw new IllegalArgumentException("주차 정보를 찾을 수 없습니다.");
@@ -34,6 +34,7 @@ public class AssignmentService {
         assignment.setContent(content);
         assignment.setDueDate(dueDate);
         assignment.setStatus(AssignmentStatus.NOT_SUBMITTED);
+        assignment.setLecture(lecture);
 
         assignmentRepository.save(assignment);
     }

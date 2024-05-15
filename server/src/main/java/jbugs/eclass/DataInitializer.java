@@ -235,19 +235,19 @@
 //        lecture6.setClassification("전필");
 //        lecture6.setLectureTime("화 13 ~ 16");
 //
-//        Lecture lecture7 = new Lecture();
-//        lecture7.setName("운영체제");
-//        lecture7.setProfessor(professor4);
-//        lecture7.setDivision("B");
-//        lecture7.setClassification("전선");
-//        lecture7.setLectureTime("수 9 ~ 12");
-//
-//        Lecture lecture8 = new Lecture();
-//        lecture8.setName("알고리즘");
-//        lecture8.setProfessor(professor2);
-//        lecture8.setDivision("B");
-//        lecture8.setClassification("전필");
-//        lecture8.setLectureTime("월 14.5 ~ 16");
+////        Lecture lecture7 = new Lecture();
+////        lecture7.setName("운영체제");
+////        lecture7.setProfessor(professor4);
+////        lecture7.setDivision("B");
+////        lecture7.setClassification("전선");
+////        lecture7.setLectureTime("수 9 ~ 12");
+////
+////        Lecture lecture8 = new Lecture();
+////        lecture8.setName("알고리즘");
+////        lecture8.setProfessor(professor2);
+////        lecture8.setDivision("B");
+////        lecture8.setClassification("전필");
+////        lecture8.setLectureTime("월 14.5 ~ 16");
 //
 //        lectureService.saveLecture(lecture1);
 //        lectureService.saveLecture(lecture2);
@@ -255,7 +255,6 @@
 //        lectureService.saveLecture(lecture4);
 //        lectureService.saveLecture(lecture5);
 //        lectureService.saveLecture(lecture6);
-//        lectureService.saveLecture(lecture7);
 //
 //        Enrollment enrollment1 = enrollmentService.enrollStudentInLecture(student1, lecture1);
 //        Enrollment enrollment2 = enrollmentService.enrollStudentInLecture(student1, lecture2);
@@ -312,17 +311,15 @@
 //        Optional<Week> week6 = weekRepository.findById(51L);
 //        Optional<Week> week7 = weekRepository.findById(68L);
 //        Optional<Week> week8 = weekRepository.findById(84L);
-//        Optional<Week> week9 = weekRepository.findById(101L);
 //
-//        assignmentService.createAssignment(week1.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 1", "과제 내용 1", LocalDateTime.of(2024, 5, 15, 23, 59));
-//        assignmentService.createAssignment(week2.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 2", "과제 내용 2", LocalDateTime.of(2024, 5, 22, 23, 59));
-//        assignmentService.createAssignment(week3.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 3", "과제 내용 3", LocalDateTime.of(2024, 5, 29, 23, 59));
-//        assignmentService.createAssignment(week4.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 4", "과제 내용 4", LocalDateTime.of(2024, 5, 15, 23, 59));
-//        assignmentService.createAssignment(week5.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 5", "과제 내용 5", LocalDateTime.of(2024, 5, 22, 23, 59));
-//        assignmentService.createAssignment(week6.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 6", "과제 내용 6", LocalDateTime.of(2024, 5, 29, 23, 59));
-//        assignmentService.createAssignment(week7.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 7", "과제 내용 7", LocalDateTime.of(2024, 5, 15, 23, 59));
-//        assignmentService.createAssignment(week8.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 8", "과제 내용 8", LocalDateTime.of(2024, 5, 22, 23, 59));
-//        assignmentService.createAssignment(week9.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 9", "과제 내용 9", LocalDateTime.of(2024, 5, 29, 23, 59));
+//        assignmentService.createAssignment(lecture1, week1.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 1", "과제 내용 1", LocalDateTime.of(2024, 5, 15, 23, 59));
+//        assignmentService.createAssignment(lecture1, week2.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 2", "과제 내용 2", LocalDateTime.of(2024, 5, 22, 23, 59));
+//        assignmentService.createAssignment(lecture1, week3.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 3", "과제 내용 3", LocalDateTime.of(2024, 5, 29, 23, 59));
+//        assignmentService.createAssignment(lecture2, week4.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 4", "과제 내용 4", LocalDateTime.of(2024, 5, 15, 23, 59));
+//        assignmentService.createAssignment(lecture3, week5.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 5", "과제 내용 5", LocalDateTime.of(2024, 5, 22, 23, 59));
+//        assignmentService.createAssignment(lecture4, week6.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 6", "과제 내용 6", LocalDateTime.of(2024, 5, 29, 23, 59));
+//        assignmentService.createAssignment(lecture5,week7.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 7", "과제 내용 7", LocalDateTime.of(2024, 5, 15, 23, 59));
+//        assignmentService.createAssignment(lecture6,week8.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 8", "과제 내용 8", LocalDateTime.of(2024, 5, 22, 23, 59));
 //
 //        Quiz quiz1 = new Quiz();
 //        quiz1.setQuizName("컴퓨터 과학 1주차 퀴즈");
@@ -334,6 +331,7 @@
 //        quiz1.setDescription("컴퓨터 과학에 대한 설명입니다.");
 //        quiz1.setTimeLimit("60분");
 //        quiz1.setWeek(week1.orElseThrow());
+//        quiz1.setLecture(lecture1);
 //
 //        Quiz quiz2 = new Quiz();
 //        quiz2.setQuizName("생활속의 인공지능 1주차 퀴즈");
@@ -345,6 +343,7 @@
 //        quiz2.setDescription("생활속의 인공지능에 대한 설명입니다.");
 //        quiz2.setTimeLimit("60분");
 //        quiz2.setWeek(week2.orElseThrow());
+//        quiz2.setLecture(lecture1);
 //
 //        QuizInfo quizInfo1 = new QuizInfo();
 //        quizInfo1.setQuiz(quiz1);
@@ -381,35 +380,36 @@
 //        noticeService.createNotice(lecture2.getId(),"4월 25일은 대면수업입니다.4", "장주찬", LocalDateTime.of(2024, 4, 8, 23, 59), 100, "대면수업으로 대체합니다", NoticeStatus.FACE_TO_FACE_CLASSES);
 //        noticeService.createNotice(lecture2.getId(),"기말고사 공지하겠습니다.", "장주찬", LocalDateTime.of(2024, 4, 13, 23, 59), 100, "기말고사에 대해 공지하겠습니다.", NoticeStatus.EXAM);
 //
-//        qnAService.createQnA(lecture1.getId(),"이건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"저건 뭔가요.", "최재완", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
-//        qnAService.createQnA(lecture1.getId(),"요건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"그건 뭔가요.", "김지훈", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
-//        qnAService.createQnA(lecture1.getId(),"이게 뭘까요.", "이영재", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"이건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, true);
+//        qnAService.createQnA(lecture1.getId(),"저건 뭔가요.", "최재완", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE, true);
+//        qnAService.createQnA(lecture1.getId(),"요건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, false);
+//        qnAService.createQnA(lecture1.getId(),"그건 뭔가요.", "김지훈", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE, false);
+//        qnAService.createQnA(lecture1.getId(),"이게 뭘까요.", "이영재", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, false);
 //
-//        qnAService.createQnA(lecture1.getId(),"모르겠어요.", "이기혁", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"알려주세요.", "이하은", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"교수님.", "박세진", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"질문 있습니다.", "김태현", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"이건 왜이럴까요.", "김예은", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"모르겠어요.", "이기혁", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, true);
+//        qnAService.createQnA(lecture1.getId(),"알려주세요.", "이하은", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED,true);
+//        qnAService.createQnA(lecture1.getId(),"교수님.", "박세진", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED ,true);
+//        qnAService.createQnA(lecture1.getId(),"질문 있습니다.", "김태현", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, false);
+//        qnAService.createQnA(lecture1.getId(),"이건 왜이럴까요.", "김예은", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, true);
 //
-//        qnAService.createQnA(lecture1.getId(),"수업관련 질문입니다.", "차은우", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"오류있습니다.", "박서현", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"과제 질문입니다.", "진승원", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"과제 질문 있습니다.", "장주찬", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture1.getId(),"저건 왜이럴까요.", "이영재", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture1.getId(),"수업관련 질문입니다.", "차은우", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, true);
+//        qnAService.createQnA(lecture1.getId(),"오류있습니다.", "박서현", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, true);
+//        qnAService.createQnA(lecture1.getId(),"과제 질문입니다.", "진승원", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, false);
+//        qnAService.createQnA(lecture1.getId(),"과제 질문 있습니다.", "장주찬", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, false);
+//        qnAService.createQnA(lecture1.getId(),"저건 왜이럴까요.", "이영재", LocalDateTime.of(2024, 5, 10, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, false);
 //
-//        qnAService.createQnA(lecture2.getId(),"이건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture2.getId(),"저건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
-//        qnAService.createQnA(lecture2.getId(),"요건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
-//        qnAService.createQnA(lecture2.getId(),"그건 뭔가요.", "최재완", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE);
-//        qnAService.createQnA(lecture2.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED);
+//        qnAService.createQnA(lecture2.getId(),"이건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, false);
+//        qnAService.createQnA(lecture2.getId(),"저건 뭔가요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE,false);
+//        qnAService.createQnA(lecture2.getId(),"요건 뭔가요.", "진승원", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, true);
+//        qnAService.createQnA(lecture2.getId(),"그건 뭔가요.", "최재완", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.COMPLETE, true);
+//        qnAService.createQnA(lecture2.getId(),"이게 뭘까요.", "장주찬", LocalDateTime.of(2024, 4, 12, 23, 59), 100, "이게 뭐야",QnAStatus.RESPONSE_EXPECTED, true);
 //
 //        Material material1 = new Material();
 //        material1.setTitle("test1");
 //        material1.setFileName("0. 스프링 MVC2 전체 목차.pdf");
 //        material1.setFilePath("/Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/0. 스프링 MVC2 전체 목차.pdf");
 //        material1.setWeek(week1.orElseThrow());
+//        material1.setLecture(lecture1);
 //        materialRepository.save(material1);
 //
 //        VideoMaterial videoMaterial = new VideoMaterial();
@@ -417,6 +417,7 @@
 //        videoMaterial.setVideoName("0. 스프링 MVC2 전체 목차.pdf");
 //        videoMaterial.setVideoPath("/Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/video/예제 도메인 모델 - 2편만 듣는 분을 위한 내용.pdf");
 //        videoMaterial.setWeek(week1.orElseThrow());
+//        material1.setLecture(lecture1);
 //        videoMaterialRepository.save(videoMaterial);
 //
 //        ChatRoom chatRoom1 = new ChatRoom();

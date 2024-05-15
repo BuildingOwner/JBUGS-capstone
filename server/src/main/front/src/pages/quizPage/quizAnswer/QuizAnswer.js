@@ -101,7 +101,7 @@ const QuizAnswer = () => {
         type: questions[indexOfOptions].type,
       };
       console.log("sending question : ", question)
-      const response = await fetch(`http://localhost:5000/aimodule/get-explane`, {
+      const response = await fetch(`http://43.200.202.59:5000/aimodule/get-explane`, {
         method: 'POST',
         body: JSON.stringify(question),
         headers: {
@@ -148,7 +148,7 @@ const QuizAnswer = () => {
         type: questions[indexOfOptions].type,
       }
       formData.append("question", JSON.stringify(question))
-      const response = await axios.post(`http://localhost:5000/aimodule/related-quiz`, formData)
+      const response = await axios.post(`http://43.200.202.59:5000/aimodule/related-quiz`, formData)
       console.log(response)
       setRelatedQuiz(response.data)
     } catch (error) {
@@ -158,7 +158,7 @@ const QuizAnswer = () => {
 
   const fetchQuizAnswer = async () => {
     try {
-      const quizResponse = await axios.get(`http://localhost:5000/aimodule/get-quiz/${quizId}`, {
+      const quizResponse = await axios.get(`http://43.200.202.59:5000/aimodule/get-quiz/${quizId}`, {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })

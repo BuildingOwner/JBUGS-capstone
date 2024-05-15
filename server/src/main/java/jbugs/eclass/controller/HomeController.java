@@ -1,4 +1,15 @@
-//package jbugs.eclass.controller;
+package jbugs.eclass.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HomeController {
+  @GetMapping(value =  {"/", "/main","/course", "/qalist", "/noticelist", "/chatbotpage", "/doquiz", "/quizanswer", "/quizlist", "/fileuploadmodal", "/quizinfomodal", "/assignmentmodal", "/qamodal", "/makeqamodal", "/noticemodal", "/assignmentlist", "/makeassignmentmodal"})
+  public String forward() {
+    return "forward:/index.html";
+  }
+}
 //
 //import jakarta.servlet.http.HttpServletRequest;
 //import jakarta.servlet.http.HttpSession;

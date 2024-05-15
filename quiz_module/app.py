@@ -38,6 +38,8 @@ def add_quiz_keyword():
     time_limit = request.form.get("time_limit")
     description = request.form.get("description")
     
+    print(path)
+    
     if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
         return "invalied request", 401
 

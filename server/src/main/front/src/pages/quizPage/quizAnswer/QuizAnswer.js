@@ -100,12 +100,19 @@ const QuizAnswer = () => {
         question: questions[indexOfOptions].question,
         type: questions[indexOfOptions].type,
       };
-      console.log("sending question : ", question)
+      // question 객체를 JSON 문자열로 만들고, 이를 다시 string으로 만듭니다.
+      const questionString = JSON.stringify(question);
+      console.log("sending question : ", questionString)
+
+      // URLSearchParams를 사용하여 form 데이터를 생성합니다.
+      const formData = new URLSearchParams();
+      formData.append('question', questionString);
+
       const response = await fetch(`http://43.200.202.59:5000/aimodule/get-explane`, {
         method: 'POST',
-        body: JSON.stringify(question),
+        body: formData,  // form-data 형식으로 Body 설정
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',  // Header 설정 수정
         },
       });
 
@@ -121,7 +128,7 @@ const QuizAnswer = () => {
         for (let char of chunk) {
           explaneText += char;
           setExplane(explaneText); // 화면에 한 글자씩 출력
-          await new Promise(resolve => setTimeout(resolve, 100)); // 글자 사이의 딜레이
+          await new Promise(resolve => setTimeout(resolve, 10)); // 글자 사이의 딜레이
         }
       }
 

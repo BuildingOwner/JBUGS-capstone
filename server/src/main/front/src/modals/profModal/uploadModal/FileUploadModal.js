@@ -27,6 +27,21 @@ const FileUploadModal = (props) => {
     console.log(e.target.value)
   }
 
+  const handleClose = (event) => {
+    setVideoTitle('')
+    setFileTitle('')
+    setFileDescription('')
+    setVideoDescription('')
+    setDescription('')
+    setAttachFile(null)
+    setVideoFile(null)
+    setChoice(null)
+    setShortAnswer(null)
+    setQuizType("")
+    event.stopPropagation()
+    props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
+  }
+
   const handleTypeChange = (e) => {
     setQuizType(e.target.value)
     console.log(e.target.value)
@@ -35,7 +50,7 @@ const FileUploadModal = (props) => {
   const handleFileChange = (e) => {
     setAttachFile(e.target.files[0])
     console.log("attachFile : ", e.target.files[0])
-
+    setFileTitle(e.target.files[0].name)
     const files = e.target.files;
     const fileCount = files.length;
 
@@ -53,6 +68,7 @@ const FileUploadModal = (props) => {
 
   const handleVideoChange = (e) => {
     setVideoFile(e.target.files[0])
+    setVideoTitle(e.target.files[0].name)
     console.log("videoFile : ", e.target.files[0])
 
     const files = e.target.files;
@@ -140,12 +156,12 @@ const FileUploadModal = (props) => {
         }
       }}
       isOpen={props.isOpen}
-      onRequestClose={props.onRequestClose}>
+      onRequestClose={handleClose}>
       <div className={styles.top}>
         <h3 className={styles.title}>파일 업로드</h3>
         <button type="button"
           className={`btn btn-primary ${styles.closeBtn}`}
-          onClick={props.onRequestClose}>X</button>
+          onClick={handleClose}>X</button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
@@ -164,7 +180,12 @@ const FileUploadModal = (props) => {
         <div className={styles.contents}>
           <Info title={"동영상명"} content={
             <div className={`${styles.contents} ${styles2.contents}`}>
-              <input type="text" className={`form-control`} placeholder="자료명을 입력해주세요" onChange={changeVideoTitle}></input>
+              <input type="text"
+                className={`form-control`}
+                placeholder="자료명을 입력해주세요"
+                onChange={changeVideoTitle}
+                value={videoTitle}
+              ></input>
               <label htmlFor="videoInput" className={`btn btn-primary`}>
                 <LuFileVideo2 size={20} />
                 {videoDescription && <span className={styles.fileDescription}>{videoDescription}</span>}
@@ -182,7 +203,11 @@ const FileUploadModal = (props) => {
         <div className={styles.contents}>
           <Info title={"파일명"} content={
             <div className={`${styles.contents} ${styles2.contents}`}>
-              <input type="text" className={`form-control`} placeholder="자료명을 입력해주세요" onChange={changeFileTitle}></input>
+              <input type="text" 
+              className={`form-control`} 
+              placeholder="자료명을 입력해주세요" 
+              onChange={changeFileTitle}
+              value={fileTitle}></input>
               <label htmlFor="fileInput" className={`btn btn-primary`}>
                 <LuFilePlus2 size={20} />
                 {fileDescription && <span className={styles.fileDescription}>{fileDescription}</span>}
@@ -242,7 +267,7 @@ const FileUploadModal = (props) => {
       </div>
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`}
-          onClick={props.onRequestClose}>닫기
+          onClick={handleClose}>닫기
         </button>
         <button className={`btn btn-primary ${styles.goBtn}`} onClick={uploadFiles}>업로드</button>
       </div>

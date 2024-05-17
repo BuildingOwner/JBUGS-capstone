@@ -77,7 +77,7 @@ const Sidebar = (props) => {
             </Link>
           </button>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/assignmentlist"} className={styles.linkBtn} state={{ enrollmentId: enrollmentId }}>
+            <Link to={"/assignmentlist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
               <LuClipboardList size="25" />
               <h3 className={styles.text}>과제</h3>
             </Link>

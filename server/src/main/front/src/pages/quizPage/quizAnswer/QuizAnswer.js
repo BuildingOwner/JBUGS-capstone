@@ -169,21 +169,41 @@ const QuizAnswer = () => {
         withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
         credentials: 'include', // credentials를 포함하는 요청으로 설정
       })
-      const userAnswer = await axios.get(`/api/answers/${quizId}`, {
-        withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
-      })
-      console.log("quizAnswer response : ", quizResponse)
-      console.log("answerResponse : ", userAnswer)
+      console.log("quizResponse : ", quizResponse)
+
+      // 학생일때만 업데이트
+      if (location.state.props.memberInfoDto.memberType === "STUDENT") {
+        const userAnswer = await axios.get(`/api/answers/${quizId}`, {
+          withCredentials: true, // 세션 쿠키를 사용하기 위해 필요
+        })
+        console.log("answerResponse : ", userAnswer)
+        const answer = userAnswer.data.answerDto.answers
+        const score = userAnswer.data.answerDto.score
+        console.log("userAnswer : ", answer)
+        setScore(score)
+        setAnswer(answer)
+      }
+
+      if (location.state.props.memberInfoDto.memberType === "PROFESSOR") {
+        let answerData = {}
+
+        quizResponse.data.questions.map((question, i) => (
+          answerData[`${i + 1}`] = question.answer
+        ))
+
+        setScore(100)
+        setAnswer(answerData)
+      }
 
       const questionData = quizResponse.data.questions.map((quiz) => quiz)
-      const answer = userAnswer.data.answerDto.answers
-      const score = userAnswer.data.answerDto.score
-      setAnswer(answer)
-      setQuestions(questionData)
-      setScore(score)
-      console.log("questionData : ", questionData)
-      console.log("userAnswer : ", answer)
 
+
+
+
+      setQuestions(questionData)
+
+      console.log("questionData : ", questionData)
+      console.log("memberinfoDto :", location.state.props.memberInfoDto)
       setMemberInfoDto(location.state.props.memberInfoDto)
       setDivision(location.state.props.courseDto.division)
       setLectureName(location.state.props.courseDto.lectureName)

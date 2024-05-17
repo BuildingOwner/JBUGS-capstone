@@ -87,7 +87,7 @@ const QuizInfoModal = (props) => {
       </div>
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
-        {props.props.submissionStatus === true
+        {props.props.submissionStatus === true || props.props.memberInfoDto.memberType === "PROFESSOR"
           ? <button className={`btn btn-primary ${styles.goBtn}`} onClick={moveToQuizAnswer}>
             해설 보기
           </button>

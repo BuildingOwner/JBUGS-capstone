@@ -5,7 +5,14 @@
 }
 
 .uploadedImage{
-  width: 100%;
+  width: 49%;
+}
+
+.imageContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--gap-xl);
 }
 
 .profile{
@@ -42,4 +49,7 @@
   height: fit-content;
   font-size: var(--font-size-base);
   white-space:pre-wrap;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
 }

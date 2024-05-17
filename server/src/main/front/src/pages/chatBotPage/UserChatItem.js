@@ -4,15 +4,16 @@ import { FaUser } from "react-icons/fa";
 const UserChatItem = (props) => {
   return (
     <div className={styles.itemContainer}>
-      <h3 className={styles.text}>{props.text}
+      <h3 className={styles.text}>
+        {props.text}
         {/* 이미지가 있을 경우 이미지 출력 */}
-        {
-          props.image ? props.image.map((image) => (
-            <div className={styles.imageContainer}>
+        <div className={styles.imageContainer}>
+          {props.image ? props.image.map((image) => (
+
               <img src={image} alt="User uploaded" className={styles.uploadedImage} />
-            </div>
-          )) : <></>
-        }
+
+            )) : <></> }
+        </div>
       </h3>
 
       <div className={styles.profile}>

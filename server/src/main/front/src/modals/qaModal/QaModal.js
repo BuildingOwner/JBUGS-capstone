@@ -13,7 +13,7 @@ const QaModal = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   const [attachFiles, setAttachFiles] = useState([])
   const data = props.props
-  
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
@@ -120,17 +120,26 @@ const QaModal = (props) => {
         <div className={styles2.contents}>
           <div className={styles2.fileTop}>
             <h3 className={styles2.title}>첨부 파일</h3>
-            <label htmlFor="fileInput" className={`btn btn-primary ${styles2.fileBtn}`}>
-              <LuFilePlus2 size={20} />
-              {fileDescription && <span>{fileDescription}</span>}
-            </label>
-            <input type="file"
-              accept="*"
-              id="fileInput"
-              className={`form-control ${styles.imageInput}`}
-              onChange={handleFileChange}
-              style={{ display: "none" }}
-              multiple></input>
+
+            {
+              data.writer === data.memberName ?
+                <>
+                  <label htmlFor="fileInput" className={`btn btn-primary ${styles2.fileBtn}`}>
+                    <LuFilePlus2 size={20} />
+                    {fileDescription && <span>{fileDescription}</span>}
+                  </label>
+                  <input type="file"
+                    accept="*"
+                    id="fileInput"
+                    className={`form-control ${styles.imageInput}`}
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                    multiple>
+                  </input>
+                </>
+                : null
+            }
+
           </div>
           {
             data.materials?.map((material) => (
@@ -158,7 +167,18 @@ const QaModal = (props) => {
             <h3 className={styles2.title}>댓글</h3>
           </div>
           <div className={styles2.commentList}>
-            <h3 className={styles2.comment}>댓글이여asdfasdfasdfadsfasdfasdfasdfdsfasdfadfadsfasdfasdfasdfdsfasdfadfadsfasdfasdfasdfdsfasdfadafas</h3>
+            {
+              // 댓글이 있을 시에 출력
+              data?.comment ?
+                data.comment?.map((comment) => (
+                  <h3 className={`${styles2.comment} 
+                  ${comment.isProfessor === true ? styles2.profComment : null}`}>
+                    {comment.writer}
+                    {comment.content}
+                  </h3>
+                ))
+                : null
+            }
           </div>
         </div>
       </div>
@@ -171,7 +191,14 @@ const QaModal = (props) => {
       />
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
-        <button className={`btn btn-primary ${styles.goBtn}`}>수정 하기</button>
+        {
+          data.writer === data.memberName ?
+            <>
+              <button className={`btn btn-primary ${styles.goBtn}`}>수정 하기</button>
+            </>
+            : null
+        }
+
       </div>
     </Modal>
   );

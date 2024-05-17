@@ -100,6 +100,7 @@ const AssignmentList = () => {
                         dueDate={assignment.dueDate}
                         weekId={assignment.weekNumber}
                         status={assignment.status}
+                        enrollmentId={enrollmentId}
                       />
                     ) : <NoItem title={"미제출 과제가"} />
                   : <NoItem title={"미제출 과제가"} />}
@@ -128,6 +129,7 @@ const AssignmentList = () => {
                         dueDate={assignment.dueDate}
                         weekId={assignment.weekNumber}
                         status={assignment.status}
+                        enrollmentId={enrollmentId}
                       />
                     ) : <NoItem title={"제출한 과제가"} />
                   : <NoItem title={"제출한 과제가"} />}

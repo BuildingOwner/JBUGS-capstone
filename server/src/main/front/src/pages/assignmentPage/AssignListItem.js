@@ -6,14 +6,11 @@ const AssignListItem = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false)
-
   const openModal = () => {
-    console.log("open")
     setModalIsOpen(true)
   }
 
   const closeModal = (event) => {
-    console.log("close")
     setModalIsOpen(false)
     if (event) {
       // 이벤트 버블링을 막음

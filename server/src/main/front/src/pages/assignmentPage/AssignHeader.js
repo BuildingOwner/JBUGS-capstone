@@ -6,7 +6,7 @@ const AssignHeader = ({ lectureName, division }) => {
     <div className={styles.header}>
       <div className={styles.top}>
         <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-          <h3 className={styles.title}>퀴즈</h3>
+          <h3 className={styles.title}>과제</h3>
           <h3 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{lectureName} {division}</h3>
         </div>
         <div className={styles.searchContainer}>

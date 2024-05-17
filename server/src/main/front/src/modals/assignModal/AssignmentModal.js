@@ -5,15 +5,39 @@ import styles2 from "./AssignmentModal.module.css"
 import Info from "../modalComponents/Info";
 import { LuFilePlus2 } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 
 const AssignmentModal = (props) => {
   Modal.setAppElement("#root")
-  console.log(props)
   const data = props?.props
   const [fileDescription, setFileDescription] = useState('');
   const [formattedDate, setFormattedDate] = useState()
   const [remainDate, setRemainDate] = useState('')
   const [attachFiles, setAttachFiles] = useState([])
+
+  const uploadAssign = async () => {
+    console.log("업로드 시작")
+    try {
+      const formData = new FormData()
+
+      // attachFiles 배열의 각 파일을 formData에 추가
+      if (attachFiles) {
+        for (let i = 0; i < attachFiles.length; i++) {
+          formData.append("attachFiles", attachFiles[i]);
+        }
+      }
+
+      const response = await axios.post(`/api/course/${data.enrollmentId}/assignment/submit`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      console.log("upload response : ", response)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   const handleFileChange = (event) => {
     const filesArray = Array.from(event.target.files) // FileList를 배열로 변환
@@ -26,7 +50,7 @@ const AssignmentModal = (props) => {
       setFileDescription(files[0].name);
     } else if (fileCount > 1) {
       // 여러 파일이 선택된 경우, "파일 n개" 형식으로 표시
-      setFileDescription(`이미지 ${fileCount}개`);
+      setFileDescription(`파일 ${fileCount}개`);
     } else {
       // 파일이 선택되지 않은 경우
       setFileDescription('');
@@ -106,7 +130,6 @@ const AssignmentModal = (props) => {
     } else {
       remainingTime = `마감`
     }
-    console.log(remainingTime)
     return remainingTime
   }
 
@@ -196,10 +219,13 @@ const AssignmentModal = (props) => {
       />
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
-        <button className={`btn btn-primary ${styles.goBtn}`}>과제 제출</button>
+        <button className={`btn btn-primary ${styles.goBtn}`}
+          onClick={
+            remainDate === "마감" ? null : uploadAssign
+          }>과제 제출</button>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
 export default AssignmentModal;

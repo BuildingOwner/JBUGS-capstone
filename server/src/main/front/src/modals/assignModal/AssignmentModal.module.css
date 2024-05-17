@@ -1,4 +1,4 @@
-.contents{
+.contents {
   display: flex;
   flex-direction: column;
   gap: var(--gap-3xs);
@@ -17,37 +17,41 @@
   background-color: #ccc !important;
 }
 
-.fileTop{
+.fileTop {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #888;
   padding-bottom: 5px;
 }
 
-.title{
+.title {
   font-size: var(--font-size-xl);
   color: #777;
   font-weight: bold;
 }
 
-.fileItem{
+.fileItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: var(--padding-7xs) 0;
 }
 
-.fileDeleteBtn{
+.fileDeleteBtn {
   background: none !important;
   border: none !important;
   color: black !important;
 }
 
-.comment{
+.comment {
   background-color: var(--point-bg-blue);
   font-size: var(--font-size-xl);
   padding: var(--padding-7xs);
   border-radius: 5px;
   width: 100%;
   word-wrap: break-word;
+}
+
+.profComment {
+  background-color: var(--point-yellow);
 }

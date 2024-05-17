@@ -90,7 +90,7 @@ public class CourseApiController {
                 weeklyContentDto.setClassFiles(fileDtos);
 
                 if (loginMember.getMemberType() == MemberType.PROFESSOR) {
-                    List<QuizDto> quizDtos = quizService.findQuizzesByLecture(enrollment.getLecture().getId());
+                    List<QuizDto> quizDtos = quizService.findQuizzesByWeekIdAndLecture(week.getId(), enrollment.getLecture().getId());
                     weeklyContentDto.setQuizzes(quizDtos);
                 } else{
                     List<QuizDto> quizDtoList = quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment);

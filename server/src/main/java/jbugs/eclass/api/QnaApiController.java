@@ -1,5 +1,6 @@
 package jbugs.eclass.api;
 
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -106,6 +108,7 @@ public class QnaApiController {
             qna.setSecret(secret);
             qnARepository.save(qna); // QnA 정보 저장
 
+            log.info(Arrays.toString(attachFiles));
             // 파일 저장
             if (attachFiles != null && attachFiles.length > 0) {
                 for (MultipartFile file : attachFiles) {

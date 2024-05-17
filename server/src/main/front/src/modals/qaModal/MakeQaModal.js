@@ -21,6 +21,12 @@ const MakeQaModal = (props) => {
   const [fileDescription, setFileDescription] = useState('');
   const [title, setTitle] = useState("")
 
+  const handleClose = (event) => {
+    setAttachFiles([])
+    event.stopPropagation()
+    props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
+  }
+
   const handleFileChange = (e) => {
     const filesArray = Array.from(e.target.files) // FileList를 배열로 변환
     setAttachFiles(filesArray)
@@ -47,7 +53,13 @@ const MakeQaModal = (props) => {
       formData.append("title", title)
       formData.append("description", qnA)
       formData.append("secret", secret)
-      formData.append("attachFiles", attachFiles)
+      
+      // attachFiles 배열의 각 파일을 formData에 추가
+      if (attachFiles) {
+        for (let i = 0; i < attachFiles.length; i++) {
+          formData.append("attachFiles", attachFiles[i]);
+        }
+      }
 
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
@@ -86,10 +98,10 @@ const MakeQaModal = (props) => {
         }
       }}
       isOpen={props.isOpen}
-      onRequestClose={props.onRequestClose}>
+      onRequestClose={handleClose}>
       <div className={styles.top}>
         <h3 className={styles.title}>질문 하기</h3>
-        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={props.onRequestClose}><IoClose /></button>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={handleClose}><IoClose /></button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
@@ -146,11 +158,11 @@ const MakeQaModal = (props) => {
         </div>
       </div>
       <div className={styles.bottom}>
-        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
+        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
         <button className={`btn btn-primary ${styles.goBtn}`} onClick={uploadQnA}>등록 하기</button>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
 export default MakeQaModal;

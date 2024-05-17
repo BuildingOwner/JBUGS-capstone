@@ -8,10 +8,16 @@ import { IoClose } from "react-icons/io5";
 
 const AssignmentModal = (props) => {
   Modal.setAppElement("#root")
-
+  console.log(props)
+  const data = props?.props
   const [fileDescription, setFileDescription] = useState('');
+  const [formattedDate, setFormattedDate] = useState()
+  const [remainDate, setRemainDate] = useState('')
+  const [attachFiles, setAttachFiles] = useState([])
 
   const handleFileChange = (event) => {
+    const filesArray = Array.from(event.target.files) // FileList를 배열로 변환
+    setAttachFiles(filesArray)
     const files = event.target.files;
     const fileCount = files.length;
 
@@ -36,9 +42,64 @@ const AssignmentModal = (props) => {
     }
   }, []);
 
-  useEffect(() => {
+  const handleClose = (event) => {
+    // setAnswerFlag(false)
+    setFileDescription('')
+    setAttachFiles([])
+    event.stopPropagation()
+    props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
+  }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월
+    const day = date.getDate().toString().padStart(2, '0'); // 일
+    const hours = date.getHours().toString().padStart(2, '0'); // 시간
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // 분
+
+    // 포맷팅된 문자열 생성
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
+
+  const remainDates = (dateString) => {
+    // 현재 날짜
+    const now = new Date()
+
+    // 마감 날짜
+    const dueDate = new Date(dateString)
+
+    // 남은 시간(밀리초 단위)
+    const diff = dueDate - now
+
+    // 밀리초를 일, 시간, 분 단위로 변환
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+
+    let remainingTime
+
+    if (days > 0) {
+      remainingTime = `${days}일 ${hours}시간`
+    } else if (hours > 0) {
+      remainingTime = `${hours}시간 ${minutes}분`
+    } else if (minutes > 0) {
+      remainingTime = `${minutes}분`
+    } else {
+      remainingTime = `마감`
+    }
+    console.log(remainingTime)
+    return remainingTime
+  }
+
+  useEffect(() => {
+    const inputDate = data?.dueDate
+    const data1 = formatDate(inputDate) // 종료 일시
+    const data2 = remainDates(inputDate) // 남은 시간
+    setRemainDate(data2)
+    setFormattedDate(data1)
   }, [])
+
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -52,22 +113,24 @@ const AssignmentModal = (props) => {
         }
       }}
       isOpen={props.isOpen}
-      onRequestClose={props.onRequestClose}>
+      onRequestClose={handleClose}>
       <div className={styles.top}>
-        <h3 className={styles.title}>공지 제목</h3>
-        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={props.onRequestClose}><IoClose /></button>
+        <h3 className={styles.title}>{data.title}</h3>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`}
+          onClick={handleClose}><IoClose />
+        </button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
-          <Info title={"종료 일시"} content={"2024-10-10"} />
-          <Info title={"마감 기한"} content={"2024-10-10"} />
+          <Info title={"종료 일시"} content={formattedDate} />
+          <Info title={"마감 기한"} content={remainDate} />
         </div>
         <div className={styles.contents}>
           <Info title={"제출 여부"} content={<h3 className={`${styles.box} ${styles.red}`}>미제출</h3>} /> {/*미제출은 red, 제출완료는 green*/}
           <Info title={"최종 수정 일시"} content={"2024-10-10"} />
         </div>
         <div className={styles.contents}>
-          <Info title={"설명"} content={"설명임"} />
+          <Info title={"설명"} content={data.contents} />
         </div>
         <div className={styles2.contents}>
           <div className={styles2.fileTop}>
@@ -84,12 +147,17 @@ const AssignmentModal = (props) => {
               style={{ display: "none" }}
               multiple></input>
           </div>
-          <div className={styles2.fileItem}>
-            <h3 style={{ fontSize: "1.25rem" }}>L 파일 이름</h3>
-            <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
-              <IoClose size={20} />
-            </button>
-          </div>
+          {
+            attachFiles.length > 0 ?
+              attachFiles.map((file) => (
+                <div className={styles2.fileItem}>
+                  <h3 style={{ fontSize: "1.25rem" }}>L {file.name}</h3>
+                  <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
+                    <IoClose size={20} />
+                  </button>
+                </div>
+              )) : null
+          }
         </div>
         <div className={styles2.contents}>
           <div className={styles2.fileTop}>
@@ -107,8 +175,8 @@ const AssignmentModal = (props) => {
         style={{ overflowY: "hidden" }} // 세로 스크롤 제거
       />
       <div className={styles.bottom}>
-        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
-        <button className={`btn btn-primary ${styles.goBtn}`}>해설 보기</button>
+        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
+        <button className={`btn btn-primary ${styles.goBtn}`}>과제 제출</button>
       </div>
     </Modal>
   );

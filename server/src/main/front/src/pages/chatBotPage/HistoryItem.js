@@ -1,7 +1,6 @@
 import styles from "./HistoryItem.module.css"
 
 const HistoryItem = (props) => {
-  console.log("history",props)
   return (
     <div className={`${styles.historyItem} ${props.selectedId == props.chatRoomId ? styles.selected : null}`} >
       <input className={`form-check-input ${styles.checkBox}`} type="checkbox" />

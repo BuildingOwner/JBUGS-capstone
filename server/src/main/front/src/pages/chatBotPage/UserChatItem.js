@@ -5,12 +5,15 @@ const UserChatItem = (props) => {
   return (
     <div className={styles.itemContainer}>
       <h3 className={styles.text}>{props.text}
-      {/* 이미지가 있을 경우 이미지 출력 */}
-        {props.image && (
-          <div className={styles.imageContainer}>
-            <img src={props.image} alt="User uploaded" className={styles.uploadedImage} />
-          </div>
-        )}</h3>
+        {/* 이미지가 있을 경우 이미지 출력 */}
+        {
+          props.image ? props.image.map((image) => (
+            <div className={styles.imageContainer}>
+              <img src={image} alt="User uploaded" className={styles.uploadedImage} />
+            </div>
+          )) : <></>
+        }
+      </h3>
 
       <div className={styles.profile}>
         <div className={styles.userIconWrapper}>

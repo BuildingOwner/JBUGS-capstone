@@ -11,11 +11,13 @@ const RelatedQuizModal = (props) => {
   const [answerFlag, setAnswerFlag] = useState(false)
   const quiz = props.relatedQuiz
   const optionIcon = [<Bs1Square size={25} />, <Bs2Square size={25} />, <Bs3Square size={25} />, <Bs4Square size={25} />]
+
   const handleClose = () => {
-    setAnswerFlag(false);
-    setSelectedOption("");
-    props.onRequestClose(); // 괄호를 추가하여 함수가 호출되도록 수정
+    setAnswerFlag(false)
+    setSelectedOption("")
+    props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
+
   useEffect(() => {
     console.log(props.relatedQuiz)
   }, [])

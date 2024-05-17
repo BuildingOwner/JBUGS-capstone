@@ -4,6 +4,10 @@
   justify-content: flex-end;
 }
 
+.uploadedImage{
+  width: 100%;
+}
+
 .profile{
   display: flex;
   flex-direction: column;

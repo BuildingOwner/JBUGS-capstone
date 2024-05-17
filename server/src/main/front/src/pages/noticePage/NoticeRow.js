@@ -42,7 +42,7 @@ const QnaRow = (props) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         props={props} />
-      <h4 className={styles.num}>{props.noticeNumber}</h4>
+      <h4 className={styles.num}>{props.noticeNumber + 1}</h4>
       {props.noticeStatus === "EXAM" ?
         <div className={`${styles.category} ${styles.exam}`}>
           <h4>시험</h4>

@@ -52,11 +52,20 @@ const NoticeList = () => {
     setNoticeFilter(e)
     console.log(e)
   }
-
   // 날짜를 기준으로 오름차순으로 정렬하는 함수
-  const sortedNoticeDtoList = noticeDtoList?.sort((a, b) => {
+  let sortedNoticeDtoList = noticeDtoList?.sort((a, b) => {
     return new Date(a.createdAt) - new Date(b.createdAt)
   })
+  console.log("sortedNoticeDtoList : ", sortedNoticeDtoList)
+
+  if (sortedNoticeDtoList) {
+    sortedNoticeDtoList = sortedNoticeDtoList.map((item, index) => ({
+      ...item, // 기존 객체의 모든 키-값 쌍을 복사
+      number: index // "number" 키에 순서를 값으로 추가
+    }));
+  }
+
+  console.log(" number sortedNoticeDtoList : ", sortedNoticeDtoList)
 
   const fetchNoticeList = async () => {
     try {
@@ -159,7 +168,7 @@ const NoticeList = () => {
             <div className={styles.list}>
               {
                 sortedNoticeDtoList?.length !== 0
-                  ? sortedNoticeDtoList
+                  ? sortedNoticeDtoList.reverse()
                     .filter((notice) =>
                       (noticeFilter === "ALL" || notice.noticeStatus === noticeFilter) &&
                       (searchFilter === "title"
@@ -168,7 +177,7 @@ const NoticeList = () => {
                     )
                     .map((notice, i) => (
                       <NoticeRow
-                        noticeNumber={i + 1}
+                        noticeNumber={notice.number}
                         content={notice.content}
                         createdAt={notice.createdAt}
                         noticeId={notice.noticeId}

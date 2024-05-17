@@ -56,9 +56,19 @@ const QaList = () => {
   }
 
   // 날짜를 기준으로 오름차순으로 정렬하는 함수
-  const sortedQnaDtoList = qnADtoList?.sort((a, b) => {
+  let sortedQnaDtoList = qnADtoList?.sort((a, b) => {
     return new Date(a.createdAt) - new Date(b.createdAt)
   })
+  console.log("sortedQnaDtoList : ", sortedQnaDtoList)
+
+  if (sortedQnaDtoList) {
+    sortedQnaDtoList = sortedQnaDtoList.map((item, index) => ({
+      ...item, // 기존 객체의 모든 키-값 쌍을 복사
+      number: index // "number" 키에 순서를 값으로 추가
+    }));
+  }
+
+  console.log(" number sortedQnaDtoList : ", sortedQnaDtoList)
 
   const reRender = () => {
     setReRenderFlag(prevFlag => !prevFlag)
@@ -106,7 +116,7 @@ const QaList = () => {
           <div className={styles.header}>
             <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
               <h3 className={styles.title}>Q & A</h3>
-              <h3 style={{fontSize:"1.5rem",fontWeight:"bold"}}>{lectureName} {division}</h3>
+              <h3 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{lectureName} {division}</h3>
             </div>
             <div className={styles.right}>
               <div className={styles.searchContainer}>
@@ -158,7 +168,7 @@ const QaList = () => {
             </div>
             <div className={`${styles.list} no-scroll-bar`}>
               {sortedQnaDtoList?.length !== 0 ?
-                sortedQnaDtoList.filter((qna) => (qaFilter === "ALL" || qna.writer === qaFilter)
+                sortedQnaDtoList.reverse().filter((qna) => (qaFilter === "ALL" || qna.writer === qaFilter)
                   && (searchFilter === "title" ?
                     // 필터가 title일 경우 keyword가 포함되어있는지 확인
                     qna.title.toLowerCase().includes(keyword.toLowerCase())
@@ -167,7 +177,7 @@ const QaList = () => {
                   )).map((qna, i) => (
                     <QnaRow
                       key={`qna${i}`}
-                      number={i}
+                      number={qna.number}
                       createdAt={qna.createdAt}
                       qnAStatus={qna.qnAStatus}
                       title={qna.title}

@@ -36,6 +36,7 @@ const QnaRow = (props) => {
     const data = formatDate(inputDate);
     setFormattedDate(data)
   }, [])
+  
   return (
     <div className={styles.row}
       // secret이 true인 경우에는 작성자와 현재 멤버 이름을 비교후 같으면 onClick 활성화

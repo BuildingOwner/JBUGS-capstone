@@ -62,6 +62,26 @@ public class QuizService {
         }).collect(Collectors.toList());
     }
 
+    public List<QuizDto> findQuizzesByWeekIdAndLecture(Long weekId, Long lectureId){
+        List<Quiz> quizzes = quizRepository.findQuizzesByWeekId(weekId);
+
+        List<QuizDto> quizDtos = quizzes.stream()
+                .map(quiz -> {
+                    QuizDto dto = new QuizDto();
+                    dto.setQuizId(quiz.getId());
+                    dto.setLectureId(lectureId);
+                    dto.setQuizType(quiz.getQuizType());
+                    dto.setQuizName(quiz.getQuizName());
+                    dto.setDescription(quiz.getDescription());
+                    dto.setDeadline(quiz.getDeadline());
+                    dto.setTimeLimit(quiz.getTimeLimit());
+                    dto.setWeek(quiz.getWeek().getWeekNumber());
+
+                    return dto;
+                }).collect(Collectors.toList());
+        return quizDtos;
+    }
+
     // 기본값을 가지는 QuizInfo 객체를 생성하는 메소드
     public QuizInfo createDefaultQuizInfo(Long quizId, Long studentId, Enrollment enrollment) {
         QuizInfo quizInfo = new QuizInfo();

@@ -176,34 +176,7 @@ const ChatbotPage = () => {
     }
   }
 
-  // const regenerateResponse = async () => {
-  //   try {
-  //     setIsSending(true)
-  //     setReadOnly(true)
-  //     const formData = new FormData();
-  //     formData.append('chat_id', chatId);
-  //     const response = await axios.post("http://43.200.202.59:5000/aimodule/regenerate", formData)
-  //     console.log(response)
-
-  //     // 서버로부터 받은 새로운 응답을 기존 chats 배열의 마지막 요소에 반영
-  //     if (response.data && chats.length > 0) {
-  //       const newChats = [...chats]
-  //       const lastIndex = newChats.length - 1
-  //       if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
-  //         newChats[lastIndex].content[0].text = response.data
-  //       }
-  //       setChats(newChats) // 업데이트된 chats 배열로 상태 업데이트
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   } finally {
-  //     setIsSending(false)
-  //     setReadOnly(false)
-  //   }
-  // }
-
   // 이미지 파일을 Base64 문자열로 변환하는 함수
-
   const convertImageFileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -220,19 +193,24 @@ const ChatbotPage = () => {
     let chattings = {
       role: 'user',
       content: [{ text: text }],
-    };
+    }
 
-    const imageInput = document.getElementById('imageInput');
+    const imageInput = document.getElementById('imageInput')
+
     if (imageInput.files) {
       for (let i = 0; i < imageInput.files.length; i++) {
         // 이미지 파일을 Base64 문자열로 변환
         const imageBase64 = await convertImageFileToBase64(imageInput.files[i]);
-        // Base64 인코딩된 이미지 문자열을 채팅 객체에 추가
-        chattings = {
-          role: 'user',
-          content: [{ text: text, image: imageBase64 }],
-        };
-
+        // 이미지를 새로 추가하거나 기존 이미지 배열에 추가하는 로직
+        let imageContent = chattings.content.find(c => c.image);
+        if (!imageContent) {
+          // 이미지 정보가 없는 경우, 새로운 이미지 정보를 content 배열에 추가
+          chattings.content.push({ image: [imageBase64] });
+        } else {
+          // 이미지 정보가 이미 있는 경우, 해당 배열에 새로운 이미지 정보 추가
+          imageContent.image.push(imageBase64);
+        }
+        console.log("chattings", chattings)
       }
     }
 
@@ -440,8 +418,8 @@ const ChatbotPage = () => {
                     <UserChatItem
                       key={index}
                       // content가 null이 아니면 해당 값을 사용, 그렇지 않으면 안전한 기본값 사용
-                      text={content ? content.text : ""}
-                      image={content ? content.image : null}
+                      text={content ? chat.content[0].text : ""}
+                      image={chat.content[1]?.image ? chat.content[1].image : null}
                       memberName={memberName}
                     />
                   ) : (

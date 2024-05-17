@@ -120,20 +120,16 @@ const QaModal = (props) => {
               style={{ display: "none" }}
               multiple></input>
           </div>
-          <div className={styles2.fileItem}>
-            {
-              data.materials?.map((material) => (
-              <>
+          {
+            data.materials?.map((material) => (
+              <div className={styles2.fileItem}>
                 <h3 style={{ fontSize: "1.25rem" }}>L {material.fileName}</h3>
                 <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
                   <IoClose size={20} />
                 </button>
-              </>
-
-              ))
-            }
-
-          </div>
+              </div>
+            ))
+          }
         </div>
         <div className={styles2.contents}>
           <div className={styles2.fileTop}>

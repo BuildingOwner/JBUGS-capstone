@@ -128,11 +128,15 @@ const NoticeList = () => {
                   </div>
                 </div>
               </div>
-              <button type="button"
-                className={`btn btn-primary ${styles.addBtn}`}
-                onClick={openModal}>
-                <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>공지작성</h3>
-              </button>
+              {
+                memberInfoDto?.memberType === "PROFESSOR" ?
+                  <button type="button"
+                    className={`btn btn-primary ${styles.addBtn}`}
+                    onClick={openModal}>
+                    <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>공지작성</h3>
+                  </button>
+                  : null
+              }
             </div>
           </div>
           <div className={styles.content}>
@@ -194,7 +198,7 @@ const NoticeList = () => {
           </div>
         </section>
       </main>
-    </div>
+    </div >
   );
 };
 

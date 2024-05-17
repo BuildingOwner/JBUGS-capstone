@@ -15,7 +15,7 @@ const ChatbotPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const memberName = location.state.memberName
-  const [studentId, setStudentId] = useState()
+  const [memberId, setMemberId] = useState()
   const [chats, setChats] = useState([]); // 대화 데이터를 저장할 상태
   const [chatDtoList, setChatDtoList] = useState([])
   const [chatIdArray, setChatIdArray] = useState([]) // 챗룸 아이디의 배열 
@@ -93,7 +93,7 @@ const ChatbotPage = () => {
   const makeNewChat = async () => {
     try {
       const response = await axios.post("/api/chat", {
-        studentId: studentId
+        memberId: memberId
       })
       console.log("makeNewChat의 response : ", response)
       await fetchChatData(); // 이 함수가 내부적으로 chatDtoList 상태를 업데이트해야 합니다.
@@ -347,7 +347,7 @@ const ChatbotPage = () => {
       console.log("chatIdArray : ", chatIdArray)
 
       setChatDtoList(chatDto)
-      setStudentId(response.data.studentDto.studentId)
+      setMemberId(response.data.memberInfoDto.memberId)
       setChatIdArray(chatIdArray)
       return chatIdArray; // chatId 배열 반환
 

@@ -29,8 +29,5 @@ public class Student {
 //    private List<Attendance> attendances = new ArrayList<>();
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<ChatRoom> chatRooms = new ArrayList<>();
-
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<QuizInfo> quizInfos = new ArrayList<>();
 }

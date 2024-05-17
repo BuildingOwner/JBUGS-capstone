@@ -23,7 +23,7 @@ public class QnA {
     private LocalDateTime createdAt;
     private int views;
     private QnAStatus qnaStatus;
-    private String qnaAnswer;
+    private String comment;
     private boolean secret;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -139,17 +139,14 @@ public class QnaApiController {
         }
     }
 
-    @PostMapping("/qna/{qnaId}/answer")
+    @PostMapping("/qna/{qnaId}/comment")
     public ResponseEntity<?> answerQnA(@PathVariable Long qnaId,
-                                       @RequestParam("qnaAnswer") String qnaAnswer,
+                                       @RequestParam("comment") String comment,
                                        HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
             Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-            if (loginMember.getMemberType() != MemberType.PROFESSOR) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다.");
-            }
             // QnA 찾기
             Optional<QnA> qnaOptional = qnARepository.findById(qnaId);
             if (!qnaOptional.isPresent()) {
@@ -158,9 +155,13 @@ public class QnaApiController {
 
             QnA qna = qnaOptional.get();
             // 답변 설정
-            qna.setQnaAnswer(qnaAnswer);
-            // 상태를 COMPLETE로 변경
-            qna.setQnaStatus(QnAStatus.COMPLETE);
+            qna.setComment(comment);
+
+            // 로그인한 멤버가 교수일 경우
+            if (loginMember.getMemberType() == MemberType.PROFESSOR) {
+                // 상태를 COMPLETE로 변경
+                qna.setQnaStatus(QnAStatus.COMPLETE);
+            }
             // 변경 사항 저장
             qnARepository.save(qna);
 

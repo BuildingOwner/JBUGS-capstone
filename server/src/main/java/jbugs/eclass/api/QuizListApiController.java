@@ -59,12 +59,18 @@ public class QuizListApiController {
             Lecture lectureId = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
             List<Week> weeks = weekService.findWeeksByLectureId(lectureId.getId());
 
-            // 모든 퀴즈를 주차 정보와 함께 단일 리스트로 반환
-            List<QuizDto> allQuizDtoList = weeks.stream()
-                    .flatMap(week -> quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment).stream())
-                    .collect(Collectors.toList());
 
-            quizContentDto.setAllQuizDtoList(allQuizDtoList);
+            if (loginMember.getMemberType() == MemberType.PROFESSOR) {
+                List<QuizDto> allQuizDtoList = quizService.findQuizzesByLecture(enrollment.getLecture().getId());
+                quizContentDto.setAllQuizDtoList(allQuizDtoList);
+            } else{
+                // 모든 퀴즈를 주차 정보와 함께 단일 리스트로 반환
+                List<QuizDto> allQuizDtoList = weeks.stream()
+                        .flatMap(week -> quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment).stream())
+                        .collect(Collectors.toList());
+                quizContentDto.setAllQuizDtoList(allQuizDtoList);
+            }
+
 
             return ResponseEntity.ok(quizContentDto);
         }

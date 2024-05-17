@@ -231,7 +231,7 @@ public class AssignmentApiController {
                     if (!file.isEmpty()) {
                         String fullPath = fileDir + file.getOriginalFilename();
 
-                        log.info("{} 저장 fullPath={}", "파일", fullPath);
+                        log.info("{} 저장 fullPath={}", "파1일", fullPath);
                         file.transferTo(new File(fullPath));
 
                         Material material = new Material();

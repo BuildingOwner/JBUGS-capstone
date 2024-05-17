@@ -33,6 +33,12 @@ public class EnrollmentRepository {
                 .getResultList();
     }
 
+    public List<Enrollment> findAllByMemberId(Long memberId) {
+        return em.createQuery("select e from Enrollment e where e.member.id = :memberId", Enrollment.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
     public Lecture findLectureByEnrollmentId(Long enrollmentId) {
         return em.createQuery("select e.lecture from Enrollment e where e.id = :enrollmentId", Lecture.class)
                 .setParameter("enrollmentId", enrollmentId)

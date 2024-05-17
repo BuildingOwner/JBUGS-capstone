@@ -18,7 +18,7 @@ public class QnADto {
     private int views;
     private QnAStatus qnAStatus;
     private boolean secret;
-    private String qnaAnswer;
+    private String comment;
     private List<MaterialDto> materials;
 
 //    public static QnADto from(QnA qna) {
@@ -45,7 +45,7 @@ public class QnADto {
         dto.setQnAStatus(qna.getQnaStatus());
         dto.setViews(qna.getViews());
         dto.setSecret(qna.isSecret());
-        dto.setQnaAnswer(qna.getQnaAnswer());
+        dto.setComment(qna.getComment());
 
         // Material 리스트를 변환하여 설정
         List<MaterialDto> materialDtos = materials.stream().map(material -> {

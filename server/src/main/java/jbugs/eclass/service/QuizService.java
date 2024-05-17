@@ -5,6 +5,7 @@ import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.AnswerDto;
 import jbugs.eclass.dto.QuizDetailsDto;
 import jbugs.eclass.dto.QuizDto;
+import jbugs.eclass.dto.QuizDto2;
 import jbugs.eclass.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -96,6 +97,26 @@ public class QuizService {
             quizDtos.add(quizDto);
         }
 
+        return quizDtos;
+    }
+
+    public List<QuizDto> findQuizzesByLecture(Long lectureId){
+        List<Quiz> quizzes = quizRepository.findByLectureId(lectureId);
+
+        List<QuizDto> quizDtos = quizzes.stream()
+                .map(quiz -> {
+                    QuizDto dto = new QuizDto();
+                    dto.setQuizId(quiz.getId());
+                    dto.setLectureId(lectureId);
+                    dto.setQuizType(quiz.getQuizType());
+                    dto.setQuizName(quiz.getQuizName());
+                    dto.setDescription(quiz.getDescription());
+                    dto.setDeadline(quiz.getDeadline());
+                    dto.setTimeLimit(quiz.getTimeLimit());
+                    dto.setWeek(quiz.getWeek().getWeekNumber());
+
+                    return dto;
+                }).collect(Collectors.toList());
         return quizDtos;
     }
 

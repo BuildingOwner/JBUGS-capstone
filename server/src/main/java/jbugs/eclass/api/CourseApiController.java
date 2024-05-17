@@ -89,8 +89,13 @@ public class CourseApiController {
                 List<FileDto> fileDtos = materialService.findMaterialsByWeekIdAndLectureId(week.getId(), enrollment.getLecture().getId());
                 weeklyContentDto.setClassFiles(fileDtos);
 
-                List<QuizDto> quizDtoList = quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment);
-                weeklyContentDto.setQuizzes(quizDtoList);
+                if (loginMember.getMemberType() == MemberType.PROFESSOR) {
+                    List<QuizDto> quizDtos = quizService.findQuizzesByLecture(enrollment.getLecture().getId());
+                    weeklyContentDto.setQuizzes(quizDtos);
+                } else{
+                    List<QuizDto> quizDtoList = quizService.findQuizzesByWeekIdAndStudentId(week.getId(), loginMember.getStudent().getId(), enrollment);
+                    weeklyContentDto.setQuizzes(quizDtoList);
+                }
 
                 return weeklyContentDto;
             }).collect(Collectors.toList());

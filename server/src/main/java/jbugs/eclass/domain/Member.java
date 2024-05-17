@@ -39,4 +39,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Enrollment> enrollments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<ChatRoom> chatRooms = new ArrayList<>();
 }

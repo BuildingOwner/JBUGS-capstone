@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.ChatRepository;
+import jbugs.eclass.repository.MemberRepository;
 import jbugs.eclass.repository.StudentRepository;
 import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 public class ChatApiController {
     private final StudentRepository studentRepository;
     private final ChatRepository chatRepository;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/chat")
     public ResponseEntity<?> getChatInfo(HttpServletRequest request) {
@@ -44,12 +46,8 @@ public class ChatApiController {
             }
             chatContentDto.setMemberInfoDto(memberInfoDto);
 
-            StudentDto studentDto = new StudentDto();
-            studentDto.setStudentId(loginMember.getStudent().getId());
-            chatContentDto.setStudentDto(studentDto);
-
             // 학생 ID에 해당하는 모든 ChatRoom 조회
-            List<ChatRoom> chatRooms = chatRepository.findByStudentId(loginMember.getStudent().getId());
+            List<ChatRoom> chatRooms = chatRepository.findByMemberId(loginMember.getId());
             List<ChatDto> chatDtoList = chatRooms.stream()
                     .map(chatRoom -> {
                         ChatDto chatDto = new ChatDto();
@@ -73,14 +71,14 @@ public class ChatApiController {
     public ResponseEntity<?> createChatRoom(@RequestBody ChatRoomCreateDto request) {
 
         // 학생 ID로 학생 엔티티 조회
-        Student student = studentRepository.findById(request.getStudentId())
-                .orElseThrow(() -> new IllegalArgumentException("Student not found with id: " + request.getStudentId()));
+        Member member = memberRepository.findById(request.getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with id: " + request.getMemberId()));
 
         // 새 채팅방 생성
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.setChatRoomName("생성");
         chatRoom.setChattingJson(null);
-        chatRoom.setStudent(student); // 학생 엔티티 설정
+        chatRoom.setMember(member); // 학생 엔티티 설정
 
         // 채팅방 저장
         chatRepository.save(chatRoom);

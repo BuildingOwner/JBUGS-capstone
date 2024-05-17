@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 public class MainApiController {
 
     private final EnrollmentRepository enrollmentRepository;
-    private final WeekService weekService;
     private final QuizService quizService;
     private final AssignmentService assignmentService;
 
@@ -57,17 +56,27 @@ public class MainApiController {
         if (loginMember.getMemberType() == MemberType.STUDENT) {
             memberInfoDto.setFirstTrack(loginMember.getStudent().getFirstTrack());
             memberInfoDto.setStudentId(loginMember.getStudent().getId());
+
+            MainInfoDto mainInfoDto = new MainInfoDto();
+            mainInfoDto.setMemberInfoDto(memberInfoDto);
+
+            List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(loginMember.getStudent().getId());
+
+            List<MainLectureDto> lectureInfos = enrollments.stream().map(this::buildMainLectureDto).collect(Collectors.toList());
+            mainInfoDto.setMainLectures(lectureInfos);
+
+            return mainInfoDto;
+        }else {
+            MainInfoDto mainInfoDto = new MainInfoDto();
+            mainInfoDto.setMemberInfoDto(memberInfoDto);
+
+            List<Enrollment> enrollments = enrollmentRepository.findAllByMemberId(loginMember.getId());
+
+            List<MainLectureDto> lectureInfos = enrollments.stream().map(this::buildMainLectureDto2).collect(Collectors.toList());
+            mainInfoDto.setMainLectures(lectureInfos);
+
+            return mainInfoDto;
         }
-
-        MainInfoDto mainInfoDto = new MainInfoDto();
-        mainInfoDto.setMemberInfoDto(memberInfoDto);
-
-        List<Enrollment> enrollments = enrollmentRepository.findAllByStudentId(loginMember.getStudent().getId());
-
-        List<MainLectureDto> lectureInfos = enrollments.stream().map(this::buildMainLectureDto).collect(Collectors.toList());
-        mainInfoDto.setMainLectures(lectureInfos);
-
-        return mainInfoDto;
     }
 
     private MainLectureDto buildMainLectureDto(Enrollment enrollment) {
@@ -83,6 +92,24 @@ public class MainApiController {
         lectureInfo.setAssignments(assignmentDtos);
 
         List<QuizDto> quizDtos = quizService.findUnsubmittedQuizzesByLectureAndStudent(enrollment.getLecture().getId(), enrollment.getStudent().getId(), enrollment);
+        lectureInfo.setQuizDtoList(quizDtos);
+
+        return lectureInfo;
+    }
+
+    private MainLectureDto buildMainLectureDto2(Enrollment enrollment) {
+        MainLectureDto lectureInfo = new MainLectureDto();
+        lectureInfo.setEnrollmentId(enrollment.getId());
+        lectureInfo.setLectureName(enrollment.getLecture().getName());
+        lectureInfo.setProfessorName(enrollment.getLecture().getProfessor().getMember().getName());
+        lectureInfo.setDivision(enrollment.getLecture().getDivision());
+        lectureInfo.setClassification(enrollment.getLecture().getClassification());
+        lectureInfo.setLectureTime(enrollment.getLecture().getLectureTime());
+
+        List<AssignmentDto> assignmentDtos = assignmentService.findAssignmentsByLecture(enrollment.getLecture().getId());
+        lectureInfo.setAssignments(assignmentDtos);
+
+        List<QuizDto> quizDtos = quizService.findQuizzesByLecture(enrollment.getLecture().getId());
         lectureInfo.setQuizDtoList(quizDtos);
 
         return lectureInfo;

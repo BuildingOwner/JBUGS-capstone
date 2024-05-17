@@ -1,13 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import Modal from "react-modal";
 import styles from "../quizModal/QuizInfoModal.module.css"
-import styles2 from "../assignModal/AssignmentModal.module.css"
 import styles3 from "../qaModal/QaModal.module.css"
 import Info from "../modalComponents/Info";
-import { LuFilePlus2 } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
-import { RxLockClosed } from "react-icons/rx";
-import { RxLockOpen2 } from "react-icons/rx";
 import axios from "axios";
 
 const MakeNoticeModal = (props) => {
@@ -105,16 +101,6 @@ const MakeNoticeModal = (props) => {
                 <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={props.onRequestClose}><IoClose /></button>
             </div>
             <div className={`no-scroll-bar ${styles.gap}`}>
-                <div className={styles.contents}>
-                    <Info title={"제목"} content={
-                        <input type="text" className={`form-control ${styles3.title}`} onChange={(e) => { setTitle(e.target.value) }} />
-                    } />
-                </div>
-                <div className={styles.contents}>
-                    <Info title={"공지 내용"} content={
-                        <textarea className={`form-control ${styles3.content}`} onChange={(e) => { setNotice(e.target.value) }} rows={5} />
-                    } />
-                </div>
                 <Info title={"공지 유형"} content={
                     <select
                         className={`form-select form-select-sm`}
@@ -126,32 +112,15 @@ const MakeNoticeModal = (props) => {
                         <option value={"FACE_TO_FACE_CLASSES"}>대면수업</option>
                     </select>
                 } />
-                {/* <div className={styles2.contents}>
-                    <div className={styles2.fileTop}>
-                        <h3 className={styles2.title}>첨부 파일</h3>
-                        <label htmlFor="fileInput" className={`btn btn-primary ${styles2.fileBtn}`}>
-                            <LuFilePlus2 size={20} />
-                        </label>
-                        <input type="file"
-                            accept="*"
-                            id="fileInput"
-                            className={`form-control ${styles.imageInput}`}
-                            style={{ display: "none" }}
-                            onChange={handleFileChange}
-                            multiple></input>
-                    </div>
-                    {
-                        attachFiles.length > 0 ?
-                            attachFiles.map((file) => (
-                                <div className={styles2.fileItem}>
-                                    <h3 style={{ fontSize: "1.25rem" }}>L {file.name}</h3>
-                                    <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
-                                        <IoClose size={20} />
-                                    </button>
-                                </div>
-                            )) : null
-                    }
-                </div> */}
+                <Info title={"제목"} content={
+                    <input type="text" className={`form-control ${styles3.title}`} onChange={(e) => { setTitle(e.target.value) }} />
+                } />
+                <div style={{flexGrow:"1"}}>
+                    <Info title={"공지 내용"} content={
+                        <textarea className={`form-control ${styles3.content}`} onChange={(e) => { setNotice(e.target.value) }} rows={10} />
+                    } />
+                </div>
+
             </div>
             <div className={styles.bottom}>
                 <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>

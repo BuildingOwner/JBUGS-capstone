@@ -37,7 +37,7 @@
 
 .searchBox {
   display: flex;
-  border: 1px solid var(--point-bg-blue);
+  border: 2px solid var(--point-bg-blue);
   border-left: none;
   border-radius: 0 5px 5px 0;
   height: 40px;

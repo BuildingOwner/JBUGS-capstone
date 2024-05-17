@@ -13,8 +13,10 @@ const QnaRow = (props) => {
 
   const closeModal = (event) => {
     setModalIsOpen(false)
-    // 이벤트 버블링을 막음
-    event.stopPropagation()
+    if (event) {
+      // 이벤트 버블링을 막음
+      event.stopPropagation()
+    }
   }
 
   const formatDate = (dateString) => {
@@ -36,7 +38,7 @@ const QnaRow = (props) => {
   }, [])
   return (
     <div className={styles.row}
-    // secret이 true인 경우에는 작성자와 현재 멤버 이름을 비교후 같으면 onClick 활성화
+      // secret이 true인 경우에는 작성자와 현재 멤버 이름을 비교후 같으면 onClick 활성화
       onClick={props.secret ? (props.writer === props.memberName ? openModal : null) : openModal}>
       <QaModal isOpen={modalIsOpen}
         onRequestClose={closeModal}

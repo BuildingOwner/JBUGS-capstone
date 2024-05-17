@@ -11,6 +11,7 @@ const QaModal = (props) => {
   Modal.setAppElement("#root")
   const [fileDescription, setFileDescription] = useState('')
   const [formattedDate, setFormattedDate] = useState()
+  const [attachFiles, setAttachFiles] = useState([])
   const data = props.props
 
   const formatDate = (dateString) => {
@@ -25,7 +26,18 @@ const QaModal = (props) => {
     return `${year}-${month}-${day}`;
   }
 
+  const handleClose = (event) => {
+    // setAnswerFlag(false)
+    setFileDescription('')
+    setAttachFiles([])
+    event.stopPropagation()
+    props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
+  }
+
   const handleFileChange = (event) => {
+    const filesArray = Array.from(event.target.files) // FileList를 배열로 변환
+    setAttachFiles(filesArray)
+    console.log(filesArray)
     const files = event.target.files;
     const fileCount = files.length;
 
@@ -69,10 +81,10 @@ const QaModal = (props) => {
         }
       }}
       isOpen={props.isOpen}
-      onRequestClose={props.onRequestClose}>
+      onRequestClose={handleClose}>
       <div className={styles.top}>
         <h3 className={styles.title}>{data.title}</h3>
-        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={props.onRequestClose}><IoClose /></button>
+        <button type="button" className={`btn btn-primary ${styles.closeBtn} ${styles.closeBtn2}`} onClick={handleClose}><IoClose /></button>
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
@@ -121,9 +133,9 @@ const QaModal = (props) => {
               multiple></input>
           </div>
           {
-            data.materials?.map((material) => (
+            attachFiles?.map((material) => (
               <div className={styles2.fileItem}>
-                <h3 style={{ fontSize: "1.25rem" }}>L {material.fileName}</h3>
+                <h3 style={{ fontSize: "1.25rem" }}>L {material.name}</h3>
                 <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
                   <IoClose size={20} />
                 </button>
@@ -148,7 +160,7 @@ const QaModal = (props) => {
         onClick={onAnswerClick}
       />
       <div className={styles.bottom}>
-        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
+        <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
         <button className={`btn btn-primary ${styles.goBtn}`}>수정 하기</button>
       </div>
     </Modal>

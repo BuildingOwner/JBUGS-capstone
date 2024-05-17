@@ -23,8 +23,8 @@ const QuizAnswer = () => {
   const [answer, setAnswer] = useState({})
   const [explane, setExplane] = useState("")
   const [relatedQuiz, setRelatedQuiz] = useState({})
-  const [explanes, setExplanes] = useState({}); // explanes를 상태로 관리
-
+  const [explanes, setExplanes] = useState({}) // explanes를 상태로 관리
+  const [score, setScore] = useState(0)
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
@@ -177,10 +177,10 @@ const QuizAnswer = () => {
 
       const questionData = quizResponse.data.questions.map((quiz) => quiz)
       const answer = userAnswer.data.answerDto.answers
-
+      const score = userAnswer.data.answerDto.score
       setAnswer(answer)
       setQuestions(questionData)
-
+      setScore(score)
       console.log("questionData : ", questionData)
       console.log("userAnswer : ", answer)
 
@@ -286,8 +286,8 @@ const QuizAnswer = () => {
           </div>
           <div className={styles.left}>
             <div className={styles.leftTime}>
-              <h3 className={styles.fontSize5xl}>남은 시간</h3>
-              <h3 className={styles.fontSize31xl}>3 : 17</h3>
+              <h3 className={styles.fontSize5xl}>점수</h3>
+              <h3 className={styles.fontSize31xl}>{score}</h3>
             </div>
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {

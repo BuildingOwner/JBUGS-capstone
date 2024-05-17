@@ -7,6 +7,7 @@ import axios from "axios";
 import { GoSearch } from "react-icons/go";
 import NoItem from "../mainPage/NoItem";
 import LoadingPage from "../mainPage/LoadingPage";
+import MakeNoticeModal from "../../modals/noticeModal/MakeNoticeModal";
 
 const NoticeList = () => {
   const location = useLocation()
@@ -19,6 +20,25 @@ const NoticeList = () => {
   const [noticeFilter, setNoticeFilter] = useState("ALL")
   const [searchFilter, setSearchFilter] = useState("title")
   const [keyword, setKeyword] = useState("")
+  // reRender를 위한 상태
+  const [reRenderFlag, setReRenderFlag] = useState(false)
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
+
+  const closeModal = (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
+    setModalIsOpen(false)
+  }
+
+  const reRender = () => {
+    setReRenderFlag(prevFlag => !prevFlag)
+  }
 
   const changeKeyword = (e) => {
     setKeyword(e.target.value)
@@ -52,18 +72,25 @@ const NoticeList = () => {
       setMemberInfoDto(response.data.memberInfoDto)
       setNoticeDtoList(noticeData)
     } catch (error) {
-
+      console.log("Notice Fetch 실패.. ", error)
     }
   }
 
   useEffect(() => {
     fetchNoticeList()
-  }, [])
+  }, [reRenderFlag])
 
   if (!memberInfoDto) return <LoadingPage />;
 
   return (
     <div className={`background`}>
+      <MakeNoticeModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        memberInfoDto={memberInfoDto}
+        enrollmentId={enrollmentId}
+        reRender={reRender}
+      />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
@@ -89,9 +116,13 @@ const NoticeList = () => {
                   </div>
                 </div>
               </div>
+              <button type="button"
+                className={`btn btn-primary ${styles.addBtn}`}
+                onClick={openModal}>
+                <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>공지작성</h3>
+              </button>
             </div>
           </div>
-
           <div className={styles.content}>
             <div className={styles.tabBtns}>
               <button style={{ borderTopLeftRadius: "5px" }}

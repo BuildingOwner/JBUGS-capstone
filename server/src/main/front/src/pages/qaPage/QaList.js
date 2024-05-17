@@ -33,10 +33,11 @@ const QaList = () => {
 
   const closeModal = (event) => {
     if (event) {
-      event.stopPropagation();
+      event.stopPropagation()
     }
-    setModalIsOpen(false);
+    setModalIsOpen(false)
   }
+
   const changeKeyword = (e) => {
     setKeyword(e.target.value)
   }

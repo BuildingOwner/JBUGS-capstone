@@ -61,7 +61,7 @@ const Main = () => {
       // console.log("현재 날짜", currentDate)
     }
     catch (error) {
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
         navigate("/")
       } else {
         // 다른 종류의 오류 발생

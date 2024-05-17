@@ -22,7 +22,8 @@ const MakeQaModal = (props) => {
   const [title, setTitle] = useState("")
 
   const handleFileChange = (e) => {
-    setAttachFiles(e.target.files[0])
+    const filesArray = Array.from(e.target.files) // FileList를 배열로 변환
+    setAttachFiles(filesArray)
     console.log("attachFile : ", e.target.files[0])
 
     const files = e.target.files;
@@ -131,12 +132,17 @@ const MakeQaModal = (props) => {
               onChange={handleFileChange}
               multiple></input>
           </div>
-          <div className={styles2.fileItem}>
-            <h3 style={{ fontSize: "1.25rem" }}>L 파일 이름</h3>
-            <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
-              <IoClose size={20} />
-            </button>
-          </div>
+          {
+            attachFiles.length > 0 ?
+              attachFiles.map((file) => (
+                <div className={styles2.fileItem}>
+                  <h3 style={{ fontSize: "1.25rem" }}>L {file.name}</h3>
+                  <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
+                    <IoClose size={20} />
+                  </button>
+                </div>
+              )) : null
+          }
         </div>
       </div>
       <div className={styles.bottom}>

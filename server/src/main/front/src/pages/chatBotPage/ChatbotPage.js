@@ -119,20 +119,55 @@ const ChatbotPage = () => {
     try {
       setIsSending(true)
       setReadOnly(true)
+
       const formData = new FormData();
       formData.append('chat_id', chatId);
-      const response = await axios.post("http://43.200.202.59:5000/aimodule/regenerate", formData)
-      console.log(response)
 
-      // 서버로부터 받은 새로운 응답을 기존 chats 배열의 마지막 요소에 반영
-      if (response.data && chats.length > 0) {
-        const newChats = [...chats]
-        const lastIndex = newChats.length - 1
-        if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
-          newChats[lastIndex].content[0].text = response.data
-        }
-        setChats(newChats) // 업데이트된 chats 배열로 상태 업데이트
+      // Fetch API를 사용하여 POST 요청 보내기
+      const response = await fetch("http://43.200.202.59:5000/aimodule/regenerate", {
+        method: 'POST',
+        body: formData
+      });
+
+      // 스트림 데이터를 읽기 위해 body 사용
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let result = '';
+      let done = false;
+
+      // 새로운 chats 배열을 복사하여 업데이트 준비
+      const newChats = [...chats];
+      const lastIndex = newChats.length - 1;
+
+      // 마지막 채팅을 초기화
+      if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
+        newChats[lastIndex].content[0].text = '';
       }
+
+      while (!done) {
+        // 스트림의 다음 청크(chunk) 읽기
+        const { value, done: streamDone } = await reader.read();
+        done = streamDone;
+
+        // 청크 데이터를 문자열로 변환
+        if (value) {
+          const chunk = decoder.decode(value, { stream: true });
+          result += chunk;
+
+          // 한 글자씩 업데이트
+          if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
+            newChats[lastIndex].content[0].text += chunk;
+            setChats([...newChats]); // 상태 업데이트
+          }
+        }
+      }
+
+      // 최종 결과를 전체 텍스트로 업데이트
+      if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
+        newChats[lastIndex].content[0].text = result;
+        setChats(newChats); // 상태 업데이트
+      }
+
     } catch (error) {
       console.log(error)
     } finally {
@@ -141,7 +176,34 @@ const ChatbotPage = () => {
     }
   }
 
+  // const regenerateResponse = async () => {
+  //   try {
+  //     setIsSending(true)
+  //     setReadOnly(true)
+  //     const formData = new FormData();
+  //     formData.append('chat_id', chatId);
+  //     const response = await axios.post("http://43.200.202.59:5000/aimodule/regenerate", formData)
+  //     console.log(response)
+
+  //     // 서버로부터 받은 새로운 응답을 기존 chats 배열의 마지막 요소에 반영
+  //     if (response.data && chats.length > 0) {
+  //       const newChats = [...chats]
+  //       const lastIndex = newChats.length - 1
+  //       if (newChats[lastIndex].content && newChats[lastIndex].content.length > 0) {
+  //         newChats[lastIndex].content[0].text = response.data
+  //       }
+  //       setChats(newChats) // 업데이트된 chats 배열로 상태 업데이트
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   } finally {
+  //     setIsSending(false)
+  //     setReadOnly(false)
+  //   }
+  // }
+
   // 이미지 파일을 Base64 문자열로 변환하는 함수
+
   const convertImageFileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();

@@ -89,7 +89,6 @@ const Main = () => {
               </div>
               <div className="header-right">
                 <div className="lets-iconssetting-fill">
-                  <img className="vector-icon5" alt="" src="/vector-31.svg" />
                 </div>
               </div>
             </div>

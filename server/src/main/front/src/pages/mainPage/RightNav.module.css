@@ -26,3 +26,9 @@
   color: var(--color-black);
   font-family: var(--font-malgun-gothic);
 }
+
+.userBg{
+  background-color: white;
+  border-radius: 100px;
+  padding: 10px;
+}

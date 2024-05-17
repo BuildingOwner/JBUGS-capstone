@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CourseItem.css";
+import { FaUser } from "react-icons/fa";
 
 const CourseItem = (props) => {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ const CourseItem = (props) => {
     <div className="course-item3" onClick={moveToCourse}>
       <div className="course-left3">
         <div className="personicon3">
-          <img className="vector-icon36" alt="" src="/vector-41.svg" />
+          <FaUser size={60} />
         </div>
         <div className="info8">
           <h2 className="h27">{props.lectureName}</h2>

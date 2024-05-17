@@ -5,6 +5,7 @@ import "./RightNav.css";
 import { useNavigate } from "react-router-dom"
 import styles from "./RightNav.module.css"
 import NoItem from "./NoItem";
+import { FaUser } from "react-icons/fa";
 
 
 const RightNav = (props) => {
@@ -34,12 +35,9 @@ const RightNav = (props) => {
             <b className="b176">{props.memberName}</b>
             <div className="div161">{props.firstTrack}</div>
           </div>
-          <img
-            className="personicon4"
-            loading="lazy"
-            alt=""
-            src="/personicon1.svg"
-          />
+          <div className={styles.userBg}>
+            <FaUser size={30} />
+          </div>
           <button type="button" className={`btn btn-primary ${styles.logoutBtn}`} onClick={handleLogout}>
             로그아웃
           </button>

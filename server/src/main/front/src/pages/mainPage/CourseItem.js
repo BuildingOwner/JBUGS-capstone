@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CourseItem.css";
 import { FaUser } from "react-icons/fa";
+import { IoArrowForwardOutline } from "react-icons/io5";
 
 const CourseItem = (props) => {
   const navigate = useNavigate()
@@ -33,9 +34,7 @@ const CourseItem = (props) => {
         <div className="division4">
           <h2 className="a3">{props.division}</h2>
         </div>
-        <div className="right-arrow3">
-          <img className="group-icon5" loading="lazy" alt="" src="/group.svg" />
-        </div>
+        <IoArrowForwardOutline size={25} />
       </div>
     </div>
   );

@@ -64,7 +64,7 @@ const AssignmentList = () => {
       <CourseSidebar lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} enrollmentId={enrollmentId} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
-          <AssignHeader />
+          <AssignHeader lectureName={lectureName} division={division} />
           <div className={styles.content}>
             <select
               className={`form-select form-select ${styles.select}`}

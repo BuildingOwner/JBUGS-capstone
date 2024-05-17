@@ -1,11 +1,14 @@
 import styles from "./AssignHeader.module.css"
 import { GoSearch } from "react-icons/go";
 
-const AssignHeader = () => {
+const AssignHeader = ({ lectureName, division }) => {
   return (
     <div className={styles.header}>
       <div className={styles.top}>
-        <h2 className={styles.title}>과제</h2>
+        <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
+          <h3 className={styles.title}>퀴즈</h3>
+          <h3 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{lectureName} {division}</h3>
+        </div>
         <div className={styles.searchContainer}>
           <select className={`form-select form-select-sm ${styles.select}`} defaultValue={'title'}>
             <option value={`title`}>제목</option>

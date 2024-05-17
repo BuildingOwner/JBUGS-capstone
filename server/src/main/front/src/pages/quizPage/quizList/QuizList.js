@@ -92,7 +92,10 @@ const QuizList = () => {
         <div className={`bg ${styles.bg}`}>
           <div className={`${styles.top}`}>
             <div className={styles.myInfo}>
-              <h3 className={styles.title}>퀴즈</h3>
+              <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
+                <h3 className={styles.title}>퀴즈</h3>
+                <h3 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{lectureName} {division}</h3>
+              </div>
               <div className={styles.scoreBoard}>
                 {completeQuizList?.map((quiz, i) =>
                   quiz.quizScore === null ? null :

@@ -95,7 +95,10 @@ const NoticeList = () => {
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
           <div className={styles.header}>
-            <h3 className={styles.title}>공지사항</h3>
+            <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
+              <h3 className={styles.title}>공지사항</h3>
+              <h3 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{lectureName} {division}</h3>
+            </div>
             <div className={styles.right}>
               <div className={styles.searchContainer}>
                 <select

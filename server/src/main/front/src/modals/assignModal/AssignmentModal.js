@@ -33,6 +33,25 @@ const AssignmentModal = (props) => {
     }
   }
 
+  // 파일 삭제 함수
+  const handleDeleteFile = (index) => {
+    // 배열에서 index에 해당하는 요소를 제거합니다.
+    const newFiles = attachFiles.filter((_, i) => i !== index)
+    const fileCount = newFiles.length
+    setAttachFiles(newFiles) // 상태를 업데이트합니다.
+
+    if (fileCount === 1) {
+      // 파일이 하나만 선택된 경우, 파일 이름을 표시
+      setFileDescription(newFiles[0].name);
+    } else if (fileCount > 1) {
+      // 여러 파일이 선택된 경우, "파일 n개" 형식으로 표시
+      setFileDescription(`이미지 ${fileCount}개`);
+    } else {
+      // 파일이 선택되지 않은 경우
+      setFileDescription('');
+    }
+  }
+
   const onAnswerClick = useCallback(() => {
     const anchor = document.querySelector(
       "[data-scroll-to='commentContainer']"
@@ -43,7 +62,6 @@ const AssignmentModal = (props) => {
   }, []);
 
   const handleClose = (event) => {
-    // setAnswerFlag(false)
     setFileDescription('')
     setAttachFiles([])
     event.stopPropagation()
@@ -149,10 +167,12 @@ const AssignmentModal = (props) => {
           </div>
           {
             attachFiles.length > 0 ?
-              attachFiles.map((file) => (
+              attachFiles.map((file, i) => (
                 <div className={styles2.fileItem}>
                   <h3 style={{ fontSize: "1.25rem" }}>L {file.name}</h3>
-                  <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
+                  <button type="button"
+                    className={`btn btn-primary ${styles2.fileDeleteBtn}`}
+                    onClick={() => handleDeleteFile(i)}>
                     <IoClose size={20} />
                   </button>
                 </div>

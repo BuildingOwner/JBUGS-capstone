@@ -13,7 +13,7 @@ const QaModal = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   const [attachFiles, setAttachFiles] = useState([])
   const data = props.props
-  console.log(data)
+  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리

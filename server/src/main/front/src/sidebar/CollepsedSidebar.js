@@ -35,7 +35,7 @@ function CollepsedSidebar(props) {
   }
 
   return (
-    <div className={`${styles.sidebars} ${styles2.sidebars}`}>
+    <div className={`${styles.sidebars} ${styles2.sidebars} ${styles3.sidebars}`}>
       <Link to={"/main"} className={`${styles.logo}`}>
         <img
           className={` ${styles2.sidebarLogo}`}
@@ -44,7 +44,7 @@ function CollepsedSidebar(props) {
           src="/miniLogo.png"
         />
       </Link>
-      <div className={styles.sidebarContainer}>
+      <div className={`${styles.sidebarContainer} ${styles3.sidebarContainer}`}>
         <div className={`${styles.navBtns} ${styles3.navBtns}`}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
             <Link to={"/main"} className={styles.linkBtn}>

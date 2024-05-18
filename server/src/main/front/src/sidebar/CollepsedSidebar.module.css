@@ -1,3 +1,11 @@
+.sidebars{
+  gap: 0;
+}
+
+.sidebarContainer{
+  gap: 0;
+}
+
 .userInfo{
   flex-direction: column;
 }

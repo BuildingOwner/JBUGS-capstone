@@ -246,6 +246,7 @@ button:hover{
   display: flex;
   background: linear-gradient(243.18deg, #b1b2ff, #b5eaea);
   min-width: 1340px;
+  min-height: calc(800px + var(--padding-xl));
 }
 
 .mycontainer{

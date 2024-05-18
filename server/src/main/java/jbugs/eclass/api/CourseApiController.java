@@ -1,18 +1,23 @@
 package jbugs.eclass.api;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
+import jbugs.eclass.repository.VideoMaterialRepository;
 import jbugs.eclass.service.*;
 import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +36,8 @@ public class CourseApiController {
     private final AssignmentService assignmentService;
     private final MaterialService materialService;
     private final VideoMaterialService videoMaterialService;
+    private final VideoMaterialRepository videoMaterialRepository;
+    private final VideoPlaybackTimeService videoPlaybackTimeService;
 
     @GetMapping("/{enrollmentId}")
     public ResponseEntity<?> getCourseInfo(@PathVariable Long enrollmentId, HttpServletRequest request) {
@@ -107,5 +114,56 @@ public class CourseApiController {
             // 세션이 없거나 로그인 되어있지 않은 경우
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("세션이 없거나 로그인되어 있지 않습니다.");
         }
+    }
+
+    @GetMapping("/stream/{videoMaterialId}")
+    public void streamVideo(@PathVariable Long videoMaterialId, HttpServletResponse response, HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
+            Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+            // 비디오 자료 조회
+            VideoMaterial videoMaterial = videoMaterialRepository.findById(videoMaterialId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid videoMaterialId"));
+
+            // 비디오 파일 검증
+            File videoFile = new File(videoMaterial.getVideoPath());
+            if (!videoFile.exists()) {
+                throw new FileNotFoundException("비디오 파일을 찾을 수 없습니다.");
+            }
+
+            // mimeType 설정
+            String mimeType = URLConnection.guessContentTypeFromName(videoFile.getName());
+            if (mimeType == null) {
+                mimeType = "video/mp4";
+            }
+
+            // 비디오 파일 스트리밍 준비
+            response.setContentType(mimeType);
+            response.setHeader("Content-Disposition", "inline; filename=\"" + videoFile.getName() + "\"");
+            response.setContentLength((int) videoFile.length());
+
+            // 저장된 시청 시간 조회 및 응답 헤더에 추가
+            if (videoMaterialId != null) {
+                videoPlaybackTimeService.findByMemberIdAndVideoMaterialId(loginMember.getId(), videoMaterialId)
+                        .ifPresent(playbackTime -> response.setHeader("Playback-Time", String.valueOf(playbackTime.getPlaybackTime())));
+            }
+
+            // 비디오 스트리밍
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(videoFile));
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+        }
+        else{
+            // 세션이 없거나 로그인되어 있지 않은 경우
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 상태 코드 설정
+            response.getWriter().write("세션이 없거나 로그인되어 있지 않습니다."); // 메시지 작성
+        }
+    }
+
+    @PostMapping("/save-time")
+    public ResponseEntity<?> savePlaybackTime(@RequestBody VideoPlaybackTimeRequestDto requestDto) {
+
+        videoPlaybackTimeService.saveOrUpdatePlaybackTime(requestDto.getMemberId(), requestDto.getVideoMaterialId(), requestDto.getPlaybackTime());
+        return ResponseEntity.ok().body("시간 저장 완료");
     }
 }

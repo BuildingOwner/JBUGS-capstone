@@ -1,5 +1,4 @@
 import axios from "axios";
-import "./FileUploadModal.css";
 import Modal from "react-modal";
 import { useState } from "react";
 import styles from "../../quizModal/QuizInfoModal.module.css"
@@ -21,6 +20,12 @@ const FileUploadModal = (props) => {
   const [quizType, setQuizType] = useState("")
   const [fileDescription, setFileDescription] = useState('');
   const [videoDescription, setVideoDescription] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Collapse 상태를 토글하는 함수
+  const toggleCollapse = () => {
+    setIsOpen(!isOpen);
+  }
 
   const changeDescription = (e) => {
     setDescription(e.target.value)
@@ -38,6 +43,7 @@ const FileUploadModal = (props) => {
     setChoice(null)
     setShortAnswer(null)
     setQuizType("")
+    setIsOpen(false)
     event.stopPropagation()
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
@@ -186,7 +192,7 @@ const FileUploadModal = (props) => {
                 onChange={changeVideoTitle}
                 value={videoTitle}
               ></input>
-              <label htmlFor="videoInput" className={`btn btn-primary`}>
+              <label htmlFor="videoInput" className={`btn btn-primary ${styles2.btn}`}>
                 <LuFileVideo2 size={20} />
                 {videoDescription && <span className={styles.fileDescription}>{videoDescription}</span>}
               </label>
@@ -203,12 +209,12 @@ const FileUploadModal = (props) => {
         <div className={styles.contents}>
           <Info title={"파일명"} content={
             <div className={`${styles.contents} ${styles2.contents}`}>
-              <input type="text" 
-              className={`form-control`} 
-              placeholder="자료명을 입력해주세요" 
-              onChange={changeFileTitle}
-              value={fileTitle}></input>
-              <label htmlFor="fileInput" className={`btn btn-primary`}>
+              <input type="text"
+                className={`form-control`}
+                placeholder="자료명을 입력해주세요"
+                onChange={changeFileTitle}
+                value={fileTitle}></input>
+              <label htmlFor="fileInput" className={`btn btn-primary ${styles2.btn}`}>
                 <LuFilePlus2 size={20} />
                 {fileDescription && <span className={styles.fileDescription}>{fileDescription}</span>}
               </label>
@@ -223,45 +229,51 @@ const FileUploadModal = (props) => {
           } />
         </div>
 
-        <div className={`${styles.contents} ${styles2.contents}`}>
-          <Info title={"객관식 개수"} content={
-            <select
-              className={`form-select form-select-sm`}
-              onChange={changeChoice}>
-              <option value={null}>객관식 개수</option>
-              {Array.from({ length: 10 }).map((_, i) => {
-                return (
-                  <option value={i + 1} key={`weekKey${i}`}>{i + 1}개</option>
-                )
-              })}
-            </select>
-          } />
-          <Info title={"주관식 개수"} content={
-            <select
-              className={`form-select form-select-sm`}
-              aria-label="Small select example"
-              onChange={changeShortAnswer}>
-              <option value={null}>주관식 개수</option>
-              {Array.from({ length: 10 }).map((_, i) => {
-                return (
-                  <option value={i + 1} key={`weekKey${i}`}>{i + 1}개</option>
-                )
-              })}
-            </select>
-          } />
-          <Info title={"문제 유형"} content={
-            <select
-              className={`form-select form-select-sm`}
-              value={quizType}
-              onChange={handleTypeChange}>
-              <option value={null}>문제 유형</option>
-              <option value={"EXERCISE"}>연습 문제</option>
-              <option value={"PRACTICE"} >실습 문제</option>
-            </select>
-          } />
+        <div className={`btn btn-primary ${styles2.btn}`} data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="collapseExample" onClick={toggleCollapse}>
+          퀴즈 생성하기
         </div>
-        <div className={styles.contents}>
-          <Info title={"퀴즈 설명"} content={<textarea className={`form-control`} rows={4} placeholder="퀴즈 설명" onChange={changeDescription}></textarea>} />
+
+        <div className={`collapse ${isOpen ? 'show' : ''} ${styles2.collepse}`} id="collapseExample">
+          <div className={`${styles.contents} ${styles2.contents}`}>
+            <Info title={"객관식 개수"} content={
+              <select
+                className={`form-select form-select-sm`}
+                onChange={changeChoice}>
+                <option value={null}>객관식 개수</option>
+                {Array.from({ length: 10 }).map((_, i) => {
+                  return (
+                    <option value={i + 1} key={`weekKey${i}`}>{i + 1}개</option>
+                  )
+                })}
+              </select>
+            } />
+            <Info title={"주관식 개수"} content={
+              <select
+                className={`form-select form-select-sm`}
+                aria-label="Small select example"
+                onChange={changeShortAnswer}>
+                <option value={null}>주관식 개수</option>
+                {Array.from({ length: 10 }).map((_, i) => {
+                  return (
+                    <option value={i + 1} key={`weekKey${i}`}>{i + 1}개</option>
+                  )
+                })}
+              </select>
+            } />
+            <Info title={"문제 유형"} content={
+              <select
+                className={`form-select form-select-sm`}
+                value={quizType}
+                onChange={handleTypeChange}>
+                <option value={null}>문제 유형</option>
+                <option value={"EXERCISE"}>연습 문제</option>
+                <option value={"PRACTICE"} >실습 문제</option>
+              </select>
+            } />
+          </div>
+          <div className={styles.contents}>
+            <Info title={"퀴즈 설명"} content={<textarea className={`form-control`} rows={4} placeholder="퀴즈 설명" onChange={changeDescription}></textarea>} />
+          </div>
         </div>
 
       </div>

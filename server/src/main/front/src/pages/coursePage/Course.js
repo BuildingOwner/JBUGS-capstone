@@ -11,7 +11,7 @@ import LoadingPage from "../mainPage/LoadingPage";
 
 const Course = () => {
   const currentDate = new Date();
-  const startDate = new Date('2024-03-01'); // 개강일 적는 곳
+  const startDate = new Date('2024-03-04'); // 개강일 적는 곳
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
 

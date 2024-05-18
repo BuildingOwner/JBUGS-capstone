@@ -42,4 +42,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<ChatRoom> chatRooms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<VideoPlaybackTime> videoPlaybackTimes = new ArrayList<>();
 }

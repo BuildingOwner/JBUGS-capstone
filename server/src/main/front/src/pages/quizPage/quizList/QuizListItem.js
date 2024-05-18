@@ -55,7 +55,6 @@ const QuizListItem = (props) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         props={props} />
-      {console.log(props.deadline)}
       {props.memberInfoDto.memberType === "PROFESSOR" ?
         <div className={`${styles.idSubmitBox} ${checkDueDate(props.deadline) ? styles.yet : styles.done}`}>
           {checkDueDate(props.deadline) ?

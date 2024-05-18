@@ -270,3 +270,12 @@ h4{
   width: max-content;
   font-size: var(--font-size-xl) !important;
 }
+
+input{
+  outline: none !important;
+}
+
+input:focus, textarea:focus{
+  box-shadow: none !important;
+  border: 1px solid var(--point-blue) !important;
+}

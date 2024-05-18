@@ -106,19 +106,19 @@ const QuizList = () => {
                 <div className={styles.aveScore}>
                   <h3 className={styles.textSmallGray}>평균 점수</h3>
                   <h3>{averageScore} 점</h3>
-                  <div className={styles.myPosition}>
+                  {/* <div className={styles.myPosition}>
                     <LuTriangle />
                     <h3>23%</h3>
-                  </div>
+                  </div> */}
                 </div>
-                <div className={styles.aveScore}>
+                {/* <div className={styles.aveScore}>
                   <h3 className={styles.textSmallGray}>평균 등수</h3>
                   <h3>19 등</h3>
                   <div className={styles.myPosition}>
                     <LuTriangle />
                     <h3>23%</h3>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className={styles.topRight}>

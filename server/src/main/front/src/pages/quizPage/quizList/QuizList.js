@@ -184,6 +184,9 @@ const QuizList = () => {
               {quizDtoList[0] ? quizDtoList.filter(quiz =>
                 (Number(selectedWeek) === 100 || Number(quiz.week) === Number(selectedWeek)) // 주차 조건
                 && (selectedType === 'all' || quiz.quizType === selectedType) // 타입 조건
+              ).length != 0 ? quizDtoList.filter(quiz =>
+                (Number(selectedWeek) === 100 || Number(quiz.week) === Number(selectedWeek)) // 주차 조건
+                && (selectedType === 'all' || quiz.quizType === selectedType) // 타입 조건
               ).map((quiz, i) => (
                 <QuizListItem
                   key={`QuizListItem${i}`}
@@ -201,8 +204,8 @@ const QuizList = () => {
                   memberInfoDto={memberInfoDto}
                   enrollmentId={enrollmentId}
                 />
-              )) :
-                <NoItem title={"퀴즈가"} />}
+              )) : <NoItem title={"퀴즈가"} />
+                : <NoItem title={"퀴즈가"} />}
             </div>
           </div>
         </div>

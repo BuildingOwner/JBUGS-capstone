@@ -3,6 +3,9 @@ package jbugs.eclass.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 public class VideoMaterial {
@@ -23,5 +26,8 @@ public class VideoMaterial {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
     private Lecture lecture;
+
+    @OneToMany(mappedBy = "videoMaterial", cascade = CascadeType.ALL)
+    private List<VideoPlaybackTime> videoPlaybackTimes = new ArrayList<>();
 }
 

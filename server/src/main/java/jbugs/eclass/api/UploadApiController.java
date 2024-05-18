@@ -61,7 +61,7 @@ public class UploadApiController {
                                         @RequestParam("choice") String choice,
                                         @RequestParam("description") String description,
                                         @RequestParam("quizType") String quizType,
-                                        @RequestParam("quizType") boolean quizFlag,
+                                        @RequestParam("quizFlag") boolean quizFlag,
                                         @PathVariable Long enrollmentId, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession(false); // 기존 세션 가져오기
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -82,8 +82,10 @@ public class UploadApiController {
                 uploadFiles(Arrays.asList(videoFiles), weekEntity.getId(), true, videoTitle, lecture);
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
-            for (String filePath : uploadedFilePaths) {
-                sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
+            if (quizFlag) {
+                for (String filePath : uploadedFilePaths) {
+                    sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
+                }
             }
 
             // 성공적으로 파일이 저장된 경우

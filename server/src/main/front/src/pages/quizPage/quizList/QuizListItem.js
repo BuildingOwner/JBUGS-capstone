@@ -17,6 +17,21 @@ const QuizListItem = (props) => {
     event.stopPropagation()
   }
 
+  const checkDueDate = (dueDateString) => {
+    // 현재 날짜 및 시간
+    const now = new Date();
+
+    // 마감 날짜를 나타내는 Date 객체 생성
+    const dueDate = new Date(dueDateString);
+
+    // dueDate가 now보다 미래인지 확인
+    if (dueDate > now) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
@@ -35,23 +50,30 @@ const QuizListItem = (props) => {
     setFormattedDate(data)
   }, [])
   return (
-    <div className={styles.quizListItem}>
+    <div className={styles.quizListItem} onClick={openModal}>
       <QuizInfoModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         props={props} />
-      <div className={`${styles.idSubmitBox} ${props.submissionStatus != 0 ? styles.done : styles.yet}`}>
-        {props.submissionStatus === true ?
-          <h3 className={styles.idSubmitText}>응시 완료</h3>
-          : <h3 className={styles.idSubmitText}>미응시</h3>}
-      </div>
+      {console.log(props.deadline)}
+      {props.memberInfoDto.memberType === "PROFESSOR" ?
+        <div className={`${styles.idSubmitBox} ${checkDueDate(props.deadline) ? styles.yet : styles.done}`}>
+          {checkDueDate(props.deadline) ?
+            <h3 className={styles.idSubmitText}>진행중</h3>
+            : <h3 className={styles.idSubmitText}>마감</h3>}
+        </div>
+        : <div className={`${styles.idSubmitBox} ${props.submissionStatus != 0 ? styles.done : styles.yet}`}>
+          {props.submissionStatus === true ?
+            <h3 className={styles.idSubmitText}>응시 완료</h3>
+            : <h3 className={styles.idSubmitText}>미응시</h3>}
+        </div>}
       {props.quizType === "EXERCISE" ? <h3 className={styles.text}>연습 문제</h3> :
         props.quizType === "EXAM" ? <h3 className={styles.text}>시험</h3> :
           <h3 className={styles.text}>실습 문제</h3>
       }
       <h3 className={styles.title}>{props.quizName}</h3>
       <h3 className={styles.text}>{props.timeLimit}</h3>
-      <h3 className={styles.text}>{props.quizScore}</h3>
+      <h3 className={styles.text}>{props.submissionStatus != 0 ? props.quizScore : "-"}</h3>
       <h3 className={styles.deadline}>{formattedDate}</h3>
       {props.submissionStatus || props?.memberInfoDto.memberType === "PROFESSOR" ?
         <button className={`btn btn-primary ${styles.feedbackBtn}`} onClick={openModal}>

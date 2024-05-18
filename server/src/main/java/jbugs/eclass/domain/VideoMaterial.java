@@ -7,16 +7,21 @@ import lombok.Data;
 @Data
 public class VideoMaterial {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "video_material_id")
     private Long id;
 
     private String title;
     private String videoName; //제목
     private String videoPath;
+    private Long fileSize;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")
     private Week week;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
 }
 

@@ -1,0 +1,86 @@
+.scoreBarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+
+.score,
+.quizName {
+  font-size: var(--font-size-base);
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
+  text-align: center;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.quizName{
+  height: 45px;
+}
+
+.Bar {
+  background-color: var(--point-blue);
+  width: 50%;
+}
+
+/* .score-item {
+    align-self: stretch;
+    display: flex;
+    margin-left: -6.25rem;
+    width: 50px;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-8xs);
+    height: 100%;
+}
+
+.text116 {
+    align-self: stretch;
+    position: relative;
+    height: 1rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.bar-wrapper7 {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 var(--padding-mini);
+}
+
+.bar9 {
+    width: 1.25rem;
+    background: linear-gradient(180deg, #a4ebf3, #aac4ff);
+    align-self: stretch;
+    position: relative;
+}
+
+.name10 {
+    align-self: stretch;
+    display: flex;
+    height: 3rem;
+    position: relative;
+    align-items: flex-end;
+}
+
+.name-txt {
+    line-break: anywhere;
+}
+
+.p132,
+.p133,
+.p134 {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    text-align: center;
+    height: var();
+} */

@@ -9,4 +9,5 @@ public class CourseContentDto {
     private MemberInfoDto memberInfoDto;
     private CourseDto courseDto;
     private List<WeeklyContentDto> weeklyContents;
+//    private TestDto testDto;
 }

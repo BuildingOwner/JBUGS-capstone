@@ -7,15 +7,17 @@ from flask import Flask, Response, request, jsonify, stream_with_context
 from secret.db_connection import getConnection
 import pymysql
 from datetime import datetime, timedelta
-from quiz_module.quiz_module_keyword import gen as keword_gen
+from quiz_module.quiz_module_keyword import gen as keyword_gen
 from quiz_module.quiz_module_image_summary import gen as summary_gen
 from secret.sql_injection_detector import sql_injection_detector
 import json
 from quiz_module.explain_generator import explain_gen
 from related_generator import related_question_gen
 from datetime import datetime
-from chat import chat
+from chat import chat as mychat
 from erase_folder import erase_folder
+from flask_cors import CORS
+from regenerate_chat import chat as regenerate_chat
 
 # Get the absolute path of the current Python script
 current_file_path = os.path.abspath(__file__)
@@ -23,23 +25,21 @@ current_file_path = os.path.abspath(__file__)
 current_file_name = os.path.basename(current_file_path)
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True)  # CORS를 활성화하고 credentials를 허용합니다.
 
-
-@app.route("/add-quiz-keyword", methods=["POST"])
+@app.route("/aimodule/add-quiz-keyword", methods=["POST"])
 def add_quiz_keyword():
     lecture = request.form.get("lecture")
+    lecture_id = request.form.get("lectureId")
     week = request.form.get("week")
     path = request.form.get("path")
     choice = request.form.get("choice")
     short = request.form.get("short")
-
-    print(f"[{current_file_name}] #add-quiz-keyword")
-    print(f"[{current_file_name}] lecture: {lecture}")
-    print(f"[{current_file_name}] week: {week}")
-    print(f"[{current_file_name}] path: {path}")
-    print(f"[{current_file_name}] choice: {choice}")
-    print(f"[{current_file_name}] short: {short}\n")
-
+    time_limit = request.form.get("time_limit")
+    description = request.form.get("description")
+    
+    print(path)
+    
     if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
         return "invalied request", 401
 
@@ -49,6 +49,25 @@ def add_quiz_keyword():
     sql_strings = [lecture, week]
     if sql_injection_detector(sql_strings):
         return "invalied request", 403
+    
+    if time_limit == None:
+        time_limit = "60분"
+        
+    if description == None:
+        description = f"{lecture} {week}주차 퀴즈"
+    
+    title = f"{lecture} {week}주차 퀴즈"
+
+    print(f"[{current_file_name}] #add-quiz-keyword")
+    print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] lecture id: {lecture_id}")
+    print(f"[{current_file_name}] week: {week}")
+    print(f"[{current_file_name}] path: {path}")
+    print(f"[{current_file_name}] choice: {choice}")
+    print(f"[{current_file_name}] short: {short}")
+    print(f"[{current_file_name}] title: {title}")
+    print(f"[{current_file_name}] time_limit: {time_limit}")
+    print(f"[{current_file_name}] description: {description}\n")
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
@@ -56,7 +75,7 @@ def add_quiz_keyword():
 
     # path = '학습자료/3-DL-원리.pdf'
 
-    question = keword_gen(path, int(choice), int(short))
+    question = keyword_gen(path, int(choice), int(short))
 
     sql_strings = [json.dumps(question, ensure_ascii=False)]
     if sql_injection_detector(sql_strings):
@@ -64,8 +83,8 @@ def add_quiz_keyword():
 
     db = getConnection()
     cursor = db.cursor()
-    sql = "INSERT INTO question (deadline, question_name, question) VALUES (%s, %s, %s)"
-    val = (formatted_date, f"{lecture} {week}주차 퀴즈", question)
+    sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data, lecture_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    val = ("1", now, formatted_date, now, week, title, time_limit, description, question, lecture_id)
     cursor.execute(sql, val)
 
     db.commit()
@@ -73,21 +92,17 @@ def add_quiz_keyword():
     return "Quiz added successfully", 200
 
 
-@app.route("/add-quiz-summary", methods=["POST"])
+@app.route("/aimodule/add-quiz-summary", methods=["POST"])
 def add_quiz_summary():
     lecture = request.form.get("lecture")
+    lecture_id = request.form.get("lectureId")
     week = request.form.get("week")
     path = request.form.get("path")
     choice = request.form.get("choice")
     short = request.form.get("short")
-
-    print(f"[{current_file_name}] #add-quiz-summary")
-    print(f"[{current_file_name}] lecture: {lecture}")
-    print(f"[{current_file_name}] week: {week}")
-    print(f"[{current_file_name}] path: {path}")
-    print(f"[{current_file_name}] choice: {choice}")
-    print(f"[{current_file_name}] short: {short}\n")
-
+    time_limit = request.form.get("time_limit")
+    description = request.form.get("description")
+    
     if int(week) > 16 or int(week) < 0 or lecture == None or lecture == "":
         return "invalied request", 401
 
@@ -97,6 +112,25 @@ def add_quiz_summary():
     sql_strings = [lecture, week]
     if sql_injection_detector(sql_strings):
         return "invalied request", 403
+    
+    if time_limit == None:
+        time_limit = "60분"
+        
+    if description == None:
+        description = f"{lecture} {week}주차 퀴즈"
+    
+    title = f"{lecture} {week}주차 퀴즈"
+
+    print(f"[{current_file_name}] #add-quiz-keyword")
+    print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] lecture id: {lecture_id}")
+    print(f"[{current_file_name}] week: {week}")
+    print(f"[{current_file_name}] path: {path}")
+    print(f"[{current_file_name}] choice: {choice}")
+    print(f"[{current_file_name}] short: {short}")
+    print(f"[{current_file_name}] title: {title}")
+    print(f"[{current_file_name}] time_limit: {time_limit}")
+    print(f"[{current_file_name}] description: {description}\n")
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
@@ -112,8 +146,8 @@ def add_quiz_summary():
 
     db = getConnection()
     cursor = db.cursor()
-    sql = "INSERT INTO question (deadline, question_name, question) VALUES (%s, %s, %s)"
-    val = (formatted_date, f"{lecture} {week}주차 퀴즈", question)
+    sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data, lecture_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    val = ("1", now, formatted_date, now, week, title, time_limit, description, question, lecture_id)
     cursor.execute(sql, val)
 
     db.commit()
@@ -121,13 +155,13 @@ def add_quiz_summary():
     return "Quiz added successfully", 200
 
 
-@app.route("/get-quiz/<int:question_id>", methods=["GET"])
+@app.route("/aimodule/get-quiz/<int:question_id>", methods=["GET"])
 def get_quiz(question_id):
     print(f"[{current_file_name}] #get-quiz id: {question_id}\n")
     try:
         db = getConnection()
         cursor = db.cursor()
-        sql = "SELECT question FROM question WHERE id = %s"
+        sql = "SELECT json_data FROM quiz WHERE quiz_id = %s"
         cursor.execute(sql, (question_id,))
         question_row = cursor.fetchone()
         if question_row:
@@ -137,13 +171,14 @@ def get_quiz(question_id):
         else:
             return "Question not found", 404
     except Exception as e:
+        print(str(e))
         return str(e), 500
     finally:
         cursor.close()
         db.close()
 
 
-@app.route("/get-explane", methods=["GET"])
+@app.route("/aimodule/get-explane", methods=["post"])
 def get_explane():
     print(f"[{current_file_name}] #get-explane\n")
     question = request.form.get("question")
@@ -157,8 +192,19 @@ def get_explane():
 
     return Response(stream_with_context(generate()))
 
+@app.route('/aimodule/regenerate', methods=['post'])
+def regenerateChat():
+    if request.method == 'POST':
+        chat_id = request.form.get('chat_id')
+        print(chat_id)
+        def generate():
+            for piece in regenerate_chat(chat_id):
+                if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
+                    yield piece.encode("utf-8")
+        return Response(stream_with_context(generate()))
+    return jsonify({'message': 'Failed to upload file'})
 
-@app.route("/related-quiz", methods=["GET"])
+@app.route("/aimodule/related-quiz", methods=["post"])
 def get_related_quiz():
     question = request.form.get("question")
     print(f"[{current_file_name}] #related-quiz quiz: {question}\n")
@@ -168,7 +214,7 @@ def get_related_quiz():
     related_question = related_question_gen(question)
     return related_question, 200
 
-@app.route('/chat', methods=['POST'])
+@app.route('/aimodule/chat', methods=['POST'])
 def chat():
     if request.method == 'POST':
 
@@ -178,8 +224,12 @@ def chat():
         for key in image_keys:
             image_file = request.files[key]
             images.append(image_file)
-        question = request.form['question']
-        chat_id = request.form.get('chatId')
+        # question = request.form.get('question')
+        # chat_id = request.form.get('chatId')
+        print(request.form)
+        data = request.form
+        question = data.get('question')
+        chat_id = data.get('chat_id')
 
         # if sql_injection_detector([chat_id]):
         #     return "invalied chat ID", 404
@@ -193,22 +243,32 @@ def chat():
                 now = datetime.now()
                 filename = str(now.strftime("%H_%M_%S_") + str(now.microsecond // 1000))+ str(i) + image.filename 
                 save_path = os.path.join('quiz_module/chat_img', filename)  # 'uploads' 폴더에 저장
+                save_path = save_path.replace('\\', '/')
                 image.save(save_path)
                 image_paths.append(save_path)
-                
-            # def generate():
-            #     for piece in chat(chat_id, question, image_paths):
-            #         if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
-            #             yield piece.encode("utf-8")
-            # return Response(stream_with_context(generate()))
         
         def generate():
-            for piece in chat(chat_id, question, image_paths):
+            for piece in mychat(chat_id, question, image_paths):
                 if piece is not None:  # piece가 None이 아닐 경우에만 encode 진행
                     yield piece.encode("utf-8")
         return Response(stream_with_context(generate()))
 
     return jsonify({'message': 'Failed to upload file'})
+
+@app.route('/aimodule/get-chat', methods=['post'])
+def get_chat():
+    chat_id = request.form.get("chat_id")
+    print(f"[{current_file_name}] chat_id: {chat_id}")
+    db = getConnection()
+    cursor = db.cursor()
+    sql = "SELECT chatting_json FROM chat_room WHERE chat_room_id = %s"
+    cursor.execute(sql, (chat_id))
+    prev_chat_text = cursor.fetchone()
+    
+    if prev_chat_text:
+        return jsonify({"chat_text": prev_chat_text[0]}), 200
+    else:
+        return jsonify({"error": "Chat not found"}), 404
 
 
 if __name__ == "__main__":

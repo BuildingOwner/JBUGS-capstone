@@ -1,38 +1,64 @@
-import "./QnaRow.css";
+import styles from "./QnaRow.module.css"
+import { useState, useEffect } from "react";
+import { FiLock } from "react-icons/fi";
+import QaModal from "../../modals/qaModal/QaModal";
+const QnaRow = (props) => {
+  const [formattedDate, setFormattedDate] = useState()
+  // 모달창 노출 여부 state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-const QnaRow = () => {
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
+
+  const closeModal = (event) => {
+    setModalIsOpen(false)
+    if (event) {
+      // 이벤트 버블링을 막음
+      event.stopPropagation()
+    }
+  }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월
+    const day = date.getDate().toString().padStart(2, '0'); // 일
+    const hours = date.getHours().toString().padStart(2, '0'); // 시간
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // 분
+
+    // 포맷팅된 문자열 생성
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    const inputDate = props.createdAt
+    const data = formatDate(inputDate);
+    setFormattedDate(data)
+  }, [])
+  
   return (
-    <div className="qna-row1">
-      <div className="line11">
-        <div className="num4">
-          <div className="div192">123</div>
-        </div>
-        <div className="status20">
-          <b className="b195">답변 예정</b>
-        </div>
-        <div className="secret3">
-          <img className="icround-lock-icon3" alt="" src="/icroundlock.svg" />
-        </div>
-        <div className="title21">
-          <div className="title-text2">
-            <span>
-              <p className="p115">이거슨 제목</p>
-              <p className="p116">2줄임</p>
-              <p className="p117">3줄임</p>
-            </span>
-          </div>
-          <div className="comment4">[3]</div>
-        </div>
-        <div className="writer4">
-          <div className="div193">김아무개</div>
-        </div>
-        <div className="upload-date4">
-          <div className="div194">2024-10-10</div>
-        </div>
-        <div className="view6">
-          <div className="div195">50000</div>
-        </div>
+    <div className={styles.row}
+      // secret이 true인 경우에는 작성자와 현재 멤버 이름을 비교후 같으면 onClick 활성화
+      onClick={props.secret ? (props.writer === props.memberName ? openModal : null) : openModal}>
+      <QaModal isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props} />
+      <h4 className={styles.num}>{props.number + 1}</h4>
+      {props.qnAStatus === "COMPLETE" ?
+        <div className={`${styles.answer} ${styles.answerDone}`}>
+          <h4>답변 완료</h4>
+        </div> :
+        <div className={`${styles.answer} ${styles.answerYet}`}>
+          <h4>답변 예정</h4>
+        </div>}
+      <div className={styles.secret}>
+        {props.secret === true ? <FiLock size={20} /> : null}
       </div>
+      <h4 className={styles.title}>{props.title}</h4>
+      <h4 className={styles.writer}>{props.writer}</h4>
+      <h4 className={styles.date}>{formattedDate}</h4>
+      <h4 className={styles.views}>{props.views}</h4>
     </div>
   );
 };

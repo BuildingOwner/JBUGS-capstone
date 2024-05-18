@@ -1,0 +1,40 @@
+.itemContainer {
+  display: flex;
+  gap: var(--gap-6xl);
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: var(--gap-xl);
+}
+
+.userIconWrapper {
+  width: 50px;
+  height: 50px;
+  background-color: #bbb;
+  padding: 5px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.name {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  width: 100px;
+  text-align: center;
+}
+
+.text {
+  max-width: calc(100% - 200px - 3.126rem);
+  background-color: #efefef;
+  padding: var(--padding-6xs);
+  border-radius: 5px;
+  height: fit-content;
+  font-size: var(--font-size-base);
+  white-space:pre-wrap;
+}

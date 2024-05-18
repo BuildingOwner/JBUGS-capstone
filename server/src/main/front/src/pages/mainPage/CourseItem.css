@@ -130,11 +130,14 @@
   text-align: center;
 }
 .course-item3 {
+  height: 10rem;
   align-self: stretch;
   border-radius: var(--br-8xs);
   background-color: var(--point-bg-blue);
   flex-direction: row;
   padding: var(--padding-xl);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
   gap: var(--gap-xl);
   text-align: left;
   font-size: var(--font-size-5xl);

@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 public class Week {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "week_id")
     private Long id;
 
@@ -28,8 +28,8 @@ public class Week {
     @OneToMany(mappedBy = "week", cascade = CascadeType.ALL)
     private List<VideoMaterial> videoMaterials = new ArrayList<>();
 
-    @OneToMany(mappedBy = "week", cascade = CascadeType.ALL)
-    private List<Attendance> attendances = new ArrayList<>();
+//    @OneToMany(mappedBy = "week", cascade = CascadeType.ALL)
+//    private List<Attendance> attendances = new ArrayList<>();
 
     @OneToMany(mappedBy = "week", cascade = CascadeType.ALL)
     private List<Assignment> assignments = new ArrayList<>();

@@ -5,6 +5,9 @@ spring:
       max-request-size: 50MB
 
   datasource:
+    # url: jdbc:mysql://localhost:3306/eclass?characterEncoding=UTF-8&serverTimezone=UTC
+    # username: root
+    # password: 1234
     url: jdbc:mysql://43.200.202.59:3306/eclass?characterEncoding=UTF-8&serverTimezone=UTC
     username: jbugs
     password: jbugsdatabase
@@ -18,7 +21,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 #    show_sql: true
     properties:
       hibernate:
@@ -32,11 +35,18 @@ spring:
 #    org.hibernate.orm.jdbc.bind: trace
 
 server:
+  port: 8080
+  address: 0.0.0.0
   servlet:
     session:
       tracking-modes: cookie
       timeout: 1h
 
-file:
-  dir: /Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/
+#file:
+#  dir: /Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/
 
+file:
+  dir: /src/main/resources/static/file/
+
+#file:
+#  dir: /Users/jinsw/Desktop/Capstone/JBUGS-capstone/server/src/main/resources/static/file/

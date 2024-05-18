@@ -5,13 +5,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Getter
 @Setter
 public class QuizInfo {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "quiz_info_id")
     private Long id;
@@ -24,11 +26,17 @@ public class QuizInfo {
     @JoinColumn(name = "enrollment_id")
     private Enrollment enrollment;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private Student student;
+
+    @ElementCollection
+    @CollectionTable(name = "answer_details", joinColumns = @JoinColumn(name = "quiz_info_id"))
+    @MapKeyColumn(name = "question_number")
+    @Column(name = "answer")
+    private Map<String, String> answers = new HashMap<>();
 }

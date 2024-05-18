@@ -1,0 +1,68 @@
+.left, .right{
+  width: 50%;
+}
+
+.left{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--padding-xl);
+  align-items: center;
+}
+
+.logo{
+  width: 100%;
+}
+
+.logoImg{
+  width: 10rem;
+}
+
+.form{
+  flex-grow: 1;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5rem;
+}
+
+.top{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-xl);
+}
+
+.title{
+  font-size: var(--font-size-21xl);
+  font-weight: bold;
+}
+
+.slogan{
+  color: #666;
+}
+
+.links{
+  display: flex;
+  gap: var(--gap-xl);
+  padding: var(--padding-xl);
+}
+
+.links a{
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.links a:hover{
+  color: #888;
+}
+
+.schoolImg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

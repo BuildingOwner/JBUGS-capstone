@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CourseItem.css";
+import { FaUser } from "react-icons/fa";
+import { IoArrowForwardOutline } from "react-icons/io5";
 
 const CourseItem = (props) => {
+  const navigate = useNavigate()
+  const moveToCourse = () => {
+    // state를 넘겨줄 때 네브바에서 넘어올때와 충돌이 나기 때문에 from으로 state를 보내준 url을 확인
+    console.log("enrollmentId : ", props.enrollmentId)
+    navigate('/course', { state: { from: '/main', enrollmentId: props.enrollmentId } })
+
+  }
+
   return (
-    <div className="course-item3">
+    <div className="course-item3" onClick={moveToCourse}>
       <div className="course-left3">
         <div className="personicon3">
-          <img className="vector-icon36" alt="" src="/vector-41.svg" />
+          <FaUser size={60} />
         </div>
         <div className="info8">
           <h2 className="h27">{props.lectureName}</h2>
@@ -23,9 +34,7 @@ const CourseItem = (props) => {
         <div className="division4">
           <h2 className="a3">{props.division}</h2>
         </div>
-        <div className="right-arrow3">
-          <img className="group-icon5" loading="lazy" alt="" src="/group.svg" />
-        </div>
+        <IoArrowForwardOutline size={25} />
       </div>
     </div>
   );

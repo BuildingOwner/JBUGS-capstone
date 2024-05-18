@@ -1,16 +1,26 @@
-import "./UserChatItem.css"
+import styles from "./ChatBoardItem.module.css"
+import { FaUser } from "react-icons/fa";
 
-const UserChatItem = () => {
+const UserChatItem = (props) => {
   return (
-    <div className="chat-item">
-      <div className="link-list">
-        <div className="value-filter" />
-        <div className="wrapper13">
-          <div className="div30">진승원</div>
+    <div className={styles.itemContainer}>
+      <h3 className={styles.text}>
+        {props.text}
+        {/* 이미지가 있을 경우 이미지 출력 */}
+        <div className={styles.imageContainer}>
+          {props.image ? props.image.map((image) => (
+
+              <img src={image} alt="User uploaded" className={styles.uploadedImage} />
+
+            )) : <></> }
         </div>
-      </div>
-      <div className="div31">
-        <p className="p13">질문이다.</p>
+      </h3>
+
+      <div className={styles.profile}>
+        <div className={styles.userIconWrapper}>
+          <FaUser size={25} />
+        </div>
+        <h3 className={styles.name}>{props.memberName}</h3>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class QnA {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "qna_id")
     private Long id;
 
@@ -23,6 +23,8 @@ public class QnA {
     private LocalDateTime createdAt;
     private int views;
     private QnAStatus qnaStatus;
+    private String comment;
+    private boolean secret;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")

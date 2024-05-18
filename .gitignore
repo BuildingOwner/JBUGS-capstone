@@ -1,5 +1,5 @@
 
-/secret
+secret/
 /quiz_module/pdf2png
 /quiz_module/chat_img
 /test
@@ -83,3 +83,7 @@ logs
 node_modules
 bower_components
 
+###python###
+testenv/
+finalenv/
+static/

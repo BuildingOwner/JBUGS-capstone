@@ -10,6 +10,9 @@ public class FileDto {
     private String title;
     private String fileName;
     private String filePath;
+    private Long fileSize;
+
+//    private int weekNumber;
 
     public static FileDto from(Material material){
         FileDto dto = new FileDto();
@@ -17,6 +20,7 @@ public class FileDto {
         dto.setTitle(material.getTitle());
         dto.setFileName(material.getFileName());
         dto.setFilePath(material.getFilePath());
+        dto.setFileSize(material.getFileSize());
         return dto;
     }
 }

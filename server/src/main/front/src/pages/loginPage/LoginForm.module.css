@@ -1,0 +1,12 @@
+.loginform{
+  gap: var(--gap-xl);
+}
+
+.signInBtn{
+  border: none;
+  background-color: var(--point-blue);
+}
+
+.signInBtn div{
+  font-weight: bold;
+}

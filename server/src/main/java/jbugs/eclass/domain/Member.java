@@ -7,12 +7,15 @@ import lombok.Setter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 public class Member {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -22,10 +25,6 @@ public class Member {
     private String loginId;
     @NotEmpty
     private String password;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
@@ -38,9 +37,9 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
-    public UserDetails toUserDetails() {
-        return User.withUsername(loginId)
-                .password(password)
-                .build();
-    }
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Enrollment> enrollments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<ChatRoom> chatRooms = new ArrayList<>();
 }

@@ -1,7 +1,11 @@
 import { useMemo } from "react";
-import "./BotChatItem.css";
+import styles from "./BotchatItem.module.css"
+import React from 'react';
+import ReactMarkdown from 'react-markdown'
+import { FaUser } from "react-icons/fa";
 
-const ChatItem = ({ propLineHeight }) => {
+const ChatItem = ({ propLineHeight, text }) => {
+  // console.log(props)
   const divStyle = useMemo(() => {
     return {
       lineHeight: propLineHeight,
@@ -9,24 +13,15 @@ const ChatItem = ({ propLineHeight }) => {
   }, [propLineHeight]);
 
   return (
-    <div className="chat-item4">
-      <div className="frame-parent2">
-        <div className="color-palette-wrapper">
-          <div className="color-palette" />
+    <div className={styles.itemContainer}>
+      <div className={styles.profile}>
+        <div className={styles.userIconWrapper}>
+          <FaUser size={25} />
         </div>
-        <div className="ai1">AI 부기</div>
+        <h3 className={styles.name}>AI부기</h3>
       </div>
-      <div className="div211" style={divStyle}>
-        <span>
-          <p className="p124">기계의 답변이다.</p>
-          <p className="p125">
-            ㅁㄴㅇㄻㄴㅇㄴㄹㄴㅁㅇㄻㄴㄻㄴㄻㄴㅇㄹㄴㄹㄴㅁㄹㄴㅇㅁ
-          </p>
-          <p className="p126">
-            ㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㅁㄴㄴㅇㅁㄻㄴㄻㄴㄻㄴㄻㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇ
-          </p>
-        </span>
-      </div>
+      
+      <h3 className={styles.text} style={divStyle}><ReactMarkdown>{text}</ReactMarkdown></h3>
     </div>
   );
 };

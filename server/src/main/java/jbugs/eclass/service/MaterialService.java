@@ -1,19 +1,24 @@
 package jbugs.eclass.service;
 
+import jbugs.eclass.domain.Assignment;
 import jbugs.eclass.domain.Material;
+import jbugs.eclass.dto.FileDto;
 import jbugs.eclass.repository.MaterialRepository;
-import jbugs.eclass.repository.VideoMaterialRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class MaterialService {
     private final MaterialRepository materialRepository;
 
@@ -46,5 +51,52 @@ public class MaterialService {
         }
     }
 
+    public void deleteMaterialsByAssignment(Assignment assignment) {
+        List<Material> materials = materialRepository.findByAssignment(assignment);
 
+        for (Material material : materials) {
+            File file = new File(material.getFilePath());
+            if (file.exists()) {
+                if (!file.delete()) {
+                    log.error("파일 삭제 실패: {}", material.getFilePath());
+                }
+            }
+        }
+        materialRepository.deleteAll(materials);
+    }
+
+    public List<FileDto> findMaterialsByWeekIdAndLectureId(Long weekId, Long lectureId) {
+        List<Material> materials = materialRepository.findMaterialsByWeekIdAndLectureId(weekId, lectureId);
+
+        List<FileDto> fileDtos = materials.stream().map(material -> {
+            FileDto dto = new FileDto();
+            dto.setFileId(material.getId());
+            dto.setTitle(material.getTitle());
+            dto.setFileName(material.getFileName());
+            dto.setFilePath(material.getFilePath());
+            dto.setFileSize(material.getFileSize());
+
+            return dto;
+        }).collect(Collectors.toList());
+
+        return fileDtos;
+    }
+
+    public List<FileDto> findMaterialsByLecture(Long lectureId) {
+        List<Material> materials = materialRepository.findByLectureId(lectureId);
+
+        List<FileDto> fileDtoList = materials.stream()
+                .map(material -> {
+                    FileDto dto = new FileDto();
+                    dto.setFileId(material.getId());
+                    dto.setTitle(material.getTitle());
+                    dto.setFileName(material.getFileName());
+                    dto.setFilePath(material.getFilePath());
+                    dto.setFileSize(material.getFileSize());
+//                    dto.setWeekNumber(material.getWeek().getWeekNumber());
+
+                    return dto;
+                }).collect(Collectors.toList());
+        return fileDtoList;
+    }
 }

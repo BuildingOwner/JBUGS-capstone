@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "./MainAssignItem.css"
-
+import { useState } from "react";
 const MainAssignItem = (props) => {
+  const navigate = useNavigate()
   console.log("MainAssignItem의 props", props)
   // dueDate 문자열을 Date 객체로 변환합니다
   const dueDate = new Date(props.dueDate);
@@ -11,8 +13,21 @@ const MainAssignItem = (props) => {
   // 남은 일수를 계산합니다
   const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
+  const moveToPage = () => {
+    if (props.url === "quiz") {
+      navigate("/quizList", {
+        state: props
+      })
+    } else {
+      navigate("/assignmentlist", {
+        state: props
+      })
+    }
+
+  }
+
   return (
-    <div className="homeworkitem">
+    <div className="homeworkitem" onClick={moveToPage}>
       <div className="week">
         <div className="div162">{props.weekNumber}주차</div>
       </div>
@@ -24,21 +39,6 @@ const MainAssignItem = (props) => {
         <div className="star-styles">
           <div className="n9">{daysRemaining}일 남음</div>
         </div>
-        {props.status === "NOT_SUBMITTED" ? (
-          <img
-            className="octiconx-12"
-            loading="lazy"
-            alt=""
-            src="/octiconx12.svg"
-          />
-        ) : (
-          <img
-            className="custom-img"
-            loading="lazy"
-            alt=""
-            src="/custom-img-2.svg"
-          />
-        )}
       </div>
     </div>
   );

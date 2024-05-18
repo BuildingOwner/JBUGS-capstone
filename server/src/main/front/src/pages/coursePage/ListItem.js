@@ -52,6 +52,12 @@ const ListItem = (props) => {
 
   }
 
+  const removeExtension = (filename) => {
+    const lastIndex = filename.lastIndexOf('.');
+    if (lastIndex === -1) return filename; // 확장자가 없다면 그대로 반환
+    return filename.substring(0, lastIndex);
+};
+
   useEffect(() => {
     if (props.url === "assignmentlist") {
       const dueDate = new Date(props.dueDate);
@@ -130,8 +136,9 @@ const ListItem = (props) => {
           {props.url === 'file' && (
             <h3 className={styles.fontSize}>{props.title}</h3>
           )}
+          {console.log(props)}
           {props.url === 'video' && (
-            <h3 className={styles.fontSize}>{props.title}</h3>
+            <h3 className={styles.fontSize}>{removeExtension(props.videoName)}</h3>
           )}
         </div>
         <div className={styles.third}>

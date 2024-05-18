@@ -50,7 +50,7 @@ const Main = () => {
 
       // 현재 날짜 정보 설정
       const currentDate = new Date();
-      const startDate = new Date('2024-03-01') // 개강일 적는 곳
+      const startDate = new Date('2024-03-04') // 개강일 적는 곳
       const year = currentDate.getFullYear()
       const month = currentDate.getMonth() + 1
       const date = currentDate.getDate()

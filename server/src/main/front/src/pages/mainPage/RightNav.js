@@ -36,10 +36,8 @@ const RightNav = (props) => {
 
     // dueDate가 now보다 미래인지 확인
     if (dueDate > now) {
-      console.log("dueDate는 현재 시간보다 미래입니다.");
       return true;
     } else {
-      console.log("dueDate는 현재 시간보다 과거입니다.");
       return false;
     }
   }

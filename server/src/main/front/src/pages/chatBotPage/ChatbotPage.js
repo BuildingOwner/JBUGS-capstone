@@ -23,6 +23,7 @@ const ChatbotPage = () => {
   const [text, setText] = useState()
   const [firstDo, setFirstDo] = useState(true)
   const [readOnly, setReadOnly] = useState(false)
+  const [selectedChatIds, setSelectedChatIds] = useState([]); // 선택된 채팅방 ID들을 관리하는 상태
 
   // React 상태 관리를 위한 Hooks
   const [isSending, setIsSending] = useState(false);
@@ -285,34 +286,81 @@ const ChatbotPage = () => {
     }
   }
 
+  // const deleteChats = async () => {
+  //   try {
+  //     const response = await axios.delete(`/api/chat`, { data: selectedChatIds })
+  //     console.log("deleteChats reponse", response)
+
+  //     // chatIdArray에서 현재 chatId를 제거합니다.
+  //     const updatedChatIdArray = chatIdArray.filter(id => id !== chatId)
+  //     setChatIdArray(updatedChatIdArray)
+
+  //     // 현재 chatId의 인덱스를 찾습니다.
+  //     const currentChatIndex = chatIdArray.findIndex(id => id === chatId)
+
+  //     // 이전 chatId의 인덱스를 계산합니다. 만약 현재 chatId가 첫 번째였다면, 이전 chatId는 없으므로 0을 반환합니다.
+  //     const prevChatIndex = currentChatIndex > 0 ? currentChatIndex - 1 : 0
+
+  //     // 이전 chatId를 설정합니다. 만약 updatedChatIdArray가 비어 있다면, null을 설정합니다.
+  //     const newCurrentChatId = updatedChatIdArray[prevChatIndex] || null
+  //     setChatId(newCurrentChatId);
+
+  //     if (newCurrentChatId !== null) {
+  //       await fetchChattings(newCurrentChatId) // 새로운 현재 chatId에 해당하는 채팅 데이터 가져오기
+  //     } else {
+  //       setChats([]) // chatIdArray가 비어있다면 chats를 비움
+  //     }
+  //   } catch (error) {
+
+  //   }
+  // }
+
   const deleteChats = async () => {
+    if (selectedChatIds.length === 0) {
+      console.warn("No chats selected for deletion.");
+      return;
+    }
+
     try {
-      const response = await axios.delete(`/api/chat/${chatId}`)
-      console.log("deleteChats reponse", response)
+      const response = await axios.delete(`/api/chat`, { data: selectedChatIds });
+      console.log("deleteChats response", response);
 
-      // chatIdArray에서 현재 chatId를 제거합니다.
-      const updatedChatIdArray = chatIdArray.filter(id => id !== chatId)
-      setChatIdArray(updatedChatIdArray)
+      // chatIdArray에서 선택된 모든 chatId를 제거합니다.
+      const updatedChatIdArray = chatIdArray.filter(id => !selectedChatIds.includes(id));
+      setChatIdArray(updatedChatIdArray);
 
-      // 현재 chatId의 인덱스를 찾습니다.
-      const currentChatIndex = chatIdArray.findIndex(id => id === chatId)
-
-      // 이전 chatId의 인덱스를 계산합니다. 만약 현재 chatId가 첫 번째였다면, 이전 chatId는 없으므로 0을 반환합니다.
-      const prevChatIndex = currentChatIndex > 0 ? currentChatIndex - 1 : 0
-
-      // 이전 chatId를 설정합니다. 만약 updatedChatIdArray가 비어 있다면, null을 설정합니다.
-      const newCurrentChatId = updatedChatIdArray[prevChatIndex] || null
+      // 확인: 삭제된 채팅방 중 현재 선택된 채팅방(chatId)도 포함되어 있으면 새로운 채팅방 선택
+      let newCurrentChatId = null;
+      if (selectedChatIds.includes(chatId)) {
+        // 현재 선택된 chatId가 삭제된 경우, 적절한 채팅방 선택 로직
+        const currentChatIndex = chatIdArray.findIndex(id => id === chatId);
+        const newChatIndex = currentChatIndex > 0 ? currentChatIndex - 1 : 0;
+        newCurrentChatId = updatedChatIdArray[newChatIndex] || null;
+      } else {
+        newCurrentChatId = chatId; // 현재 선택된 chatId 유지
+      }
       setChatId(newCurrentChatId);
 
+      // 새로운 chatId에 대한 채팅 데이터 가져오기 또는 chatIdArray가 empty 인 경우 chat 비움
       if (newCurrentChatId !== null) {
-        await fetchChattings(newCurrentChatId) // 새로운 현재 chatId에 해당하는 채팅 데이터 가져오기
+        await fetchChattings(newCurrentChatId);
       } else {
-        setChats([]) // chatIdArray가 비어있다면 chats를 비움
+        setChats([]); // chatIdArray가 비어있다면 chats를 비움
       }
     } catch (error) {
-
+      console.error("Failed to delete chats:", error);
     }
-  }
+  };
+
+  const toggleChatSelection = (chatRoomId) => {
+    setSelectedChatIds(prev => {
+      if (prev.includes(chatRoomId)) {
+        return prev.filter(id => id !== chatRoomId);
+      } else {
+        return [...prev, chatRoomId];
+      }
+    });
+  };
 
   const fetchChattings = async (chatRoomId) => { // chatRoomId 매개변수 추가
     try {
@@ -477,6 +525,8 @@ const ChatbotPage = () => {
                     chatRoomId={chat.chatRoomId}
                     chatRoomName={chat.chatRoomName}
                     selectedId={chatId}
+                    isSelected={selectedChatIds.includes(chat.chatRoomId)}
+                    onSelectionChange={toggleChatSelection}
                   />
                 ))}
               </div>

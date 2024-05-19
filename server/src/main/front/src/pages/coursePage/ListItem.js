@@ -99,7 +99,7 @@ const ListItem = (props) => {
         </video>`
       ); // 새 창에 비디오 태그를 작성합니다.
     } catch (error) {
-      console.log(error)
+      alert("동영상을 불러올 수 없습니다.")
     }
   }
 
@@ -134,6 +134,7 @@ const ListItem = (props) => {
       // 'a' 요소를 문서에서 제거
     } catch (error) {
       console.error('Error while downloading the PDF:', error);
+      alert("파일을 받을 수 없습니다.")
     }
   }
 

@@ -5,7 +5,9 @@
 <div align="center"><h3>GPT4-turbo 기반 PDF 강의 자료와 이미지를 활용한 문제 생성 및 해설이 가능한 AI 강화 스마트 온라인 교육 플랫폼</h3></div>
 <div align="center"><h3>AI-Enhanced Smart Online Education Platform Capable of Generating Questions and Explanations Using PDF Lecture Materials and Images Based on GPT4-turbo</h3></div><br>
 
+
 ## 🔔 작품 소개
+
 
 E class+는 코로나 19 이후 대학 교육 환경에서 급속히 증가하는 블렌디드 수업과 온라인 학습의 필요성을 고려하여 개발된 혁신적인 교육 플랫폼입니다.
 
@@ -19,6 +21,7 @@ E class+는 코로나 19 이후 대학 교육 환경에서 급속히 증가하�
 2. UI가 깔끔하지만 불필요한 기능이 많아보인다.
 
 - **강의페이지**
+
 
 1. 주차가 거듭될수록 마우스 드래그의 횟수가 늘어난다.
 2. 불필요한 기능이 많아보인다.
@@ -158,3 +161,4 @@ E class+는 코로나 19 이후 대학 교육 환경에서 급속히 증가하�
 | 팀장 | 최재완 | AI 모듈 개발, UI 설계 및 개발, AWS 구축 |
 | 팀원 | 장주찬 | DB 설계 및 구축, Rest-API 개발 |
 | 팀원 | 진승원 | UI 설계 및 개발, 동적 UI 구현 |
+

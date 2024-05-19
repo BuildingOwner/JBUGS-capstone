@@ -197,9 +197,6 @@ const QuizAnswer = () => {
 
       const questionData = quizResponse.data.questions.map((quiz) => quiz)
 
-
-
-
       setQuestions(questionData)
 
       console.log("questionData : ", questionData)

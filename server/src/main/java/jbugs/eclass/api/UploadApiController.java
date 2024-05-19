@@ -2,12 +2,14 @@ package jbugs.eclass.api;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
 import jbugs.eclass.repository.VideoMaterialRepository;
 import jbugs.eclass.service.MaterialService;
+import jbugs.eclass.service.VideoPlaybackTimeService;
 import jbugs.eclass.service.WeekService;
 import jbugs.eclass.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +26,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -59,6 +61,7 @@ public class UploadApiController {
                                         @RequestParam("choice") String choice,
                                         @RequestParam("description") String description,
                                         @RequestParam("quizType") String quizType,
+                                        @RequestParam("quizFlag") boolean quizFlag,
                                         @PathVariable Long enrollmentId, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession(false); // 기존 세션 가져오기
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -79,8 +82,10 @@ public class UploadApiController {
                 uploadFiles(Arrays.asList(videoFiles), weekEntity.getId(), true, videoTitle, lecture);
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
-            for (String filePath : uploadedFilePaths) {
-                sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
+            if (quizFlag) {
+                for (String filePath : uploadedFilePaths) {
+                    sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
+                }
             }
 
             // 성공적으로 파일이 저장된 경우

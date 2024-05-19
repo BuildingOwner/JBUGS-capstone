@@ -27,6 +27,21 @@ const RightNav = (props) => {
     navigate("/");
   }
 
+  const checkDueDate = (dueDateString) => {
+    // 현재 날짜 및 시간
+    const now = new Date();
+
+    // 마감 날짜를 나타내는 Date 객체 생성
+    const dueDate = new Date(dueDateString);
+
+    // dueDate가 now보다 미래인지 확인
+    if (dueDate > now) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <div className="rightnav">
       <div className="righttop">
@@ -54,6 +69,7 @@ const RightNav = (props) => {
                 mainLectures.map((lecture) => (
                   lecture.assignments
                     .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
+                    .filter((assignment) => checkDueDate(assignment.dueDate))
                     .map((assignment) => ( // 이거 남은날짜가 적은거 부터 나왔으면 좋겠음 밑에꺼도 똑같이
                       <MainAssignItem
                         lectureName={lecture.lectureName}
@@ -79,6 +95,7 @@ const RightNav = (props) => {
               mainLectures.map((lecture) => (
                 lecture.quizDtoList
                   .filter((quiz) => quiz.submissionStatus === false)
+                  .filter((quiz) => checkDueDate(quiz.deadline))
                   .map((quiz) => (
                     <MainAssignItem
                       lectureName={lecture.lectureName}

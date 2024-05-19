@@ -1,3 +1,14 @@
 .contents {
     gap: var(--gap-xl);
 }
+
+.collepse{
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl);
+}
+
+.btn{
+    background-color: var(--point-blue) !important;
+    border: none !important;
+}

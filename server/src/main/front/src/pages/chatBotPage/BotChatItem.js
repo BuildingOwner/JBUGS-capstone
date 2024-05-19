@@ -21,7 +21,7 @@ const ChatItem = ({ propLineHeight, text }) => {
         <h3 className={styles.name}>AI부기</h3>
       </div>
       
-      <h3 className={styles.text} style={divStyle}><ReactMarkdown>{text}</ReactMarkdown></h3>
+      <div className={styles.text} style={divStyle}><ReactMarkdown>{text}</ReactMarkdown></div>
     </div>
   );
 };

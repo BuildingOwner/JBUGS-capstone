@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: var(--gap-3xs);
+  border-radius: 5px;
 }
 
 .title{

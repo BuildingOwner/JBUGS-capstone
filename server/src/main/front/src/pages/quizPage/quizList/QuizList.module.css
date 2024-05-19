@@ -95,7 +95,7 @@
   flex-direction: column;
   gap: var(--gap-xl);
   border-radius: 0 0 30px 30px;
-  max-height: calc(100% - 376px);
+  /* max-height: calc(100% - 376px); */
 }
 
 .choose{

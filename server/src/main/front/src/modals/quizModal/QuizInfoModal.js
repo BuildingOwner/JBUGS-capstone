@@ -72,9 +72,9 @@ const QuizInfoModal = (props) => {
         <div className={styles.contents}>
           {
             data.quizScore === undefined ? <Info title={"점수"} content={`- 점 / 100점`} /> :
-              <Info title={"점수"} content={`${data?.quizScore}점 / 100점`} />
+              <Info title={"점수"} content={`${data?.quizScore === null || props.props.submissionStatus == 0 ? "- " : data?.quizScore}점 / 100점`} />
           }
-          <Info title={"반영 비율"} content={`${data.reflectionRatio}% / 20%`} />
+          <Info title={"반영 비율"} content={`${data.reflectionRatio == undefined ? "없음" : `${data.reflectionRatio == undefined}%`} / 20%`} />
           {
             data.quizType === "PRACTICE" ? <Info title={"분류"} content={"실습 문제"} /> :
               data.quizType === "EXAM" ? <Info title={"분류"} content={"시험"} /> :

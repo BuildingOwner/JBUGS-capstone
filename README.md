@@ -39,11 +39,13 @@ E class+는 코로나 19 이후 대학 교육 환경에서 급속히 증가하�
 ## ✔개선된 페이지
 * __메인 페이지__
 <div>
- <img src="./image/메인 페이지.PNG" width="800" height="450" />
+ <img src="/images/메인 페이지.png" width="800"/>
  <p>
   <strong>캘린더 추가</strong> -> 날짜 확인 간편화 및 개인 일정 등록 가능
   <br> 
-  <strong>과제 표시</strong> -> 미완료 과제 확인 가능
+  <strong>미제출 과제 표시</strong> -> 미제출 과제 확인 가능
+  <br> 
+  <strong>미응시 퀴즈 표시</strong> -> 미응시 퀴즈 확인 가능
   <br> 
   <strong>UI 간결화</strong> -> 불필요한 기능 축소화
   </p>
@@ -53,16 +55,15 @@ E class+는 코로나 19 이후 대학 교육 환경에서 급속히 증가하�
  
 * __강의 페이지__
 <div>
-<img src="./image/course1.PNG" width="400" height="250" />
-<img src="./image/course2.PNG" width="400" height="250" />
+<img src="/images/강의 홈.png" width="800" />
 <p>
-  <strong>아코디언바 추가</strong> -> 마우스 드래그 횟수 감소
+  <strong>유연한 내비게이션</strong> -> 사이드바를 통한 다양한 메뉴 접근 가능성(홈, AI 채팅, 강의 활동, Q&A 등)
   <br> 
-  <strong>강의 진도율 시각화</strong> -> 주차별 강의 진행도 확인 가능
+  <strong>진도율 트래킹 및 시각화</strong> -> 강의 진행 상태를 시각적으로 표시하는 진도율 바 제공
   <br> 
-  <strong>Sticky Bar</strong> -> 주차별 이동 간결화
+  <strong>주차별 강의 내용 접근</strong> -> 중앙의 주차별 접근 바를 사용하여 각 주차의 강의 콘텐츠에 쉽게 접근
   <br>
-  <strong>과제 표시</strong> -> 완료/미완료 과제 확인 가능
+  <strong>자료 및 과제 관리</strong> -> 강의 자료 및 과제 파일을 직관적으로 정리하고 관리, 세부 정보 표시(파일 크기, 타입, 업로드 날짜)
 </p>
 </div>
 <br>

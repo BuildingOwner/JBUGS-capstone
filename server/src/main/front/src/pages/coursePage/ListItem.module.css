@@ -24,7 +24,8 @@
 .blue,
 .red,
 .green,
-.yellow {
+.yellow,
+.common {
   width: 80px;
   background-color: var(--boder-blue);
   display: flex;
@@ -65,4 +66,8 @@
 
 .yellow {
   background-color: var(--point-yellow);
+}
+
+.common{
+  background-color: #ccc;
 }

@@ -162,6 +162,8 @@ const ListItem = (props) => {
         setfileColor(hear = styles.green);
       } else if (extension[last].includes('doc') || extension[last].includes('hwp')) {
         setfileColor(hear = styles.blue);
+      } else{
+        setfileColor(styles.common);
       }
 
       setFileExtension(extension[last])
@@ -216,7 +218,6 @@ const ListItem = (props) => {
           {props.url === 'file' && (
             <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
           )}
-          {console.log(props)}
           {props.url === 'video' && (
             <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
           )}

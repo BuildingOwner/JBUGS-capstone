@@ -30,7 +30,7 @@ const ListItem = (props) => {
     } else if (props.url === "quizlist") {
       openModal();
     } else if (props.url === "video") {
-
+      watchVideo()
     } else {
       downloadFile()
     }
@@ -65,6 +65,44 @@ const ListItem = (props) => {
     return filename.substring(0, lastIndex);
   }
 
+  const watchVideo = async () => {
+    const videoName = props.videoName.split('.')
+    const length = videoName.length
+    const extension = videoName[length - 1].toLowerCase() // 확장자명 추출
+
+    // 확장자에 따른 MIME 타입 매핑
+    const mimeTypes = {
+      'mp4': 'video/mp4',
+      'mov': 'video/quicktime',
+      'webm': 'video/webm',
+      'ogg': 'video/ogg',
+      'avi': 'video/x-msvideo',
+      'wmv': 'video/x-ms-wmv',
+      'flv': 'video/x-flv',
+      'mkv': 'video/x-matroska',
+    }
+
+    const mimeType = mimeTypes[extension] || 'video/mp4'
+
+    try {
+      const response = await axios.get(`/api/course/stream/${props.videoId}`, {
+        responseType: 'blob' // 바이너리 데이터로 응답 받기
+      })
+      const videoBlob = new Blob([response.data], { type: mimeType }) // Blob 객체 생성
+      const videoUrl = URL.createObjectURL(videoBlob) // Blob URL 생성
+
+      const videoWindow = window.open('', '_blank') // 새 창을 엽니다.
+      videoWindow.document.write(
+        `<video controls autoplay style="width:100%;height:auto;">
+          <source src="${videoUrl}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>`
+      ); // 새 창에 비디오 태그를 작성합니다.
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const downloadFile = async () => {
     try {
       // axios.get 메소드를 사용하여 비동기 요청을 수행하고, 응답을 response 변수에 저장
@@ -74,10 +112,9 @@ const ListItem = (props) => {
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
         });
 
-        const downloadUrl = window.URL.createObjectURL(new Blob([response.data], { type: `application/${fileExtension}` }));
+      const downloadUrl = window.URL.createObjectURL(new Blob([response.data], { type: `application/${fileExtension}` }));
 
       // 서버에서 받은 응답 데이터를 Blob 객체로 감싸고, 그 객체를 사용하여 다운로드할 수 있는 URL 생성
-
       const link = document.createElement('a');
       // 'a' 요소를 생성하여 link라는 이름의 상수에 할당 (이 요소는 다운로드 링크를 나타냄)
 

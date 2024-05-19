@@ -176,6 +176,7 @@ const Course = () => {
                     videoPath={video.videoPath}
                     url={videoUrl}
                     fileSize={video.fileSize}
+                    videoId={video.videoId}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>

@@ -188,6 +188,7 @@ const QaList = () => {
                       secret={qna.secret}
                       memberName={memberName}
                       materials={qna.materials}
+                      comment={qna.comment}
                     />
                   )) : <NoItem title={"등록된 질문이"} />}
             </div>

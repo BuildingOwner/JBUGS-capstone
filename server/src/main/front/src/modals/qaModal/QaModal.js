@@ -12,7 +12,11 @@ const QaModal = (props) => {
   const [fileDescription, setFileDescription] = useState('')
   const [formattedDate, setFormattedDate] = useState()
   const [attachFiles, setAttachFiles] = useState([])
+  const [comment, setComment] = useState("")
   const data = props.props
+  const commentss = data.comment
+  const [responseComment, setResponseComment] = useState("")
+  const [commentData, setCommentData] = useState({})
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -24,6 +28,36 @@ const QaModal = (props) => {
 
     // 포맷팅된 문자열 생성
     return `${year}-${month}-${day}`;
+  }
+
+  const parseCommentString = () => {
+    if (commentss === null) {
+      return
+    }
+    const comments = [];
+    const commentPairs = commentss.split("writer:").filter(Boolean);
+
+    commentPairs.forEach(pair => {
+      const [writer, content] = pair.split("content:");
+      if (writer && content) {
+        comments.push({ writer: writer.trim(), content: content.trim() });
+      }
+    });
+    console.log(comments)
+    return comments;
+  };
+
+  const makeComment = async () => {
+    try {
+      const response = await axios.post(`/api/course/qna/${data.qnaId}/comment`, null, {
+        params: {
+          comment: `${responseComment} writer:${data.memberName} content:${comment}`
+        }
+      })
+      console.log(response);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const downloadFile = async (index) => {
@@ -93,19 +127,12 @@ const QaModal = (props) => {
     }
   }
 
-  const onAnswerClick = useCallback(() => {
-    const anchor = document.querySelector(
-      "[data-scroll-to='commentContainer']"
-    );
-    if (anchor) {
-      anchor.scrollIntoView({ block: "start", behavior: "smooth" });
-    }
-  }, []);
-
   useEffect(() => {
     const inputDate = data?.createdAt
     const data1 = formatDate(inputDate);
     setFormattedDate(data1)
+    setResponseComment(data?.comment)
+    setCommentData(parseCommentString(data?.comment))
     console.log(props)
   }, [])
 
@@ -152,7 +179,6 @@ const QaModal = (props) => {
             data.secret === true ? <Info title={"공개 여부"} content={"비밀글"} />
               : <Info title={"공개 여부"} content={"공개글"} />
           }
-
           <Info title={"조회수"} content={data.views} />
         </div>
         <div className={styles.contents}>
@@ -161,7 +187,6 @@ const QaModal = (props) => {
         <div className={styles2.contents}>
           <div className={styles2.fileTop}>
             <h3 className={styles2.title}>첨부 파일</h3>
-
             {
               data.writer === data.memberName ?
                 <>
@@ -180,7 +205,6 @@ const QaModal = (props) => {
                 </>
                 : null
             }
-
           </div>
           {
             data.materials?.map((material, i) => (
@@ -210,11 +234,11 @@ const QaModal = (props) => {
           <div className={styles2.commentList}>
             {
               // 댓글이 있을 시에 출력
-              data?.comment ?
-                data.comment?.map((comment) => (
+              commentData ?
+                commentData.map((comment) => (
                   <h3 className={`${styles2.comment} 
                   ${comment.isProfessor === true ? styles2.profComment : null}`}>
-                    {comment.writer}
+                    {comment.writer}<br/>
                     {comment.content}
                   </h3>
                 ))
@@ -228,8 +252,9 @@ const QaModal = (props) => {
         className="form-control"
         placeholder="댓글을 입력하세요..."
         style={{ overflowY: "hidden" }} // 세로 스크롤 제거
-        onClick={onAnswerClick}
+        onChange={(e) => setComment(e.target.value)}
       />
+      <button className={`btn btn-primary ${styles.goBtn}`} onClick={makeComment}>댓글 남기기</button>
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
         {
@@ -239,7 +264,6 @@ const QaModal = (props) => {
             </>
             : null
         }
-
       </div>
     </Modal>
   );

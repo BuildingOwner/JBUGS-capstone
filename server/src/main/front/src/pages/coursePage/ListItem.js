@@ -94,10 +94,10 @@ const ListItem = (props) => {
       const videoWindow = window.open('', '_blank') // 새 창을 엽니다.
       videoWindow.document.write(
         `<video controls autoplay style="width:100%;height:auto;">
-          <source src="${videoUrl}" type="video/mp4">
+          <source src="${videoUrl}" type="${mimeType}">
           Your browser does not support the video tag.
         </video>`
-      ); // 새 창에 비디오 태그를 작성합니다.
+      ) // 새 창에 비디오 태그를 작성합니다.
     } catch (error) {
       alert("동영상을 불러올 수 없습니다.")
     }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./ListItem.module.css"
 import { useNavigate } from "react-router-dom";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
+import axios from "axios";
 
 const ListItem = (props) => {
   const navigate = useNavigate()
@@ -28,6 +29,10 @@ const ListItem = (props) => {
       moveToAssignmentList();
     } else if (props.url === "quizlist") {
       openModal();
+    } else if (props.url === "video") {
+
+    } else {
+      downloadFile()
     }
   }
 
@@ -44,7 +49,9 @@ const ListItem = (props) => {
         count += 1
       }
     }
-    if (count === 1) {
+    if (count === 0) {
+      setByte(`${Math.round(byte * 10) / 10}B`)
+    } else if (count === 1) {
       setByte(`${Math.round(byte * 10) / 10}KB`)
     } else if (count === 2) {
       setByte(`${Math.round(byte * 10) / 10}MB`)
@@ -56,7 +63,43 @@ const ListItem = (props) => {
     const lastIndex = filename.lastIndexOf('.');
     if (lastIndex === -1) return filename; // 확장자가 없다면 그대로 반환
     return filename.substring(0, lastIndex);
-};
+  }
+
+  const downloadFile = async () => {
+    try {
+      // axios.get 메소드를 사용하여 비동기 요청을 수행하고, 응답을 response 변수에 저장
+      const response = await axios.get(`/api/course/files/download/${props.fileName}`
+        , {
+          responseType: 'blob', // 파일 다운로드를 위해 응답 타입을 blob으로 설정
+          withCredentials: true // 세션 쿠키를 사용하기 위해 필요
+        });
+
+        const downloadUrl = window.URL.createObjectURL(new Blob([response.data], { type: `application/${fileExtension}` }));
+
+      // 서버에서 받은 응답 데이터를 Blob 객체로 감싸고, 그 객체를 사용하여 다운로드할 수 있는 URL 생성
+
+      const link = document.createElement('a');
+      // 'a' 요소를 생성하여 link라는 이름의 상수에 할당 (이 요소는 다운로드 링크를 나타냄)
+
+      link.href = downloadUrl;
+      // 'a' 요소의 href 속성을 다운로드할 URL인 downloadUrl로 설정
+
+      link.setAttribute('download', `${props.title}`);
+      // 'a' 요소의 download 속성을 설정하여 파일 이름을 지정
+
+      document.body.appendChild(link);
+      // 'a' 요소를 문서의 본문(body)에 추가
+
+      link.click();
+      // 'a' 요소를 클릭하여 다운로드를 시작
+
+      link.remove();
+      // 'a' 요소를 문서에서 제거
+    } catch (error) {
+      console.error('Error while downloading the PDF:', error);
+    }
+  }
+
 
   useEffect(() => {
     if (props.url === "assignmentlist") {
@@ -134,11 +177,11 @@ const ListItem = (props) => {
             <h3 className={styles.fontSize}>{props.quizName}</h3>
           )}
           {props.url === 'file' && (
-            <h3 className={styles.fontSize}>{props.title}</h3>
+            <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
           )}
           {console.log(props)}
           {props.url === 'video' && (
-            <h3 className={styles.fontSize}>{removeExtension(props.videoName)}</h3>
+            <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
           )}
         </div>
         <div className={styles.third}>

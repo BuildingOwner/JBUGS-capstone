@@ -24,4 +24,4 @@ def pdf2png(path):
     return f"{directory}/"
 
 if __name__ == "__main__":
-    print(pdf2png('test\과제1.pdf'))
+    print(pdf2png('test\erd.pdf'))

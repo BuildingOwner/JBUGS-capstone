@@ -26,6 +26,46 @@ const QaModal = (props) => {
     return `${year}-${month}-${day}`;
   }
 
+  const downloadFile = async (index) => {
+    const fileName = props.props.materials[index].fileName
+    const fileSplit = fileName.split(".")
+    const length = fileSplit.length
+    const extension = fileSplit[length - 1]
+    try {
+      // axios.get 메소드를 사용하여 비동기 요청을 수행하고, 응답을 response 변수에 저장
+      const response = await axios.get(`/api/course/files/download/${fileName}`
+        , {
+          responseType: 'blob', // 파일 다운로드를 위해 응답 타입을 blob으로 설정
+          withCredentials: true // 세션 쿠키를 사용하기 위해 필요
+        })
+
+      // 서버에서 받은 응답 데이터를 Blob 객체로 감싸고, 그 객체를 사용하여 다운로드할 수 있는 URL 생성
+      const downloadUrl = window.URL.createObjectURL(new Blob([response.data], { type: `application/${extension}` }))
+
+      // 'a' 요소를 생성하여 link라는 이름의 상수에 할당 (이 요소는 다운로드 링크를 나타냄)
+      const link = document.createElement('a')
+
+      // 'a' 요소의 href 속성을 다운로드할 URL인 downloadUrl로 설정
+      link.href = downloadUrl
+
+      // 'a' 요소의 download 속성을 설정하여 파일 이름을 지정
+      link.setAttribute('download', `${fileName}`)
+
+      // 'a' 요소를 문서의 본문(body)에 추가
+      document.body.appendChild(link);
+
+      // 'a' 요소를 클릭하여 다운로드를 시작
+      link.click()
+
+      // 'a' 요소를 문서에서 제거
+      link.remove()
+
+    } catch (error) {
+      console.error('Error while downloading the PDF:', error);
+      alert("파일을 받을 수 없습니다.")
+    }
+  }
+
   const handleClose = (event) => {
     // setAnswerFlag(false)
     setFileDescription('')
@@ -66,6 +106,7 @@ const QaModal = (props) => {
     const inputDate = data?.createdAt
     const data1 = formatDate(inputDate);
     setFormattedDate(data1)
+    console.log(props)
   }, [])
 
   return (
@@ -142,8 +183,8 @@ const QaModal = (props) => {
 
           </div>
           {
-            data.materials?.map((material) => (
-              <div className={styles2.fileItem}>
+            data.materials?.map((material, i) => (
+              <div className={styles2.fileItem} onClick={() => downloadFile(i)}>
                 <h3 style={{ fontSize: "1.25rem" }}>L {material.fileName}</h3>
                 <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
                   <IoClose size={20} />

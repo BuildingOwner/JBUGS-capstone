@@ -191,7 +191,7 @@ const AssignmentModal = (props) => {
           {
             attachFiles.length > 0 ?
               attachFiles.map((file, i) => (
-                <div className={styles2.fileItem}>
+                <div className={styles2.fileItem} key={i}>
                   <h3 style={{ fontSize: "1.25rem" }}>L {file.name}</h3>
                   <button type="button"
                     className={`btn btn-primary ${styles2.fileDeleteBtn}`}

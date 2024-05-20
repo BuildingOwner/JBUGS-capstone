@@ -11,8 +11,10 @@ const QaModal = (props) => {
   Modal.setAppElement("#root")
   const [fileDescription, setFileDescription] = useState('')
   const [formattedDate, setFormattedDate] = useState()
-  const [attachFiles, setAttachFiles] = useState([])
+  const [attachFiles, setAttachFiles] = useState([]) // 업데이트 할 파일들 (new files)
+  const [prevFiles, setPrevFiles] = useState([]) // 받아온 파일들
   const [comment, setComment] = useState("")
+  const [startFlag, setStartFlag] = useState(false)
   const data = props.props
   const commentss = data.comment
   const [responseComment, setResponseComment] = useState("")
@@ -30,6 +32,37 @@ const QaModal = (props) => {
     return `${year}-${month}-${day}`;
   }
 
+  // 파일 삭제 함수
+  const handleDeleteFile = (index) => {
+    // 배열에서 index에 해당하는 요소를 제거합니다.
+    const newFiles = attachFiles.filter((_, i) => i !== index)
+    const fileCount = newFiles.length
+    setAttachFiles(newFiles) // 상태를 업데이트합니다.
+
+    if (fileCount === 1) {
+      // 파일이 하나만 선택된 경우, 파일 이름을 표시
+      setFileDescription(newFiles[0].name);
+    } else if (fileCount > 1) {
+      // 여러 파일이 선택된 경우, "파일 n개" 형식으로 표시
+      setFileDescription(`이미지 ${fileCount}개`);
+    } else {
+      // 파일이 선택되지 않은 경우
+      setFileDescription('');
+    }
+  }
+
+  // 파일 삭제 함수
+  const handleDeletePrevFile = (index, event) => {
+    if (event) {
+      event.stopPropagation()
+    }
+    console.log("실행")
+    // 배열에서 index에 해당하는 요소를 제거합니다.
+    const newFiles = prevFiles.filter((_, i) => i !== index)
+    const fileCount = newFiles.length
+    setPrevFiles(newFiles) // 상태를 업데이트합니다.
+  }
+
   const parseCommentString = () => {
     if (commentss === null) {
       return
@@ -44,8 +77,8 @@ const QaModal = (props) => {
       }
     });
     console.log(comments)
-    return comments;
-  };
+    return comments
+  }
 
   const makeComment = async () => {
     try {
@@ -105,6 +138,7 @@ const QaModal = (props) => {
     setFileDescription('')
     setAttachFiles([])
     event.stopPropagation()
+    setStartFlag(!startFlag)
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
 
@@ -132,9 +166,10 @@ const QaModal = (props) => {
     const data1 = formatDate(inputDate);
     setFormattedDate(data1)
     setResponseComment(data?.comment)
+    setPrevFiles(data?.materials)
     setCommentData(parseCommentString(data?.comment))
     console.log(props)
-  }, [])
+  }, [startFlag]) // 모달이 닫히면 다시 렌더링이 일어남
 
   return (
     <Modal className={styles.modalContainer}
@@ -206,21 +241,25 @@ const QaModal = (props) => {
                 : null
             }
           </div>
-          {
-            data.materials?.map((material, i) => (
+          {prevFiles.length > 0 ?
+            prevFiles.map((material, i) => (
               <div className={styles2.fileItem} onClick={() => downloadFile(i)}>
                 <h3 style={{ fontSize: "1.25rem" }}>L {material.fileName}</h3>
-                <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
+                <button type="button"
+                  className={`btn btn-primary ${styles2.fileDeleteBtn}`}
+                  onClick={(e) => handleDeletePrevFile(i, e)}>
                   <IoClose size={20} />
                 </button>
               </div>
-            ))
+            )) : null
           }
           {
             attachFiles?.map((material) => (
               <div className={styles2.fileItem}>
                 <h3 style={{ fontSize: "1.25rem" }}>L {material.name}</h3>
-                <button type="button" className={`btn btn-primary ${styles2.fileDeleteBtn}`}>
+                <button type="button"
+                  className={`btn btn-primary ${styles2.fileDeleteBtn}`}
+                  onClick={() => handleDeleteFile(i)}>
                   <IoClose size={20} />
                 </button>
               </div>
@@ -234,11 +273,11 @@ const QaModal = (props) => {
           <div className={styles2.commentList}>
             {
               // 댓글이 있을 시에 출력
-              commentData ?
+              commentData?.length > 0 ?
                 commentData.map((comment) => (
                   <h3 className={`${styles2.comment} 
                   ${comment.isProfessor === true ? styles2.profComment : null}`}>
-                    {comment.writer}<br/>
+                    {comment.writer}<br />
                     {comment.content}
                   </h3>
                 ))

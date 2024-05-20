@@ -329,6 +329,9 @@ const ChatbotPage = () => {
       const updatedChatIdArray = chatIdArray.filter(id => !selectedChatIds.includes(id));
       setChatIdArray(updatedChatIdArray);
 
+      const updatedChatDtoList = chatDtoList.filter(chat => !selectedChatIds.includes(chat.chatRoomId));
+      setChatDtoList(updatedChatDtoList);
+
       // 확인: 삭제된 채팅방 중 현재 선택된 채팅방(chatId)도 포함되어 있으면 새로운 채팅방 선택
       let newCurrentChatId = null;
       if (selectedChatIds.includes(chatId)) {

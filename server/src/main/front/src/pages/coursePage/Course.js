@@ -209,6 +209,7 @@ const Course = () => {
                 {classFiles[0] ? classFiles.map((file, i) => (
                   <ListItem
                     key={`file${i}`}
+                    fileId={file.fileId}
                     fileName={file.fileName}
                     filePath={file.filePath}
                     title={file.title}

@@ -14,7 +14,7 @@ const AssignmentModal = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   const [remainDate, setRemainDate] = useState('')
   const [attachFiles, setAttachFiles] = useState([])
-
+  const [comment, setComment] = useState("")
   const uploadAssign = async () => {
     console.log("업로드 시작")
     try {

@@ -3,6 +3,7 @@ import styles from "./ListItem.module.css"
 import { useNavigate } from "react-router-dom";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 import axios from "axios";
+import { IoClose } from "react-icons/io5";
 
 const ListItem = (props) => {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ const ListItem = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [fileColor, setfileColor] = useState('');
   const [byte, setByte] = useState(0)
+
   const openModal = () => {
     console.log('modal open')
     setModalIsOpen(true);
@@ -22,6 +24,20 @@ const ListItem = (props) => {
     setModalIsOpen(false)
     // 이벤트 버블링을 막음
     event.stopPropagation()
+  }
+
+  const handleDeleteFile = async (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
+    if (confirm("삭제 하시겠습니까?") === true) {
+      try {
+        const response = await axios.delete(`/api/material/${props.fileId}`);
+        console.log(response.data); // 서버로부터의 응답을 처리합니다.
+      } catch (error) {
+        console.error('Error deleting material:', error);
+      }
+    }
   }
 
   const checkURL = () => {
@@ -163,7 +179,7 @@ const ListItem = (props) => {
         setfileColor(hear = styles.green);
       } else if (extension[last].includes('doc') || extension[last].includes('hwp')) {
         setfileColor(hear = styles.blue);
-      } else{
+      } else {
         setfileColor(styles.common);
       }
 
@@ -237,8 +253,15 @@ const ListItem = (props) => {
           <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
         {props.url === 'file' && (
-          <h3 className={styles.fontSize}>{byte}
-          </h3>
+          <>
+            <h3 className={styles.fontSize}>{byte}
+            </h3>
+            <button type="button"
+              className={`btn btn-primary `}
+              onClick={(e) => handleDeleteFile(e)}>
+              <IoClose size={20} />
+            </button>
+          </>
         )}
         {props.url === 'video' && (
           <h3 className={styles.fontSize}>{byte}</h3>

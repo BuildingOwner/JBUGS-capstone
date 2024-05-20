@@ -71,6 +71,7 @@ const QaList = () => {
   console.log(" number sortedQnaDtoList : ", sortedQnaDtoList)
 
   const reRender = () => {
+    console.log("리렌더링")
     setReRenderFlag(prevFlag => !prevFlag)
   }
 
@@ -189,6 +190,7 @@ const QaList = () => {
                       memberName={memberName}
                       materials={qna.materials}
                       comment={qna.comment}
+                      reRender={reRender}
                     />
                   )) : <NoItem title={"등록된 질문이"} />}
             </div>

@@ -26,6 +26,21 @@ const ListItem = (props) => {
     event.stopPropagation()
   }
 
+  const handleDeleteVideoFile = async (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
+    if (confirm("삭제 하시겠습니까?") === true) {
+      try {
+        const response = await axios.delete(`/api/videoMaterial/${props.videoId}`)
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    props.reRender()
+  }
+
   const handleDeleteFile = async (event) => {
     if (event) {
       event.stopPropagation()
@@ -38,6 +53,7 @@ const ListItem = (props) => {
         console.error('Error deleting material:', error);
       }
     }
+    props.reRender()
   }
 
   const checkURL = () => {
@@ -264,7 +280,15 @@ const ListItem = (props) => {
           </>
         )}
         {props.url === 'video' && (
-          <h3 className={styles.fontSize}>{byte}</h3>
+          <>
+            <h3 className={styles.fontSize}>{byte}
+            </h3>
+            <button type="button"
+              className={`btn btn-primary `}
+              onClick={(e) => handleDeleteVideoFile(e)}>
+              <IoClose size={20} />
+            </button>
+          </>
         )}
       </div>
     </div>

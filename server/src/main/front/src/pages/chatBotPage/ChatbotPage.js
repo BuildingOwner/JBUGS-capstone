@@ -329,6 +329,7 @@ const ChatbotPage = () => {
       const updatedChatIdArray = chatIdArray.filter(id => !selectedChatIds.includes(id));
       setChatIdArray(updatedChatIdArray);
 
+      //chatDtoList를 업데이트시켜 HistoryItem 리렌더링
       const updatedChatDtoList = chatDtoList.filter(chat => !selectedChatIds.includes(chat.chatRoomId));
       setChatDtoList(updatedChatDtoList);
 

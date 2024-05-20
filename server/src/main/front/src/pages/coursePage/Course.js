@@ -156,7 +156,7 @@ const Course = () => {
                 ))}
               </nav>
               <button type="button" className={`btn btn-primary 
-              ${memberInfoDto?.memberType == "STUDENT" ? styles.hidden : null}
+              ${memberInfoDto?.memberType == "STUDENTs" ? styles.hidden : null}
               ${styles.addBtn}`} onClick={openModal}>
                 <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
               </button>
@@ -177,6 +177,7 @@ const Course = () => {
                     url={videoUrl}
                     fileSize={video.fileSize}
                     videoId={video.videoId}
+                    reRender={reRender}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>
@@ -215,6 +216,7 @@ const Course = () => {
                     title={file.title}
                     url={fileUrl}
                     fileSize={file.fileSize}
+                    reRender={reRender}
                   />
                 )) : <NoItem title={"자료가"} />}
               </div>

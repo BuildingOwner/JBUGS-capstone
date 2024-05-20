@@ -17,14 +17,17 @@ const FileUploadModal = (props) => {
   const [shortAnswer, setShortAnswer] = useState(null)
   const [choice, setChoice] = useState(null)
   const [description, setDescription] = useState(null)
-  const [quizType, setQuizType] = useState("")
-  const [fileDescription, setFileDescription] = useState('');
-  const [videoDescription, setVideoDescription] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [quizType, setQuizType] = useState(null)
+  const [fileDescription, setFileDescription] = useState('')
+  const [videoDescription, setVideoDescription] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [quizFlag, setQuizFlag] = useState(false)
 
   // Collapse 상태를 토글하는 함수
   const toggleCollapse = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(!isOpen)
+    console.log(!quizFlag)
+    setQuizFlag(!quizFlag)
   }
 
   const changeDescription = (e) => {
@@ -44,7 +47,9 @@ const FileUploadModal = (props) => {
     setShortAnswer(null)
     setQuizType("")
     setIsOpen(false)
-    event.stopPropagation()
+    if (event) {
+      event.stopPropagation()
+    }
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
 
@@ -117,7 +122,7 @@ const FileUploadModal = (props) => {
   }
 
   const uploadFiles = async () => {
-    const formData = new FormData();
+    const formData = new FormData()
     formData.append("weekNumber", weekNumber)
     formData.append("fileTitle", fileTitle)
     formData.append("videoTitle", videoTitle)
@@ -127,6 +132,7 @@ const FileUploadModal = (props) => {
     formData.append("attachFiles", attachFiles)
     formData.append("description", description)
     formData.append("quizType", quizType)
+    formData.append("quizFlag", quizFlag)
 
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
@@ -145,8 +151,10 @@ const FileUploadModal = (props) => {
     }
     // 부모 컴포넌트를 다시 렌더링
     props.reRender()
-    // 프로세스가 끝나면 모달 닫기
-    props.onRequestClose(null)
+
+    handleClose()
+    // // 프로세스가 끝나면 모달 닫기
+    // props.onRequestClose(null)
   }
 
   return (
@@ -229,7 +237,12 @@ const FileUploadModal = (props) => {
           } />
         </div>
 
-        <div className={`btn btn-primary ${styles2.btn}`} data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="collapseExample" onClick={toggleCollapse}>
+        <div className={`btn btn-primary ${styles2.btn}`}
+          data-bs-toggle="collapse"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          onClick={toggleCollapse}>
           퀴즈 생성하기
         </div>
 

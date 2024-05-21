@@ -194,60 +194,88 @@
 //        memberService.join(member9);
 //
 //        Lecture lecture1 = new Lecture();
-//        lecture1.setName("알고리즘");
-//        lecture1.setProfessor(professor2);
+//        lecture1.setName("웹프로그래밍");
+//        lecture1.setProfessor(professor1);
 //        lecture1.setDivision("A");
 //        lecture1.setClassification("전필");
 //        lecture1.setLectureTime("월 13 ~ 14.5");
 //
 //        Lecture lecture2 = new Lecture();
-//        lecture2.setName("모바일스마트시스템");
-//        lecture2.setProfessor(professor4);
-//        lecture2.setDivision("8");
+//        lecture2.setName("웹프로그래밍");
+//        lecture2.setProfessor(professor1);
+//        lecture2.setDivision("B");
 //        lecture2.setClassification("전필");
 //        lecture2.setLectureTime("월 10.5 ~ 12");
 //
 //        Lecture lecture3 = new Lecture();
-//        lecture3.setName("컴파일러");
+//        lecture3.setName("프로그래밍언어론");
 //        lecture3.setProfessor(professor1);
-//        lecture3.setDivision("B");
+//        lecture3.setDivision("A");
 //        lecture3.setClassification("전선");
 //        lecture3.setLectureTime("화 9 ~ 12");
 //
 //        Lecture lecture4 = new Lecture();
-//        lecture4.setName("설계패턴");
-//        lecture4.setProfessor(professor3);
-//        lecture4.setDivision("C");
+//        lecture4.setName("프로그래밍언어론");
+//        lecture4.setProfessor(professor1);
+//        lecture4.setDivision("B");
 //        lecture4.setClassification("전선");
 //        lecture4.setLectureTime("수 13 ~ 16");
 //
 //        Lecture lecture5 = new Lecture();
-//        lecture5.setName("안드로이드프로그래밍");
-//        lecture5.setProfessor(professor5);
-//        lecture5.setDivision("A");
+//        lecture5.setName("프로그래밍언어론");
+//        lecture5.setProfessor(professor1);
+//        lecture5.setDivision("O");
 //        lecture5.setClassification("전필");
 //        lecture5.setLectureTime("금 13 ~ 14.5");
 //
 //        Lecture lecture6 = new Lecture();
-//        lecture6.setName("웹프레임워크1");
-//        lecture6.setProfessor(professor6);
+//        lecture6.setName("캡스톤디자인");
+//        lecture6.setProfessor(professor1);
 //        lecture6.setDivision("7");
 //        lecture6.setClassification("전필");
 //        lecture6.setLectureTime("화 13 ~ 16");
 //
-////        Lecture lecture7 = new Lecture();
-////        lecture7.setName("운영체제");
-////        lecture7.setProfessor(professor4);
-////        lecture7.setDivision("B");
-////        lecture7.setClassification("전선");
-////        lecture7.setLectureTime("수 9 ~ 12");
-////
-////        Lecture lecture8 = new Lecture();
-////        lecture8.setName("알고리즘");
-////        lecture8.setProfessor(professor2);
-////        lecture8.setDivision("B");
-////        lecture8.setClassification("전필");
-////        lecture8.setLectureTime("월 14.5 ~ 16");
+//        Lecture lecture7 = new Lecture();
+//        lecture7.setName("운영체제");
+//        lecture7.setProfessor(professor4);
+//        lecture7.setDivision("B");
+//        lecture7.setClassification("전선");
+//        lecture7.setLectureTime("수 9 ~ 12");
+//
+//        Lecture lecture8 = new Lecture();
+//        lecture8.setName("알고리즘");
+//        lecture8.setProfessor(professor4);
+//        lecture8.setDivision("A");
+//        lecture8.setClassification("전필");
+//        lecture8.setLectureTime("월 13 ~ 14.5");
+//
+//        Lecture lecture9 = new Lecture();
+//        lecture9.setName("알고리즘");
+//        lecture9.setProfessor(professor4);
+//        lecture9.setDivision("B");
+//        lecture9.setClassification("전필");
+//        lecture9.setLectureTime("월 14.5 ~ 16");
+//
+//        Lecture lecture10 = new Lecture();
+//        lecture10.setName("알고리즘");
+//        lecture10.setProfessor(professor4);
+//        lecture10.setDivision("O");
+//        lecture10.setClassification("전필");
+//        lecture10.setLectureTime("화 13 ~ 14.5");
+//
+//        Lecture lecture11 = new Lecture();
+//        lecture11.setName("알고리즘");
+//        lecture11.setProfessor(professor4);
+//        lecture11.setDivision("8");
+//        lecture11.setClassification("전필");
+//        lecture11.setLectureTime("화 14.5 ~ 16");
+//
+//        Lecture lecture12 = new Lecture();
+//        lecture12.setName("정보보안");
+//        lecture12.setProfessor(professor6);
+//        lecture12.setDivision("8");
+//        lecture12.setClassification("전필");
+//        lecture12.setLectureTime("화 14.5 ~ 16");
 //
 //        lectureService.saveLecture(lecture1);
 //        lectureService.saveLecture(lecture2);
@@ -255,6 +283,12 @@
 //        lectureService.saveLecture(lecture4);
 //        lectureService.saveLecture(lecture5);
 //        lectureService.saveLecture(lecture6);
+//        lectureService.saveLecture(lecture7);
+//        lectureService.saveLecture(lecture8);
+//        lectureService.saveLecture(lecture9);
+//        lectureService.saveLecture(lecture10);
+//        lectureService.saveLecture(lecture11);
+//        lectureService.saveLecture(lecture12);
 //
 //        Enrollment enrollment1 = enrollmentService.enrollStudentInLecture(student1, lecture1);
 //        Enrollment enrollment2 = enrollmentService.enrollStudentInLecture(student1, lecture2);
@@ -278,7 +312,7 @@
 //        enrollmentService.enrollStudentInLecture(student3, lecture6);
 //
 //        int memberIndex = 1;
-//        String[] studentNames = {"김지훈","박세진", "박서연", "도민준","이하은","장도윤","박지우","이유진","김현우","한수아","신지호", "김예은", "김태현", "김민서", "박준호", "이하윤", "차은우", "박서현", "김지안", "조우진", "박소율", "김민주"};
+//        String[] studentNames = {"김지훈","박세진", "박서연", "도민준","이하은","장도윤","박지우","이유진","김현우","한수아","신지호", "김예은", "김태현", "김민서", "박준호", "이하윤", "차은우"};
 //        for(String name : studentNames) {
 //            Member member10 = new Member();
 //            member10.setLoginId("19710" + memberIndex); // 로그인 ID 설정
@@ -302,6 +336,15 @@
 //
 //            memberIndex++; // 다음 멤버를 위해 인덱스 증가
 //        }
+//
+//        enrollmentService.enrollMemberInLecture(member2, lecture1);
+//        enrollmentService.enrollMemberInLecture(member2, lecture2);
+//        enrollmentService.enrollMemberInLecture(member2, lecture2);
+//        enrollmentService.enrollMemberInLecture(member2, lecture2);
+//        enrollmentService.enrollMemberInLecture(member2, lecture2);
+//        enrollmentService.enrollMemberInLecture(member2, lecture2);
+//
+//
 //
 //        Optional<Week> week1 = weekRepository.findById(1L);
 //        Optional<Week> week2 = weekRepository.findById(2L);

@@ -77,7 +77,7 @@
 //        Professor professor1 = new Professor();
 //        professor1.setMajor("컴퓨터공학과");
 //        professor1.setEmail("sdkim@hansung.ac.kr");
-//        professor1.setLab("연구관327호");
+//        professor1.setLab("연구동 327호");
 //
 //        member2.setProfessor(professor1);
 //        professor1.setMember(member2);
@@ -86,15 +86,15 @@
 //
 //        Member member3 = new Member();
 //        member3.setLoginId("2222");
-//        member3.setName("강희중");
+//        member3.setName("이재문");
 //        String encodedPassword3 = passwordEncoder.encode("1234!");
 //        member3.setPassword(encodedPassword3);
 //        member3.setMemberType(MemberType.PROFESSOR);
 //
 //        Professor professor2 = new Professor();
 //        professor2.setMajor("컴퓨터공학과");
-//        professor2.setEmail("hjkang@hansung.ac.kr");
-//        professor2.setLab("연구관320호");
+//        professor2.setEmail("jmlee@hansung.ac.kr");
+//        professor2.setLab("연구동 302호");
 //
 //        member3.setProfessor(professor2);
 //        professor2.setMember(member3);
@@ -103,15 +103,15 @@
 //
 //        Member member4 = new Member();
 //        member4.setLoginId("3333");
-//        member4.setName("한기준");
+//        member4.setName("박승현");
 //        String encodedPassword4 = passwordEncoder.encode("1234!");
 //        member4.setPassword(encodedPassword4);
 //        member4.setMemberType(MemberType.PROFESSOR);
 //
 //        Professor professor3 = new Professor();
 //        professor3.setMajor("컴퓨터공학과");
-//        professor3.setEmail("keejun.han@hansung.ac.kr");
-//        professor3.setLab("연구관215호");
+//        professor3.setEmail("sp@hansung.ac.kr");
+//        professor3.setLab("연구동 329호");
 //
 //        member4.setProfessor(professor3);
 //        professor3.setMember(member4);
@@ -120,15 +120,15 @@
 //
 //        Member member5 = new Member();
 //        member5.setLoginId("4444");
-//        member5.setName("이재문");
+//        member5.setName("황기태");
 //        String encodedPassword5 = passwordEncoder.encode("1234!");
 //        member5.setPassword(encodedPassword5);
 //        member5.setMemberType(MemberType.PROFESSOR);
 //
 //        Professor professor4 = new Professor();
 //        professor4.setMajor("컴퓨터공학과");
-//        professor4.setEmail("jmlee@hansung.ac.kr");
-//        professor4.setLab("연구관302호");
+//        professor4.setEmail("calafk@hansung.ac.kr");
+//        professor4.setLab("연구동 309호");
 //
 //        member5.setProfessor(professor4);
 //        professor4.setMember(member5);
@@ -145,7 +145,7 @@
 //        Professor professor5 = new Professor();
 //        professor5.setMajor("컴퓨터공학과");
 //        professor5.setEmail("jyheo@hansung.ac.kr");
-//        professor5.setLab("연구관305호");
+//        professor5.setLab("연구동 305호");
 //
 //        member6.setProfessor(professor5);
 //        professor5.setMember(member6);
@@ -154,15 +154,15 @@
 //
 //        Member member7 = new Member();
 //        member7.setLoginId("6666");
-//        member7.setName("박승현");
+//        member7.setName("한기준");
 //        String encodedPassword7 = passwordEncoder.encode("1234!");
 //        member7.setPassword(encodedPassword7);
 //        member7.setMemberType(MemberType.PROFESSOR);
 //
 //        Professor professor6 = new Professor();
 //        professor6.setMajor("컴퓨터공학과");
-//        professor6.setEmail("sp@hansung.ac.kr");
-//        professor6.setLab("연구관329호");
+//        professor6.setEmail("keejun.han@hansung.ac.kr");
+//        professor6.setLab("연구동 215호");
 //
 //        member7.setProfessor(professor6);
 //        professor6.setMember(member7);
@@ -201,36 +201,36 @@
 //        lecture1.setLectureTime("월 13 ~ 14.5");
 //
 //        Lecture lecture2 = new Lecture();
-//        lecture2.setName("웹프로그래밍");
+//        lecture2.setName("프로그래밍언어론");
 //        lecture2.setProfessor(professor1);
 //        lecture2.setDivision("B");
-//        lecture2.setClassification("전필");
+//        lecture2.setClassification("전선");
 //        lecture2.setLectureTime("월 10.5 ~ 12");
 //
 //        Lecture lecture3 = new Lecture();
-//        lecture3.setName("프로그래밍언어론");
+//        lecture3.setName("캡스톤디자인");
 //        lecture3.setProfessor(professor1);
 //        lecture3.setDivision("A");
-//        lecture3.setClassification("전선");
-//        lecture3.setLectureTime("화 9 ~ 12");
+//        lecture3.setClassification("전필");
+//        lecture3.setLectureTime("토 9 ~ 12");
 //
 //        Lecture lecture4 = new Lecture();
-//        lecture4.setName("프로그래밍언어론");
+//        lecture4.setName("캡스톤디자인");
 //        lecture4.setProfessor(professor1);
 //        lecture4.setDivision("B");
-//        lecture4.setClassification("전선");
-//        lecture4.setLectureTime("수 13 ~ 16");
+//        lecture4.setClassification("전필");
+//        lecture4.setLectureTime("토 9 ~ 12");
 //
 //        Lecture lecture5 = new Lecture();
-//        lecture5.setName("프로그래밍언어론");
+//        lecture5.setName("캡스톤디자인");
 //        lecture5.setProfessor(professor1);
 //        lecture5.setDivision("O");
 //        lecture5.setClassification("전필");
-//        lecture5.setLectureTime("금 13 ~ 14.5");
+//        lecture5.setLectureTime("토 9 ~ 12");
 //
 //        Lecture lecture6 = new Lecture();
-//        lecture6.setName("캡스톤디자인");
-//        lecture6.setProfessor(professor1);
+//        lecture6.setName("Ios프로그래밍");
+//        lecture6.setProfessor(professor2);
 //        lecture6.setDivision("7");
 //        lecture6.setClassification("전필");
 //        lecture6.setLectureTime("화 13 ~ 16");
@@ -240,42 +240,14 @@
 //        lecture7.setProfessor(professor4);
 //        lecture7.setDivision("B");
 //        lecture7.setClassification("전선");
-//        lecture7.setLectureTime("수 9 ~ 12");
+//        lecture7.setLectureTime("월 9 ~ 12");
 //
 //        Lecture lecture8 = new Lecture();
-//        lecture8.setName("알고리즘");
-//        lecture8.setProfessor(professor4);
+//        lecture8.setName("정보보안");
+//        lecture8.setProfessor(professor3);
 //        lecture8.setDivision("A");
-//        lecture8.setClassification("전필");
+//        lecture8.setClassification("전선");
 //        lecture8.setLectureTime("월 13 ~ 14.5");
-//
-//        Lecture lecture9 = new Lecture();
-//        lecture9.setName("알고리즘");
-//        lecture9.setProfessor(professor4);
-//        lecture9.setDivision("B");
-//        lecture9.setClassification("전필");
-//        lecture9.setLectureTime("월 14.5 ~ 16");
-//
-//        Lecture lecture10 = new Lecture();
-//        lecture10.setName("알고리즘");
-//        lecture10.setProfessor(professor4);
-//        lecture10.setDivision("O");
-//        lecture10.setClassification("전필");
-//        lecture10.setLectureTime("화 13 ~ 14.5");
-//
-//        Lecture lecture11 = new Lecture();
-//        lecture11.setName("알고리즘");
-//        lecture11.setProfessor(professor4);
-//        lecture11.setDivision("8");
-//        lecture11.setClassification("전필");
-//        lecture11.setLectureTime("화 14.5 ~ 16");
-//
-//        Lecture lecture12 = new Lecture();
-//        lecture12.setName("정보보안");
-//        lecture12.setProfessor(professor6);
-//        lecture12.setDivision("8");
-//        lecture12.setClassification("전필");
-//        lecture12.setLectureTime("화 14.5 ~ 16");
 //
 //        lectureService.saveLecture(lecture1);
 //        lectureService.saveLecture(lecture2);
@@ -285,31 +257,27 @@
 //        lectureService.saveLecture(lecture6);
 //        lectureService.saveLecture(lecture7);
 //        lectureService.saveLecture(lecture8);
-//        lectureService.saveLecture(lecture9);
-//        lectureService.saveLecture(lecture10);
-//        lectureService.saveLecture(lecture11);
-//        lectureService.saveLecture(lecture12);
 //
 //        Enrollment enrollment1 = enrollmentService.enrollStudentInLecture(student1, lecture1);
 //        Enrollment enrollment2 = enrollmentService.enrollStudentInLecture(student1, lecture2);
 //        Enrollment enrollment3 = enrollmentService.enrollStudentInLecture(student1, lecture3);
-//        Enrollment enrollment4 = enrollmentService.enrollStudentInLecture(student1, lecture4);
-//        Enrollment enrollment5 = enrollmentService.enrollStudentInLecture(student1, lecture5);
-//        Enrollment enrollment6 = enrollmentService.enrollStudentInLecture(student1, lecture6);
+//        Enrollment enrollment4 = enrollmentService.enrollStudentInLecture(student1, lecture6);
+//        Enrollment enrollment5 = enrollmentService.enrollStudentInLecture(student1, lecture7);
+//        Enrollment enrollment6 = enrollmentService.enrollStudentInLecture(student1, lecture8);
 //
 //        enrollmentService.enrollStudentInLecture(student2, lecture1);
 //        enrollmentService.enrollStudentInLecture(student2, lecture2);
-//        enrollmentService.enrollStudentInLecture(student2, lecture3);
 //        enrollmentService.enrollStudentInLecture(student2, lecture4);
-//        enrollmentService.enrollStudentInLecture(student2, lecture5);
 //        enrollmentService.enrollStudentInLecture(student2, lecture6);
+//        enrollmentService.enrollStudentInLecture(student2, lecture7);
+//        enrollmentService.enrollStudentInLecture(student2, lecture8);
 //
 //        enrollmentService.enrollStudentInLecture(student3, lecture1);
 //        enrollmentService.enrollStudentInLecture(student3, lecture2);
-//        enrollmentService.enrollStudentInLecture(student3, lecture3);
-//        enrollmentService.enrollStudentInLecture(student3, lecture4);
 //        enrollmentService.enrollStudentInLecture(student3, lecture5);
 //        enrollmentService.enrollStudentInLecture(student3, lecture6);
+//        enrollmentService.enrollStudentInLecture(student3, lecture7);
+//        enrollmentService.enrollStudentInLecture(student3, lecture8);
 //
 //        int memberIndex = 1;
 //        String[] studentNames = {"김지훈","박세진", "박서연", "도민준","이하은","장도윤","박지우","이유진","김현우","한수아","신지호", "김예은", "김태현", "김민서", "박준호", "이하윤", "차은우"};
@@ -330,21 +298,22 @@
 //            enrollmentService.enrollStudentInLecture(student5, lecture1);
 //            enrollmentService.enrollStudentInLecture(student5, lecture2);
 //            enrollmentService.enrollStudentInLecture(student5, lecture3);
-//            enrollmentService.enrollStudentInLecture(student5, lecture4);
-//            enrollmentService.enrollStudentInLecture(student5, lecture5);
 //            enrollmentService.enrollStudentInLecture(student5, lecture6);
+//            enrollmentService.enrollStudentInLecture(student5, lecture7);
+//            enrollmentService.enrollStudentInLecture(student5, lecture8);
 //
 //            memberIndex++; // 다음 멤버를 위해 인덱스 증가
 //        }
 //
 //        enrollmentService.enrollMemberInLecture(member2, lecture1);
 //        enrollmentService.enrollMemberInLecture(member2, lecture2);
-//        enrollmentService.enrollMemberInLecture(member2, lecture2);
-//        enrollmentService.enrollMemberInLecture(member2, lecture2);
-//        enrollmentService.enrollMemberInLecture(member2, lecture2);
-//        enrollmentService.enrollMemberInLecture(member2, lecture2);
+//        enrollmentService.enrollMemberInLecture(member2, lecture3);
+//        enrollmentService.enrollMemberInLecture(member2, lecture4);
+//        enrollmentService.enrollMemberInLecture(member2, lecture5);
 //
-//
+//        enrollmentService.enrollMemberInLecture(member3, lecture6);
+//        enrollmentService.enrollMemberInLecture(member5, lecture7);
+//        enrollmentService.enrollMemberInLecture(member4, lecture8);
 //
 //        Optional<Week> week1 = weekRepository.findById(1L);
 //        Optional<Week> week2 = weekRepository.findById(2L);
@@ -360,9 +329,9 @@
 //        assignmentService.createAssignment(lecture1, week3.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 3", "과제 내용 3", LocalDateTime.of(2024, 5, 29, 23, 59));
 //        assignmentService.createAssignment(lecture2, week4.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 4", "과제 내용 4", LocalDateTime.of(2024, 5, 15, 23, 59));
 //        assignmentService.createAssignment(lecture3, week5.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 5", "과제 내용 5", LocalDateTime.of(2024, 5, 22, 23, 59));
-//        assignmentService.createAssignment(lecture4, week6.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 6", "과제 내용 6", LocalDateTime.of(2024, 5, 29, 23, 59));
-//        assignmentService.createAssignment(lecture5,week7.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 7", "과제 내용 7", LocalDateTime.of(2024, 5, 15, 23, 59));
-//        assignmentService.createAssignment(lecture6,week8.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 8", "과제 내용 8", LocalDateTime.of(2024, 5, 22, 23, 59));
+//        assignmentService.createAssignment(lecture6, week6.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 6", "과제 내용 6", LocalDateTime.of(2024, 5, 29, 23, 59));
+//        assignmentService.createAssignment(lecture7,week7.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 7", "과제 내용 7", LocalDateTime.of(2024, 5, 15, 23, 59));
+//        assignmentService.createAssignment(lecture8,week8.orElseThrow(() -> new NoSuchElementException("Week not found")).getId(), "과제 제목 8", "과제 내용 8", LocalDateTime.of(2024, 5, 22, 23, 59));
 //
 //        Quiz quiz1 = new Quiz();
 //        quiz1.setQuizName("컴퓨터 과학 1주차 퀴즈");

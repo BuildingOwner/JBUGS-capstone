@@ -36,6 +36,21 @@ const AssignListItem = (props) => {
     setFormattedDate(data)
   }, [])
 
+  const checkDueDate = (dueDateString) => {
+    // 현재 날짜 및 시간
+    const now = new Date();
+
+    // 마감 날짜를 나타내는 Date 객체 생성
+    const dueDate = new Date(dueDateString);
+
+    // dueDate가 now보다 미래인지 확인
+    if (dueDate > now) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <div className={styles.row} onClick={openModal}>
       <AssignmentModal
@@ -45,7 +60,12 @@ const AssignListItem = (props) => {
       />
 
       <div className={styles.submitBox}>
-        {props.status === "NOT_SUBMITTED" ? <h4 className={styles.red}>미제출</h4> : <h4 className={styles.green}>제출 완료</h4>}
+        {props.memberType === "PROFESSOR" ?
+          (checkDueDate(props.dueDate) ?
+            <h4 className={styles.red}>진행중</h4>
+            : <h4 className={styles.green}>마감</h4>) :
+          (props.status === "NOT_SUBMITTED" ? <h4 className={styles.red}>미제출</h4> : <h4 className={styles.green}>제출 완료</h4>)
+        }
       </div>
       <h4 className={styles.title}>{props.title}</h4>
       <h4>{props.weekId}주차</h4>

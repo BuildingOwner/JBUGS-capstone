@@ -110,6 +110,7 @@ const Main = () => {
             memberName={memberName}
             firstTrack={firstTrack}
             mainLectures={mainLectures}
+            memberType={memberInfoDto.memberType}
           />
         </section>
       </main>

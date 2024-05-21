@@ -61,7 +61,8 @@ const RightNav = (props) => {
       <div className={styles.contants}>
         <div className={`homework ${styles.yetContainer}`}>
           <div className="hw-top">
-            <h1 className="title17">미제출 과제</h1>
+            {console.log(props)}
+            <h1 className="title17">{props.memberType === "PROFESSOR" ? "진행 중인 과제" : "미제출 과제"}</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
             {
@@ -88,7 +89,7 @@ const RightNav = (props) => {
         </div>
         <div className={`homework ${styles.yetContainer}`}>
           <div className="hw-top">
-            <h1 className="title17">미응시 퀴즈</h1>
+            <h1 className="title17">{props.memberType === "PROFESSOR" ? "진행 중인 퀴즈" : "미응시 퀴즈"}</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
             {mainLectures ?

@@ -16,6 +16,8 @@ const AssignmentList = () => {
   const [division, setDivision] = useState()
   const [unsubmittedAssignments, setUnsubmittedAssignments] = useState([])
   const [submittedAssignments, setSubmittedAssignments] = useState([])
+  const [ongoingAssignments, setOngoingAssignments] = useState([])
+  const [pastDueAssignments, setPastDueAssignments] = useState([])
   const [memberInfoDto, setMemberInfoDto] = useState()
   const [courseDto, setCourseDto] = useState()
   const [selectedWeek, setSelectedWeek] = useState(100)
@@ -42,6 +44,8 @@ const AssignmentList = () => {
         // setAssignments(assignmentList)
         setUnsubmittedAssignments(assignmentList.filter(assignment => assignment.status === "NOT_SUBMITTED"))
         setSubmittedAssignments(assignmentList.filter(assignment => assignment.status === "SUBMITTED"))
+        setOngoingAssignments(assignmentList.filter(assignment => checkDueDate(assignment.dueDate)))
+        setPastDueAssignments(assignmentList.filter(assignment => !checkDueDate(assignment.dueDate)))
         setCourseDto(response.data.courseDto)
       }
       catch (error) {
@@ -56,6 +60,21 @@ const AssignmentList = () => {
 
     fetchAssignmentList();
   }, []);
+
+  const checkDueDate = (dueDateString) => {
+    // 현재 날짜 및 시간
+    const now = new Date();
+
+    // 마감 날짜를 나타내는 Date 객체 생성
+    const dueDate = new Date(dueDateString);
+
+    // dueDate가 now보다 미래인지 확인
+    if (dueDate > now) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   if (!memberInfoDto) return <LoadingPage />;
 
@@ -79,14 +98,54 @@ const AssignmentList = () => {
             </select>
             <div className={styles.listContainer}>
               <div className={styles.colName}>
-                <h4 style={{ fontWeight: "bold" }}>미제출 과제</h4>
+                <h4 style={{ fontWeight: "bold" }}>{memberInfoDto.memberType === "PROFESSOR" ? "진행 중인 과제" : "미제출 과제"}</h4>
                 <h4 className={styles.title}>제목</h4>
                 <h4>주차</h4>
                 <h4>기한</h4>
                 <h4>성적</h4>
               </div>
               <div className={`no-scroll-bar ${styles.list}`}>
-                {unsubmittedAssignments.length != 0 ?
+                {memberInfoDto.memberType === "STUDENT" ?
+                  (unsubmittedAssignments.length != 0 ?
+                    unsubmittedAssignments.filter(assign =>
+                      (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                    ).length != 0 ?
+                      unsubmittedAssignments.filter(assign =>
+                        (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                      ).map((assignment) =>
+                        <AssignListItem
+                          key={assignment.id}
+                          title={assignment.title}
+                          contents={assignment.contents}
+                          dueDate={assignment.dueDate}
+                          weekId={assignment.weekNumber}
+                          status={assignment.status}
+                          enrollmentId={enrollmentId}
+                          memberType={memberInfoDto.memberType}
+                        />
+                      ) : <NoItem title={"미제출 과제가"} />
+                    : <NoItem title={"미제출 과제가"} />) :
+                  (ongoingAssignments.length != 0 ?
+                    ongoingAssignments.filter(assign =>
+                      (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                    ).length != 0 ?
+                      ongoingAssignments.filter(assign =>
+                        (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                      ).map((assignment) =>
+                        <AssignListItem
+                          key={assignment.id}
+                          title={assignment.title}
+                          contents={assignment.contents}
+                          dueDate={assignment.dueDate}
+                          weekId={assignment.weekNumber}
+                          status={assignment.status}
+                          enrollmentId={enrollmentId}
+                          memberType={memberInfoDto.memberType}
+                        />
+                      ) : <NoItem title={"진행 중인 과제가"} />
+                    : <NoItem title={"진행 중인 과제가"} />)
+                }
+                {/* {unsubmittedAssignments.length != 0 ?
                   unsubmittedAssignments.filter(assign =>
                     (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
                   ).length != 0 ?
@@ -101,21 +160,23 @@ const AssignmentList = () => {
                         weekId={assignment.weekNumber}
                         status={assignment.status}
                         enrollmentId={enrollmentId}
+                        memberType={memberInfoDto.memberType}
                       />
-                    ) : <NoItem title={"미제출 과제가"} />
-                  : <NoItem title={"미제출 과제가"} />}
+                    ) : <NoItem title={"미제출 과제"} />
+                  : <NoItem title={"미제출 과제"} />} */}
               </div>
             </div>
             <div className={styles.listContainer}>
               <div className={styles.colName}>
-                <h4 style={{ fontWeight: "bold" }}>제출한 과제</h4>
+                <h4 style={{ fontWeight: "bold" }}>{memberInfoDto.memberType === "PROFESSOR" ? "마감된 과제" : "제출한 과제"}</h4>
                 <h4 className={styles.title}>제목</h4>
                 <h4>주차</h4>
                 <h4>기한</h4>
                 <h4>성적</h4>
               </div>
               <div className={`no-scroll-bar ${styles.list}`}>
-                {submittedAssignments.length != 0 ?
+              {memberInfoDto.memberType === "STUDENT" ?
+                (submittedAssignments.length != 0 ?
                   submittedAssignments.filter(assign =>
                     (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
                   ).length != 0 ?
@@ -130,9 +191,30 @@ const AssignmentList = () => {
                         weekId={assignment.weekNumber}
                         status={assignment.status}
                         enrollmentId={enrollmentId}
+                        memberType={memberInfoDto.memberType}
                       />
                     ) : <NoItem title={"제출한 과제가"} />
-                  : <NoItem title={"제출한 과제가"} />}
+                  : <NoItem title={"제출한 과제가"} />) : 
+                  (pastDueAssignments.length != 0 ?
+                    pastDueAssignments.filter(assign =>
+                      (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                    ).length != 0 ?
+                    pastDueAssignments.filter(assign =>
+                        (Number(selectedWeek) === 100 || Number(assign.weekNumber) === Number(selectedWeek)) // 주차 조건
+                      ).map((assignment) =>
+                        <AssignListItem
+                          key={assignment.id}
+                          title={assignment.title}
+                          contents={assignment.contents}
+                          dueDate={assignment.dueDate}
+                          weekId={assignment.weekNumber}
+                          status={assignment.status}
+                          enrollmentId={enrollmentId}
+                          memberType={memberInfoDto.memberType}
+                        />
+                      ) : <NoItem title={"마감된 과제가"} />
+                    : <NoItem title={"마감된 과제가"} />)
+                  }
               </div>
             </div>
           </div>

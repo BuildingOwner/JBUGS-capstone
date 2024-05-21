@@ -187,7 +187,7 @@ const QaList = () => {
                       writer={qna.writer}
                       content={qna.content}
                       secret={qna.secret}
-                      memberName={memberName}
+                      memberInfoDto={memberInfoDto}
                       materials={qna.materials}
                       comment={qna.comment}
                       reRender={reRender}

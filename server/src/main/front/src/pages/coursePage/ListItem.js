@@ -176,12 +176,14 @@ const ListItem = (props) => {
       const dueDate = new Date(props.dueDate);
       const currentDate = new Date();
       const timeDiff = dueDate.getTime() - currentDate.getTime();
-      setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+      const remainDate = Math.ceil(timeDiff / (1000 * 3600 * 24))
+      setDaysRemaining(remainDate >= 0 ? remainDate : 0);
     } else if (props.url === "quizlist") {
       const dueDate = new Date(props.deadline);
       const currentDate = new Date();
       const timeDiff = dueDate.getTime() - currentDate.getTime();
-      setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+      const remainDate = Math.ceil(timeDiff / (1000 * 3600 * 24))
+      setDaysRemaining(remainDate >= 0 ? remainDate : 0);
     } else if (props.url === "file") {
       // console.log("file")
       const extension = props.fileName.split('.')
@@ -202,7 +204,22 @@ const ListItem = (props) => {
       setFileExtension(extension[last])
     }
     calcByte()
-  }, []);
+  });
+
+  const checkDueDate = (dueDateString) => {
+    // 현재 날짜 및 시간
+    const now = new Date();
+
+    // 마감 날짜를 나타내는 Date 객체 생성
+    const dueDate = new Date(dueDateString);
+
+    // dueDate가 now보다 미래인지 확인
+    if (dueDate > now) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <div className={styles.listItem} onClick={checkURL}>
@@ -213,26 +230,46 @@ const ListItem = (props) => {
       <div className={styles.flex}>
         <div className={styles.first}>
           {props.url === 'assignmentlist' && (
-            props.status === "NOT_SUBMITTED" ? (
-              <h3 className={`${styles.fontSize} ${styles.red}`}>
-                미제출
-              </h3>
-            ) : (
+            props.memberInfoDto?.memberType == "STUDENT" ?
+            (props.submissionStatus === true ? (
               <h3 className={`${styles.fontSize} ${styles.green}`}>
                 제출
               </h3>
-            )
-          )}
-          {props.url === 'quizlist' && (
-            props.submissionStatus === true ? (
-              <h3 className={`${styles.fontSize} ${styles.green}`}>
-                응시
-              </h3>
             ) : (
               <h3 className={`${styles.fontSize} ${styles.red}`}>
-                미응시
+                미제출
               </h3>
-            )
+            )) :
+            (checkDueDate(props.dueDate) === true ? (
+              <h3 className={`${styles.fontSize} ${styles.red}`}>
+                진행중
+              </h3>
+            ) : (
+              <h3 className={`${styles.fontSize} ${styles.green}`}>
+                마감
+              </h3>
+            ))
+          )}
+          {props.url === 'quizlist' && (
+            props.memberInfoDto?.memberType == "STUDENT" ?
+              (props.submissionStatus === true ? (
+                <h3 className={`${styles.fontSize} ${styles.green}`}>
+                  응시
+                </h3>
+              ) : (
+                <h3 className={`${styles.fontSize} ${styles.red}`}>
+                  미응시
+                </h3>
+              )) :
+              (checkDueDate(props.deadline) === true ? (
+                <h3 className={`${styles.fontSize} ${styles.red}`}>
+                  진행중
+                </h3>
+              ) : (
+                <h3 className={`${styles.fontSize} ${styles.green}`}>
+                  마감
+                </h3>
+              ))
           )}
           {props.url === 'file' && (
             <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
@@ -270,23 +307,21 @@ const ListItem = (props) => {
         )}
         {props.url === 'file' && (
           <>
-            <h3 className={styles.fontSize}>{byte}
-            </h3>
+            <h3 className={styles.fontSize}>{byte}</h3>
             <button type="button"
-              className={`btn btn-primary `}
+              className={`btn btn-primary ${styles.deleteBtn}`}
               onClick={(e) => handleDeleteFile(e)}>
-              <IoClose size={20} />
+              <IoClose size={25} />
             </button>
           </>
         )}
         {props.url === 'video' && (
           <>
-            <h3 className={styles.fontSize}>{byte}
-            </h3>
+            <h3 className={styles.fontSize}>{byte}</h3>
             <button type="button"
-              className={`btn btn-primary `}
+              className={`btn btn-primary ${styles.deleteBtn}`}
               onClick={(e) => handleDeleteVideoFile(e)}>
-              <IoClose size={20} />
+              <IoClose size={25} />
             </button>
           </>
         )}

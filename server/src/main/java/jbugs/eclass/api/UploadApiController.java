@@ -100,7 +100,12 @@ public class UploadApiController {
     public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title, Lecture lecture) throws IOException {
         Week weekEntity = weekService.findWeekById(weekId).orElseThrow(() -> new IllegalArgumentException("Invalid weekId"));
         List<String> filePaths = new ArrayList<>();
+        String lectureName = lecture.getName();
+
+        lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
+
         String directory = isVideo ? fileDir + "video/" : fileDir;
+        directory += lectureName + "/";
 
         String currentDirectory = System.getProperty("user.dir");
         if (currentDirectory.indexOf("JBUGS-capstone") == -1) {
@@ -152,6 +157,7 @@ public class UploadApiController {
         }
         return filePaths;
     }
+
 
 
 

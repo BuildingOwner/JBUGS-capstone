@@ -178,6 +178,7 @@ const Course = () => {
                     fileSize={video.fileSize}
                     videoId={video.videoId}
                     reRender={reRender}
+                    memberInfoDto={memberInfoDto}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>
@@ -217,6 +218,7 @@ const Course = () => {
                     url={fileUrl}
                     fileSize={file.fileSize}
                     reRender={reRender}
+                    memberInfoDto={memberInfoDto}
                   />
                 )) : <NoItem title={"자료가"} />}
               </div>

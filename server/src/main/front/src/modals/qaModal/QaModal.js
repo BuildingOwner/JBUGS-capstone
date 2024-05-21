@@ -84,7 +84,7 @@ const QaModal = (props) => {
     try {
       const response = await axios.post(`/api/course/qna/${data.qnaId}/comment`, null, {
         params: {
-          comment: `${responseComment} writer:${data.memberName} content:${comment}`
+          comment: `${responseComment} writer:${data.memberInfoDto.memberName} content:${comment}`
         }
       })
       console.log(response);

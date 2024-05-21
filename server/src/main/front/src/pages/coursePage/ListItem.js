@@ -136,7 +136,9 @@ const ListItem = (props) => {
   }
 
   const downloadFile = async () => {
+
     try {
+      console.log(" fileExtension", fileExtension)
       // axios.get 메소드를 사용하여 비동기 요청을 수행하고, 응답을 response 변수에 저장
       const response = await axios.get(`/api/course/files/download/${props.fileName}`
         , {
@@ -165,7 +167,7 @@ const ListItem = (props) => {
       link.remove();
       // 'a' 요소를 문서에서 제거
     } catch (error) {
-      console.error('Error while downloading the PDF:', error);
+      console.error(`Error while downloading the ${fileExtension}}:`, error);
       alert("파일을 받을 수 없습니다.")
     }
   }
@@ -231,24 +233,24 @@ const ListItem = (props) => {
         <div className={styles.first}>
           {props.url === 'assignmentlist' && (
             props.memberInfoDto?.memberType == "STUDENT" ?
-            (props.submissionStatus === true ? (
-              <h3 className={`${styles.fontSize} ${styles.green}`}>
-                제출
-              </h3>
-            ) : (
-              <h3 className={`${styles.fontSize} ${styles.red}`}>
-                미제출
-              </h3>
-            )) :
-            (checkDueDate(props.dueDate) === true ? (
-              <h3 className={`${styles.fontSize} ${styles.red}`}>
-                진행중
-              </h3>
-            ) : (
-              <h3 className={`${styles.fontSize} ${styles.green}`}>
-                마감
-              </h3>
-            ))
+              (props.submissionStatus === true ? (
+                <h3 className={`${styles.fontSize} ${styles.green}`}>
+                  제출
+                </h3>
+              ) : (
+                <h3 className={`${styles.fontSize} ${styles.red}`}>
+                  미제출
+                </h3>
+              )) :
+              (checkDueDate(props.dueDate) === true ? (
+                <h3 className={`${styles.fontSize} ${styles.red}`}>
+                  진행중
+                </h3>
+              ) : (
+                <h3 className={`${styles.fontSize} ${styles.green}`}>
+                  마감
+                </h3>
+              ))
           )}
           {props.url === 'quizlist' && (
             props.memberInfoDto?.memberType == "STUDENT" ?
@@ -308,21 +310,28 @@ const ListItem = (props) => {
         {props.url === 'file' && (
           <>
             <h3 className={styles.fontSize}>{byte}</h3>
-            <button type="button"
-              className={`btn btn-primary ${styles.deleteBtn}`}
-              onClick={(e) => handleDeleteFile(e)}>
-              <IoClose size={25} />
-            </button>
+            {
+              props.memberInfoDto.memberType === "STUDENTs" ? null :
+                <button type="button"
+                  className={`btn btn-primary ${styles.deleteBtn}`}
+                  onClick={(e) => handleDeleteFile(e)}>
+                  <IoClose size={25} />
+                </button>
+            }
           </>
         )}
         {props.url === 'video' && (
           <>
             <h3 className={styles.fontSize}>{byte}</h3>
-            <button type="button"
-              className={`btn btn-primary ${styles.deleteBtn}`}
-              onClick={(e) => handleDeleteVideoFile(e)}>
-              <IoClose size={25} />
-            </button>
+            {
+              props.memberInfoDto.memberType === "STUDENTs" ? null :
+                <button type="button"
+                  className={`btn btn-primary ${styles.deleteBtn}`}
+                  onClick={(e) => handleDeleteVideoFile(e)}>
+                  <IoClose size={25} />
+                </button>
+            }
+
           </>
         )}
       </div>

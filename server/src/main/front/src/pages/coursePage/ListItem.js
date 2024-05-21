@@ -311,7 +311,7 @@ const ListItem = (props) => {
           <>
             <h3 className={styles.fontSize}>{byte}</h3>
             {
-              props.memberInfoDto.memberType === "STUDENTs" ? null :
+              props.memberInfoDto.memberType === "STUDENT" ? null :
                 <button type="button"
                   className={`btn btn-primary ${styles.deleteBtn}`}
                   onClick={(e) => handleDeleteFile(e)}>
@@ -324,7 +324,7 @@ const ListItem = (props) => {
           <>
             <h3 className={styles.fontSize}>{byte}</h3>
             {
-              props.memberInfoDto.memberType === "STUDENTs" ? null :
+              props.memberInfoDto.memberType === "STUDENT" ? null :
                 <button type="button"
                   className={`btn btn-primary ${styles.deleteBtn}`}
                   onClick={(e) => handleDeleteVideoFile(e)}>

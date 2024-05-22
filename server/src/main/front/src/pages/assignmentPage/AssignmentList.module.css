@@ -1,0 +1,43 @@
+.bg {
+  flex-direction: column;
+}
+
+.content {
+  background-color: var(--point-bg-blue);
+  padding: var(--padding-xl);
+  flex-grow: 1;
+  border-radius: 0 0 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+}
+
+.select {
+  width: fit-content !important;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  height: calc((100% - 67px) / 2);
+}
+
+.colName {
+  display: flex;
+}
+
+.colName h4 {
+  width: 150px;
+  text-align: center;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xs);
+}

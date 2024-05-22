@@ -1,0 +1,39 @@
+.h38 {
+  margin: 0;
+  width: 8.188rem;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+}
+.vector-icon74 {
+  height: 0.813rem;
+  width: 0.813rem;
+  position: relative;
+}
+.heroicons-outlinex27,
+.top7 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.heroicons-outlinex27 {
+  height: 1.563rem;
+  justify-content: flex-start;
+  padding: var(--padding-7xs);
+  box-sizing: border-box;
+  width: 1.563rem;
+}
+.top7 {
+  align-self: stretch;
+  justify-content: space-between;
+  padding: var(--padding-11xl) 0;
+  gap: var(--gap-xl);
+  text-align: left;
+  font-size: var(--font-size-11xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

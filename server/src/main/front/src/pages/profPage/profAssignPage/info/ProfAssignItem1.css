@@ -1,0 +1,110 @@
+.div319 {
+  align-self: stretch;
+  position: relative;
+}
+.title37 {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.error-handler2 {
+  align-self: stretch;
+  position: relative;
+}
+.ave3 {
+  width: 6.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div320 {
+  align-self: stretch;
+  position: relative;
+}
+.week26 {
+  width: 6.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div321 {
+  align-self: stretch;
+  position: relative;
+}
+.count3 {
+  width: 6.25rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.progress-bar {
+  align-self: stretch;
+  position: relative;
+}
+.date41 {
+  width: 6.875rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.b247 {
+  position: relative;
+  font-size: var(--font-size-lg);
+  display: inline-block;
+  font-family: var(--font-roboto);
+  color: var(--color-black);
+  text-align: left;
+  min-width: 2.25rem;
+}
+.submit20 {
+  border-radius: var(--br-3xs);
+  background-color: var(--point-green);
+  flex-direction: row;
+  justify-content: center;
+  padding: var(--padding-8xs) var(--padding-13xl);
+}
+.item3,
+.status30,
+.submit20 {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.status30 {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.item3 {
+  width: 66.875rem;
+  border-top: 1px solid var(--color-darkgray-100);
+  box-sizing: border-box;
+  flex-direction: row;
+  justify-content: center;
+  padding: var(--padding-7xs) var(--padding-3xs);
+  gap: var(--gap-3xs);
+  flex-shrink: 0;
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+  font-family: var(--font-malgun-gothic);
+}

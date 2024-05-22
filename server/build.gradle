@@ -1,0 +1,92 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'jbugs'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//쿼리 파라미터 로그 남기기
+//	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+
+	//JUnit4 추가
+	testImplementation("org.junit.vintage:junit-vintage-engine") {
+	exclude group: "org.hamcrest", module: "hamcrest-core"
+}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+//
+// def frontDir = "$projectDir/src/main/front"
+
+// sourceSets {
+
+// 	main {
+// 		resources { srcDirs = ["$projectDir/src/main/resources"]
+// 		}
+// 	}
+// }
+
+// processResources { dependsOn "copyReactBuildFiles" }
+
+// task installReact(type: Exec) {
+// 	workingDir "$frontDir"
+// 	inputs.dir "$frontDir"
+// 	group = BasePlugin.BUILD_GROUP
+// 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+// 		commandLine "npm.cmd", "audit", "fix"
+// 		commandLine 'npm.cmd', 'install' }
+// 	else {
+// 		commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
+// 	}
+// }
+
+// task buildReact(type: Exec) {
+// 	dependsOn "installReact"
+// 	workingDir "$frontDir"
+// 	inputs.dir "$frontDir"
+// 	group = BasePlugin.BUILD_GROUP
+// 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+// 		commandLine "npm.cmd", "run-script", "build"
+// 	} else {
+// 		commandLine "npm", "run-script", "build"
+// 	}
+// }
+
+// task copyReactBuildFiles(type: Copy) {
+// 	dependsOn "buildReact"
+// 	from "$frontDir/build"
+// 	into "$projectDir/src/main/resources/static/"
+// }

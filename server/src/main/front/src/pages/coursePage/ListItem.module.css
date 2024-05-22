@@ -1,0 +1,84 @@
+.listItem {
+  width: 100%;
+  display: flex;
+  background-color: white;
+  align-items: center;
+  gap: 10px;
+  padding: var(--padding-xs);
+  border-radius: 5px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.listItem:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+.flex {
+  display: flex;
+  flex-grow: 1;
+  gap: 20px;
+}
+
+.blue,
+.red,
+.green,
+.yellow,
+.common {
+  width: 80px;
+  background-color: var(--boder-blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: var(--padding-4xs);
+  font-weight: bold;
+}
+
+.second,
+.third,
+.fourth {
+  display: flex;
+  align-items: center;
+}
+
+.fourth {
+  min-width: fit-content;
+  gap: var(--gap-mini);
+}
+
+.fontSize {
+  font-size: var(--font-size-lg);
+  width: 100%;
+}
+
+.third h3{
+  font-size: var(--font-size-base);
+}
+
+.red {
+  background-color: var(--point-red);
+}
+
+.green {
+  background-color: var(--point-green);
+}
+
+.yellow {
+  background-color: var(--point-yellow);
+}
+
+.common{
+  background-color: #ccc;
+}
+
+.deleteBtn{
+  background-color: var(--point-red) !important;
+  border: none !important;
+  padding: var(--padding-11xs) !important;
+}
+
+.deleteBtn:hover{
+  background-color: #eee !important;
+}

@@ -1,0 +1,73 @@
+.quizListItem{
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  gap: var(--gap-xl);
+  padding: var(--padding-sm-5) var(--padding-16xl);
+  align-items: center;
+}
+
+.quizListItem:hover{
+  background-color: #ddd;
+}
+
+.idSubmitBox, .text{
+  min-width: 110px;
+  display: flex;
+  justify-content: center;
+}
+
+.text{
+  min-width: 90px;
+}
+
+.deadline{
+  min-width: 125px;
+}
+
+.title{
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
+  text-align: center;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  min-width: 100px;
+}
+
+.idSubmitText, .text, .feedbackBtn, .title, .feedbackText, .deadline{
+  font-size: var(--font-size-lg);
+}
+
+.idSubmitText, .feedbackText{
+  font-weight: bold;
+}
+
+.feedbackBtn{
+  display: flex !important;
+  justify-content: center;
+  border: none !important;
+  background-color: var(--point-blue) !important;
+  /* width: fit-content !important; */
+  min-width: 125px !important;
+}
+
+.feedbackBtn:hover{
+  background-color: #888 !important;
+}
+
+.done{
+  background-color: var(--point-green);
+}
+
+.yet{
+  background-color: var(--point-red);
+}
+
+.idSubmitBox{
+  border-radius: 10px;
+  padding: var(--padding-sm-5);
+}

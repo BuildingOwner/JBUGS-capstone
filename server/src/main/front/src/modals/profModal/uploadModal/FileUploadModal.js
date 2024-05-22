@@ -1,6 +1,6 @@
 import axios from "axios";
 import Modal from "react-modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../quizModal/QuizInfoModal.module.css"
 import styles2 from "./FileUploadModal.module.css"
 import Info from "../../modalComponents/Info";
@@ -151,12 +151,11 @@ const FileUploadModal = (props) => {
     }
     // 부모 컴포넌트를 다시 렌더링
     props.reRender()
-
     handleClose()
-    // // 프로세스가 끝나면 모달 닫기
-    // props.onRequestClose(null)
   }
-
+  useEffect(() => {
+    setWeekNumber(props?.selectedWeek)
+  }, [props])
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -179,12 +178,11 @@ const FileUploadModal = (props) => {
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
-          {console.log(props)}
           <Info title={"주차 선택"} content={
             <select
               className={`form-select form-select-sm`}
               onChange={handleWeekChange}
-              value={props.selectedWeek}>
+              value={weekNumber}>
               <option value={null}>주차 선택</option>
               {Array.from({ length: 16 }).map((_, i) => {
                 return (

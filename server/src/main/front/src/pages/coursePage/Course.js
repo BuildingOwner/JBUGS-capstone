@@ -130,14 +130,21 @@ const Course = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         enrollmentId={enrollmentId}
+        selectedWeek={selectedWeek}
         reRender={reRender} />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
           <div className={styles.nav}>
-            <div className={styles.courseTitle}>
-              <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
-              <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
+            <div className={styles.titles}>
+              <div className={styles.courseTitle}>
+                <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
+                <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
+              </div>
+              <div className={styles.date}>
+                <h4 className={styles.todayWeek}>asdf</h4>
+                <h4 className={styles.todayDate}>asdf</h4>
+              </div>
             </div>
             <div className={styles.topRight}>
               <nav className={styles.weekList}>
@@ -156,7 +163,7 @@ const Course = () => {
                 ))}
               </nav>
               <button type="button" className={`btn btn-primary 
-              ${memberInfoDto?.memberType == "STUDENTs" ? styles.hidden : null}
+              ${memberInfoDto?.memberType == "STUDENT" ? styles.hidden : null}
               ${styles.addBtn}`} onClick={openModal}>
                 <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
               </button>
@@ -178,6 +185,7 @@ const Course = () => {
                     fileSize={video.fileSize}
                     videoId={video.videoId}
                     reRender={reRender}
+                    memberInfoDto={memberInfoDto}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>
@@ -198,6 +206,7 @@ const Course = () => {
                     enrollmentId={enrollmentId}
                     courseDto={courseDto}
                     url={assignmentUrl}
+                    memberInfoDto={memberInfoDto}
                   />
                 )) : <NoItem title={"과제가"} />}
               </div>
@@ -217,6 +226,7 @@ const Course = () => {
                     url={fileUrl}
                     fileSize={file.fileSize}
                     reRender={reRender}
+                    memberInfoDto={memberInfoDto}
                   />
                 )) : <NoItem title={"자료가"} />}
               </div>

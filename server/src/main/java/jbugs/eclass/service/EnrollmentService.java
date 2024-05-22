@@ -2,6 +2,7 @@ package jbugs.eclass.service;
 
 import jbugs.eclass.domain.Enrollment;
 import jbugs.eclass.domain.Lecture;
+import jbugs.eclass.domain.Member;
 import jbugs.eclass.domain.Student;
 import jbugs.eclass.repository.EnrollmentRepository;
 import jbugs.eclass.repository.WeekRepository;
@@ -22,6 +23,17 @@ public class EnrollmentService {
     public Enrollment enrollStudentInLecture(Student student, Lecture lecture) {
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
+        enrollment.setLecture(lecture);
+
+        enrollmentRepository.save(enrollment);
+
+        return enrollment;
+    }
+
+    @Transactional
+    public Enrollment enrollMemberInLecture(Member member, Lecture lecture) {
+        Enrollment enrollment = new Enrollment();
+        enrollment.setMember(member);
         enrollment.setLecture(lecture);
 
         enrollmentRepository.save(enrollment);

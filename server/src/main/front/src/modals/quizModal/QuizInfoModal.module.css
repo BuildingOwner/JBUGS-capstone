@@ -2,14 +2,14 @@
   background-color: white;
   width: 40%;
   position: relative;
-  top: 10%;
+  top: 5%;
   left: 30%;
   padding: var(--padding-28xl);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: var(--gap-21xl);
-  height: 80%;
+  height: 90%;
 }
 
 .top{
@@ -117,4 +117,15 @@
 .option:hover{
   background-color: #ccc;
   cursor: pointer;
+}
+
+.commentWriter{
+  font-size: var(--font-size-base) !important;
+  font-weight: bold;
+  color: var(--bs-blue);
+}
+
+.commentContent{
+  width: 100%;
+  word-wrap: break-word;
 }

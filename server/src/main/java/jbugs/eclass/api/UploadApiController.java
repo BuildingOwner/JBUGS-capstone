@@ -100,7 +100,21 @@ public class UploadApiController {
     public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title, Lecture lecture) throws IOException {
         Week weekEntity = weekService.findWeekById(weekId).orElseThrow(() -> new IllegalArgumentException("Invalid weekId"));
         List<String> filePaths = new ArrayList<>();
-        String directory = isVideo ? fileDir + "video/" : fileDir;
+        String lectureName = lecture.getName();
+
+        lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
+
+        String directory = isVideo ? fileDir + "video/" : fileDir +"file/";
+        directory += lectureName + "/";
+
+        String currentDirectory = System.getProperty("user.dir");
+        if (currentDirectory.indexOf("JBUGS-capstone") == -1) {
+            currentDirectory += "/JBUGS-capstone/server/";
+        }
+        File dir = new File(currentDirectory + directory);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
 
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
@@ -108,40 +122,43 @@ public class UploadApiController {
                 String originalFileName = file.getOriginalFilename();
                 String safeFileName = UUID.randomUUID().toString() + "_" + originalFileName; // 예시로 UUID 추가
 
-                String currentDirectory = System.getProperty("user.dir");
-                if(currentDirectory.indexOf("JBUGS-capstone") == -1){
-                    currentDirectory += "/JBUGS-capstone/server/";
-                }
-                String fullPath = currentDirectory + directory + originalFileName;
+                String fullPath = dir.getPath() + "/" + originalFileName;
                 long fileSize = file.getSize();
 
                 log.info("{} 저장 fullPath={}", isVideo ? "비디오" : "파일", fullPath);
-                file.transferTo(new File(fullPath));
+                try {
+                    file.transferTo(new File(fullPath));
 
-                if (isVideo) {
-                    VideoMaterial videoMaterial = new VideoMaterial();
-                    videoMaterial.setVideoPath(fullPath);
-                    videoMaterial.setTitle(title);
-                    videoMaterial.setVideoName(originalFileName);
-                    videoMaterial.setWeek(weekEntity);
-                    videoMaterial.setFileSize(fileSize);
-                    videoMaterial.setLecture(lecture);
-                    videoMaterialRepository.save(videoMaterial);
-                } else {
-                    Material material = new Material();
-                    material.setFilePath(fullPath);
-                    material.setTitle(title);
-                    material.setFileName(originalFileName);
-                    material.setWeek(weekEntity);
-                    material.setFileSize(fileSize);
-                    material.setLecture(lecture);
-                    materialService.join(material);
-                    filePaths.add(fullPath);
+                    if (isVideo) {
+                        VideoMaterial videoMaterial = new VideoMaterial();
+                        videoMaterial.setVideoPath(fullPath);
+                        videoMaterial.setTitle(title);
+                        videoMaterial.setVideoName(originalFileName);
+                        videoMaterial.setWeek(weekEntity);
+                        videoMaterial.setFileSize(fileSize);
+                        videoMaterial.setLecture(lecture);
+                        videoMaterialRepository.save(videoMaterial);
+                    } else {
+                        Material material = new Material();
+                        material.setFilePath(fullPath);
+                        material.setTitle(title);
+                        material.setFileName(originalFileName);
+                        material.setWeek(weekEntity);
+                        material.setFileSize(fileSize);
+                        material.setLecture(lecture);
+                        materialService.join(material);
+                        filePaths.add(fullPath);
+                    }
+                } catch (IOException e) {
+                    log.error("파일 업로드 중 오류 발생: " + e.getMessage(), e);
+                    throw e;
                 }
             }
         }
         return filePaths;
     }
+
+
 
 
     // 파일 업로드 로직 이후에 추가

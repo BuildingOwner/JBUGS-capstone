@@ -179,10 +179,12 @@ const FileUploadModal = (props) => {
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
+          {console.log(props)}
           <Info title={"주차 선택"} content={
             <select
               className={`form-select form-select-sm`}
-              onChange={handleWeekChange}>
+              onChange={handleWeekChange}
+              value={props.selectedWeek}>
               <option value={null}>주차 선택</option>
               {Array.from({ length: 16 }).map((_, i) => {
                 return (

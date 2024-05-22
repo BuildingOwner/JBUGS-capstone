@@ -67,7 +67,7 @@ def chat(chat_id):
     print(f"[{current_file_name}] 이전 대화 이미지 urls: {urls}")
     
     response = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-4o",
         messages=message,
         stream=True
     )

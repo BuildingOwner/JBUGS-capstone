@@ -74,11 +74,11 @@
 }
 
 .deleteBtn{
-  background-color: var(--point-red) !important;
+  background-color: var(--bs-danger) !important;
   border: none !important;
   padding: var(--padding-11xs) !important;
 }
 
 .deleteBtn:hover{
-  background-color: #eee !important;
+  background-color: #888 !important;
 }

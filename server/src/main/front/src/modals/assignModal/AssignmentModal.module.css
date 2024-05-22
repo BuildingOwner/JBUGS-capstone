@@ -55,3 +55,9 @@
 .profComment {
   background-color: var(--point-yellow);
 }
+
+.commentList{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-7xs);
+}

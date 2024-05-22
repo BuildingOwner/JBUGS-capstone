@@ -23,6 +23,7 @@ public class QnA {
     private LocalDateTime createdAt;
     private int views;
     private QnAStatus qnaStatus;
+    @Column(length = 50000)
     private String comment;
     private boolean secret;
 

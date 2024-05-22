@@ -28,6 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-devtools'
 
+	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	compileOnly 'org.projectlombok:lombok'

@@ -8,9 +8,9 @@ spring:
     # url: jdbc:mysql://localhost:3306/eclass?characterEncoding=UTF-8&serverTimezone=UTC
     # username: root
     # password: 1234
-    url: jdbc:mysql://43.200.202.59:3306/eclass?characterEncoding=UTF-8&serverTimezone=UTC
-    username: jbugs
-    password: jbugsdatabase
+    url: ${MYSQL_HOST_PORT}
+    username: ${USER_NAME}
+    password: ${USER_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   #  datasource:
@@ -22,7 +22,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#    show_sql: true
+    #    show_sql: true
     properties:
       hibernate:
         format_sql: true
@@ -42,11 +42,6 @@ server:
       tracking-modes: cookie
       timeout: 1h
 
-#file:
-#  dir: /Users/j_jchani/J_C/jbugs/JBUGS-capstone/server/src/main/resources/static/file/
 
 file:
-  dir: /src/main/resources/static/file/
-
-#file:
-#  dir: /Users/jinsw/Desktop/Capstone/JBUGS-capstone/server/src/main/resources/static/file/
+  dir: ${file_dir}

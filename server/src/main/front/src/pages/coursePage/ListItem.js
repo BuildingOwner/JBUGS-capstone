@@ -141,7 +141,7 @@ const ListItem = (props) => {
     try {
       console.log(" fileExtension", fileExtension)
       // axios.get 메소드를 사용하여 비동기 요청을 수행하고, 응답을 response 변수에 저장
-      const response = await axios.get(`/api/course/files/download/${props.fileName}`
+      const response = await axios.get(`/api/course/files/download/${props.enrollmentId}/${props.fileName}`
         , {
           responseType: 'blob', // 파일 다운로드를 위해 응답 타입을 blob으로 설정
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
@@ -195,11 +195,11 @@ const ListItem = (props) => {
       if (extension[last].includes('pdf')) {
         setfileColor(styles.red);
       } else if (extension[last].includes('ppt')) {
-        setfileColor(hear = styles.yellow);
+        setfileColor(styles.yellow);
       } else if (extension[last].includes('xl')) {
-        setfileColor(hear = styles.green);
+        setfileColor(styles.green);
       } else if (extension[last].includes('doc') || extension[last].includes('hwp')) {
-        setfileColor(hear = styles.blue);
+        setfileColor(styles.blue);
       } else {
         setfileColor(styles.common);
       }

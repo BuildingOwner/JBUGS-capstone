@@ -275,17 +275,16 @@ const QaModal = (props) => {
               // 댓글이 있을 시에 출력
               commentData?.length > 0 ?
                 commentData.map((comment) => (
-                  <h3 className={`${styles2.comment} 
+                  <div className={`${styles2.comment} 
                   ${comment.isProfessor === true ? styles2.profComment : null}`}>
-                    {comment.writer}<br />
-                    {comment.content}
-                  </h3>
+                    <h4 className={styles.commentWriter}>{comment.writer}</h4>
+                    <h4 className={styles.commentContent}>{comment.content}</h4>
+                  </div>
                 ))
                 : null
             }
           </div>
         </div>
-      </div>
       <textarea
         rows={1}
         className="form-control"
@@ -294,6 +293,7 @@ const QaModal = (props) => {
         onChange={(e) => setComment(e.target.value)}
       />
       <button className={`btn btn-primary ${styles.goBtn}`} onClick={makeComment}>댓글 남기기</button>
+      </div>
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
         {

@@ -5,19 +5,10 @@ spring:
       max-request-size: 50MB
 
   datasource:
-    # url: jdbc:mysql://localhost:3306/eclass?characterEncoding=UTF-8&serverTimezone=UTC
-    # username: root
-    # password: 1234
     url: ${MYSQL_HOST_PORT}
     username: ${USER_NAME}
     password: ${USER_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-  #  datasource:
-  #    url: jdbc:h2:tcp://localhost/~/jbugs
-  #    username: sa
-  #    password:
-  #    driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
@@ -28,11 +19,6 @@ spring:
         format_sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
-
-#logging:
-#  level:
-#    org.hibernate.SQL: debug
-#    org.hibernate.orm.jdbc.bind: trace
 
 server:
   port: 8080

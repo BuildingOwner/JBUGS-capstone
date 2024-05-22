@@ -199,6 +199,7 @@ const Course = () => {
                     enrollmentId={enrollmentId}
                     courseDto={courseDto}
                     url={assignmentUrl}
+                    memberInfoDto={memberInfoDto}
                   />
                 )) : <NoItem title={"과제가"} />}
               </div>

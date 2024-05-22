@@ -13,6 +13,7 @@ const ListItem = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [fileColor, setfileColor] = useState('');
   const [byte, setByte] = useState(0)
+  const [memberInfoDto, setMemberInfoDto] = useState();
 
   const openModal = () => {
     console.log('modal open')
@@ -206,6 +207,7 @@ const ListItem = (props) => {
       setFileExtension(extension[last])
     }
     calcByte()
+    setMemberInfoDto(props.memberInfoDto)
   });
 
   const checkDueDate = (dueDateString) => {
@@ -231,7 +233,6 @@ const ListItem = (props) => {
         props={props} />
       <div className={styles.flex}>
         <div className={styles.first}>
-          {console.log(props.memberInfoDto)}
           {props.url === 'assignmentlist' && (
             props.memberInfoDto?.memberType == "STUDENT" ?
               (props.submissionStatus === true ? (

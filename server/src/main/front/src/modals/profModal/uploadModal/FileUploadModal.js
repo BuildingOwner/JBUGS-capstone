@@ -25,6 +25,13 @@ const FileUploadModal = (props) => {
 
   // Collapse 상태를 토글하는 함수
   const toggleCollapse = () => {
+    const filetitle = fileTitle.split(".")
+    const length = filetitle.length
+    const extension = filetitle[length - 1]
+    if(extension !== "pdf") {
+      alert("pdf만 퀴즈 생성이 가능합니다.")
+      return
+    }
     setIsOpen(!isOpen)
     console.log(!quizFlag)
     setQuizFlag(!quizFlag)
@@ -62,8 +69,8 @@ const FileUploadModal = (props) => {
     setAttachFile(e.target.files[0])
     console.log("attachFile : ", e.target.files[0])
     setFileTitle(e.target.files[0].name)
-    const files = e.target.files;
-    const fileCount = files.length;
+    const files = e.target.files
+    const fileCount = files.length
 
     if (fileCount === 1) {
       // 파일이 하나만 선택된 경우, 파일 이름을 표시

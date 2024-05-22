@@ -193,9 +193,9 @@ const ListItem = (props) => {
       const last = extension.length - 1
 
       if (extension[last].includes('pdf')) {
-        setfileColor(styles.yellow);
+        setfileColor(styles.red);
       } else if (extension[last].includes('ppt')) {
-        setfileColor(hear = styles.red);
+        setfileColor(hear = styles.yellow);
       } else if (extension[last].includes('xl')) {
         setfileColor(hear = styles.green);
       } else if (extension[last].includes('doc') || extension[last].includes('hwp')) {

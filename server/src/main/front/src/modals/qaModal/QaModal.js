@@ -18,7 +18,7 @@ const QaModal = (props) => {
   const data = props.props
   const commentss = data.comment
   const [responseComment, setResponseComment] = useState("")
-  const [commentData, setCommentData] = useState({})
+  const [commentData, setCommentData] = useState([])
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -62,36 +62,52 @@ const QaModal = (props) => {
     const fileCount = newFiles.length
     setPrevFiles(newFiles) // 상태를 업데이트합니다.
   }
-
-  const parseCommentString = () => {
-    if (commentss === null) {
-      return
+  const parseCommentString = (commentString) => {
+    if (!commentString) {
+      return []
     }
-    const comments = [];
-    const commentPairs = commentss.split("writer:").filter(Boolean);
+
+    const comments = []
+    const commentPairs = commentString.split("writer:").filter(Boolean)
 
     commentPairs.forEach(pair => {
-      const [writer, content] = pair.split("content:");
+      const [writer, content] = pair.split("content:")
       if (writer && content) {
-        comments.push({ writer: writer.trim(), content: content.trim() });
+        comments.push({ writer: writer.trim(), content: content.trim() })
       }
-    });
+    })
+
     console.log(comments)
     return comments
   }
 
   const makeComment = async () => {
     try {
+      console.log("writer:", data.memberInfoDto.memberName)
+      console.log("content:", comment)
+
+      // 댓글을 서버에 전송
       const response = await axios.post(`/api/course/qna/${data.qnaId}/comment`, null, {
         params: {
           comment: `${responseComment} writer:${data.memberInfoDto.memberName} content:${comment}`
         }
       })
-      console.log(response);
+
+      console.log(response)
+
+      // 서버로부터 받은 새로운 댓글 문자열을 파싱하여 댓글 객체 배열로 변환
+      const newComments = parseCommentString(`writer:${data.memberInfoDto.memberName} content:${comment}`)
+
+      // 기존 댓글 데이터에 새 댓글을 추가
+      setCommentData(prevCommentData => [...prevCommentData, ...newComments])
+      setComment("")
+      data.reRender()
+      console.log(newComments)
     } catch (error) {
       console.log(error)
     }
   }
+
 
   const downloadFile = async (index) => {
     const fileName = props.props.materials[index].fileName
@@ -285,14 +301,15 @@ const QaModal = (props) => {
             }
           </div>
         </div>
-      <textarea
-        rows={1}
-        className="form-control"
-        placeholder="댓글을 입력하세요..."
-        style={{ overflowY: "hidden" }} // 세로 스크롤 제거
-        onChange={(e) => setComment(e.target.value)}
-      />
-      <button className={`btn btn-primary ${styles.goBtn}`} onClick={makeComment}>댓글 남기기</button>
+        <textarea
+          rows={1}
+          className="form-control"
+          placeholder="댓글을 입력하세요..."
+          value={comment}
+          style={{ overflowY: "hidden" }} // 세로 스크롤 제거
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <button className={`btn btn-primary ${styles.goBtn}`} onClick={makeComment}>댓글 남기기</button>
       </div>
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>

@@ -95,6 +95,15 @@
 }
 
 .cureentWeek{
-  background-color: var(--point-blue) !important;
+  background-color: #9e7bff !important;
   color: white !important;
+}
+
+.titles{
+  display: flex;
+  flex-direction: column;
+}
+
+.date{
+  display: flex;
 }

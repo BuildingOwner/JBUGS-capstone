@@ -130,14 +130,21 @@ const Course = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         enrollmentId={enrollmentId}
+        selectedWeek={selectedWeek}
         reRender={reRender} />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
           <div className={styles.nav}>
-            <div className={styles.courseTitle}>
-              <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
-              <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
+            <div className={styles.titles}>
+              <div className={styles.courseTitle}>
+                <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
+                <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
+              </div>
+              <div className={styles.date}>
+                <h4 className={styles.todayWeek}>asdf</h4>
+                <h4 className={styles.todayDate}>asdf</h4>
+              </div>
             </div>
             <div className={styles.topRight}>
               <nav className={styles.weekList}>

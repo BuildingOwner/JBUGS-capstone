@@ -207,7 +207,7 @@ const AssignmentModal = (props) => {
             <h3 className={styles2.title}>댓글</h3>
           </div>
           <div className={styles2.commentList}>
-            <h3 className={styles2.comment}>댓글이여asdfasdfasdfadsfasdfasdfasdfdsfasdfadfadsfasdfasdfasdfdsfasdfadfadsfasdfasdfasdfdsfasdfadafas</h3>
+            <h3 className={styles2.comment}>댓글이여.</h3>
           </div>
         </div>
       </div>

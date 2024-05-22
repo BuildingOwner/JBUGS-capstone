@@ -277,6 +277,7 @@ const Course = () => {
                     quizId={quiz?.quizId}
                     jsonData={quiz?.jsonData}
                     description={quiz?.description}
+                    timeLimit={quiz?.timeLimit}
                     deadline={quiz?.deadline}
                     weekId={quiz?.weekId}
                     quizScore={quiz?.quizScore}

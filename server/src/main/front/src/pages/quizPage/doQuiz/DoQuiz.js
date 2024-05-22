@@ -9,7 +9,7 @@ import LoadingPage from "../../mainPage/LoadingPage";
 const DoQuiz = (props) => {
   const navigate = useNavigate()
   const data = useLocation().state.props // 이곳에서 사용될 데이터
-  console.log("data", data)
+  // console.log("data", data)
   const enrollmentId = data.enrollmentId
   const optionIcon = [<Bs1Square size={27} />, <Bs2Square size={27} />, <Bs3Square size={27} />, <Bs4Square size={27} />]
   const [memberInfoDto, setMemberInfoDto] = useState()
@@ -21,7 +21,7 @@ const DoQuiz = (props) => {
   const [answer, setAnswer] = useState({})
   const [score, setScore] = useState()
   const [checked, setChecked] = useState({});
-
+  const [timeLeft, setTimeLeft] = useState(20 * 60) // 앞에 60은 data.timeLimit(시간제한)
   const minusIndex = () => {
     if (indexOfOptions == 0) {
     } else {
@@ -177,9 +177,33 @@ const DoQuiz = (props) => {
     }
   }
 
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes} : ${remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}`
+  }
+
   useEffect(() => {
     fetchQuiz()
   }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => { 
+        if (prevTime <= 1) {
+          clearInterval(timer)
+          if (prevTime === 1) {
+            submitQuiz()
+          }
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer); // 컴포넌트 언마운트 시 타이머 클리어
+  }, []);
+
 
   if (!questions) return <LoadingPage />;
 
@@ -243,7 +267,7 @@ const DoQuiz = (props) => {
           <div className={styles.left}>
             <div className={styles.leftTime}>
               <h3 className={styles.fontSize5xl}>남은 시간</h3>
-              <h3 className={styles.fontSize31xl}>3 : 17</h3>
+              <h3 className={styles.fontSize31xl}>{formatTime(timeLeft)}</h3>
             </div>
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {

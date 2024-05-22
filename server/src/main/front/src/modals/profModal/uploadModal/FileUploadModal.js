@@ -14,8 +14,8 @@ const FileUploadModal = (props) => {
   const [videoTitle, setVideoTitle] = useState(null)
   const [videoFiles, setVideoFile] = useState(null)
   const [attachFiles, setAttachFile] = useState(null)
-  const [shortAnswer, setShortAnswer] = useState(null)
-  const [choice, setChoice] = useState(null)
+  const [shortAnswer, setShortAnswer] = useState(0)
+  const [choice, setChoice] = useState(0)
   const [description, setDescription] = useState(null)
   const [quizType, setQuizType] = useState(null)
   const [fileDescription, setFileDescription] = useState('')
@@ -259,7 +259,7 @@ const FileUploadModal = (props) => {
               <select
                 className={`form-select form-select-sm`}
                 onChange={changeChoice}>
-                <option value={null}>객관식 개수</option>
+                <option value={0}>객관식 개수</option>
                 {Array.from({ length: 10 }).map((_, i) => {
                   return (
                     <option value={i + 1} key={`weekKey${i}`}>{i + 1}개</option>
@@ -272,7 +272,7 @@ const FileUploadModal = (props) => {
                 className={`form-select form-select-sm`}
                 aria-label="Small select example"
                 onChange={changeShortAnswer}>
-                <option value={null}>주관식 개수</option>
+                <option value={0}>주관식 개수</option>
                 {Array.from({ length: 10 }).map((_, i) => {
                   return (
                     <option value={i + 1} key={`weekKey${i}`}>{i + 1}개</option>

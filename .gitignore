@@ -10,7 +10,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-server/src/main/resources/application.yml
+# server/src/main/resources/application.yml
+server/src/main/resources/.env
+
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 

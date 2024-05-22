@@ -104,7 +104,7 @@ public class UploadApiController {
 
         lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
 
-        String directory = isVideo ? fileDir + "video/" : fileDir;
+        String directory = isVideo ? fileDir + "video/" : fileDir +"file/";
         directory += lectureName + "/";
 
         String currentDirectory = System.getProperty("user.dir");

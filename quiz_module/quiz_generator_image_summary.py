@@ -47,7 +47,7 @@ def summary_pdf(path):
 
     for i in range(0, img_count, 20):
         payload = {
-            "model": "gpt-4-turbo",
+            "model": "gpt-4o",
             "messages": [
                 {
                     "role": "system",
@@ -139,7 +139,7 @@ def generator(summary, quiz_type, questions=[]):
     """
 
     completion = client.chat.completions.create(
-        model="gpt-4-turbo-preview",
+        model="gpt-4o",
         messages=[
             {
                 "role": "system",

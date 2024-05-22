@@ -89,7 +89,7 @@ def chat(chat_id, question, img_path=[]):
             message[-1]["content"].append(img)
     
     response = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-4o",
         messages=message,
         stream=True
     )
@@ -153,7 +153,7 @@ def make_name_by_question(str):
     방 이라는 글자는 빼줘.
     '''
     completion = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a name maker"},
             {"role": "user", "content": question}

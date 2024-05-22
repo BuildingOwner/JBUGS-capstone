@@ -26,7 +26,7 @@ def related_question_gen(question=question1):
     이 문제와 같은 유형으로 비슷한 문제를 만들어줘
     """
     completion = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are the professor explaining the problem."},
             {"role": "user", "content": user_input},

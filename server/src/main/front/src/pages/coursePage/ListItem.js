@@ -14,7 +14,8 @@ const ListItem = (props) => {
   const [fileColor, setfileColor] = useState('');
   const [byte, setByte] = useState(0)
   const [memberInfoDto, setMemberInfoDto] = useState();
-
+  const [timeDifference, setTimeDifference] = useState(null)
+  console.log(props)
   const openModal = () => {
     console.log('modal open')
     setModalIsOpen(true);
@@ -141,7 +142,7 @@ const ListItem = (props) => {
     try {
       console.log(" fileExtension", fileExtension)
       // axios.get 메소드를 사용하여 비동기 요청을 수행하고, 응답을 response 변수에 저장
-      const response = await axios.get(`/api/course/files/download/${props.fileName}`
+      const response = await axios.get(`/api/course/files/download/${props.enrollmentId}/${props.fileName}`
         , {
           responseType: 'blob', // 파일 다운로드를 위해 응답 타입을 blob으로 설정
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
@@ -178,28 +179,35 @@ const ListItem = (props) => {
     if (props.url === "assignmentlist") {
       const dueDate = new Date(props.dueDate);
       const currentDate = new Date();
-      const timeDiff = dueDate.getTime() - currentDate.getTime();
+      const timeDiff = dueDate.getTime() - currentDate.getTime()
+      console.log("timediff", timeDiff)
       const remainDate = Math.ceil(timeDiff / (1000 * 3600 * 24))
-      setDaysRemaining(remainDate >= 0 ? remainDate : 0);
+      setDaysRemaining(remainDate >= 0 ? remainDate : 0)
+      if (timeDiff < 0) {
+        setTimeDifference(timeDiff)
+      }
     } else if (props.url === "quizlist") {
       const dueDate = new Date(props.deadline);
       const currentDate = new Date();
       const timeDiff = dueDate.getTime() - currentDate.getTime();
       const remainDate = Math.ceil(timeDiff / (1000 * 3600 * 24))
-      setDaysRemaining(remainDate >= 0 ? remainDate : 0);
+      setDaysRemaining(remainDate >= 0 ? remainDate : 0)
+      if (timeDiff < 0) {
+        setTimeDifference(timeDiff)
+      }
     } else if (props.url === "file") {
       // console.log("file")
       const extension = props.fileName.split('.')
       const last = extension.length - 1
 
       if (extension[last].includes('pdf')) {
-        setfileColor(styles.yellow);
+        setfileColor(styles.red);
       } else if (extension[last].includes('ppt')) {
-        setfileColor(hear = styles.red);
+        setfileColor(styles.yellow);
       } else if (extension[last].includes('xl')) {
-        setfileColor(hear = styles.green);
+        setfileColor(styles.green);
       } else if (extension[last].includes('doc') || extension[last].includes('hwp')) {
-        setfileColor(hear = styles.blue);
+        setfileColor(styles.blue);
       } else {
         setfileColor(styles.common);
       }
@@ -208,7 +216,7 @@ const ListItem = (props) => {
     }
     calcByte()
     setMemberInfoDto(props.memberInfoDto)
-  });
+  })
 
   const checkDueDate = (dueDateString) => {
     // 현재 날짜 및 시간
@@ -230,7 +238,8 @@ const ListItem = (props) => {
       <QuizInfoModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        props={props} />
+        props={props} 
+        timeDifference={timeDifference}/>
       <div className={styles.flex}>
         <div className={styles.first}>
           {props.url === 'assignmentlist' && (
@@ -303,10 +312,12 @@ const ListItem = (props) => {
         </div>
       </div>
       <div className={styles.fourth}>
-        {props.url === 'assignmentlist' && (
+        {props.url === 'assignmentlist' && (timeDifference <= 0 ?
+          <h3 className={styles.fontSize}>마감</h3> :
           <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
-        {props.url === 'quizlist' && (
+        {props.url === 'quizlist' && (timeDifference <= 0 ?
+          <h3 className={styles.fontSize}>마감</h3> :
           <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
         {props.url === 'file' && (

@@ -192,7 +192,7 @@ const NoticeList = () => {
                         key={`notice${i}`}
                       />
                     ))
-                  : <NoItem title={"공지가 없습니다"} />
+                  : <NoItem title={"공지가"} />
               }
             </div>
           </div>

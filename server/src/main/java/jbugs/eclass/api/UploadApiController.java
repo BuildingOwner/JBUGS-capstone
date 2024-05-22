@@ -193,14 +193,20 @@ public class UploadApiController {
         log.info("Response Body: {}", responseEntity.getBody());
     }
 
-    @GetMapping("/files/download/{filename:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request) throws UnsupportedEncodingException {
+    @GetMapping("/files/download/{enrollmentId}/{filename:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename, @PathVariable Long enrollmentId, HttpServletRequest request) throws UnsupportedEncodingException {
+        Lecture lecture = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
+        String lectureName = lecture.getName();
+
+        lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
+
+        String directory =  fileDir + "file/" +lectureName + "/";
 
         String currentDirectory = System.getProperty("user.dir");
         if(currentDirectory.indexOf("JBUGS-capstone") == -1){
             currentDirectory += "/JBUGS-capstone/server/";
         }
-        String fullPath = currentDirectory + fileDir + filename;
+        String fullPath = currentDirectory + directory + filename;
         // 파일의 전체 경로 생성
 
         // 파일 시스템에서 리소스 로드

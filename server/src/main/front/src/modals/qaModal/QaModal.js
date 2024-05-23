@@ -291,7 +291,7 @@ const QaModal = (props) => {
               // 댓글이 있을 시에 출력
               commentData?.length > 0 ?
                 commentData.map((comment) => (
-                  <div className={`${styles2.comment} 
+                  <div className={`${styles2.comment} ${console.log(props)}
                   ${comment.isProfessor === true ? styles2.profComment : null}`}>
                     <h4 className={styles.commentWriter}>{comment.writer}</h4>
                     <h4 className={styles.commentContent}>{comment.content}</h4>

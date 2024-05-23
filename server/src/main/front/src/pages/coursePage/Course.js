@@ -38,7 +38,7 @@ const Course = () => {
     // 날짜 포맷: 예) "3월 4일"
     const format = (date) => `${date.getMonth() + 1}월 ${date.getDate()}일`;
 
-    return `${format(start)} ~ ${format(end)}`;
+    return `${format(start)} - ${format(end)}`;
   };
 
   const navigate = useNavigate()
@@ -170,11 +170,11 @@ const Course = () => {
                 <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
                 <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
               </div>
-              <div className={styles.date}>
+              <div className={`${styles.date} ${cureentWeek === selectedWeek ? styles.thisWeek : null}`}>
                 {/* 선택된 주차 */}
                 <h4 className={styles.todayWeek}>{selectedWeek}주차</h4>
                 {/* 선택된 주차의 날짜 ex) 5/1 ~ 5/8 */}
-                <h4 className={styles.todayDate}>{dateRange}</h4>
+                <h4 className={styles.todayDate}>{`[${dateRange}]`}</h4>
               </div>
             </div>
             <div className={styles.topRight}>
@@ -187,7 +187,7 @@ const Course = () => {
                       weeklyContents[index]?.quizzes.length > 0 ||
                       weeklyContents[index]?.assignments.length > 0
                       ? styles.blue : null
-                      } ${selectedWeek - 1 == index ? styles.cureentWeek : null}`}
+                      } ${selectedWeek - 1 == index ? styles.cureentWeek : null} ${cureentWeek === index+1 ? styles.today : null}`}
                     style={{ fontWeight: "bold", fontSize: "1.25rem" }}
                     onClick={() => (changeWeek(index + 1))}
                   >{index + 1}</button>

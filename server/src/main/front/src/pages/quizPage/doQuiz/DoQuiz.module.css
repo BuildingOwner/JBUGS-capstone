@@ -172,15 +172,16 @@
 }
 
 .correct{
-  background-color: var(--point-green) !important;
+  background-color: var(--point-green);
 }
 
 .wrong{
-  background-color: var(--point-red) !important;
+  background-color: var(--point-red) ;
 }
 
 .quizNavBtn:hover{
   background-color: #ddd;
+  cursor: pointer;
 }
 
 .checked{
@@ -188,5 +189,5 @@
 }
 
 .done{
-  background-color: var(--point-green) !important;
+  background-color: var(--point-green);
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import Sidebar from "../../../sidebar/CourseSidebars"
 import styles from "../doQuiz/DoQuiz.module.css"
 import { Bs1Square, Bs2Square, Bs3Square, Bs4Square } from 'react-icons/bs'
@@ -27,6 +27,13 @@ const QuizAnswer = () => {
   const [score, setScore] = useState(0)
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [explane]);
 
   const openModal = () => {
     console.log("open")
@@ -284,7 +291,7 @@ const QuizAnswer = () => {
                       </>)
                   }
                 </div>
-                <div className={styles.answerContainer}>
+                <div className={styles.answerContainer} ref={containerRef}>
                   {explane === "" ? <p>해설 생성 가능</p> :
                     <ReactMarkdown >{explane}</ReactMarkdown>}
                 </div>

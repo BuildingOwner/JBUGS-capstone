@@ -96,7 +96,7 @@ const QuizList = () => {
                 <h3 className={styles.title}>퀴즈</h3>
                 <h3 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{lectureName} {division}</h3>
               </div>
-              <div className={styles.scoreBoard}>
+              <div className={`${styles.scoreBoard} no-scroll-bar`}>
                 {completeQuizList?.map((quiz, i) =>
                   quiz.quizScore === null ? null :
                     <QuizScoreBar quizName={quiz.quizName} quizScore={quiz.quizScore} key={`quizScoreBar${i}`} />
@@ -123,7 +123,7 @@ const QuizList = () => {
             </div>
             <div className={styles.topRight}>
               <h3>미응시 퀴즈</h3>
-              <div className={styles.uncompleteQuizsContainer}>
+              <div className={`${styles.uncompleteQuizsContainer} no-scroll-bar`}>
                 {uncompleteQuizList[0] ? uncompleteQuizList.map((quiz, i) => {
                   return (
                     <UncompleteQuizItem

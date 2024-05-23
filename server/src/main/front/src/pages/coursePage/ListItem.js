@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
+import ReactPlayer from 'react-player'
 
 const ListItem = (props) => {
   const navigate = useNavigate()

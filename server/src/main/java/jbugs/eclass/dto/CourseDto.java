@@ -6,4 +6,5 @@ import lombok.Data;
 public class CourseDto {
     private String lectureName;
     private String division;
+    private String professorName;
 }

@@ -84,7 +84,7 @@ public class UploadApiController {
             // 파일 경로(들)을 사용하여 추가 처리 수행
             if (quizFlag) {
                 for (String filePath : uploadedFilePaths) {
-                    sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
+                    sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getId()), filePath, choice, shortAnswer, description, quizType);
                 }
             }
 

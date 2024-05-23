@@ -61,6 +61,7 @@ public class AssignmentApiController {
             CourseDto courseDto = new CourseDto();
             courseDto.setLectureName(enrollment.getLecture().getName());
             courseDto.setDivision(enrollment.getLecture().getDivision());
+            courseDto.setProfessorName(enrollment.getLecture().getProfessor().getMember().getName());
             assignmentContentDto.setCourseDto(courseDto);
 
             List<AssignmentDto> assignmentDtos = assignmentService.findAssignmentsByLecture(enrollment.getLecture().getId());

@@ -23,7 +23,8 @@ question1 = '''
 
 def related_question_gen(question=question1):
     user_input = question + """
-    이 문제와 같은 유형으로 비슷한 문제를 만들어줘
+    이 문제와 같은 유형으로 비슷한 문제를 만들어줘.
+    반드시 이문제와 같은 형식의 json을 사용해줘.
     """
     completion = client.chat.completions.create(
         model="gpt-4o",
@@ -37,6 +38,8 @@ def related_question_gen(question=question1):
     related_question = completion.choices[0].message.content
     
     answer = validate_question(related_question).lower()
+    print(related_question)
+    print(answer)
     if "true" in answer:
         try:
             json_validate(related_question)

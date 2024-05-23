@@ -89,6 +89,7 @@ const QaList = () => {
       setLectureName(lectureName1)
       setDivision(division1)
       setMemberName(response.data.memberInfoDto.memberName)
+      setCourseDto(response.data.courseDto)
       setMemberInfoDto(response.data.memberInfoDto)
       setQnADtoList(qnADtoList)
     } catch (error) {
@@ -187,6 +188,7 @@ const QaList = () => {
                       writer={qna.writer}
                       content={qna.content}
                       secret={qna.secret}
+                      courseDto={courseDto}
                       memberInfoDto={memberInfoDto}
                       materials={qna.materials}
                       comment={qna.comment}

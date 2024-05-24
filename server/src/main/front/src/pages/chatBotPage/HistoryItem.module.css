@@ -1,0 +1,53 @@
+.historyItem {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs);
+  gap: var(--gap-2xs);
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 5px;
+}
+
+.historyItem:hover {
+  background-color: #ccc;
+}
+
+.checkBox {
+  width: 20px !important;
+  height: 20px !important;
+  border: none !important;
+  margin: 0 !important;
+}
+
+.roomTitle {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  width: calc(100% - 20px - 0.688rem);
+}
+
+.roomTitle:hover{
+  background: none !important;
+}
+
+.roomName{
+  width: 100%;
+  font-size: var(--font-size-xl);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.selected{
+  background-color: var(--boder-blue);
+}

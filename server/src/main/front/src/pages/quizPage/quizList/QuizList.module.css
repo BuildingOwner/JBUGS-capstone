@@ -1,0 +1,145 @@
+.mycontainer{
+  width: calc(100% - 270px);
+}
+
+.bg {
+  flex-direction: column;
+}
+
+.top{
+  width: 100%;
+  height: fit-content;
+  display: flex;
+}
+
+.myInfo{
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  padding: 40px 30px 20px 30px;
+}
+
+.title{
+  font-size: var(--font-size-11xl);
+  font-weight: bold;
+}
+
+.scoreBoard{
+  flex-grow: 1;
+  display: flex;
+  gap: var(--gap-10xs);
+  overflow-x: auto;
+  min-height: 150px;
+}
+
+.aveInfo{
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.aveScore{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.textSmallGray{
+  font-size: var(--font-size-base);
+  color: #555;
+}
+
+.myPosition{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #aaa;
+}
+
+.myPosition h3{
+  font-size: var(--font-size-sm);
+}
+
+.topRight{
+  width: calc(100% - 30%);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-lightblue-100);
+  padding: 30px;
+  padding-top: 40px;
+  border-radius: 0 30px 0 0;
+}
+
+.topRight > h3{
+  font-size: var(--font-size-5xl);
+  font-weight: bold;
+  padding-bottom: var(--gap-xl);
+}
+
+.uncompleteQuizsContainer{
+  flex-grow: 1;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+}
+
+.bottom{
+  flex-grow: 1;
+  background-color: var(--point-bg-blue);
+  padding: var(--padding-16xl);
+  padding-bottom: var(--padding-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  border-radius: 0 0 30px 30px;
+  /* max-height: calc(100% - 376px); */
+}
+
+.choose{
+  display: flex;
+  gap: var(--gap-xl);
+}
+
+.select{
+  width: fit-content !important;
+  font-size: var(--font-size-base) !important;
+}
+
+.labels{
+  width: 100%;
+  background-color: var(--bg-blue);
+  border-radius: 5px;
+  display: flex;
+  gap: var(--gap-xl);
+  padding: var(--padding-sm-5) var(--padding-16xl);
+  align-items: center;
+}
+
+.quizListContainer{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xs);
+}
+
+.labelText, .labelTextTimeOut{
+  min-width: 90px;
+  text-align: center;
+  font-size: var(--font-size-xl);
+}
+.labelTextTitle{
+  flex-grow: 1;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  min-width: 100px;
+}
+
+.labelTextTimeOut, .feedbackBtnLable{
+  min-width: 125px;
+}
+
+.submmitLable{
+  min-width: 110px;
+}

@@ -1,0 +1,121 @@
+.sidebars {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gap-mini);
+  width: fit-content;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo {
+  padding: var(--padding-xl);
+  padding-top: var(--padding-16xl);
+  padding-right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebarLogo {
+  width: 150px;
+}
+
+.sidebarContainer {
+  padding: var(--padding-xl);
+  padding-right: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-6xl);
+  align-items: center;
+}
+
+.navBtns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-6xl);
+  align-items: center;
+  padding: var(--padding-xl);
+  border-radius: 10px;
+  width: 230px;
+}
+
+.sidebarNavBtn {
+  display: flex !important;
+  align-items: center;
+  border: none !important;
+  /* background-color: var(--point-blue) !important; */
+  background: none !important;
+  width: 90%;
+  border-radius: 5px;
+  text-decoration: none !important;
+}
+
+.sidebarNavBtn:hover {
+  background-color: #ccc !important;
+}
+
+.linkBtn {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--gap-mini) !important;
+  color: black !important;
+  background: none !important;
+  border: none !important;
+}
+
+.linkBtn:hover {
+  background: none !important;
+}
+
+.bottom {
+  padding: var(--padding-xl);
+  padding-right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+}
+
+.userInfo {
+  display: flex;
+  gap: var(--gap-xl);
+  align-items: center;
+  justify-content: center;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userName {
+  font-size: var(--font-size-base);
+  font-weight: bold;
+}
+
+.userTrack {
+  font-size: var(--font-size-base);
+}
+
+.userImage {
+  background-color: white;
+  border-radius: 100px;
+  padding: var(--padding-3xs);
+}
+
+.logoutBtn {
+  border: none !important;
+  background-color: var(--point-blue) !important;
+  display: flex !important;
+  justify-content: center;
+}
+
+.text {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+}

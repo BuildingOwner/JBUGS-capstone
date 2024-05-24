@@ -1,0 +1,75 @@
+.sidebars{
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gap-mini);
+}
+
+.logo{
+  padding: 20px;
+  padding-top: var(--padding-31xl);
+  padding-right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebarLogo{
+  width: 150px;
+}
+
+.sidebarContainer{
+  padding: 20px;
+  padding-right: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.navBtns{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-16xl);
+  align-items: center;
+  padding: var(--padding-xl) 0;
+  border-radius: 10px;
+}
+
+.sidebarNavBtn {
+  display: flex !important;
+  align-items: center;
+  border: none !important;
+  /* background-color: var(--point-blue) !important; */
+  background: none !important;
+  width: 60%;
+  border-radius: 5px;
+  text-decoration: none !important;
+}
+
+.sidebarNavBtn:hover {
+  background-color: #ccc !important;
+}
+
+.linkBtn {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--gap-mini) !important;
+  color: black !important;
+  background: none !important;
+  border: none !important;
+}
+
+.linkBtn:hover {
+  background: none !important;
+}
+
+.reactCalendar{
+  border: none;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.linkBtn h3{
+  font-weight: bold;
+}

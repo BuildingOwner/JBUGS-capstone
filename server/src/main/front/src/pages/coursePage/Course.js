@@ -182,10 +182,11 @@ const Course = () => {
                 {Array.from({ length: 16 }).map((_, index) => (
                   <button type="button"
                     key={index}
-                    className={`btn btn-primary ${styles.weekBtn} ${weeklyContents[index]?.lectureVideos.length > 0 ||
-                      weeklyContents[index]?.classFiles.length > 0 ||
-                      weeklyContents[index]?.quizzes.length > 0 ||
-                      weeklyContents[index]?.assignments.length > 0
+                    className={`btn btn-primary ${styles.weekBtn} ${
+                      weeklyContents[index]?.lectureVideos.length > 0 
+                      // weeklyContents[index]?.classFiles.length > 0 ||
+                      // weeklyContents[index]?.quizzes.length > 0 ||
+                      // weeklyContents[index]?.assignments.length > 0
                       ? styles.blue : null
                       } ${selectedWeek - 1 == index ? styles.cureentWeek : null} ${cureentWeek === index + 1 ? styles.today : null}`}
                     style={{ fontWeight: "bold", fontSize: "1.25rem" }}

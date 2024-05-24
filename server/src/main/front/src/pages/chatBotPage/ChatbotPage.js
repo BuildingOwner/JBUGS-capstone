@@ -420,7 +420,7 @@ const ChatbotPage = () => {
           <div className={styles.top}>
             <div className={styles.topLeft}>
               <h3 style={{ fontWeight: "bold" }}>AI 부기</h3>
-              <div className={styles.selectedModel}>GPT 4 Turbo</div>
+              <div className={styles.selectedModel}><b>Powered by GPT-4o</b></div>
             </div>
             <div className={styles.topRight}>
               <h3>History</h3>

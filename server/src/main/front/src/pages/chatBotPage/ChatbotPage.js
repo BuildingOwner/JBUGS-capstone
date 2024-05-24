@@ -322,7 +322,12 @@ const ChatbotPage = () => {
         setChats([]); // chatIdArray가 비어있다면 chats를 비움
       }
     } catch (error) {
-      console.error("Failed to delete chats:", error);
+      if (error.response?.status === 401) {
+        navigate("/login")
+      } else {
+        // 다른 종류의 오류 발생
+        console.error("Failed to delete chats:", error);
+      }
     }
   };
 
@@ -350,7 +355,7 @@ const ChatbotPage = () => {
       setChats(chatData);
     } catch (error) {
       if (error.response.status === 401) {
-        navigate("/")
+        navigate("/login")
       } else {
         // 다른 종류의 오류 발생
         console.error(error);
@@ -375,7 +380,7 @@ const ChatbotPage = () => {
 
     } catch (error) {
       if (error.response.status === 401) {
-        navigate("/")
+        navigate("/login")
       } else {
         // 다른 종류의 오류 발생
         console.error(error);

@@ -28,11 +28,11 @@ const Sidebar = (props) => {
         // 오류 처리
         console.error("로그아웃 실패", error);
       });
-    navigate("/");
+    navigate("/login");
   }
   return (
     <div className={styles.sidebar}>
-      <Link to={"/main"} className={styles.logo}>
+      <Link to={"/"} className={styles.logo}>
         <img
           className={styles.sidebarLogo}
           loading="lazy"
@@ -43,7 +43,7 @@ const Sidebar = (props) => {
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/main"} className={styles.linkBtn}>
+            <Link to={"/"} className={styles.linkBtn}>
               <GoHome size="25" />
               <h3 className={styles.text}>HOME</h3>
             </Link>

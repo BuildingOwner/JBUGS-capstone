@@ -78,7 +78,7 @@
 }
 
 .chatBoardPadding{
-  padding: var(--padding-base);
+  padding: var(--padding-base) !important;
 }
 
 .bottomRight {

@@ -14,7 +14,7 @@ const MainSidebar = ({ memberInfoDto }) => {
 
   return (
     <div className={styles.sidebars}>
-      <Link to={"/main"} className={styles.logo}>
+      <Link to={"/"} className={styles.logo}>
         <img
           className={styles.sidebarLogo}
           loading="lazy"
@@ -25,7 +25,7 @@ const MainSidebar = ({ memberInfoDto }) => {
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/main"} className={styles.linkBtn}>
+            <Link to={"/"} className={styles.linkBtn}>
               <GoHome size="30" />
               <h3>Home</h3>
             </Link>

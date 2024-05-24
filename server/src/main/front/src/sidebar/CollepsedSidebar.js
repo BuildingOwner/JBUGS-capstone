@@ -31,12 +31,12 @@ function CollepsedSidebar(props) {
         // 오류 처리
         console.error("로그아웃 실패", error);
       });
-    navigate("/");
+    navigate("/login");
   }
 
   return (
     <div className={`${styles.sidebars} ${styles2.sidebars} ${styles3.sidebars}`}>
-      <Link to={"/main"} className={`${styles.logo}`}>
+      <Link to={"/"} className={`${styles.logo}`}>
         <img
           className={` ${styles2.sidebarLogo}`}
           loading="lazy"
@@ -47,7 +47,7 @@ function CollepsedSidebar(props) {
       <div className={`${styles.sidebarContainer} ${styles3.sidebarContainer}`}>
         <div className={`${styles.navBtns} ${styles3.navBtns}`}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/main"} className={styles.linkBtn}>
+            <Link to={"/"} className={styles.linkBtn}>
               <GoHome size="25" />
             </Link>
           </button>

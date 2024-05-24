@@ -33,7 +33,7 @@ const LoginForm = () => {
       document.cookie = `sessionId=${sessionId}; path=/`;
       console.log("세션 id: ", sessionId)
       // 로그인 성공 후 다음 페이지로 이동
-      navigate("/main")
+      navigate("/")
     } catch (error) {
       console.error("로그인 실패:", error);
       alert("로그인 실패")

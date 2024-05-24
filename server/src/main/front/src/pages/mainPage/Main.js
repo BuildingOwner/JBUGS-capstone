@@ -55,7 +55,7 @@ const Main = () => {
     }
     catch (error) {
       if (error.response?.status === 401) {
-        navigate("/")
+        navigate("/login")
       } else {
         // 다른 종류의 오류 발생
         console.error(error)

@@ -7,7 +7,7 @@ import styles2 from "./MainSidebarCollepsed.module.css"
 function CollepsedSidebar({memberInfoDto}) {
   return (
     <div className={`${styles.sidebars} ${styles2.sidebars}`}>
-      <Link to={"/main"} className={`${styles.logo}`}>
+      <Link to={"/"} className={`${styles.logo}`}>
         <img
           className={`${styles.sidebarLogo} ${styles2.sidebarLogo}`}
           loading="lazy"
@@ -18,7 +18,7 @@ function CollepsedSidebar({memberInfoDto}) {
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>
           <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/main"} className={styles.linkBtn}>
+            <Link to={"/"} className={styles.linkBtn}>
               <GoHome size="30" />
             </Link>
           </button>

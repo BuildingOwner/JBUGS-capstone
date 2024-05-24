@@ -4,7 +4,7 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import styles from "./MainSidebar.module.css"
 import styles2 from "./MainSidebarCollepsed.module.css"
 
-function CollepsedSidebar({memberInfoDto}) {
+function CollepsedSidebar({ memberInfoDto }) {
   return (
     <div className={`${styles.sidebars} ${styles2.sidebars}`}>
       <Link to={"/"} className={`${styles.logo}`}>
@@ -17,16 +17,16 @@ function CollepsedSidebar({memberInfoDto}) {
       </Link>
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/"} className={styles.linkBtn}>
+          <Link to={"/"} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <GoHome size="30" />
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"} state={{ memberName: memberInfoDto?.memberName }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/chatbotpage"} state={{ memberName: memberInfoDto?.memberName }} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <IoChatbubbleEllipsesOutline size="30" />
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
     </div>

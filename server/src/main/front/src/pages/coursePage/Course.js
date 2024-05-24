@@ -187,7 +187,7 @@ const Course = () => {
                       weeklyContents[index]?.quizzes.length > 0 ||
                       weeklyContents[index]?.assignments.length > 0
                       ? styles.blue : null
-                      } ${selectedWeek - 1 == index ? styles.cureentWeek : null} ${cureentWeek === index+1 ? styles.today : null}`}
+                      } ${selectedWeek - 1 == index ? styles.cureentWeek : null} ${cureentWeek === index + 1 ? styles.today : null}`}
                     style={{ fontWeight: "bold", fontSize: "1.25rem" }}
                     onClick={() => (changeWeek(index + 1))}
                   >{index + 1}</button>
@@ -239,6 +239,7 @@ const Course = () => {
                     courseDto={courseDto}
                     url={assignmentUrl}
                     memberInfoDto={memberInfoDto}
+                    reRender={reRender}
                   />
                 )) : <NoItem title={"과제가"} />}
               </div>
@@ -286,6 +287,7 @@ const Course = () => {
                     memberInfoDto={memberInfoDto}
                     courseDto={courseDto}
                     url={quizUrl}
+                    reRender={reRender}
                   />
                 )) : <NoItem title={"퀴즈가"} />}
               </div>

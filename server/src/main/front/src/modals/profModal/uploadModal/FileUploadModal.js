@@ -28,7 +28,7 @@ const FileUploadModal = (props) => {
     const filetitle = fileTitle !== null ? fileTitle.split(".") : "null"
     const length = filetitle.length
     const extension = filetitle[length - 1]
-    if(extension !== "pdf") {
+    if (extension !== "pdf") {
       alert("pdf만 퀴즈 생성이 가능합니다.")
       return
     }
@@ -152,6 +152,7 @@ const FileUploadModal = (props) => {
         }
       })
       console.log("response : ", response)
+      alert('파일 업로드 되었습니다.'); // 사용자에게 알림
     } catch (error) {
       console.log(error);
       alert('파일 업로드에 실패했습니다.'); // 사용자에게 알림

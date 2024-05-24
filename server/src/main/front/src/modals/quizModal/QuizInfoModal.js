@@ -10,7 +10,6 @@ const QuizInfoModal = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   const navigate = useNavigate()
   const data = props.props
-  console.log("Modal data", data)
   const moveToDoQuiz = () => {
     navigate('/doquiz', {
       state: {

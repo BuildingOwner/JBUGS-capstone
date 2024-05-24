@@ -36,6 +36,7 @@
   font-weight: bold;
 }
 
+.first,
 .second,
 .third,
 .fourth {
@@ -51,6 +52,19 @@
 .fontSize {
   font-size: var(--font-size-lg);
   width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트에 대해 줄임표(...) 표시 */
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 0;
+}
+
+.third{
+  flex-grow: 1;
+  width: 1px;
 }
 
 .third h3{

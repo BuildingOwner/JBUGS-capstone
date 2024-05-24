@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-xl);
-  height: calc((100% - 67px) / 2);
+  height: calc((100vh - 290.6px) / 2);
 }
 
 .colName {

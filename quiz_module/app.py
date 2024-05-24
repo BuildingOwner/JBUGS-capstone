@@ -56,7 +56,7 @@ def add_quiz_keyword():
     if description == None:
         description = f"{lecture} {week}주차 퀴즈"
     
-    title = f"{lecture} {week}주차 퀴즈"
+    title = f"{lecture} {week}주차 연습문제"
 
     print(f"[{current_file_name}] #add-quiz-keyword")
     print(f"[{current_file_name}] lecture: {lecture}")
@@ -119,7 +119,7 @@ def add_quiz_summary():
     if description == None:
         description = f"{lecture} {week}주차 퀴즈"
     
-    title = f"{lecture} {week}주차 퀴즈"
+    title = f"{lecture} {week}주차 실습문제"
 
     print(f"[{current_file_name}] #add-quiz-keyword")
     print(f"[{current_file_name}] lecture: {lecture}")

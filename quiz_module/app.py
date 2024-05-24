@@ -31,13 +31,24 @@ CORS(app, supports_credentials=True)  # CORS를 활성화하고 credentials를 �
 def add_quiz_keyword():
     lecture = request.form.get("lecture")
     lecture_id = request.form.get("lectureId")
-    week_id = request.form.get("week_id")
+    week_id = request.form.get("weekId")
     weekNumber = request.form.get("weekNumber")
     path = request.form.get("path")
     choice = request.form.get("choice")
     short = request.form.get("short")
     time_limit = request.form.get("time_limit")
     description = request.form.get("description")
+    
+    print(f"[{current_file_name}] #add-quiz-keyword")
+    print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] lecture id: {lecture_id}")
+    print(f"[{current_file_name}] week_id: {week_id}")
+    print(f"[{current_file_name}] weekNumber: {weekNumber}")
+    print(f"[{current_file_name}] path: {path}")
+    print(f"[{current_file_name}] choice: {choice}")
+    print(f"[{current_file_name}] short: {short}")
+    print(f"[{current_file_name}] time_limit: {time_limit}")
+    print(f"[{current_file_name}] description: {description}\n")
     
     if lecture == None or lecture == "":
         return "invalied request", 400
@@ -50,24 +61,13 @@ def add_quiz_keyword():
         return "invalied request", 403
     
     if time_limit == None:
-        time_limit = "60분"
+        time_limit = "60"
         
     if description == None:
         description = f"{lecture} {weekNumber}주차 연습문제"
     
     title = f"{lecture} {weekNumber}주차 연습문제"
-
-    print(f"[{current_file_name}] #add-quiz-keyword")
-    print(f"[{current_file_name}] lecture: {lecture}")
-    print(f"[{current_file_name}] lecture id: {lecture_id}")
-    print(f"[{current_file_name}] week: {week_id}")
-    print(f"[{current_file_name}] weekNumber: {weekNumber}")
-    print(f"[{current_file_name}] path: {path}")
-    print(f"[{current_file_name}] choice: {choice}")
-    print(f"[{current_file_name}] short: {short}")
     print(f"[{current_file_name}] title: {title}")
-    print(f"[{current_file_name}] time_limit: {time_limit}")
-    print(f"[{current_file_name}] description: {description}\n")
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
@@ -96,13 +96,24 @@ def add_quiz_keyword():
 def add_quiz_summary():
     lecture = request.form.get("lecture")
     lecture_id = request.form.get("lectureId")
-    week_id = request.form.get("week_id")
+    week_id = request.form.get("weekId")
     weekNumber = request.form.get("weekNumber")
     path = request.form.get("path")
     choice = request.form.get("choice")
     short = request.form.get("short")
     time_limit = request.form.get("time_limit")
     description = request.form.get("description")
+    
+    print(f"[{current_file_name}] #add-quiz-keyword")
+    print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] lecture id: {lecture_id}")
+    print(f"[{current_file_name}] week_id: {week_id}")
+    print(f"[{current_file_name}] weekNumber: {weekNumber}")
+    print(f"[{current_file_name}] path: {path}")
+    print(f"[{current_file_name}] choice: {choice}")
+    print(f"[{current_file_name}] short: {short}")
+    print(f"[{current_file_name}] time_limit: {time_limit}")
+    print(f"[{current_file_name}] description: {description}\n")
     
     if lecture == None or lecture == "":
         return "invalied request", 400
@@ -115,24 +126,13 @@ def add_quiz_summary():
         return "invalied request", 403
     
     if time_limit == None:
-        time_limit = "60분"
+        time_limit = "60"
         
     if description == None:
         description = f"{lecture} {weekNumber}주차 퀴즈"
     
     title = f"{lecture} {weekNumber}주차 실습문제"
-
-    print(f"[{current_file_name}] #add-quiz-keyword")
-    print(f"[{current_file_name}] lecture: {lecture}")
-    print(f"[{current_file_name}] lecture id: {lecture_id}")
-    print(f"[{current_file_name}] week_id: {week_id}")
-    print(f"[{current_file_name}] weekNumber: {weekNumber}")
-    print(f"[{current_file_name}] path: {path}")
-    print(f"[{current_file_name}] choice: {choice}")
-    print(f"[{current_file_name}] short: {short}")
     print(f"[{current_file_name}] title: {title}")
-    print(f"[{current_file_name}] time_limit: {time_limit}")
-    print(f"[{current_file_name}] description: {description}\n")
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)

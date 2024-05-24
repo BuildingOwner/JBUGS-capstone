@@ -260,6 +260,7 @@ const Course = () => {
                     reRender={reRender}
                     memberInfoDto={memberInfoDto}
                     enrollmentId={enrollmentId}
+                    selectedWeek={selectedWeek}
                   />
                 )) : <NoItem title={"자료가"} />}
               </div>

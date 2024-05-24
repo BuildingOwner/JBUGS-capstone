@@ -257,13 +257,10 @@ const ListItem = (props) => {
   })
 
   const checkDueDate = (dueDateString) => {
-    console.log("dueDateString : ", dueDateString)
     // 현재 날짜 및 시간
     const now = new Date();
-    console.log(now)
     // 마감 날짜를 나타내는 Date 객체 생성
     const dueDate = new Date(dueDateString);
-    console.log(dueDate)
     // dueDate가 now보다 미래인지 확인
     if (dueDate > now) {
       return true;

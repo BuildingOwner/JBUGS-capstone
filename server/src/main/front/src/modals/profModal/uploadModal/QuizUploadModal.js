@@ -4,13 +4,14 @@ import styles from "../../quizModal/QuizInfoModal.module.css"
 import styles2 from "./FileUploadModal.module.css"
 import Info from "../../modalComponents/Info";
 const QuizUploadModal = (props) => {
+  const data = props.props
   Modal.setAppElement('#root')
   const [shortAnswer, setShortAnswer] = useState(0)
   const [choice, setChoice] = useState(0)
   const [quizType, setQuizType] = useState(null)
   const [description, setDescription] = useState(null)
 
-  // 컴포넌트 클릭시 모든 이벤트 버블링 막음 (밑에는 안막힘)
+  // 컴포넌트 클릭시 모든 이벤트 버블링 막음
   const stopPropagation = (e) => {
     e.stopPropagation()
   }
@@ -64,8 +65,8 @@ const QuizUploadModal = (props) => {
         </div>
         <div className={`no-scroll-bar ${styles.gap}`}>
           <div className={styles.contents}>
-            <Info title={"주차"} content={"이 파일의 주차 넣으셈"} />
-            <Info title={"파일명"} content={"이 파일명 넣으셈"} />
+            <Info title={"주차"} content={`${data.selectedWeek}주차`} />
+            <Info title={"파일명"} content={data.title} />
           </div>
           <div className={`${styles.contents} ${styles2.contents}`}
             onClick={stopPropagation}>

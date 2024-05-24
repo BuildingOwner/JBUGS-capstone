@@ -23,7 +23,7 @@ const ListItem = (props) => {
 
   // 퀴즈 업로드 모달
   const openUploadModal = (event) => {
-    if(event) {
+    if (event) {
       event.stopPropagation()
     }
     setUploadModalIsOpen(true);
@@ -272,7 +272,7 @@ const ListItem = (props) => {
   }
 
   return (
-    <div className={styles.listItem} onClick={checkURL}>
+    <>
       <QuizInfoModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -283,139 +283,141 @@ const ListItem = (props) => {
         onRequestClose={closeUploadModal}
         props={props}
         timeDifference={timeDifference} />
-      <div className={styles.flex}>
-        <div className={styles.first}>
-          {props.url === 'assignmentlist' && (
-            props.memberInfoDto?.memberType == "STUDENT" ?
-              (props.submissionStatus === true ? (
-                <h3 className={`${styles.fontSize} ${styles.green}`}>
-                  제출
-                </h3>
-              ) : (
-                <h3 className={`${styles.fontSize} ${styles.red}`}>
-                  미제출
-                </h3>
-              )) :
-              (checkDueDate(props.dueDate) === true ? (
-                <h3 className={`${styles.fontSize} ${styles.red}`}>
-                  진행중
-                </h3>
-              ) : (
-                <h3 className={`${styles.fontSize} ${styles.green}`}>
-                  마감
-                </h3>
-              ))
+      <div className={styles.listItem} onClick={checkURL}>
+        <div className={styles.flex}>
+          <div className={styles.first}>
+            {props.url === 'assignmentlist' && (
+              props.memberInfoDto?.memberType == "STUDENT" ?
+                (props.submissionStatus === true ? (
+                  <h3 className={`${styles.fontSize} ${styles.green}`}>
+                    제출
+                  </h3>
+                ) : (
+                  <h3 className={`${styles.fontSize} ${styles.red}`}>
+                    미제출
+                  </h3>
+                )) :
+                (checkDueDate(props.dueDate) === true ? (
+                  <h3 className={`${styles.fontSize} ${styles.red}`}>
+                    진행중
+                  </h3>
+                ) : (
+                  <h3 className={`${styles.fontSize} ${styles.green}`}>
+                    마감
+                  </h3>
+                ))
+            )}
+            {props.url === 'quizlist' && (
+              props.memberInfoDto?.memberType == "STUDENT" ?
+                (props.submissionStatus === true ? (
+                  <h3 className={`${styles.fontSize} ${styles.green}`}>
+                    응시
+                  </h3>
+                ) : (
+                  <h3 className={`${styles.fontSize} ${styles.red}`}>
+                    미응시
+                  </h3>
+                )) :
+                (checkDueDate(props.deadline) === true ? (
+                  <h3 className={`${styles.fontSize} ${styles.red}`}>
+                    진행중
+                  </h3>
+                ) : (
+                  <h3 className={`${styles.fontSize} ${styles.green}`}>
+                    마감
+                  </h3>
+                ))
+            )}
+            {props.url === 'file' && (
+              <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
+            )}
+            {props.url === 'video' && (
+              <h3 className={`${styles.fontSize} ${styles.blue}`}>length</h3>
+            )}
+          </div>
+          <div className={styles.second}>
+            {props.url === 'assignmentlist' && (
+              <h3 className={styles.fontSize}>{props.title}</h3>
+            )}
+            {props.url === 'quizlist' && (
+              <h3 className={styles.fontSize}>{props.quizName}</h3>
+            )}
+            {props.url === 'file' && (
+              <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
+            )}
+            {props.url === 'video' && (
+              <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
+            )}
+          </div>
+          <div className={styles.third}>
+            {props.url === 'video' ?
+              <div className="prograss-bar"></div> :
+              <h3 className={styles.fontSize}>{props.contents}</h3>}
+          </div>
+        </div>
+        <div className={styles.fourth}>
+          {props.url === 'assignmentlist' && (timeDifference < 0 ?
+            <h3 className={styles.fontSize}>마감</h3> :
+            <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
           )}
           {props.url === 'quizlist' && (
-            props.memberInfoDto?.memberType == "STUDENT" ?
-              (props.submissionStatus === true ? (
-                <h3 className={`${styles.fontSize} ${styles.green}`}>
-                  응시
-                </h3>
-              ) : (
-                <h3 className={`${styles.fontSize} ${styles.red}`}>
-                  미응시
-                </h3>
-              )) :
-              (checkDueDate(props.deadline) === true ? (
-                <h3 className={`${styles.fontSize} ${styles.red}`}>
-                  진행중
-                </h3>
-              ) : (
-                <h3 className={`${styles.fontSize} ${styles.green}`}>
-                  마감
-                </h3>
-              ))
-          )}
-          {props.url === 'file' && (
-            <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
-          )}
-          {props.url === 'video' && (
-            <h3 className={`${styles.fontSize} ${styles.blue}`}>length</h3>
-          )}
-        </div>
-        <div className={styles.second}>
-          {props.url === 'assignmentlist' && (
-            <h3 className={styles.fontSize}>{props.title}</h3>
-          )}
-          {props.url === 'quizlist' && (
-            <h3 className={styles.fontSize}>{props.quizName}</h3>
-          )}
-          {props.url === 'file' && (
-            <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
-          )}
-          {props.url === 'video' && (
-            <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
-          )}
-        </div>
-        <div className={styles.third}>
-          {props.url === 'video' ?
-            <div className="prograss-bar"></div> :
-            <h3 className={styles.fontSize}>{props.contents}</h3>}
-        </div>
-      </div>
-      <div className={styles.fourth}>
-        {props.url === 'assignmentlist' && (timeDifference < 0 ?
-          <h3 className={styles.fontSize}>마감</h3> :
-          <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
-        )}
-        {props.url === 'quizlist' && (
-          <>
-            {
-              timeDifference < 0 ?
-                <h3 className={styles.fontSize}>마감</h3> :
-                <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
-            }
-            {
-              props.memberInfoDto.memberType === "STUDENT" ? null :
-                <div className={styles.modBtns}>
-                  <button type="button"
-                    className={`btn btn-primary ${styles.deleteBtn}`}
-                    onClick={(e) => handleDeleteQuiz(e)}>
-                    <IoClose size={25} />
-                  </button>
-                </div>
-            }
-          </>
-        )}
-        {props.url === 'file' && (
-          <>
-            <h3 className={styles.fontSize}>{byte}</h3>
-            {
-              props.memberInfoDto.memberType === "STUDENT" ? null :
-                <div className={styles.modBtns}>
-                  {fileExtension === "pdf" ?
+            <>
+              {
+                timeDifference < 0 ?
+                  <h3 className={styles.fontSize}>마감</h3> :
+                  <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
+              }
+              {
+                props.memberInfoDto.memberType === "STUDENT" ? null :
+                  <div className={styles.modBtns}>
                     <button type="button"
-                      className={`btn btn-primary ${styles.modBtn}`}
-                      onClick={(e) => openUploadModal(e)}>
-                      <HiOutlineSquaresPlus size={25} />
-                    </button> : null
-                  }
+                      className={`btn btn-primary ${styles.deleteBtn}`}
+                      onClick={(e) => handleDeleteQuiz(e)}>
+                      <IoClose size={25} />
+                    </button>
+                  </div>
+              }
+            </>
+          )}
+          {props.url === 'file' && (
+            <>
+              <h3 className={styles.fontSize}>{byte}</h3>
+              {
+                props.memberInfoDto.memberType === "STUDENT" ? null :
+                  <div className={styles.modBtns}>
+                    {fileExtension === "pdf" ?
+                      <button type="button"
+                        className={`btn btn-primary ${styles.modBtn}`}
+                        onClick={(e) => openUploadModal(e)}>
+                        <HiOutlineSquaresPlus size={25} />
+                      </button> : null
+                    }
+                    <button type="button"
+                      className={`btn btn-primary ${styles.deleteBtn}`}
+                      onClick={(e) => handleDeleteFile(e)}>
+                      <IoClose size={25} />
+                    </button>
+                  </div>
+              }
+            </>
+          )}
+          {props.url === 'video' && (
+            <>
+              <h3 className={styles.fontSize}>{byte}</h3>
+              {
+                props.memberInfoDto.memberType === "STUDENT" ? null :
                   <button type="button"
                     className={`btn btn-primary ${styles.deleteBtn}`}
-                    onClick={(e) => handleDeleteFile(e)}>
+                    onClick={(e) => handleDeleteVideoFile(e)}>
                     <IoClose size={25} />
                   </button>
-                </div>
-            }
-          </>
-        )}
-        {props.url === 'video' && (
-          <>
-            <h3 className={styles.fontSize}>{byte}</h3>
-            {
-              props.memberInfoDto.memberType === "STUDENT" ? null :
-                <button type="button"
-                  className={`btn btn-primary ${styles.deleteBtn}`}
-                  onClick={(e) => handleDeleteVideoFile(e)}>
-                  <IoClose size={25} />
-                </button>
-            }
+              }
 
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

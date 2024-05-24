@@ -431,7 +431,7 @@ const ChatbotPage = () => {
           </div>
           <div className={styles.bottom} ref={bottomRef}>
             <div className={styles.bottomLeft}>
-              <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`} ref={chatBoardRef}>
+              <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar ${styles.chatBoardPadding}`} ref={chatBoardRef}>
                 {chats?.map((chat, index) => {
                   // chat.content가 존재하며, 그 길이가 0보다 큰지 확인
                   const content = chat.content && chat.content.length > 0 ? chat.content[0] : null;

@@ -267,6 +267,7 @@ body {
 .no-scroll-bar {
   overflow: hidden;
   scrollbar-gutter: stable both-edges;
+  padding: 0 5px;
 }
 
 .no-scroll-bar:hover {

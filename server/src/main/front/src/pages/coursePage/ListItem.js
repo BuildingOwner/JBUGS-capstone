@@ -318,9 +318,30 @@ const ListItem = (props) => {
           <h3 className={styles.fontSize}>마감</h3> :
           <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
-        {props.url === 'quizlist' && (timeDifference <= 0 ?
-          <h3 className={styles.fontSize}>마감</h3> :
-          <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
+        {props.url === 'quizlist' && (
+          <>
+            {
+              timeDifference <= 0 ?
+                <h3 className={styles.fontSize}>마감</h3> :
+                <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
+            }
+            {
+              props.memberInfoDto.memberType === "STUDENT" ? null :
+                <div className={styles.modBtns}>
+                  {fileExtension === "pdf" ?
+                    <button type="button"
+                      className={`btn btn-primary ${styles.modBtn}`}>
+                      <HiOutlineSquaresPlus size={25} />
+                    </button> : null
+                  }
+                  <button type="button"
+                    className={`btn btn-primary ${styles.deleteBtn}`}
+                    onClick={(e) => handleDeleteFile(e)}>
+                    <IoClose size={25} />
+                  </button>
+                </div>
+            }
+          </>
         )}
         {props.url === 'file' && (
           <>

@@ -6,18 +6,38 @@ import axios from "axios";
 import { IoClose } from "react-icons/io5";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import ReactPlayer from 'react-player'
-
+import QuizUploadModal from "../../modals/profModal/uploadModal/QuizUploadModal";
 const ListItem = (props) => {
   const navigate = useNavigate()
   const [daysRemaining, setDaysRemaining] = useState()
   const [fileExtension, setFileExtension] = useState()
   // 모달창 노출 여부 state
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [uploadModalIsOpen, setUploadModalIsOpen] = useState(false)
   const [fileColor, setfileColor] = useState('');
   const [byte, setByte] = useState(0)
   const [memberInfoDto, setMemberInfoDto] = useState();
   const [timeDifference, setTimeDifference] = useState(null)
   console.log(props)
+
+  // 퀴즈 업로드 모달
+  const openUploadModal = (event) => {
+    if(event) {
+      event.stopPropagation()
+    }
+    setUploadModalIsOpen(true);
+  }
+
+  const closeUploadModal = (event) => {
+    if (event) {
+      // 이벤트 버블링을 막음
+      event.stopPropagation()
+    }
+    console.log("modal close")
+    setUploadModalIsOpen(false)
+
+  }
+
   const openModal = () => {
     console.log('modal open')
     setModalIsOpen(true);
@@ -258,6 +278,11 @@ const ListItem = (props) => {
         onRequestClose={closeModal}
         props={props}
         timeDifference={timeDifference} />
+      <QuizUploadModal
+        isOpen={uploadModalIsOpen}
+        onRequestClose={closeUploadModal}
+        props={props}
+        timeDifference={timeDifference} />
       <div className={styles.flex}>
         <div className={styles.first}>
           {props.url === 'assignmentlist' && (
@@ -360,7 +385,9 @@ const ListItem = (props) => {
                 <div className={styles.modBtns}>
                   {fileExtension === "pdf" ?
                     <button type="button"
-                      className={`btn btn-primary ${styles.modBtn}`}>
+                      className={`btn btn-primary ${styles.modBtn}`}
+                      onClick={openUploadModal}
+                    >
                       <HiOutlineSquaresPlus size={25} />
                     </button> : null
                   }

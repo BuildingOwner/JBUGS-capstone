@@ -24,18 +24,18 @@ const MainSidebar = ({ memberInfoDto }) => {
       </Link>
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/"} className={styles.linkBtn}>
+          <Link to={"/"} className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <GoHome size="30" />
               <h3>Home</h3>
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"} state={{ memberName: memberInfoDto?.memberName }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/chatbotpage"} state={{ memberName: memberInfoDto?.memberName }} className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <IoChatbubbleEllipsesOutline size="30" />
               <h3>AI chat</h3>
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
         <div className={styles.calendar}>
           <Calendar

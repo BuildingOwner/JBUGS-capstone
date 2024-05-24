@@ -15,8 +15,9 @@ const ChatItem = ({ propLineHeight, text }) => {
   return (
     <div className={styles.itemContainer}>
       <div className={styles.profile}>
-        <div className={styles.userIconWrapper}>
-          <FaUser size={25} />
+        <div className={styles.userIconWrapper} style={{background:"none"}}>
+          {/* <FaUser size={25} /> */}
+          <img src="/bugi.png" width={100}></img>
         </div>
         <h3 className={styles.name}>AI부기</h3>
       </div>

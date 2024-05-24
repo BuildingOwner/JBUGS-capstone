@@ -322,7 +322,12 @@ const ChatbotPage = () => {
         setChats([]); // chatIdArray가 비어있다면 chats를 비움
       }
     } catch (error) {
-      console.error("Failed to delete chats:", error);
+      if (error.response?.status === 401) {
+        navigate("/login")
+      } else {
+        // 다른 종류의 오류 발생
+        console.error("Failed to delete chats:", error);
+      }
     }
   };
 
@@ -350,7 +355,7 @@ const ChatbotPage = () => {
       setChats(chatData);
     } catch (error) {
       if (error.response.status === 401) {
-        navigate("/")
+        navigate("/login")
       } else {
         // 다른 종류의 오류 발생
         console.error(error);
@@ -375,7 +380,7 @@ const ChatbotPage = () => {
 
     } catch (error) {
       if (error.response.status === 401) {
-        navigate("/")
+        navigate("/login")
       } else {
         // 다른 종류의 오류 발생
         console.error(error);
@@ -420,7 +425,7 @@ const ChatbotPage = () => {
           <div className={styles.top}>
             <div className={styles.topLeft}>
               <h3 style={{ fontWeight: "bold" }}>AI 부기</h3>
-              <div className={styles.selectedModel}>GPT 4 Turbo</div>
+              <div className={styles.selectedModel}><b>Powered by GPT-4o</b></div>
             </div>
             <div className={styles.topRight}>
               <h3>History</h3>
@@ -431,7 +436,7 @@ const ChatbotPage = () => {
           </div>
           <div className={styles.bottom} ref={bottomRef}>
             <div className={styles.bottomLeft}>
-              <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar`} ref={chatBoardRef}>
+              <div id="chatBoard" className={`${styles.chatBoard} no-scroll-bar ${styles.chatBoardPadding}`} ref={chatBoardRef}>
                 {chats?.map((chat, index) => {
                   // chat.content가 존재하며, 그 길이가 0보다 큰지 확인
                   const content = chat.content && chat.content.length > 0 ? chat.content[0] : null;

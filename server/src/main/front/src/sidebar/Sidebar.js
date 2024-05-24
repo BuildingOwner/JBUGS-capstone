@@ -28,11 +28,11 @@ const Sidebar = (props) => {
         // 오류 처리
         console.error("로그아웃 실패", error);
       });
-    navigate("/");
+    navigate("/login");
   }
   return (
     <div className={styles.sidebar}>
-      <Link to={"/main"} className={styles.logo}>
+      <Link to={"/"} className={styles.logo}>
         <img
           className={styles.sidebarLogo}
           loading="lazy"
@@ -42,52 +42,52 @@ const Sidebar = (props) => {
       </Link>
       <div className={styles.sidebarContainer}>
         <div className={styles.navBtns}>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/main"} className={styles.linkBtn}>
+          <Link to={"/"} className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <GoHome size="25" />
               <h3 className={styles.text}>HOME</h3>
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"}
-              state={{ memberName: memberName }}
-              className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/chatbotpage"}
+            state={{ memberName: memberName }}
+            className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <IoChatbubbleEllipsesOutline size="25" />
               <h3 className={styles.text}>AI chat</h3>
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
         <div className={styles.navBtns}>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/course"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+          <Link to={"/course"} state={{ enrollmentId: enrollmentId }} className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <PiBooks size="25" />
               <h3 className={styles.text}>강의 홈</h3>
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/qalist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/qalist"} state={{ enrollmentId: enrollmentId }} className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <FaQuestion size="25" />
               <h3 className={styles.text}>Q & A</h3>
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/noticelist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/noticelist"} state={{ enrollmentId: enrollmentId }} className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <TbSpeakerphone size="25" />
               <h3 className={styles.text}>공지사항</h3>
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/assignmentlist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/assignmentlist"} state={{ enrollmentId: enrollmentId }} className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <LuClipboardList size="25" />
               <h3 className={styles.text}>과제</h3>
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn}`}>
-            <Link to={"/quizlist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/quizlist"} state={{ enrollmentId: enrollmentId }} className={styles.sidebarNavBtn}>
+            <button className={`btn btn-primary ${styles.linkBtn}`}>
               <MdOutlineQuiz size="25" />
               <h3 className={styles.text}>퀴즈</h3>
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
       <div className={styles.bottom}>

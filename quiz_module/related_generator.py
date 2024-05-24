@@ -38,8 +38,6 @@ def related_question_gen(question=question1):
     related_question = completion.choices[0].message.content
     
     answer = validate_question(related_question).lower()
-    print(related_question)
-    print(answer)
     if "true" in answer:
         try:
             json_validate(related_question)

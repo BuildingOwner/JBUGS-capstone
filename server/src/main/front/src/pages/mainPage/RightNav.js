@@ -23,7 +23,7 @@ const RightNav = (props) => {
         // 오류 처리
         console.error("로그아웃 실패", error);
       });
-    navigate("/");
+    navigate("/login");
   }
 
   const checkDueDate = (dueDateString) => {

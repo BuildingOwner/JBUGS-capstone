@@ -84,7 +84,18 @@ public class UploadApiController {
             // 파일 경로(들)을 사용하여 추가 처리 수행
             if (quizFlag) {
                 for (String filePath : uploadedFilePaths) {
-                    sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getId()), filePath, choice, shortAnswer, description, quizType);
+                    log.info("sendQuizKeywordRequest called with parameters: lectureId={}, lectureName={}, weekId={}, weekNumber={}, filePath={}, choice={}, shortAnswer={}, description={}, quizType={}",
+                            lecture.getId(),
+                            lecture.getName(),
+                            String.valueOf(weekEntity.getId()),
+                            String.valueOf(weekEntity.getWeekNumber()),
+                            filePath,
+                            choice,
+                            shortAnswer,
+                            description,
+                            quizType
+                    );
+                    sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getId()), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
                 }
             }
 
@@ -162,14 +173,15 @@ public class UploadApiController {
 
 
     // 파일 업로드 로직 이후에 추가
-    public void sendQuizKeywordRequest(Long lectureId, String lecture, String week, String path, String choice, String shortAnswer, String description, String quizType) {
+    public void sendQuizKeywordRequest(Long lectureId, String lecture, String weekId, String weekNumber, String path, String choice, String shortAnswer, String description, String quizType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("lectureId", String.valueOf(lectureId));
         map.add("lecture", lecture);
-        map.add("week", week);
+        map.add("weekId", weekId);
+        map.add("weekNumber", weekNumber);
         map.add("path", path);
         map.add("choice", choice);
         map.add("short", shortAnswer);

@@ -30,6 +30,21 @@ const ListItem = (props) => {
     event.stopPropagation()
   }
 
+  const handleDeleteQuiz = async (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
+    if (confirm("삭제 하시겠습니까?") === true) {
+      try {
+        const response = await axios.delete(`/api/quiz/${props.quizId}`)
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    props.reRender()
+  }
+
   const handleDeleteVideoFile = async (event) => {
     if (event) {
       event.stopPropagation()
@@ -191,7 +206,8 @@ const ListItem = (props) => {
     } else if (props.url === "quizlist") {
       const dueDate = new Date(props.deadline);
       const currentDate = new Date();
-      const timeDiff = dueDate.getTime() - currentDate.getTime();
+      const timeDiff = dueDate.getTime() - currentDate.getTime()
+      console.log("quiz timeDiff : ", timeDiff)
       const remainDate = Math.ceil(timeDiff / (1000 * 3600 * 24))
       setDaysRemaining(remainDate >= 0 ? remainDate : 0)
       if (timeDiff < 0) {
@@ -314,13 +330,27 @@ const ListItem = (props) => {
         </div>
       </div>
       <div className={styles.fourth}>
-        {props.url === 'assignmentlist' && (timeDifference <= 0 ?
+        {props.url === 'assignmentlist' && (timeDifference < 0 ?
           <h3 className={styles.fontSize}>마감</h3> :
           <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
-        {props.url === 'quizlist' && (timeDifference <= 0 ?
-          <h3 className={styles.fontSize}>마감</h3> :
-          <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
+        {props.url === 'quizlist' && (timeDifference < 0 ?
+          <>
+            <h3 className={styles.fontSize}>마감</h3>
+            <button type="button"
+              className={`btn btn-primary ${styles.deleteBtn}`}
+              onClick={(e) => handleDeleteQuiz(e)}>
+              <IoClose size={25} />
+            </button>
+          </> :
+          <>
+            <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
+            <button type="button"
+              className={`btn btn-primary ${styles.deleteBtn}`}
+              onClick={(e) => handleDeleteQuiz(e)}>
+              <IoClose size={25} />
+            </button>
+          </>
         )}
         {props.url === 'file' && (
           <>

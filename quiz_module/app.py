@@ -48,7 +48,6 @@ def add_quiz_keyword():
     print(f"[{current_file_name}] choice: {choice}")
     print(f"[{current_file_name}] short: {short}")
     print(f"[{current_file_name}] time_limit: {time_limit}")
-    print(f"[{current_file_name}] description: {description}\n")
     
     if lecture == None or lecture == "":
         return "invalied request", 400
@@ -63,11 +62,12 @@ def add_quiz_keyword():
     if time_limit == None:
         time_limit = "60"
         
-    if description == None:
+    if len(description) <= 0:
         description = f"{lecture} {weekNumber}주차 연습문제"
+    print(f"[{current_file_name}] description: {description}")
     
     title = f"{lecture} {weekNumber}주차 연습문제"
-    print(f"[{current_file_name}] title: {title}")
+    print(f"[{current_file_name}] title: {title}\n")
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
@@ -113,7 +113,6 @@ def add_quiz_summary():
     print(f"[{current_file_name}] choice: {choice}")
     print(f"[{current_file_name}] short: {short}")
     print(f"[{current_file_name}] time_limit: {time_limit}")
-    print(f"[{current_file_name}] description: {description}\n")
     
     if lecture == None or lecture == "":
         return "invalied request", 400
@@ -128,11 +127,12 @@ def add_quiz_summary():
     if time_limit == None:
         time_limit = "60"
         
-    if description == None:
+    if len(description) <= 0:
         description = f"{lecture} {weekNumber}주차 퀴즈"
+    print(f"[{current_file_name}] description: {description}\n")
     
     title = f"{lecture} {weekNumber}주차 실습문제"
-    print(f"[{current_file_name}] title: {title}")
+    print(f"[{current_file_name}] title: {title}\n")
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)

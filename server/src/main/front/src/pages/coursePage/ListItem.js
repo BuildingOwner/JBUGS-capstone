@@ -273,16 +273,6 @@ const ListItem = (props) => {
 
   return (
     <>
-      <QuizInfoModal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        props={props}
-        timeDifference={timeDifference} />
-      <QuizUploadModal
-        isOpen={uploadModalIsOpen}
-        onRequestClose={closeUploadModal}
-        props={props}
-        timeDifference={timeDifference} />
       <div className={styles.listItem} onClick={checkURL}>
         <div className={styles.flex}>
           <div className={styles.first}>
@@ -352,7 +342,7 @@ const ListItem = (props) => {
           <div className={styles.third}>
             {props.url === 'video' ?
               <div className="prograss-bar"></div> :
-              <h3 className={styles.fontSize}>{props.contents}</h3>}
+              <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3>}
           </div>
         </div>
         <div className={styles.fourth}>
@@ -423,6 +413,16 @@ const ListItem = (props) => {
           )}
         </div>
       </div>
+      <QuizInfoModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        props={props}
+        timeDifference={timeDifference} />
+      <QuizUploadModal
+        isOpen={uploadModalIsOpen}
+        onRequestClose={closeUploadModal}
+        props={props}
+        timeDifference={timeDifference} />
     </>
   )
 }

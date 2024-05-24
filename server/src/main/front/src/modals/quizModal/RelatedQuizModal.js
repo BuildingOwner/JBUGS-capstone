@@ -85,7 +85,7 @@ const RelatedQuizModal = (props) => {
                     ></input>
                     {
                       answerFlag === true ?
-                        <div className={styles2.green}>정답: {quiz.answer}</div> : null
+                        <h4>정답: {quiz.answer}</h4> : null
                     }
                   </>
 

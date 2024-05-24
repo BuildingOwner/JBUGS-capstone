@@ -1,6 +1,6 @@
 import axios from "axios";
 import Modal from "react-modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../quizModal/QuizInfoModal.module.css"
 import styles2 from "./FileUploadModal.module.css"
 import Info from "../../modalComponents/Info";
@@ -14,8 +14,8 @@ const FileUploadModal = (props) => {
   const [videoTitle, setVideoTitle] = useState(null)
   const [videoFiles, setVideoFile] = useState(null)
   const [attachFiles, setAttachFile] = useState(null)
-  const [shortAnswer, setShortAnswer] = useState(null)
-  const [choice, setChoice] = useState(null)
+  const [shortAnswer, setShortAnswer] = useState(0)
+  const [choice, setChoice] = useState(0)
   const [description, setDescription] = useState(null)
   const [quizType, setQuizType] = useState(null)
   const [fileDescription, setFileDescription] = useState('')
@@ -25,6 +25,13 @@ const FileUploadModal = (props) => {
 
   // Collapse 상태를 토글하는 함수
   const toggleCollapse = () => {
+    const filetitle = fileTitle !== null ? fileTitle.split(".") : "null"
+    const length = filetitle.length
+    const extension = filetitle[length - 1]
+    if(extension !== "pdf") {
+      alert("pdf만 퀴즈 생성이 가능합니다.")
+      return
+    }
     setIsOpen(!isOpen)
     console.log(!quizFlag)
     setQuizFlag(!quizFlag)
@@ -62,8 +69,8 @@ const FileUploadModal = (props) => {
     setAttachFile(e.target.files[0])
     console.log("attachFile : ", e.target.files[0])
     setFileTitle(e.target.files[0].name)
-    const files = e.target.files;
-    const fileCount = files.length;
+    const files = e.target.files
+    const fileCount = files.length
 
     if (fileCount === 1) {
       // 파일이 하나만 선택된 경우, 파일 이름을 표시
@@ -151,12 +158,11 @@ const FileUploadModal = (props) => {
     }
     // 부모 컴포넌트를 다시 렌더링
     props.reRender()
-
     handleClose()
-    // // 프로세스가 끝나면 모달 닫기
-    // props.onRequestClose(null)
   }
-
+  useEffect(() => {
+    setWeekNumber(props?.selectedWeek)
+  }, [props])
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -182,7 +188,8 @@ const FileUploadModal = (props) => {
           <Info title={"주차 선택"} content={
             <select
               className={`form-select form-select-sm`}
-              onChange={handleWeekChange}>
+              onChange={handleWeekChange}
+              value={weekNumber}>
               <option value={null}>주차 선택</option>
               {Array.from({ length: 16 }).map((_, i) => {
                 return (
@@ -252,7 +259,7 @@ const FileUploadModal = (props) => {
               <select
                 className={`form-select form-select-sm`}
                 onChange={changeChoice}>
-                <option value={null}>객관식 개수</option>
+                <option value={0}>객관식 개수</option>
                 {Array.from({ length: 10 }).map((_, i) => {
                   return (
                     <option value={i + 1} key={`weekKey${i}`}>{i + 1}개</option>
@@ -265,7 +272,7 @@ const FileUploadModal = (props) => {
                 className={`form-select form-select-sm`}
                 aria-label="Small select example"
                 onChange={changeShortAnswer}>
-                <option value={null}>주관식 개수</option>
+                <option value={0}>주관식 개수</option>
                 {Array.from({ length: 10 }).map((_, i) => {
                   return (
                     <option value={i + 1} key={`weekKey${i}`}>{i + 1}개</option>

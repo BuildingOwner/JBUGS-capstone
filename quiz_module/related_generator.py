@@ -23,10 +23,11 @@ question1 = '''
 
 def related_question_gen(question=question1):
     user_input = question + """
-    이 문제와 같은 유형으로 비슷한 문제를 만들어줘
+    이 문제와 같은 유형으로 비슷한 문제를 만들어줘.
+    반드시 이문제와 같은 형식의 json을 사용해줘.
     """
     completion = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are the professor explaining the problem."},
             {"role": "user", "content": user_input},
@@ -43,11 +44,11 @@ def related_question_gen(question=question1):
         except (ValidationError, JSONDecodeError):
             # print(questions)
             print(f"[{current_file_name}] JSON 형식이 잘못되었습니다. 다시 생성합니다.\n")
-            related_question_gen(question)
+            return related_question_gen(question)
         return related_question
     else:
         print(f"[{current_file_name}] 퀴즈 재생성\n")
-        related_question_gen(question)
+        return related_question_gen(question)
 
 if __name__ == "__main__":
     print(related_question_gen())

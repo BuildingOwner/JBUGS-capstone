@@ -16,12 +16,15 @@ client = OpenAI(api_key=keys.OPENAI_KEY)
 def validate_question(question):
     userInput = f"""
     {question}
-    이 문제의 answer을 무시하고 option만 봤을 때 답이 2개 이상이거나 이상하다면 false를 출력해주고 이상이 없으면 true를 출력해줘.
+    이 문제의 type이 choice일 경우 answer을 무시하고 option만 봤을 때 답이 2개 이상이거나 이상하다면 false를 출력해주고 이상이 없으면 true를 출력해줘.
+    
+    혹은 이 문제의 타입이 short일 경우 question에 대한 정답으로 answer이 맞으면 true, 아니면 false를 출력해줘.
+    
     반드시 true나 false만 출력해줘.
     """
 
     completion = client.chat.completions.create(
-        model="gpt-4-turbo-preview",
+        model="gpt-4-turbo",
         messages=[
             {
                 "role": "system",

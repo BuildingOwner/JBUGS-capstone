@@ -36,11 +36,12 @@ const QnaRow = (props) => {
     const data = formatDate(inputDate);
     setFormattedDate(data)
   }, [])
-  
+
   return (
     <div className={styles.row}
       // secret이 true인 경우에는 작성자와 현재 멤버 이름을 비교후 같으면 onClick 활성화
-      onClick={props.secret ? (props.writer === props.memberName ? openModal : null) : openModal}>
+      onClick={props.secret ? (props.writer === props.memberInfoDto.memberName || props.memberInfoDto.memberType === "PROFESSOR" ? openModal : null) : openModal}>
+      {console.log(props)}
       <QaModal isOpen={modalIsOpen}
         onRequestClose={closeModal}
         props={props} />

@@ -16,8 +16,8 @@ const QuizScoreBar = (props) => {
   return (
     <div className={styles.scoreBarContainer}>
       <h3 className={styles.score}>{props.quizScore}</h3>
-        <div ref={barRef} className={styles.Bar}><p> </p></div>
-        <h3 className={styles.quizName}>{props.quizName}</h3>
+      <div ref={barRef} className={styles.Bar}><p> </p></div>
+      <h3 className={styles.quizName}>{props.quizName}</h3>
     </div>
   );
 }

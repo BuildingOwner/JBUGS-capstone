@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
+import { HiOutlineSquaresPlus } from "react-icons/hi2";
+import ReactPlayer from 'react-player'
 
 const ListItem = (props) => {
   const navigate = useNavigate()
@@ -13,7 +15,9 @@ const ListItem = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [fileColor, setfileColor] = useState('');
   const [byte, setByte] = useState(0)
-
+  const [memberInfoDto, setMemberInfoDto] = useState();
+  const [timeDifference, setTimeDifference] = useState(null)
+  console.log(props)
   const openModal = () => {
     console.log('modal open')
     setModalIsOpen(true);
@@ -136,9 +140,11 @@ const ListItem = (props) => {
   }
 
   const downloadFile = async () => {
+
     try {
+      console.log(" fileExtension", fileExtension)
       // axios.get 메소드를 사용하여 비동기 요청을 수행하고, 응답을 response 변수에 저장
-      const response = await axios.get(`/api/course/files/download/${props.fileName}`
+      const response = await axios.get(`/api/course/files/download/${props.enrollmentId}/${props.fileName}`
         , {
           responseType: 'blob', // 파일 다운로드를 위해 응답 타입을 blob으로 설정
           withCredentials: true // 세션 쿠키를 사용하기 위해 필요
@@ -165,7 +171,7 @@ const ListItem = (props) => {
       link.remove();
       // 'a' 요소를 문서에서 제거
     } catch (error) {
-      console.error('Error while downloading the PDF:', error);
+      console.error(`Error while downloading the ${fileExtension}}:`, error);
       alert("파일을 받을 수 없습니다.")
     }
   }
@@ -175,26 +181,35 @@ const ListItem = (props) => {
     if (props.url === "assignmentlist") {
       const dueDate = new Date(props.dueDate);
       const currentDate = new Date();
-      const timeDiff = dueDate.getTime() - currentDate.getTime();
-      setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+      const timeDiff = dueDate.getTime() - currentDate.getTime()
+      console.log("timediff", timeDiff)
+      const remainDate = Math.ceil(timeDiff / (1000 * 3600 * 24))
+      setDaysRemaining(remainDate >= 0 ? remainDate : 0)
+      if (timeDiff < 0) {
+        setTimeDifference(timeDiff)
+      }
     } else if (props.url === "quizlist") {
       const dueDate = new Date(props.deadline);
       const currentDate = new Date();
       const timeDiff = dueDate.getTime() - currentDate.getTime();
-      setDaysRemaining(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+      const remainDate = Math.ceil(timeDiff / (1000 * 3600 * 24))
+      setDaysRemaining(remainDate >= 0 ? remainDate : 0)
+      if (timeDiff < 0) {
+        setTimeDifference(timeDiff)
+      }
     } else if (props.url === "file") {
       // console.log("file")
       const extension = props.fileName.split('.')
       const last = extension.length - 1
 
       if (extension[last].includes('pdf')) {
-        setfileColor(styles.yellow);
+        setfileColor(styles.red);
       } else if (extension[last].includes('ppt')) {
-        setfileColor(hear = styles.red);
+        setfileColor(styles.yellow);
       } else if (extension[last].includes('xl')) {
-        setfileColor(hear = styles.green);
+        setfileColor(styles.green);
       } else if (extension[last].includes('doc') || extension[last].includes('hwp')) {
-        setfileColor(hear = styles.blue);
+        setfileColor(styles.blue);
       } else {
         setfileColor(styles.common);
       }
@@ -202,37 +217,74 @@ const ListItem = (props) => {
       setFileExtension(extension[last])
     }
     calcByte()
-  }, []);
+    setMemberInfoDto(props.memberInfoDto)
+  })
+
+  const checkDueDate = (dueDateString) => {
+    // 현재 날짜 및 시간
+    const now = new Date();
+
+    // 마감 날짜를 나타내는 Date 객체 생성
+    const dueDate = new Date(dueDateString);
+
+    // dueDate가 now보다 미래인지 확인
+    if (dueDate > now) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <div className={styles.listItem} onClick={checkURL}>
       <QuizInfoModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        props={props} />
+        props={props}
+        timeDifference={timeDifference} />
       <div className={styles.flex}>
         <div className={styles.first}>
           {props.url === 'assignmentlist' && (
-            props.status === "NOT_SUBMITTED" ? (
-              <h3 className={`${styles.fontSize} ${styles.red}`}>
-                미제출
-              </h3>
-            ) : (
-              <h3 className={`${styles.fontSize} ${styles.green}`}>
-                제출
-              </h3>
-            )
+            props.memberInfoDto?.memberType == "STUDENT" ?
+              (props.submissionStatus === true ? (
+                <h3 className={`${styles.fontSize} ${styles.green}`}>
+                  제출
+                </h3>
+              ) : (
+                <h3 className={`${styles.fontSize} ${styles.red}`}>
+                  미제출
+                </h3>
+              )) :
+              (checkDueDate(props.dueDate) === true ? (
+                <h3 className={`${styles.fontSize} ${styles.red}`}>
+                  진행중
+                </h3>
+              ) : (
+                <h3 className={`${styles.fontSize} ${styles.green}`}>
+                  마감
+                </h3>
+              ))
           )}
           {props.url === 'quizlist' && (
-            props.submissionStatus === true ? (
-              <h3 className={`${styles.fontSize} ${styles.green}`}>
-                응시
-              </h3>
-            ) : (
-              <h3 className={`${styles.fontSize} ${styles.red}`}>
-                미응시
-              </h3>
-            )
+            props.memberInfoDto?.memberType == "STUDENT" ?
+              (props.submissionStatus === true ? (
+                <h3 className={`${styles.fontSize} ${styles.green}`}>
+                  응시
+                </h3>
+              ) : (
+                <h3 className={`${styles.fontSize} ${styles.red}`}>
+                  미응시
+                </h3>
+              )) :
+              (checkDueDate(props.deadline) === true ? (
+                <h3 className={`${styles.fontSize} ${styles.red}`}>
+                  진행중
+                </h3>
+              ) : (
+                <h3 className={`${styles.fontSize} ${styles.green}`}>
+                  마감
+                </h3>
+              ))
           )}
           {props.url === 'file' && (
             <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
@@ -262,32 +314,47 @@ const ListItem = (props) => {
         </div>
       </div>
       <div className={styles.fourth}>
-        {props.url === 'assignmentlist' && (
+        {props.url === 'assignmentlist' && (timeDifference <= 0 ?
+          <h3 className={styles.fontSize}>마감</h3> :
           <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
-        {props.url === 'quizlist' && (
+        {props.url === 'quizlist' && (timeDifference <= 0 ?
+          <h3 className={styles.fontSize}>마감</h3> :
           <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
         )}
         {props.url === 'file' && (
           <>
-            <h3 className={styles.fontSize}>{byte}
-            </h3>
-            <button type="button"
-              className={`btn btn-primary `}
-              onClick={(e) => handleDeleteFile(e)}>
-              <IoClose size={20} />
-            </button>
+            <h3 className={styles.fontSize}>{byte}</h3>
+            {
+              props.memberInfoDto.memberType === "STUDENT" ? null :
+                <div className={styles.modBtns}>
+                  {fileExtension === "pdf" ?
+                    <button type="button"
+                      className={`btn btn-primary ${styles.modBtn}`}>
+                      <HiOutlineSquaresPlus size={25} />
+                    </button> : null
+                  }
+                  <button type="button"
+                    className={`btn btn-primary ${styles.deleteBtn}`}
+                    onClick={(e) => handleDeleteFile(e)}>
+                    <IoClose size={25} />
+                  </button>
+                </div>
+            }
           </>
         )}
         {props.url === 'video' && (
           <>
-            <h3 className={styles.fontSize}>{byte}
-            </h3>
-            <button type="button"
-              className={`btn btn-primary `}
-              onClick={(e) => handleDeleteVideoFile(e)}>
-              <IoClose size={20} />
-            </button>
+            <h3 className={styles.fontSize}>{byte}</h3>
+            {
+              props.memberInfoDto.memberType === "STUDENT" ? null :
+                <button type="button"
+                  className={`btn btn-primary ${styles.deleteBtn}`}
+                  onClick={(e) => handleDeleteVideoFile(e)}>
+                  <IoClose size={25} />
+                </button>
+            }
+
           </>
         )}
       </div>

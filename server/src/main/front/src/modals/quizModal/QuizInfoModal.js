@@ -10,7 +10,7 @@ const QuizInfoModal = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   const navigate = useNavigate()
   const data = props.props
-  // console.log("Modal data", data)
+  console.log("Modal data", data)
   const moveToDoQuiz = () => {
     navigate('/doquiz', {
       state: {
@@ -41,7 +41,7 @@ const QuizInfoModal = (props) => {
   }
 
   useEffect(() => {
-    const inputDate = props.props.deadline
+    const inputDate = props?.props.deadline
     const data = formatDate(inputDate);
     setFormattedDate(data)
   }, [])
@@ -87,7 +87,7 @@ const QuizInfoModal = (props) => {
       </div>
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
-        {props.props.submissionStatus === true || props.props.memberInfoDto?.memberType === "PROFESSOR"
+        {props.props.submissionStatus === true || props.props.memberInfoDto?.memberType === "PROFESSOR" || props.timeDifference <= 0
           ? <button className={`btn btn-primary ${styles.goBtn}`} onClick={moveToQuizAnswer}>
             해설 보기
           </button>

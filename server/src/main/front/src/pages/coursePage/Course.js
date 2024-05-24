@@ -25,6 +25,22 @@ const Course = () => {
   }
   const cureentWeek = calculateWeek(startDate, currentDate)
 
+  // 선택된 주차에 따른 날짜 범위 계산
+  const calculateDateRange = (week) => {
+    // 시작 날짜 계산: 개강일로부터 (주차-1)주 후의 월요일
+    const start = new Date(startDate);
+    start.setDate(start.getDate() + (week - 1) * 7);
+
+    // 끝 날짜 계산: 시작 날짜로부터 6일 후의 일요일
+    const end = new Date(start);
+    end.setDate(end.getDate() + 6);
+
+    // 날짜 포맷: 예) "3월 4일"
+    const format = (date) => `${date.getMonth() + 1}월 ${date.getDate()}일`;
+
+    return `${format(start)} - ${format(end)}`;
+  };
+
   const navigate = useNavigate()
   const location = useLocation()
   const [memberInfoDto, setMemberInfoDto] = useState()
@@ -39,6 +55,7 @@ const Course = () => {
   const [selectedWeek, setSelectedWeek] = useState(cureentWeek)
   // reRender를 위한 상태
   const [reRenderFlag, setReRenderFlag] = useState(false)
+  const [dateRange, setDateRange] = useState(calculateDateRange(selectedWeek));
 
   const assignmentUrl = "assignmentlist"
   const quizUrl = "quizlist"
@@ -48,7 +65,6 @@ const Course = () => {
   let enrollmentId
 
   if (location.state.from === '/main') {
-    console.log("main에서 옴")
     enrollmentId = location.state.enrollmentId
   } else {
     enrollmentId = location.state?.enrollmentId
@@ -96,6 +112,14 @@ const Course = () => {
       setQuizs(quizData)
       setClassFiles(fileData)
       setMemberInfoDto(memberInfo)
+
+      // 현재 날짜 정보 설정
+      const currentDate = new Date();
+      const startDate = new Date('2024-03-04') // 개강일 적는 곳
+      const year = currentDate.getFullYear()
+      const month = currentDate.getMonth() + 1
+      const date = currentDate.getDate()
+
     }
     catch (error) {
       if (error.response.status === 401 || error.response.status === 400) {
@@ -119,8 +143,13 @@ const Course = () => {
       setAssignments(selectedWeekData.assignments)
       setQuizs(selectedWeekData.quizzes)
       setClassFiles(selectedWeekData.classFiles)
+      setDateRange(calculateDateRange(selectedWeek))
     }
   }, [selectedWeek, weeklyContents])
+
+  // useEffect(() => {
+  //   setDateRange(calculateDateRange(selectedWeek));
+  // }, [selectedWeek]);
 
   if (!memberInfoDto) return <LoadingPage />;
 
@@ -130,14 +159,23 @@ const Course = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         enrollmentId={enrollmentId}
+        selectedWeek={selectedWeek}
         reRender={reRender} />
       <CourseSidebar enrollmentId={enrollmentId} lectureName={lectureName} division={division} memberInfoDto={memberInfoDto} />
       <main className={`mycontainer`}>
         <section className={`bg ${styles.bg}`}>
           <div className={styles.nav}>
-            <div className={styles.courseTitle}>
-              <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
-              <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
+            <div className={styles.titles}>
+              <div className={styles.courseTitle}>
+                <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{lectureName}</h3>
+                <h3 style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{division}</h3>
+              </div>
+              <div className={`${styles.date} ${cureentWeek === selectedWeek ? styles.thisWeek : null}`}>
+                {/* 선택된 주차 */}
+                <h4 className={styles.todayWeek}>{selectedWeek}주차</h4>
+                {/* 선택된 주차의 날짜 ex) 5/1 ~ 5/8 */}
+                <h4 className={styles.todayDate}>{`[${dateRange}]`}</h4>
+              </div>
             </div>
             <div className={styles.topRight}>
               <nav className={styles.weekList}>
@@ -149,14 +187,14 @@ const Course = () => {
                       weeklyContents[index]?.quizzes.length > 0 ||
                       weeklyContents[index]?.assignments.length > 0
                       ? styles.blue : null
-                      } ${selectedWeek - 1 == index ? styles.cureentWeek : null}`}
+                      } ${selectedWeek - 1 == index ? styles.cureentWeek : null} ${cureentWeek === index+1 ? styles.today : null}`}
                     style={{ fontWeight: "bold", fontSize: "1.25rem" }}
                     onClick={() => (changeWeek(index + 1))}
                   >{index + 1}</button>
                 ))}
               </nav>
               <button type="button" className={`btn btn-primary 
-              ${memberInfoDto?.memberType == "STUDENTs" ? styles.hidden : null}
+              ${memberInfoDto?.memberType == "STUDENT" ? styles.hidden : null}
               ${styles.addBtn}`} onClick={openModal}>
                 <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
               </button>
@@ -178,6 +216,8 @@ const Course = () => {
                     fileSize={video.fileSize}
                     videoId={video.videoId}
                     reRender={reRender}
+                    memberInfoDto={memberInfoDto}
+                    enrollmentId={enrollmentId}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>
@@ -198,6 +238,7 @@ const Course = () => {
                     enrollmentId={enrollmentId}
                     courseDto={courseDto}
                     url={assignmentUrl}
+                    memberInfoDto={memberInfoDto}
                   />
                 )) : <NoItem title={"과제가"} />}
               </div>
@@ -217,6 +258,8 @@ const Course = () => {
                     url={fileUrl}
                     fileSize={file.fileSize}
                     reRender={reRender}
+                    memberInfoDto={memberInfoDto}
+                    enrollmentId={enrollmentId}
                   />
                 )) : <NoItem title={"자료가"} />}
               </div>
@@ -234,6 +277,7 @@ const Course = () => {
                     quizId={quiz?.quizId}
                     jsonData={quiz?.jsonData}
                     description={quiz?.description}
+                    timeLimit={quiz?.timeLimit}
                     deadline={quiz?.deadline}
                     weekId={quiz?.weekId}
                     quizScore={quiz?.quizScore}

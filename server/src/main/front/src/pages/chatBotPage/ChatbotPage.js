@@ -221,7 +221,6 @@ const ChatbotPage = () => {
       setChats([...chats, chattings]);
     }
 
-
     const userText = text
     setText('')
     handleResizeHeight()
@@ -285,35 +284,6 @@ const ChatbotPage = () => {
       setReadOnly(false)
     }
   }
-
-  // const deleteChats = async () => {
-  //   try {
-  //     const response = await axios.delete(`/api/chat`, { data: selectedChatIds })
-  //     console.log("deleteChats reponse", response)
-
-  //     // chatIdArray에서 현재 chatId를 제거합니다.
-  //     const updatedChatIdArray = chatIdArray.filter(id => id !== chatId)
-  //     setChatIdArray(updatedChatIdArray)
-
-  //     // 현재 chatId의 인덱스를 찾습니다.
-  //     const currentChatIndex = chatIdArray.findIndex(id => id === chatId)
-
-  //     // 이전 chatId의 인덱스를 계산합니다. 만약 현재 chatId가 첫 번째였다면, 이전 chatId는 없으므로 0을 반환합니다.
-  //     const prevChatIndex = currentChatIndex > 0 ? currentChatIndex - 1 : 0
-
-  //     // 이전 chatId를 설정합니다. 만약 updatedChatIdArray가 비어 있다면, null을 설정합니다.
-  //     const newCurrentChatId = updatedChatIdArray[prevChatIndex] || null
-  //     setChatId(newCurrentChatId);
-
-  //     if (newCurrentChatId !== null) {
-  //       await fetchChattings(newCurrentChatId) // 새로운 현재 chatId에 해당하는 채팅 데이터 가져오기
-  //     } else {
-  //       setChats([]) // chatIdArray가 비어있다면 chats를 비움
-  //     }
-  //   } catch (error) {
-
-  //   }
-  // }
 
   const deleteChats = async () => {
     if (selectedChatIds.length === 0) {
@@ -450,7 +420,7 @@ const ChatbotPage = () => {
           <div className={styles.top}>
             <div className={styles.topLeft}>
               <h3 style={{ fontWeight: "bold" }}>AI 부기</h3>
-              <div className={styles.selectedModel}>GPT 4 Turbo</div>
+              <div className={styles.selectedModel}><b>Powered by GPT-4o</b></div>
             </div>
             <div className={styles.topRight}>
               <h3>History</h3>

@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
-import MainAssignItem from "./MainAssignItem"
+import MainAssignItem from "./MainAssignItem";
 import axios from "axios";
 import "./RightNav.css";
-import { useNavigate } from "react-router-dom"
-import styles from "./RightNav.module.css"
+import { useNavigate } from "react-router-dom";
+import styles from "./RightNav.module.css";
 import NoItem from "./NoItem";
 import { FaUser } from "react-icons/fa";
 
-
 const RightNav = (props) => {
-  const navigate = useNavigate()
-  console.log("RightNav의 props", props)
-  const mainLectures = props.mainLectures
+  const navigate = useNavigate();
+  console.log("RightNav의 props", props);
+  const mainLectures = props.mainLectures;
 
   const handleLogout = () => {
     axios.post('/logout', null, { withCredentials: true }) // withCredentials를 설정하여 쿠키를 서버로 전송합니다.
@@ -28,19 +27,41 @@ const RightNav = (props) => {
   }
 
   const checkDueDate = (dueDateString) => {
-    // 현재 날짜 및 시간
     const now = new Date();
-
-    // 마감 날짜를 나타내는 Date 객체 생성
     const dueDate = new Date(dueDateString);
+    return dueDate > now;
+  };
 
-    // dueDate가 now보다 미래인지 확인
-    if (dueDate > now) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  const findPendingAssignments = () => {
+    if (!mainLectures) return [];
+    return mainLectures.flatMap((lecture) =>
+      lecture.assignments
+        .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
+        .filter((assignment) => checkDueDate(assignment.dueDate))
+        .map((assignment) => ({
+          ...assignment,
+          lectureName: lecture.lectureName,
+          enrollmentId: lecture.enrollmentId,
+        }))
+    ).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+  };
+
+  const findPendingQuizzes = () => {
+    if (!mainLectures) return [];
+    return mainLectures.flatMap((lecture) =>
+      lecture.quizDtoList
+        .filter((quiz) => !quiz.submissionStatus)
+        .filter((quiz) => checkDueDate(quiz.deadline))
+        .map((quiz) => ({
+          ...quiz,
+          lectureName: lecture.lectureName,
+          enrollmentId: lecture.enrollmentId,
+        }))
+    ).sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+  };
+
+  const assignments = findPendingAssignments();
+  const quizzes = findPendingQuizzes();
 
   return (
     <div className="rightnav">
@@ -61,56 +82,50 @@ const RightNav = (props) => {
       <div className={styles.contants}>
         <div className={`homework ${styles.yetContainer}`}>
           <div className="hw-top">
-            <h1 className="title17">미제출 과제</h1>
+            <h1 className="title17">{props.memberType === "PROFESSOR" ? "진행 중인 과제" : "미제출 과제"}</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
-            {
-              mainLectures ?
-                mainLectures.map((lecture) => (
-                  lecture.assignments
-                    .filter((assignment) => assignment.status === 'NOT_SUBMITTED')
-                    .filter((assignment) => checkDueDate(assignment.dueDate))
-                    .map((assignment) => ( // 이거 남은날짜가 적은거 부터 나왔으면 좋겠음 밑에꺼도 똑같이
-                      <MainAssignItem
-                        lectureName={lecture.lectureName}
-                        key={assignment.id}
-                        title={assignment.title}
-                        contents={assignment.contents}
-                        dueDate={assignment.dueDate}
-                        weekNumber={assignment.weekNumber}
-                        status={assignment.status}
-                        enrollmentId={lecture.enrollmentId}
-                      />
-                    ))
-                )) : <NoItem title={"미제출 과제가"} />
-            }
+            {assignments.length === 0 ? (
+              <NoItem title={props.memberType === "PROFESSOR" ? "진행 중인 과제가" : "기한 내 미제출 과제가"} />
+            ) : (
+              assignments.map((assignment) => (
+                <MainAssignItem
+                  lectureName={assignment.lectureName}
+                  key={assignment.id}
+                  title={assignment.title}
+                  contents={assignment.contents}
+                  dueDate={assignment.dueDate}
+                  weekNumber={assignment.weekNumber}
+                  status={assignment.status}
+                  enrollmentId={assignment.enrollmentId}
+                />
+              ))
+            )}
           </div>
         </div>
         <div className={`homework ${styles.yetContainer}`}>
           <div className="hw-top">
-            <h1 className="title17">미응시 퀴즈</h1>
+            <h1 className="title17">{props.memberType === "PROFESSOR" ? "진행 중인 퀴즈" : "미응시 퀴즈"}</h1>
           </div>
           <div className={`hw-item no-scroll-bar ${styles.hwItem}`}>
-            {mainLectures ?
-              mainLectures.map((lecture) => (
-                lecture.quizDtoList
-                  .filter((quiz) => quiz.submissionStatus === false)
-                  .filter((quiz) => checkDueDate(quiz.deadline))
-                  .map((quiz) => (
-                    <MainAssignItem
-                      lectureName={lecture.lectureName}
-                      url={"quiz"}
-                      key={quiz.quizId}
-                      title={quiz.quizName}
-                      contents={quiz.description} // 퀴즈 설명
-                      dueDate={quiz.deadline}
-                      weekNumber={quiz.week}
-                      status={quiz.submissionStatus}
-                      enrollmentId={lecture.enrollmentId}
-                      timeLimit={quiz.timeLimit}
-                    />
-                  ))
-              )) : <NoItem title={"미응시 퀴즈가"} />}
+            {quizzes.length === 0 ? (
+              <NoItem title={props.memberType === "PROFESSOR" ? "진행 중인 퀴즈가" : "기한 내 미응시 퀴즈가"} />
+            ) : (
+              quizzes.map((quiz) => (
+                <MainAssignItem
+                  lectureName={quiz.lectureName}
+                  url={"quiz"}
+                  key={quiz.quizId}
+                  title={quiz.quizName}
+                  contents={quiz.description}
+                  dueDate={quiz.deadline}
+                  weekNumber={quiz.week}
+                  status={quiz.submissionStatus}
+                  enrollmentId={quiz.enrollmentId}
+                  timeLimit={quiz.timeLimit}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>

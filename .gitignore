@@ -9,6 +9,12 @@ secret/
 __pycache__/
 *.py[cod]
 *$py.class
+nohup.out
+
+# server/src/main/resources/application.yml
+server/src/main/resources/.env
+server/src/main/resources/static
+
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 

@@ -84,7 +84,7 @@ public class UploadApiController {
             // 파일 경로(들)을 사용하여 추가 처리 수행
             if (quizFlag) {
                 for (String filePath : uploadedFilePaths) {
-                    sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
+                    sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getId()), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
                 }
             }
 
@@ -100,7 +100,21 @@ public class UploadApiController {
     public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title, Lecture lecture) throws IOException {
         Week weekEntity = weekService.findWeekById(weekId).orElseThrow(() -> new IllegalArgumentException("Invalid weekId"));
         List<String> filePaths = new ArrayList<>();
-        String directory = isVideo ? fileDir + "video/" : fileDir;
+        String lectureName = lecture.getName();
+
+        lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
+
+        String directory = isVideo ? fileDir + "video/" : fileDir +"file/";
+        directory += lectureName + "/";
+
+        String currentDirectory = System.getProperty("user.dir");
+        if (currentDirectory.indexOf("JBUGS-capstone") == -1) {
+            currentDirectory += "/JBUGS-capstone/server/";
+        }
+        File dir = new File(currentDirectory + directory);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
 
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
@@ -108,35 +122,36 @@ public class UploadApiController {
                 String originalFileName = file.getOriginalFilename();
                 String safeFileName = UUID.randomUUID().toString() + "_" + originalFileName; // 예시로 UUID 추가
 
-                String currentDirectory = System.getProperty("user.dir");
-                if(currentDirectory.indexOf("JBUGS-capstone") == -1){
-                    currentDirectory += "/JBUGS-capstone/server/";
-                }
-                String fullPath = currentDirectory + directory + originalFileName;
+                String fullPath = dir.getPath() + "/" + originalFileName;
                 long fileSize = file.getSize();
 
                 log.info("{} 저장 fullPath={}", isVideo ? "비디오" : "파일", fullPath);
-                file.transferTo(new File(fullPath));
+                try {
+                    file.transferTo(new File(fullPath));
 
-                if (isVideo) {
-                    VideoMaterial videoMaterial = new VideoMaterial();
-                    videoMaterial.setVideoPath(fullPath);
-                    videoMaterial.setTitle(title);
-                    videoMaterial.setVideoName(originalFileName);
-                    videoMaterial.setWeek(weekEntity);
-                    videoMaterial.setFileSize(fileSize);
-                    videoMaterial.setLecture(lecture);
-                    videoMaterialRepository.save(videoMaterial);
-                } else {
-                    Material material = new Material();
-                    material.setFilePath(fullPath);
-                    material.setTitle(title);
-                    material.setFileName(originalFileName);
-                    material.setWeek(weekEntity);
-                    material.setFileSize(fileSize);
-                    material.setLecture(lecture);
-                    materialService.join(material);
-                    filePaths.add(fullPath);
+                    if (isVideo) {
+                        VideoMaterial videoMaterial = new VideoMaterial();
+                        videoMaterial.setVideoPath(fullPath);
+                        videoMaterial.setTitle(title);
+                        videoMaterial.setVideoName(originalFileName);
+                        videoMaterial.setWeek(weekEntity);
+                        videoMaterial.setFileSize(fileSize);
+                        videoMaterial.setLecture(lecture);
+                        videoMaterialRepository.save(videoMaterial);
+                    } else {
+                        Material material = new Material();
+                        material.setFilePath(fullPath);
+                        material.setTitle(title);
+                        material.setFileName(originalFileName);
+                        material.setWeek(weekEntity);
+                        material.setFileSize(fileSize);
+                        material.setLecture(lecture);
+                        materialService.join(material);
+                        filePaths.add(fullPath);
+                    }
+                } catch (IOException e) {
+                    log.error("파일 업로드 중 오류 발생: " + e.getMessage(), e);
+                    throw e;
                 }
             }
         }
@@ -144,15 +159,18 @@ public class UploadApiController {
     }
 
 
+
+
     // 파일 업로드 로직 이후에 추가
-    public void sendQuizKeywordRequest(Long lectureId, String lecture, String week, String path, String choice, String shortAnswer, String description, String quizType) {
+    public void sendQuizKeywordRequest(Long lectureId, String lecture, String weekId, String weekNumber, String path, String choice, String shortAnswer, String description, String quizType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("lectureId", String.valueOf(lectureId));
         map.add("lecture", lecture);
-        map.add("week", week);
+        map.add("weekId", weekId);
+        map.add("weekNumber", weekNumber);
         map.add("path", path);
         map.add("choice", choice);
         map.add("short", shortAnswer);
@@ -176,14 +194,20 @@ public class UploadApiController {
         log.info("Response Body: {}", responseEntity.getBody());
     }
 
-    @GetMapping("/files/download/{filename:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request) throws UnsupportedEncodingException {
+    @GetMapping("/files/download/{enrollmentId}/{filename:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename, @PathVariable Long enrollmentId, HttpServletRequest request) throws UnsupportedEncodingException {
+        Lecture lecture = enrollmentRepository.findLectureByEnrollmentId(enrollmentId);
+        String lectureName = lecture.getName();
+
+        lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
+
+        String directory =  fileDir + "file/" +lectureName + "/";
 
         String currentDirectory = System.getProperty("user.dir");
         if(currentDirectory.indexOf("JBUGS-capstone") == -1){
             currentDirectory += "/JBUGS-capstone/server/";
         }
-        String fullPath = currentDirectory + fileDir + filename;
+        String fullPath = currentDirectory + directory + filename;
         // 파일의 전체 경로 생성
 
         // 파일 시스템에서 리소스 로드

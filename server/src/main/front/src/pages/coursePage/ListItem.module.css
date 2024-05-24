@@ -38,13 +38,14 @@
 
 .second,
 .third,
-.fourfh {
+.fourth {
   display: flex;
   align-items: center;
 }
 
-.fourfh {
+.fourth {
   min-width: fit-content;
+  gap: var(--gap-mini);
 }
 
 .fontSize {
@@ -70,4 +71,26 @@
 
 .common{
   background-color: #ccc;
+}
+
+.deleteBtn{
+  background-color: var(--bs-danger) !important;
+  border: none !important;
+  padding: var(--padding-11xs) !important;
+}
+
+.deleteBtn:hover, .modBtn:hover {
+  background-color: #888 !important;
+}
+
+.modBtns{
+  display: flex;
+  gap: var(--gap-7xs);
+  height: fit-content;
+}
+
+.modBtn{
+  background-color: var(--point-blue) !important;
+  border: none !important;
+  padding: var(--padding-11xs) !important;
 }

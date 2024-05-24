@@ -89,7 +89,7 @@ def chat(chat_id, question, img_path=[]):
             message[-1]["content"].append(img)
     
     response = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-4o",
         messages=message,
         stream=True
     )
@@ -148,17 +148,21 @@ def make_name_by_question(str):
     question = f'''
     {str}
     
-    이 내용을 바탕으로 채팅방 이름을 지어줘.
+    이 내용의 질문을 바탕으로 채팅방 이름을 지어줘.
     경어체로 지어줘.
     방 이라는 글자는 빼줘.
+    이름 앞뒤로 꾸미는 글자는 빼줘. (ex. "", **)
+    20자 이하로 해줘.
     '''
     completion = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a name maker"},
             {"role": "user", "content": question}
         ]
     )
+    
+    print(f"[{current_file_name}] #make_name_by_question 채팅방 이름 변경: {completion.choices[0].message.content}")
 
     return completion.choices[0].message.content
 

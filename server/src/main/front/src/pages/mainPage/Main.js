@@ -38,11 +38,6 @@ const Main = () => {
       const mainLectures2 = response.data.mainLectures; // 여기에 데이터 저장
       console.log("get 응답:", response)
 
-      // console.log("memberInfoDto:", memberInfoDto2)
-      // console.log("response memberInfoDto:", response.data.memberInfoDto)
-      // console.log("mainLectures", mainLectures2)
-      // console.log("response mainLectures", response.data.mainLectures)
-
       setMemberInfoDto(memberInfoDto2)
       setMainLectures(response.data.mainLectures)
       setMemberName(memberInfoDto2.memberName)
@@ -57,8 +52,6 @@ const Main = () => {
 
       setCurrentDate(`${year}년 ${month}월 ${date}일`)
       setCurrentWeek(calculateWeek(startDate, currentDate))
-      // console.log("현재 주차:", currentWeek)
-      // console.log("현재 날짜", currentDate)
     }
     catch (error) {
       if (error.response?.status === 401) {
@@ -73,7 +66,7 @@ const Main = () => {
   useEffect(() => {
     fetchMainInfo()
   }, [])
-  
+
   if (!memberInfoDto) return <LoadingPage />;
 
   return (
@@ -110,6 +103,7 @@ const Main = () => {
             memberName={memberName}
             firstTrack={firstTrack}
             mainLectures={mainLectures}
+            memberType={memberInfoDto.memberType}
           />
         </section>
       </main>

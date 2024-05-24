@@ -31,7 +31,7 @@ def extrect_keyword(path, number=10):
     """
 
     completion = client.chat.completions.create(
-        model="gpt-4-turbo-preview",
+        model="gpt-4o",
         messages=[
             {
                 "role": "system",
@@ -92,7 +92,7 @@ def generator(keyword, quiz_type, questions=[]):
     # print(userInput)
 
     completion = client.chat.completions.create(
-        model="gpt-4-turbo-preview",
+        model="gpt-4o",
         messages=[
             {
                 "role": "system",

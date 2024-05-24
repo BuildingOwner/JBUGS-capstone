@@ -239,7 +239,6 @@ const Course = () => {
                     courseDto={courseDto}
                     url={assignmentUrl}
                     memberInfoDto={memberInfoDto}
-                    reRender={reRender}
                   />
                 )) : <NoItem title={"과제가"} />}
               </div>

@@ -218,7 +218,6 @@ const ListItem = (props) => {
       const dueDate = new Date(props.dueDate);
       const currentDate = new Date();
       const timeDiff = dueDate.getTime() - currentDate.getTime()
-      console.log("timediff", timeDiff)
       const remainDate = Math.ceil(timeDiff / (1000 * 3600 * 24))
       setDaysRemaining(remainDate >= 0 ? remainDate : 0)
       if (timeDiff < 0) {
@@ -257,12 +256,13 @@ const ListItem = (props) => {
   })
 
   const checkDueDate = (dueDateString) => {
+    console.log("dueDateString : ", dueDateString)
     // 현재 날짜 및 시간
     const now = new Date();
-
+    console.log(now)
     // 마감 날짜를 나타내는 Date 객체 생성
     const dueDate = new Date(dueDateString);
-
+    console.log(dueDate)
     // dueDate가 now보다 미래인지 확인
     if (dueDate > now) {
       return true;
@@ -356,16 +356,23 @@ const ListItem = (props) => {
           </div>
         </div>
         <div className={styles.fourth}>
-          {props.url === 'assignmentlist' && (timeDifference < 0 ?
-            <h3 className={styles.fontSize}>마감</h3> :
-            <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
-          )}
+          {
+            props.url === 'assignmentlist' ? (
+              checkDueDate(props.dueDate) === true ?
+                (
+                  <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
+                ) : (
+                  <h3 className={styles.fontSize}>마감</h3>
+                )
+            ) : null // 'assignmentlist'가 아닐 경우 아무 것도 출력x
+          }
+
           {props.url === 'quizlist' && (
             <>
               {
-                timeDifference < 0 ?
-                  <h3 className={styles.fontSize}>마감</h3> :
-                  <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
+                checkDueDate(props.dueDate) === true ?
+                  <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3> :
+                  <h3 className={styles.fontSize}>마감</h3>
               }
               {
                 props.memberInfoDto.memberType === "STUDENT" ? null :
@@ -412,7 +419,6 @@ const ListItem = (props) => {
                     <IoClose size={25} />
                   </button>
               }
-
             </>
           )}
         </div>

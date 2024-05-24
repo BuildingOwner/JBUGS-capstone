@@ -370,7 +370,7 @@ const ListItem = (props) => {
           {props.url === 'quizlist' && (
             <>
               {
-                checkDueDate(props.dueDate) === true ?
+                checkDueDate(props.deadline) === true ?
                   <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3> :
                   <h3 className={styles.fontSize}>마감</h3>
               }

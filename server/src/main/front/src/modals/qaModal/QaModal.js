@@ -62,6 +62,7 @@ const QaModal = (props) => {
     const fileCount = newFiles.length
     setPrevFiles(newFiles) // 상태를 업데이트합니다.
   }
+
   const parseCommentString = (commentString) => {
     if (!commentString) {
       return []
@@ -291,8 +292,8 @@ const QaModal = (props) => {
               // 댓글이 있을 시에 출력
               commentData?.length > 0 ?
                 commentData.map((comment) => (
-                  <div className={`${styles2.comment} 
-                  ${comment.isProfessor === true ? styles2.profComment : null}`}>
+                  <div className={`${styles2.comment} ${console.log(props)}
+                  ${data?.courseDto.professorName === comment.writer ? styles2.profComment : null}`}>
                     <h4 className={styles.commentWriter}>{comment.writer}</h4>
                     <h4 className={styles.commentContent}>{comment.content}</h4>
                   </div>

@@ -25,7 +25,7 @@ const FileUploadModal = (props) => {
 
   // Collapse 상태를 토글하는 함수
   const toggleCollapse = () => {
-    const filetitle = fileTitle.split(".")
+    const filetitle = fileTitle !== null ? fileTitle.split(".") : "null"
     const length = filetitle.length
     const extension = filetitle[length - 1]
     if(extension !== "pdf") {

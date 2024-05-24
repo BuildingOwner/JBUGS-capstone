@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
+import { HiOutlineSquaresPlus } from "react-icons/hi2";
+import ReactPlayer from 'react-player'
 
 const ListItem = (props) => {
   const navigate = useNavigate()
@@ -238,8 +240,8 @@ const ListItem = (props) => {
       <QuizInfoModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        props={props} 
-        timeDifference={timeDifference}/>
+        props={props}
+        timeDifference={timeDifference} />
       <div className={styles.flex}>
         <div className={styles.first}>
           {props.url === 'assignmentlist' && (
@@ -325,11 +327,19 @@ const ListItem = (props) => {
             <h3 className={styles.fontSize}>{byte}</h3>
             {
               props.memberInfoDto.memberType === "STUDENT" ? null :
-                <button type="button"
-                  className={`btn btn-primary ${styles.deleteBtn}`}
-                  onClick={(e) => handleDeleteFile(e)}>
-                  <IoClose size={25} />
-                </button>
+                <div className={styles.modBtns}>
+                  {fileExtension === "pdf" ?
+                    <button type="button"
+                      className={`btn btn-primary ${styles.modBtn}`}>
+                      <HiOutlineSquaresPlus size={25} />
+                    </button> : null
+                  }
+                  <button type="button"
+                    className={`btn btn-primary ${styles.deleteBtn}`}
+                    onClick={(e) => handleDeleteFile(e)}>
+                    <IoClose size={25} />
+                  </button>
+                </div>
             }
           </>
         )}

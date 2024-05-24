@@ -53,6 +53,7 @@ public class QuizListApiController {
             CourseDto courseDto = new CourseDto();
             courseDto.setLectureName(enrollment.getLecture().getName());
             courseDto.setDivision(enrollment.getLecture().getDivision());
+            courseDto.setProfessorName(enrollment.getLecture().getProfessor().getMember().getName());
             quizContentDto.setCourseDto(courseDto);
 
             //enrollmentId에 해당하는 각 주차id가져오기

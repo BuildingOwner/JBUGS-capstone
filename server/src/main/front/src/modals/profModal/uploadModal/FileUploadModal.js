@@ -128,6 +128,10 @@ const FileUploadModal = (props) => {
     setVideoTitle(e.target.value)
   }
 
+  const uploadAndRender = () => {
+    uploadFiles()
+    handleClose()
+  }
   const uploadFiles = async () => {
     const formData = new FormData()
     formData.append("weekNumber", weekNumber)
@@ -156,14 +160,17 @@ const FileUploadModal = (props) => {
     } catch (error) {
       console.log(error);
       alert('파일 업로드에 실패했습니다.'); // 사용자에게 알림
+    } finally {
+      // 부모 컴포넌트를 다시 렌더링
+      props.reRender()
     }
-    // 부모 컴포넌트를 다시 렌더링
-    props.reRender()
-    handleClose()
+
   }
+
   useEffect(() => {
     setWeekNumber(props?.selectedWeek)
   }, [props])
+
   return (
     <Modal className={styles.modalContainer}
       style={{

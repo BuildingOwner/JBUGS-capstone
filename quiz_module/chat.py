@@ -130,6 +130,11 @@ def chat(chat_id, question, img_path=[]):
         sql_str = "UPDATE chat_room SET chatting_json = %s WHERE chat_room_id = %s"
         params = (json.dumps(message, ensure_ascii=False, separators=(',', ':')), chat_id)
         print(f"[{current_file_name}]  db 업데이트", end="")
+        
+    if sql_injection_detector([sql_str]) == False:
+        cursor.execute(sql_str, params)
+        db.commit()
+        print(" 완료")
     
     sql = "SELECT chat_room_name FROM chat_room WHERE chat_room_id = %s"
     cursor.execute(sql, (chat_id,))
@@ -137,12 +142,7 @@ def chat(chat_id, question, img_path=[]):
     if chat_room_name[0] == ("생성" or "이름"):
         sql = "UPDATE chat_room SET chat_room_name = %s WHERE chat_room_id = %s"
         cursor.execute(sql, (make_name_by_question(question), chat_id,))
-        chat_room_name = cursor.fetchone()
-
-    if sql_injection_detector([sql_str]) == False:
-        cursor.execute(sql_str, params)
         db.commit()
-        print(" 완료")
 
 def make_name_by_question(str):
     question = f'''

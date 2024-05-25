@@ -62,7 +62,7 @@ def add_quiz_keyword():
     if time_limit == None:
         time_limit = "60"
         
-    if len(description) <= 0:
+    if len(description) <= 0 or description == "null":
         description = f"{lecture} {weekNumber}주차 연습문제"
     print(f"[{current_file_name}] description: {description}")
     
@@ -127,7 +127,9 @@ def add_quiz_summary():
     if time_limit == None:
         time_limit = "60"
         
-    if len(description) <= 0:
+    print(len(description))
+    
+    if len(description) <= 0 or description == "null":
         description = f"{lecture} {weekNumber}주차 퀴즈"
     print(f"[{current_file_name}] description: {description}\n")
     

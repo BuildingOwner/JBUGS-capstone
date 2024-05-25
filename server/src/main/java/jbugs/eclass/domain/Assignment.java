@@ -22,6 +22,8 @@ public class Assignment {
     private Week week;
 
     private String title;  // 과제 제목
+
+    @Column(length = 10000)
     private String content; // 과제 내용
     private LocalDateTime dueDate; //제출 일자
 

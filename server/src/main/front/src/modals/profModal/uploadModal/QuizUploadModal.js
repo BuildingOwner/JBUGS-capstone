@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "../../quizModal/QuizInfoModal.module.css"
 import styles2 from "./FileUploadModal.module.css"
 import Info from "../../modalComponents/Info";
+import axios from "axios";
 const QuizUploadModal = (props) => {
   const data = props.props
   Modal.setAppElement('#root')
@@ -42,6 +43,14 @@ const QuizUploadModal = (props) => {
     }
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
+
+  const uploadQuiz = async () => {
+    try {
+      const response = await axios.get(`/api/course/${materialId}`)
+    } catch (error) {
+
+    }
+  }
   return (
     <div onClick={stopPropagation}>
       <Modal className={styles.modalContainer}
@@ -66,7 +75,7 @@ const QuizUploadModal = (props) => {
         <div className={`no-scroll-bar ${styles.gap}`}>
           <div className={styles.contents}>
             <Info title={"주차"} content={`${data.selectedWeek}주차`} />
-            <Info title={"파일명"} content={data.title} />
+            <Info title={"파일명"} content={data.fileName} />
           </div>
           <div className={`${styles.contents} ${styles2.contents}`}
             onClick={stopPropagation}>

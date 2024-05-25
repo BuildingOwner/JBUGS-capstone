@@ -84,7 +84,7 @@ def add_quiz_keyword():
     db = getConnection()
     cursor = db.cursor()
     sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data, lecture_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    val = ("1", now, formatted_date, now, week_id, title, time_limit, description, question, lecture_id)
+    val = ("3", now, formatted_date, now, week_id, title, time_limit, description, question, lecture_id)
     cursor.execute(sql, val)
 
     db.commit()
@@ -151,7 +151,7 @@ def add_quiz_summary():
     db = getConnection()
     cursor = db.cursor()
     sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data, lecture_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    val = ("1", now, formatted_date, now, week_id, title, time_limit, description, question, lecture_id)
+    val = ("2", now, formatted_date, now, week_id, title, time_limit, description, question, lecture_id)
     cursor.execute(sql, val)
 
     db.commit()

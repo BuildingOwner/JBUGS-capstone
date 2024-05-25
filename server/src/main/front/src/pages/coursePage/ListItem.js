@@ -230,7 +230,6 @@ const ListItem = (props) => {
     }
   }
 
-
   useEffect(() => {
     if (props.url === "assignmentlist") {
       const dueDate = new Date(props.dueDate);

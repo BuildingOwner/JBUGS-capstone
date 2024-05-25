@@ -22,6 +22,7 @@ import MakeQaModal from "./modals/qaModal/MakeQaModal";
 import NoticeModal from "./modals/noticeModal/NoticeModal";
 import MakeAssignmentModal from "./modals/profModal/profAssignModal/MakeAssignmentModal";
 import AssignmentList from "./pages/assignmentPage/AssignmentList";
+import VideoPlayer from "./pages/coursePage/VideoPlayer";
 // import ProfEditQuizModal from "./modals/profModal/profQuizModal/ProfEditQuizModal";
 // import ProfAssignmentModal from "./modals/profModal/profAssignModal/ProfAssignmentModal";
 // import ProfStudentQuizInfo from "./pages/profPage/profQuizPage/info/ProfStudentQuizInfo";
@@ -173,6 +174,7 @@ function App() {
       <Route path="/noticemodal" element={<NoticeModal />} />
       <Route path="/assignmentlist" element={<AssignmentList />} />
       <Route path="/makeassignmentmodal" element={<MakeAssignmentModal />} />
+      <Route path="/videoplayer" element={<VideoPlayer />} />
       {/* <Route path="/profeditquizmodal" element={<ProfEditQuizModal />} />
       <Route path="/profassignmentmodal" element={<ProfAssignmentModal />} />
       <Route path="/profstudentquizinfo" element={<ProfStudentQuizInfo />} />

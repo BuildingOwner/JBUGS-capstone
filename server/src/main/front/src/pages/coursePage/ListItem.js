@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ReactDOM from "react-dom"
 import styles from "./ListItem.module.css"
 import { useNavigate } from "react-router-dom";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
@@ -7,6 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import ReactPlayer from 'react-player'
 import QuizUploadModal from "../../modals/profModal/uploadModal/QuizUploadModal"
+import VideoPlayer from "./VideoPlayer"
 
 const ListItem = (props) => {
   const navigate = useNavigate()
@@ -163,13 +165,28 @@ const ListItem = (props) => {
       const videoBlob = new Blob([response.data], { type: mimeType }) // Blob 객체 생성
       const videoUrl = URL.createObjectURL(videoBlob) // Blob URL 생성
 
-      const videoWindow = window.open('', '_blank') // 새 창을 엽니다.
-      videoWindow.document.write(
-        `<video controls autoplay style="width:90%;height:auto;">
-          <source src="${videoUrl}" type="${mimeType}">
-          Your browser does not support the video tag.
-        </video>`
-      ) // 새 창에 비디오 태그를 작성합니다.
+      // const videoWindow = window.open('', '_blank') // 새 창을 엽니다.
+      // videoWindow.document.write(
+      //   `<video controls autoplay style="width:90%;height:auto;">
+      //     <source src="${videoUrl}" type="${mimeType}">
+      //     Your browser does not support the video tag.
+      //   </video>`
+      // )
+
+      // 새 창 열기
+      const newWindow = window.open('', '_blank');
+
+      // 새 창에 HTML 스켈레톤 삽입하기
+      newWindow.document.body.innerHTML = `<div id="root"></div>`;
+
+      // 데이터 전달
+      newWindow.onload = () => {
+        newWindow.postMessage({ videoUrl, mimeType }, '*');
+      };
+
+      // 새 창에서 React 컴포넌트 렌더링하기
+      ReactDOM.render(<VideoPlayer />, newWindow.document.getElementById('root'));
+
     } catch (error) {
       alert("동영상을 불러올 수 없습니다.")
       console.log(error)
@@ -296,7 +313,7 @@ const ListItem = (props) => {
                 ))
             )}
             {props.url === 'quizlist' && (
-              props.memberInfoDto?.memberType == "STUDENT" ?
+              props.memberInfoDto?.memberType === "STUDENT" ?
                 (props.submissionStatus === true ? (
                   <h3 className={`${styles.fontSize} ${styles.green}`}>
                     응시
@@ -415,7 +432,7 @@ const ListItem = (props) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         props={props}
-        timeDifference={timeDifference} />
+        checkDueDate={checkDueDate(props.deadline)} />
       <QuizUploadModal
         isOpen={uploadModalIsOpen}
         onRequestClose={closeUploadModal}

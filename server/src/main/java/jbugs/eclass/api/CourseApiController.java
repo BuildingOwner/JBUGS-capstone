@@ -145,10 +145,10 @@ public class CourseApiController {
             response.setContentLength((int) videoFile.length());
 
             // 저장된 시청 시간 조회 및 응답 헤더에 추가
-            if (videoMaterialId != null) {
-                videoPlaybackTimeService.findByMemberIdAndVideoMaterialId(loginMember.getId(), videoMaterialId)
-                        .ifPresent(playbackTime -> response.setHeader("Playback-Time", String.valueOf(playbackTime.getPlaybackTime())));
-            }
+            Long playbackTime = videoPlaybackTimeService.findByMemberIdAndVideoMaterialId(loginMember.getId(), videoMaterialId)
+                    .map(VideoPlaybackTime::getPlaybackTime)
+                    .orElse(0L); // playbackTime이 존재하지 않을 경우 0을 기본값으로 사용
+            response.setHeader("Playback-Time", String.valueOf(playbackTime));
 
             // 비디오 스트리밍
             InputStream inputStream = new BufferedInputStream(new FileInputStream(videoFile));
@@ -163,8 +163,18 @@ public class CourseApiController {
 
     @PostMapping("/save-time")
     public ResponseEntity<?> savePlaybackTime(@RequestBody VideoPlaybackTimeRequestDto requestDto) {
-
-        videoPlaybackTimeService.saveOrUpdatePlaybackTime(requestDto.getMemberId(), requestDto.getVideoMaterialId(), requestDto.getPlaybackTime());
-        return ResponseEntity.ok().body("시간 저장 완료");
+        videoPlaybackTimeService.findByMemberIdAndVideoMaterialId(requestDto.getMemberId(), requestDto.getVideoMaterialId())
+                .ifPresentOrElse(currentPlaybackTime -> {
+                    // 기존에 저장된 시청 시간이 제공된 시청 시간보다 작을 경우에만 업데이트
+                    if (currentPlaybackTime.getPlaybackTime() < requestDto.getPlaybackTime()) {
+                        videoPlaybackTimeService.saveOrUpdatePlaybackTime(requestDto.getMemberId(), requestDto.getVideoMaterialId(), requestDto.getPlaybackTime());
+                        ResponseEntity.ok().body("시간 업데이트 완료");
+                    }
+                }, () -> {
+                    // 기존 시청 시간이 존재하지 않는 경우 새로 저장
+                    videoPlaybackTimeService.saveOrUpdatePlaybackTime(requestDto.getMemberId(), requestDto.getVideoMaterialId(), requestDto.getPlaybackTime());
+                    ResponseEntity.ok().body("시간 저장 완료");
+                });
+        return ResponseEntity.ok().body("처리 완료");
     }
 }

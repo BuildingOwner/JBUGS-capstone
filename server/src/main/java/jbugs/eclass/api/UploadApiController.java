@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
+import jbugs.eclass.repository.MaterialRepository;
 import jbugs.eclass.repository.VideoMaterialRepository;
 import jbugs.eclass.service.MaterialService;
 import jbugs.eclass.service.VideoPlaybackTimeService;
@@ -43,6 +44,7 @@ public class UploadApiController {
     private final MaterialService materialService;
     private final VideoMaterialRepository videoMaterialRepository;
     private final RestTemplate restTemplate;
+    private final MaterialRepository materialRepository;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -169,9 +171,6 @@ public class UploadApiController {
         return filePaths;
     }
 
-
-
-
     // 파일 업로드 로직 이후에 추가
     public void sendQuizKeywordRequest(Long lectureId, String lecture, String weekId, String weekNumber, String path, String choice, String shortAnswer, String description, String quizType) {
         HttpHeaders headers = new HttpHeaders();
@@ -249,5 +248,25 @@ public class UploadApiController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(resource);
+    }
+
+    @PostMapping("/uploadMaterial/{materialId}")
+    public ResponseEntity<?> uploadFileByMaterialId(@PathVariable Long materialId,
+                                                    @RequestParam("shortAnswer") String shortAnswer,
+                                                    @RequestParam("choice") String choice,
+                                                    @RequestParam("description") String description,
+                                                    @RequestParam("quizType") String quizType,
+                                                    HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession(false); // 기존 세션 가져오기
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Material material = materialRepository.findById(materialId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Material not found"));
+        Week weekEntity = material.getWeek();
+        Lecture lecture = material.getLecture();
+
+        sendQuizKeywordRequest(lecture.getId(), lecture.getName(), String.valueOf(weekEntity.getId()), String.valueOf(weekEntity.getWeekNumber()), material.getFilePath(), choice, shortAnswer, description, quizType);
+
+        // 성공적으로 파일이 저장된 경우
+        return ResponseEntity.ok().body("파일이 성공적으로 업로드 되었습니다.");
     }
 }

@@ -44,6 +44,10 @@ const QuizUploadModal = (props) => {
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
 
+  const uploadAndRender = () => {
+    uploadQuiz()
+    handleClose()
+  }
   const uploadQuiz = async () => {
     try {
       const formData = new FormData()
@@ -64,6 +68,8 @@ const QuizUploadModal = (props) => {
       console.log("response : ", response)
     } catch (error) {
       console.log(error)
+    } finally {
+      data.reRender()
     }
   }
   return (
@@ -144,7 +150,7 @@ const QuizUploadModal = (props) => {
             onClick={handleClose}>닫기
           </button>
           <button className={`btn btn-primary ${styles.goBtn}`}
-            onClick={uploadQuiz}>퀴즈 생성</button>
+            onClick={uploadAndRender}>퀴즈 생성</button>
         </div>
       </Modal>
     </div>

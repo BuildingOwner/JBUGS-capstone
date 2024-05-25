@@ -263,10 +263,21 @@ public class UploadApiController {
         Material material = materialRepository.findById(materialId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Material not found"));
         Week weekEntity = material.getWeek();
         Lecture lecture = material.getLecture();
-
-        sendQuizKeywordRequest(lecture.getId(), lecture.getName(), String.valueOf(weekEntity.getId()), String.valueOf(weekEntity.getWeekNumber()), material.getFilePath(), choice, shortAnswer, description, quizType);
+        String filePath = material.getFilePath();
+        log.info("sendQuizKeywordRequest called with parameters: lectureId={}, lectureName={}, weekId={}, weekNumber={}, filePath={}, choice={}, shortAnswer={}, description={}, quizType={}",
+                lecture.getId(),
+                lecture.getName(),
+                String.valueOf(weekEntity.getId()),
+                String.valueOf(weekEntity.getWeekNumber()),
+                filePath,
+                choice,
+                shortAnswer,
+                description,
+                quizType
+        );
+        sendQuizKeywordRequest(lecture.getId(), lecture.getName(), String.valueOf(weekEntity.getId()), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
 
         // 성공적으로 파일이 저장된 경우
-        return ResponseEntity.ok().body("파일이 성공적으로 업로드 되었습니다.");
+        return ResponseEntity.ok().body("퀴즈가 생성되었습니다.");
     }
 }

@@ -47,6 +47,7 @@ const QuizUploadModal = (props) => {
   const uploadAndRender = () => {
     uploadQuiz()
     handleClose()
+    alert("퀴즈 생성중입니다.")
   }
   const uploadQuiz = async () => {
     try {
@@ -69,6 +70,7 @@ const QuizUploadModal = (props) => {
     } catch (error) {
       console.log(error)
     } finally {
+      alert("퀴즈가 생성되었습니다.")
       data.reRender()
     }
   }

@@ -309,7 +309,7 @@ const FileUploadModal = (props) => {
         <button className={`btn btn-primary ${styles.closeBtn}`}
           onClick={handleClose}>닫기
         </button>
-        <button className={`btn btn-primary ${styles.goBtn}`} onClick={uploadFiles}>업로드</button>
+        <button className={`btn btn-primary ${styles.goBtn}`} onClick={uploadAndRender}>업로드</button>
       </div>
     </Modal>
   );

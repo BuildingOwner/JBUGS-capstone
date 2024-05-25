@@ -46,9 +46,24 @@ const QuizUploadModal = (props) => {
 
   const uploadQuiz = async () => {
     try {
-      const response = await axios.get(`/api/course/${materialId}`)
+      const formData = new FormData()
+      const materialId = data.fileId
+      console.log("materialId : ", materialId)
+      formData.append("shortAnswer", shortAnswer)
+      formData.append("choice", choice)
+      formData.append("description", description)
+      formData.append("quizType", quizType)
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      const response = await axios.post(`/api/course/uploadMaterial/${materialId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      console.log("response : ", response)
     } catch (error) {
-
+      console.log(error)
     }
   }
   return (
@@ -128,7 +143,8 @@ const QuizUploadModal = (props) => {
           <button className={`btn btn-primary ${styles.closeBtn}`}
             onClick={handleClose}>닫기
           </button>
-          <button className={`btn btn-primary ${styles.goBtn}`}>퀴즈 생성</button>
+          <button className={`btn btn-primary ${styles.goBtn}`}
+            onClick={uploadQuiz}>퀴즈 생성</button>
         </div>
       </Modal>
     </div>

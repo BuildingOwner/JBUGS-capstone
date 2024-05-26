@@ -26,6 +26,11 @@ const VideoPlayer = () => {
     setPlayedSeconds(state.playedSeconds)
   }
 
+  const calcPercent = (long, playedSecond) => {
+    const percent = playedSecond / long * 100
+    console.log(percent)
+    return percent
+  }
   useEffect(() => {
 
     const handleMessage = (event) => {
@@ -50,10 +55,13 @@ const VideoPlayer = () => {
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
+      const percent = calcPercent(videoDuration, playedSeconds)
+
       const jsonData = {
         memberId: memberId,
         videoMaterialId: videoId,
         playbackTime: playedSeconds,
+        percent: percent,
       }
 
       // jsonData를 콘솔에 출력

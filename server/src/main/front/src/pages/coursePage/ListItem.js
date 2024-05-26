@@ -328,7 +328,7 @@ const ListItem = (props) => {
               <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
             )}
             {props.url === 'video' && (
-              <h3 className={`${styles.fontSize} ${styles.blue}`}>length</h3>
+              <h3 className={`${styles.fontSize} ${styles.blue}`}>{props.percent}%</h3>
             )}
           </div>
           <div className={styles.second}>

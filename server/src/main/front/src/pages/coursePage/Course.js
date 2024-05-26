@@ -219,6 +219,7 @@ const Course = () => {
                     reRender={reRender}
                     memberInfoDto={memberInfoDto}
                     enrollmentId={enrollmentId}
+                    percent={video.percent}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>

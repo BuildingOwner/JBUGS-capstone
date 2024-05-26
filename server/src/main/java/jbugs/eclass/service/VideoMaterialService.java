@@ -3,6 +3,7 @@ package jbugs.eclass.service;
 import jbugs.eclass.domain.Assignment;
 import jbugs.eclass.domain.Material;
 import jbugs.eclass.domain.VideoMaterial;
+import jbugs.eclass.domain.VideoPlaybackTime;
 import jbugs.eclass.dto.AssignmentDto;
 import jbugs.eclass.dto.FileDto;
 import jbugs.eclass.dto.LectureVideoDto;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VideoMaterialService {
     private final VideoMaterialRepository videoMaterialRepository;
+    private final VideoPlaybackTimeService videoPlaybackTimeService;
 
     public List<LectureVideoDto> findVideoMaterialsByWeekIdAndLectureId(Long weekId, Long lectureId) {
         List<VideoMaterial> videoMaterials = videoMaterialRepository.findVideoMaterialsByWeekIdAndLectureId(weekId, lectureId);
@@ -54,5 +56,17 @@ public class VideoMaterialService {
                     return dto;
                 }).collect(Collectors.toList());
         return lectureVideoDtoList;
+    }
+
+    public List<LectureVideoDto> findVideoMaterialsByWeekIdAndLectureIdWithPlaybackTime(Long weekId, Long lectureId, Long memberId) {
+        List<VideoMaterial> videoMaterials = videoMaterialRepository.findByWeekIdAndLectureId(weekId, lectureId);
+        return videoMaterials.stream()
+                .map(videoMaterial -> {
+                    Long playbackTime = videoPlaybackTimeService.findByMemberIdAndVideoMaterialId(memberId, videoMaterial.getId())
+                            .map(VideoPlaybackTime::getPlaybackTime)
+                            .orElse(0L);
+                    return LectureVideoDto.from(videoMaterial, playbackTime);
+                })
+                .collect(Collectors.toList());
     }
 }

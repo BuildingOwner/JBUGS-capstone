@@ -62,9 +62,7 @@ public class VideoMaterialService {
         List<VideoMaterial> videoMaterials = videoMaterialRepository.findByWeekIdAndLectureId(weekId, lectureId);
         return videoMaterials.stream()
                 .map(videoMaterial -> {
-                    Long playbackTime = videoPlaybackTimeService.findByMemberIdAndVideoMaterialId(memberId, videoMaterial.getId())
-                            .map(VideoPlaybackTime::getPlaybackTime)
-                            .orElse(0L);
+                    Long playbackTime = videoPlaybackTimeService.getOrCreatePlaybackTime(memberId, videoMaterial.getId());
                     return LectureVideoDto.from(videoMaterial, playbackTime);
                 })
                 .collect(Collectors.toList());

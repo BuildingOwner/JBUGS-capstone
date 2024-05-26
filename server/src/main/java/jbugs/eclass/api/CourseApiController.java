@@ -91,7 +91,7 @@ public class CourseApiController {
                 List<AssignmentDto> assignmentDtos = assignmentService.findAssignmentsByWeekIdAndLectureId(week.getId(), enrollment.getLecture().getId());
                 weeklyContentDto.setAssignments(assignmentDtos);
 
-                List<LectureVideoDto> lectureVideoDtos = videoMaterialService.findVideoMaterialsByWeekIdAndLectureId(week.getId(), enrollment.getLecture().getId());
+                List<LectureVideoDto> lectureVideoDtos = videoMaterialService.findVideoMaterialsByWeekIdAndLectureIdWithPlaybackTime(week.getId(), enrollment.getLecture().getId(), loginMember.getId());
                 weeklyContentDto.setLectureVideos(lectureVideoDtos);
 
                 List<FileDto> fileDtos = materialService.findMaterialsByWeekIdAndLectureId(week.getId(), enrollment.getLecture().getId());

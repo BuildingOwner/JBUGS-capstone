@@ -48,4 +48,22 @@ public class VideoPlaybackTimeService {
         return videoPlaybackTimeRepository.findByMemberIdAndVideoMaterialId(memberId, videoMaterialId);
     }
 
+    public Long getOrCreatePlaybackTime(Long memberId, Long videoMaterialId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 Member가 없습니다. id=" + memberId));
+
+        VideoMaterial videoMaterial = videoMaterialRepository.findById(videoMaterialId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 VideoMaterial이 없습니다. id=" + videoMaterialId));
+
+        return videoPlaybackTimeRepository.findByMemberIdAndVideoMaterialId(memberId, videoMaterialId)
+                .map(VideoPlaybackTime::getPlaybackTime)
+                .orElseGet(() -> {
+                    VideoPlaybackTime newPlaybackTime = new VideoPlaybackTime();
+                    newPlaybackTime.setMember(member);
+                    newPlaybackTime.setVideoMaterial(videoMaterial);
+                    newPlaybackTime.setPlaybackTime(0L);
+                    videoPlaybackTimeRepository.save(newPlaybackTime);
+                    return 0L;
+                });
+    }
 }

@@ -62,8 +62,10 @@ public class VideoMaterialService {
         List<VideoMaterial> videoMaterials = videoMaterialRepository.findByWeekIdAndLectureId(weekId, lectureId);
         return videoMaterials.stream()
                 .map(videoMaterial -> {
-                    Long playbackTime = videoPlaybackTimeService.getOrCreatePlaybackTime(memberId, videoMaterial.getId());
-                    return LectureVideoDto.from(videoMaterial, playbackTime);
+                    VideoPlaybackTime videoPlaybackTime = videoPlaybackTimeService.getOrCreatePlaybackTimeAndPercent(memberId, videoMaterial.getId());
+                    Long playbackTime = videoPlaybackTime.getPlaybackTime();
+                    int percent = videoPlaybackTime.getPercent();
+                    return LectureVideoDto.from(videoMaterial, playbackTime, percent);
                 })
                 .collect(Collectors.toList());
     }

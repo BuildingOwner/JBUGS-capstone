@@ -13,6 +13,7 @@ public class VideoPlaybackTime {
     private Long id;
 
     private Long playbackTime;
+    private int percent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "video_material_id")

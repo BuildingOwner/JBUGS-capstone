@@ -12,10 +12,11 @@ public class LectureVideoDto {
     private String videoPath;
     private Long fileSize;
     private Long playbackTime = 0L;
+    private int percent;
 
 //    private int weekNumber;
 
-    public static LectureVideoDto from(VideoMaterial videoMaterial, Long playbackTime){
+    public static LectureVideoDto from(VideoMaterial videoMaterial, Long playbackTime, int percent){
         LectureVideoDto dto = new LectureVideoDto();
         dto.setVideoId(videoMaterial.getId());
         dto.setTitle(videoMaterial.getTitle());
@@ -23,6 +24,7 @@ public class LectureVideoDto {
         dto.setVideoPath(videoMaterial.getVideoPath());
         dto.setFileSize(videoMaterial.getFileSize());
         dto.setPlaybackTime(playbackTime);
+        dto.setPercent(percent);
         return dto;
     }
 }

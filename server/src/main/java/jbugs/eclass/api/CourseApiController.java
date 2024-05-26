@@ -165,16 +165,38 @@ public class CourseApiController {
     public ResponseEntity<?> savePlaybackTime(@RequestBody VideoPlaybackTimeRequestDto requestDto) {
         videoPlaybackTimeService.findByMemberIdAndVideoMaterialId(requestDto.getMemberId(), requestDto.getVideoMaterialId())
                 .ifPresentOrElse(currentPlaybackTime -> {
+                    boolean isUpdated = false;
+
                     // 기존에 저장된 시청 시간이 제공된 시청 시간보다 작을 경우에만 업데이트
                     if (currentPlaybackTime.getPlaybackTime() < requestDto.getPlaybackTime()) {
-                        videoPlaybackTimeService.saveOrUpdatePlaybackTime(requestDto.getMemberId(), requestDto.getVideoMaterialId(), requestDto.getPlaybackTime());
-                        ResponseEntity.ok().body("시간 업데이트 완료");
+                        currentPlaybackTime.setPlaybackTime(requestDto.getPlaybackTime());
+                        isUpdated = true;
+                    }
+
+                    // 기존에 저장된 퍼센트가 제공된 퍼센트보다 작을 경우에만 업데이트
+                    if (currentPlaybackTime.getPercent() < requestDto.getPercent()) {
+                        currentPlaybackTime.setPercent(requestDto.getPercent());
+                        isUpdated = true;
+                    }
+
+                    if (isUpdated) {
+                        videoPlaybackTimeService.saveOrUpdatePlaybackTime(currentPlaybackTime.getMember().getId(),
+                                currentPlaybackTime.getVideoMaterial().getId(),
+                                currentPlaybackTime.getPlaybackTime(),
+                                currentPlaybackTime.getPercent());
+                        ResponseEntity.ok().body("시간 및 퍼센트 업데이트 완료");
+                    } else {
+                        ResponseEntity.ok().body("변경 사항 없음");
                     }
                 }, () -> {
                     // 기존 시청 시간이 존재하지 않는 경우 새로 저장
-                    videoPlaybackTimeService.saveOrUpdatePlaybackTime(requestDto.getMemberId(), requestDto.getVideoMaterialId(), requestDto.getPlaybackTime());
-                    ResponseEntity.ok().body("시간 저장 완료");
+                    videoPlaybackTimeService.saveOrUpdatePlaybackTime(requestDto.getMemberId(),
+                            requestDto.getVideoMaterialId(),
+                            requestDto.getPlaybackTime(),
+                            requestDto.getPercent());
+                    ResponseEntity.ok().body("시간 및 퍼센트 저장 완료");
                 });
         return ResponseEntity.ok().body("처리 완료");
     }
+
 }

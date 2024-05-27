@@ -63,6 +63,7 @@ public class UploadApiController {
                                         @RequestParam("choice") String choice,
                                         @RequestParam("description") String description,
                                         @RequestParam("quizType") String quizType,
+                                        @RequestParam("videoLength") String videoLength,
                                         @RequestParam("quizFlag") boolean quizFlag,
                                         @PathVariable Long enrollmentId, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession(false); // 기존 세션 가져오기
@@ -76,12 +77,12 @@ public class UploadApiController {
 
             // 파일 업로드 처리
             if (attachFiles != null && attachFiles.length > 0) {
-                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(attachFiles), weekEntity.getId(), false, fileTitle, lecture));
+                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(attachFiles), weekEntity.getId(), false, fileTitle, lecture, videoLength));
             }
 
             // 비디오 업로드 처리 후 경로(들) 반환
             if (videoFiles != null && videoFiles.length > 0) {
-                uploadFiles(Arrays.asList(videoFiles), weekEntity.getId(), true, videoTitle, lecture);
+                uploadFiles(Arrays.asList(videoFiles), weekEntity.getId(), true, videoTitle, lecture, videoLength);
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
             if (quizFlag) {
@@ -110,7 +111,7 @@ public class UploadApiController {
 
     }
 
-    public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title, Lecture lecture) throws IOException {
+    public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title, Lecture lecture, String videoLength) throws IOException {
         Week weekEntity = weekService.findWeekById(weekId).orElseThrow(() -> new IllegalArgumentException("Invalid weekId"));
         List<String> filePaths = new ArrayList<>();
         String lectureName = lecture.getName();
@@ -150,6 +151,7 @@ public class UploadApiController {
                         videoMaterial.setWeek(weekEntity);
                         videoMaterial.setFileSize(fileSize);
                         videoMaterial.setLecture(lecture);
+                        videoMaterial.setVideoLength(videoLength);
                         videoMaterialRepository.save(videoMaterial);
                     } else {
                         Material material = new Material();

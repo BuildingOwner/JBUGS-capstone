@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import ReactDOM from "react-dom"
 import styles from "./ListItem.module.css"
 import { useNavigate } from "react-router-dom";
 import QuizInfoModal from "../../modals/quizModal/QuizInfoModal";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
-import ReactPlayer from 'react-player'
 import QuizUploadModal from "../../modals/profModal/uploadModal/QuizUploadModal"
-import VideoPlayer from "./VideoPlayer"
 
 const ListItem = (props) => {
   const navigate = useNavigate()
@@ -155,7 +152,6 @@ const ListItem = (props) => {
       'flv': 'video/x-flv',
       'mkv': 'video/x-matroska',
     }
-
     const mimeType = mimeTypes[extension] || 'video/mp4'
 
     try {
@@ -164,28 +160,24 @@ const ListItem = (props) => {
       })
       const videoBlob = new Blob([response.data], { type: mimeType }) // Blob 객체 생성
       const videoUrl = URL.createObjectURL(videoBlob) // Blob URL 생성
+      console.log("response", response)
+      const newWindow = window.open("/videoplayer", "_blank", "width=800,height=600");
 
-      // const videoWindow = window.open('', '_blank') // 새 창을 엽니다.
-      // videoWindow.document.write(
-      //   `<video controls autoplay style="width:90%;height:auto;">
-      //     <source src="${videoUrl}" type="${mimeType}">
-      //     Your browser does not support the video tag.
-      //   </video>`
-      // )
+      // 새 창이 로드된 후 메시지 전송
+      newWindow.onload = function () {
+        // response.headers에서 'playback-time' 헤더의 값을 안전하게 가져오기
+        const playbackTime = response.headers['playback-time'] ? response.headers['playback-time'] : null;
 
-      // 새 창 열기
-      const newWindow = window.open('', '_blank');
-
-      // 새 창에 HTML 스켈레톤 삽입하기
-      newWindow.document.body.innerHTML = `<div id="root"></div>`;
-
-      // 데이터 전달
-      newWindow.onload = () => {
-        newWindow.postMessage({ videoUrl, mimeType }, '*');
-      };
-
-      // 새 창에서 React 컴포넌트 렌더링하기
-      ReactDOM.render(<VideoPlayer />, newWindow.document.getElementById('root'));
+        // postMessage를 사용하여 새 창에 메시지 전송
+        newWindow.postMessage({
+          videoUrl: videoUrl,
+          videoName: videoName,
+          videoId: props.videoId,
+          memberId: memberInfoDto.memberId,
+          playbackTime: playbackTime
+        }, '*');
+      }
+      newWindow.onclose = props.reRender()
 
     } catch (error) {
       alert("동영상을 불러올 수 없습니다.")
@@ -336,7 +328,7 @@ const ListItem = (props) => {
               <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
             )}
             {props.url === 'video' && (
-              <h3 className={`${styles.fontSize} ${styles.blue}`}>length</h3>
+              <h3 className={`${styles.fontSize} ${styles.blue}`}>{props.percent}%</h3>
             )}
           </div>
           <div className={styles.second}>

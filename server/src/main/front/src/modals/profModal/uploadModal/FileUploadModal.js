@@ -43,8 +43,8 @@ const FileUploadModal = (props) => {
   }
 
   const handleClose = (event) => {
-    setVideoTitle('')
-    setFileTitle('')
+    setVideoTitle(null)
+    setFileTitle(null)
     setFileDescription('')
     setVideoDescription('')
     setDescription('')
@@ -52,7 +52,7 @@ const FileUploadModal = (props) => {
     setVideoFile(null)
     setChoice(null)
     setShortAnswer(null)
-    setQuizType("")
+    setQuizType(null)
     setIsOpen(false)
     if (event) {
       event.stopPropagation()
@@ -132,7 +132,29 @@ const FileUploadModal = (props) => {
     uploadFiles()
     handleClose()
   }
+  
   const uploadFiles = async () => {
+    // 유효성 검사 추가
+    if (weekNumber === null || (fileTitle === null && videoTitle === null)) {
+      alert("파일과 비디오중 하나는 업로드 되어야합니다.")
+      return
+    }
+
+    if (quizFlag === true) {
+      if (shortAnswer === 0) {
+        alert("주관식 개수를 선택해주세요.")
+        return
+      }
+      if (choice === 0) {
+        alert("객관식 개수를 선택해주세요.")
+        return
+      }
+      if (quizType === null) {
+        alert("문제 유형을 선택해주세요.")
+        return
+      }
+    }
+
     const formData = new FormData()
     formData.append("weekNumber", weekNumber)
     formData.append("fileTitle", fileTitle)
@@ -156,11 +178,12 @@ const FileUploadModal = (props) => {
         }
       })
       console.log("response : ", response)
-      alert('파일 업로드 되었습니다.'); // 사용자에게 알림
+
     } catch (error) {
       console.log(error);
       alert('파일 업로드에 실패했습니다.'); // 사용자에게 알림
     } finally {
+      alert('파일 업로드 되었습니다.'); // 사용자에게 알림
       // 부모 컴포넌트를 다시 렌더링
       props.reRender()
     }

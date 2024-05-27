@@ -12,6 +12,7 @@ import LoadingPage from "../mainPage/LoadingPage";
 const Course = () => {
   const currentDate = new Date();
   const startDate = new Date('2024-03-04'); // 개강일 적는 곳
+
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
 
@@ -19,10 +20,15 @@ const Course = () => {
     const diffDays = Math.round((endDate - startDate) / oneDay);
 
     // 개강일로부터 경과한 일수를 7로 나누어서 주차를 계산
-    const week = Math.ceil(diffDays / 7);
+    let week = Math.ceil(diffDays / 7);
 
+    // 7로 나누어 떨어질 때 +1 추가
+    if (diffDays % 7 === 0 && diffDays !== 0) {
+      week += 1;
+    }
     return week;
   }
+
   const cureentWeek = calculateWeek(startDate, currentDate)
 
   // 선택된 주차에 따른 날짜 범위 계산
@@ -182,8 +188,7 @@ const Course = () => {
                 {Array.from({ length: 16 }).map((_, index) => (
                   <button type="button"
                     key={index}
-                    className={`btn btn-primary ${styles.weekBtn} ${
-                      weeklyContents[index]?.lectureVideos.length > 0 
+                    className={`btn btn-primary ${styles.weekBtn} ${weeklyContents[index]?.lectureVideos.length > 0
                       // weeklyContents[index]?.classFiles.length > 0 ||
                       // weeklyContents[index]?.quizzes.length > 0 ||
                       // weeklyContents[index]?.assignments.length > 0
@@ -219,6 +224,7 @@ const Course = () => {
                     reRender={reRender}
                     memberInfoDto={memberInfoDto}
                     enrollmentId={enrollmentId}
+                    percent={video.percent}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>

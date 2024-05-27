@@ -22,6 +22,7 @@ const FileUploadModal = (props) => {
   const [videoDescription, setVideoDescription] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [quizFlag, setQuizFlag] = useState(false)
+  const [videoLength, setVideoLength] = useState('') // 영상 길이
 
   // Collapse 상태를 토글하는 함수
   const toggleCollapse = () => {
@@ -60,11 +61,13 @@ const FileUploadModal = (props) => {
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
 
+  // 퀴즈 타입이 변경되었을 경우
   const handleTypeChange = (e) => {
     setQuizType(e.target.value)
     console.log(e.target.value)
   }
 
+  // 파일이 변경되었을 경우
   const handleFileChange = (e) => {
     setAttachFile(e.target.files[0])
     console.log("attachFile : ", e.target.files[0])
@@ -84,6 +87,7 @@ const FileUploadModal = (props) => {
     }
   }
 
+  // 비디오가 변경되었을 경우
   const handleVideoChange = (e) => {
     setVideoFile(e.target.files[0])
     setVideoTitle(e.target.files[0].name)
@@ -102,6 +106,19 @@ const FileUploadModal = (props) => {
       // 파일이 선택되지 않은 경우
       setVideoDescription('');
     }
+    // 비디오 길이를 가져오기 위한 로직 추가
+    const videoElement = document.createElement('video');
+    videoElement.preload = 'metadata';
+
+    videoElement.onloadedmetadata = () => {
+      window.URL.revokeObjectURL(videoElement.src);
+      const duration = videoElement.duration
+      console.log("길이 : ", duration);
+      // 필요 시 상태 업데이트
+      setVideoLength(duration);
+    }
+
+    videoElement.src = URL.createObjectURL(e.target.files[0]);
   }
 
   const handleWeekChange = (e) => {
@@ -132,7 +149,7 @@ const FileUploadModal = (props) => {
     uploadFiles()
     handleClose()
   }
-  
+
   const uploadFiles = async () => {
     // 유효성 검사 추가
     if (weekNumber === null || (fileTitle === null && videoTitle === null)) {
@@ -166,6 +183,7 @@ const FileUploadModal = (props) => {
     formData.append("description", description)
     formData.append("quizType", quizType)
     formData.append("quizFlag", quizFlag)
+    formData.append("videoLength", videoLength)
 
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
@@ -178,12 +196,11 @@ const FileUploadModal = (props) => {
         }
       })
       console.log("response : ", response)
-
+      alert('파일 업로드 되었습니다.'); // 사용자에게 알림
     } catch (error) {
       console.log(error);
       alert('파일 업로드에 실패했습니다.'); // 사용자에게 알림
     } finally {
-      alert('파일 업로드 되었습니다.'); // 사용자에게 알림
       // 부모 컴포넌트를 다시 렌더링
       props.reRender()
     }

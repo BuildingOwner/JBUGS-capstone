@@ -18,6 +18,7 @@ const ListItem = (props) => {
   const [byte, setByte] = useState(0)
   const [memberInfoDto, setMemberInfoDto] = useState();
   const [timeDifference, setTimeDifference] = useState(null)
+  const [videoLength, setVideoLength] = useState("00:00")
   console.log(props)
 
   // 퀴즈 업로드 모달
@@ -259,6 +260,23 @@ const ListItem = (props) => {
       }
 
       setFileExtension(extension[last])
+    } else if (props.url === "video") {
+      const duration = props.videoLength
+      let minute
+      let second
+      if (Math.floor(duration / 60) / 10 === 0) {
+        minute = `0${Math.floor(duration / 60)}`
+      } else {
+        minute = Math.floor(duration / 60)
+      }
+      if (Math.floor(duration % 60) / 10 === 0) {
+        second = `0${Math.floor(duration % 60)}`
+      } else {
+        second = Math.floor(duration % 60)
+      }
+
+
+      setVideoLength(`${minute}:${second}`)
     }
     calcByte()
     setMemberInfoDto(props.memberInfoDto)
@@ -328,7 +346,7 @@ const ListItem = (props) => {
               <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
             )}
             {props.url === 'video' && (
-              <h3 className={`${styles.fontSize} ${styles.blue}`}>{props.percent}%</h3>
+              <h3 className={`${styles.fontSize} ${styles.blue}`}>{videoLength !== null ? videoLength : `00:00`}</h3>
             )}
           </div>
           <div className={styles.second}>
@@ -406,6 +424,7 @@ const ListItem = (props) => {
           )}
           {props.url === 'video' && (
             <>
+              <h3 className={styles.fontSize}>{props.percent}%</h3>
               <h3 className={styles.fontSize}>{byte}</h3>
               {
                 props.memberInfoDto.memberType === "STUDENT" ? null :

@@ -2,7 +2,8 @@ import React from "react";
 import ReactPlayer from "react-player";
 import styles from "./VideoPlayer.module.css"
 import { useRef, useState, useEffect } from "react"
-import axios from "axios";
+import LoadingPage from "../mainPage/LoadingPage"
+
 const VideoPlayer = () => {
   const [memberId, setMemberId] = useState('')
   const [playbackTime, setPlaybackTime] = useState(0)
@@ -21,8 +22,10 @@ const VideoPlayer = () => {
 
   // 동영상 재생 시간이 업데이트될 때 호출될 함수
   const handleProgress = (state) => {
+    if (playedSeconds > state.playedSeconds) {
+      return
+    }
     console.log('Played seconds:', state.playedSeconds)
-    console.log({ memberId, videoId })
     setPlayedSeconds(state.playedSeconds)
   }
 
@@ -31,8 +34,9 @@ const VideoPlayer = () => {
     console.log(percent)
     return percent
   }
-  useEffect(() => {
 
+  useEffect(() => {
+    // ListItem에서의 postMessage를 받아오는 함수
     const handleMessage = (event) => {
       // 'videoUrl'과 'videoName'이 있는 경우에만 처리
       if (event.data && event.data.videoUrl && event.data.videoName) {
@@ -54,6 +58,7 @@ const VideoPlayer = () => {
   }, [])
 
   useEffect(() => {
+    // 모달이 종료되기전에 실행되는 함수
     const handleBeforeUnload = (event) => {
       const percent = calcPercent(videoDuration, playedSeconds)
 
@@ -99,6 +104,7 @@ const VideoPlayer = () => {
     setIsReady(true)
   }
 
+  if (playbackTime === 0) return <LoadingPage />;
   return (
     <div className={styles.player}>
       <div className={styles.inner}>

@@ -13,6 +13,7 @@ public class LectureVideoDto {
     private Long fileSize;
     private Long playbackTime = 0L;
     private int percent;
+    private String videoLength;
 
 //    private int weekNumber;
 
@@ -25,6 +26,7 @@ public class LectureVideoDto {
         dto.setFileSize(videoMaterial.getFileSize());
         dto.setPlaybackTime(playbackTime);
         dto.setPercent(percent);
+        dto.setVideoLength(videoMaterial.getVideoLength());
         return dto;
     }
 }

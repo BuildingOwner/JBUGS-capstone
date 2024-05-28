@@ -1,5 +1,6 @@
 import CourseSidebar from "../../sidebar/CourseSidebars";
 import ListItem from "./ListItem";
+import VideoItem from "./VideoItem";
 import styles from "./Course.module.css"
 import FileUploadModal from "../../modals/profModal/uploadModal/FileUploadModal";
 import { useNavigate } from "react-router-dom";
@@ -213,7 +214,7 @@ const Course = () => {
               </div>
               <div className={`${styles.list} no-scroll-bar`}>
                 {lectureVideos[0] ? lectureVideos.map((video, i) => (
-                  <ListItem
+                  <VideoItem
                     key={`lectureVideo${i}`}
                     title={video.title}
                     videoName={video.videoName}

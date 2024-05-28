@@ -8,6 +8,8 @@ import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import QuizUploadModal from "../../modals/profModal/uploadModal/QuizUploadModal"
 import AssignmentModal from "../../modals/assignModal/AssignmentModal.js"
 
+import ProgressBar from 'react-bootstrap/ProgressBar';
+
 const ListItem = (props) => {
   const navigate = useNavigate()
   const [daysRemaining, setDaysRemaining] = useState()
@@ -317,7 +319,7 @@ const ListItem = (props) => {
           <div className={styles.first}>
             {props.url === 'assignmentlist' && (
               props.memberInfoDto?.memberType == "STUDENT" ?
-                (props.submissionStatus === true ? (
+                (props.status === "SUBMITTED" ? (
                   <h3 className={`${styles.fontSize} ${styles.green}`}>
                     제출
                   </h3>
@@ -380,8 +382,10 @@ const ListItem = (props) => {
           </div>
           <div className={styles.third}>
             {props.url === 'video' ?
-              <div className="prograss-bar"></div> :
-              <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3>}
+              null :
+            <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3>
+
+            }
           </div>
         </div>
         <div className={styles.fourth}>
@@ -439,8 +443,8 @@ const ListItem = (props) => {
           )}
           {props.url === 'video' && (
             <>
-              <h3 className={styles.fontSize}>{props.percent}%</h3>
-              <h3 className={styles.fontSize}>{byte}</h3>
+             
+             <ProgressBar now={props.percent} label={`${props.percent}%`} />
               {
                 props.memberInfoDto.memberType === "STUDENT" ? null :
                   <button type="button"
@@ -467,7 +471,8 @@ const ListItem = (props) => {
         isOpen={assignIsOpen}
         onRequestClose={closeAssignModal}
         props={props}
-        timeDifference={timeDifference} />
+        timeDifference={timeDifference} 
+        from={"course"}/>
     </>
   )
 }

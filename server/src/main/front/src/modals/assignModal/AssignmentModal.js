@@ -6,10 +6,13 @@ import Info from "../modalComponents/Info";
 import { LuFilePlus2 } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AssignmentModal = (props) => {
   Modal.setAppElement("#root")
+  const { reRender, ...restProps } = props.props;
   const data = props?.props
+  const navigate = useNavigate()
   const [fileDescription, setFileDescription] = useState('');
   const [formattedDate, setFormattedDate] = useState()
   const [remainDate, setRemainDate] = useState('')
@@ -77,6 +80,7 @@ const AssignmentModal = (props) => {
     }
   }
 
+  // 댓글창 클릭 시 댓글로
   const onAnswerClick = useCallback(() => {
     const anchor = document.querySelector(
       "[data-scroll-to='commentContainer']"
@@ -85,6 +89,10 @@ const AssignmentModal = (props) => {
       anchor.scrollIntoView({ block: "start", behavior: "smooth" });
     }
   }, []);
+
+  const moveToAssignmentList = () => {
+    navigate('/assignmentlist', { state: restProps })
+  }
 
   const handleClose = (event) => {
     if (event) {
@@ -170,7 +178,11 @@ const AssignmentModal = (props) => {
           <Info title={"마감 여부"} content={remainDate} />
         </div>
         <div className={styles.contents}>
-          <Info title={"제출 여부"} content={<h3 className={`${styles.box} ${styles.red}`}>미제출</h3>} /> {/*미제출은 red, 제출완료는 green*/}
+          {
+            data.status === "SUBMITTED" ? <Info title={"제출 여부"} content={<h3 className={`${styles.box} ${styles.green}`}>제출</h3>} />
+              : <Info title={"제출 여부"} content={<h3 className={`${styles.box} ${styles.red}`}>미제출</h3>} />
+          }
+          {/*미제출은 red, 제출완료는 green*/}
           <Info title={"최종 수정 일시"} content={"2024-10-10"} />
         </div>
         <div className={styles.contents}>
@@ -222,10 +234,17 @@ const AssignmentModal = (props) => {
       />
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
-        <button className={`btn btn-primary ${styles.goBtn}`}
-          onClick={
-            remainDate === "마감" ? null : uploadAssign
-          }>과제 제출</button>
+        {
+          props?.from === "course" ?
+            <button className={`btn btn-primary ${styles.goBtn}`}
+              onClick={moveToAssignmentList}>
+              과제 페이지로
+            </button>
+            : <button className={`btn btn-primary ${styles.goBtn}`}
+              onClick={remainDate === "마감" ? null : uploadAssign}>
+              과제 제출
+            </button>
+        }
       </div>
     </Modal>
   )

@@ -196,7 +196,7 @@ const FileUploadModal = (props) => {
         }
       })
       console.log("response : ", response)
-      alert('파일 업로드 되었습니다.'); // 사용자에게 알림
+      alert(`${weekNumber}주차 파일이 업로드 되었습니다.`); // 사용자에게 알림
     } catch (error) {
       console.log(error);
       alert('파일 업로드에 실패했습니다.'); // 사용자에게 알림
@@ -226,7 +226,7 @@ const FileUploadModal = (props) => {
       isOpen={props.isOpen}
       onRequestClose={handleClose}>
       <div className={styles.top}>
-        <h3 className={styles.title}>파일 업로드</h3>
+        <h3 className={styles.title}>강의자료 추가</h3>
         <button type="button"
           className={`btn btn-primary ${styles.closeBtn}`}
           onClick={handleClose}>X</button>

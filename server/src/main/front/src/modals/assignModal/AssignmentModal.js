@@ -15,6 +15,7 @@ const AssignmentModal = (props) => {
   const [remainDate, setRemainDate] = useState('')
   const [attachFiles, setAttachFiles] = useState([])
   const [comment, setComment] = useState("")
+
   const uploadAssign = async () => {
     console.log("업로드 시작")
     try {
@@ -86,9 +87,11 @@ const AssignmentModal = (props) => {
   }, []);
 
   const handleClose = (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
     setFileDescription('')
     setAttachFiles([])
-    event.stopPropagation()
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
 
@@ -163,8 +166,8 @@ const AssignmentModal = (props) => {
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
-          <Info title={"종료 일시"} content={formattedDate} />
-          <Info title={"마감 기한"} content={remainDate} />
+          <Info title={"마감 기한"} content={formattedDate} />
+          <Info title={"마감 여부"} content={remainDate} />
         </div>
         <div className={styles.contents}>
           <Info title={"제출 여부"} content={<h3 className={`${styles.box} ${styles.red}`}>미제출</h3>} /> {/*미제출은 red, 제출완료는 green*/}

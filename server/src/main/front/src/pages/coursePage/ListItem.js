@@ -6,6 +6,7 @@ import axios from "axios";
 import { IoClose } from "react-icons/io5";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import QuizUploadModal from "../../modals/profModal/uploadModal/QuizUploadModal"
+import AssignmentModal from "../../modals/assignModal/AssignmentModal.js"
 
 const ListItem = (props) => {
   const navigate = useNavigate()
@@ -13,13 +14,29 @@ const ListItem = (props) => {
   const [fileExtension, setFileExtension] = useState()
   // 모달창 노출 여부 state
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [assignIsOpen, setAssignIsOpen] = useState(false)
   const [uploadModalIsOpen, setUploadModalIsOpen] = useState(false);
   const [fileColor, setfileColor] = useState('');
   const [byte, setByte] = useState(0)
   const [memberInfoDto, setMemberInfoDto] = useState();
   const [timeDifference, setTimeDifference] = useState(null)
   const [videoLength, setVideoLength] = useState("00:00")
-  console.log(props)
+
+  // 과제모달
+  const openAssignModal = (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
+    setAssignIsOpen(true)
+  }
+  // 과제모달
+  const closeAssignModal = (event) => {
+    if (event) {
+      // 이벤트 버블링을 막음
+      event.stopPropagation()
+    }
+    setAssignIsOpen(false)
+  }
 
   // 퀴즈 업로드 모달
   const openUploadModal = (event) => {
@@ -29,23 +46,20 @@ const ListItem = (props) => {
     setUploadModalIsOpen(true);
   }
 
+  // 퀴즈 업로드 모달
   const closeUploadModal = (event) => {
     if (event) {
       // 이벤트 버블링을 막음
       event.stopPropagation()
     }
-    console.log("modal close")
     setUploadModalIsOpen(false)
-
   }
 
   const openModal = () => {
-    console.log('modal open')
     setModalIsOpen(true);
   }
 
   const closeModal = (event) => {
-    console.log("modal close")
     setModalIsOpen(false)
     // 이벤트 버블링을 막음
     event.stopPropagation()
@@ -98,7 +112,8 @@ const ListItem = (props) => {
 
   const checkURL = () => {
     if (props.url === "assignmentlist") {
-      moveToAssignmentList();
+      openAssignModal()
+      // moveToAssignmentList();
     } else if (props.url === "quizlist") {
       openModal();
     } else if (props.url === "video") {
@@ -446,6 +461,11 @@ const ListItem = (props) => {
       <QuizUploadModal
         isOpen={uploadModalIsOpen}
         onRequestClose={closeUploadModal}
+        props={props}
+        timeDifference={timeDifference} />
+      <AssignmentModal
+        isOpen={assignIsOpen}
+        onRequestClose={closeAssignModal}
         props={props}
         timeDifference={timeDifference} />
     </>

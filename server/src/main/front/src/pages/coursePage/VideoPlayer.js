@@ -104,7 +104,10 @@ const VideoPlayer = () => {
     setIsReady(true)
   }
 
-  if (playbackTime === 0) return <LoadingPage />;
+  if (videoUrl === false) {
+    console.log(videoUrl)
+    return <LoadingPage />
+  };
   return (
     <div className={styles.player}>
       <div className={styles.inner}>

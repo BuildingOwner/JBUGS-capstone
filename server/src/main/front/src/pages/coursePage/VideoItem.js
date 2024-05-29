@@ -60,6 +60,8 @@ const VideoItem = (props) => {
     }
     const mimeType = mimeTypes[extension] || 'video/mp4'
 
+    const newWindow = window.open("/videoplayer", "_blank", "width=800,height=600");
+
     try {
       const response = await axios.get(`/api/course/stream/${props.videoId}`, {
         responseType: 'blob' // 바이너리 데이터로 응답 받기
@@ -67,13 +69,12 @@ const VideoItem = (props) => {
       const videoBlob = new Blob([response.data], { type: mimeType }) // Blob 객체 생성
       const videoUrl = URL.createObjectURL(videoBlob) // Blob URL 생성
       console.log("response", response)
-      const newWindow = window.open("/videoplayer", "_blank", "width=800,height=600");
+      
 
       // 새 창이 로드된 후 메시지 전송
       newWindow.onload = function () {
         // response.headers에서 'playback-time' 헤더의 값을 안전하게 가져오기
         const playbackTime = response.headers['playback-time'] ? response.headers['playback-time'] : null;
-
         // postMessage를 사용하여 새 창에 메시지 전송
         newWindow.postMessage({
           videoUrl: videoUrl,

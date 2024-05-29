@@ -1,3 +1,4 @@
 .noGap{
   flex-grow: unset;
+  width: auto;
 }

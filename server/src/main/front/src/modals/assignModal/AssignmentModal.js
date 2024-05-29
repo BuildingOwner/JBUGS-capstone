@@ -152,6 +152,19 @@ const AssignmentModal = (props) => {
     setFormattedDate(data1)
   }, [])
 
+  const checkDueDate = (dueDateString) => {
+    // 현재 날짜 및 시간
+    const now = new Date();
+    // 마감 날짜를 나타내는 Date 객체 생성
+    const dueDate = new Date(dueDateString);
+    // dueDate가 now보다 미래인지 확인
+    if (dueDate > now) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -174,8 +187,9 @@ const AssignmentModal = (props) => {
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
+          {console.log(props)}
           <Info title={"마감 기한"} content={formattedDate} />
-          <Info title={"마감 여부"} content={remainDate} />
+          <Info title={"마감 여부"} content={checkDueDate(props.props.dueDate) ? "진행중" : "마감"} />
         </div>
         <div className={styles.contents}>
           {
@@ -238,7 +252,7 @@ const AssignmentModal = (props) => {
           props?.from === "course" ?
             <button className={`btn btn-primary ${styles.goBtn}`}
               onClick={moveToAssignmentList}>
-              과제 페이지로
+              과제 페이지
             </button>
             : <button className={`btn btn-primary ${styles.goBtn}`}
               onClick={remainDate === "마감" ? null : uploadAssign}>

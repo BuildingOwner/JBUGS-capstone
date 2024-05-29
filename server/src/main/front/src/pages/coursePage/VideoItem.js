@@ -4,6 +4,7 @@ import styles2 from "./VideoItem.module.css"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
+import { Tooltip } from 'react-tooltip';
 
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
@@ -145,13 +146,19 @@ const VideoItem = (props) => {
                   <button type="button"
                     className={`btn btn-primary ${styles.deleteBtn}`}
                     onClick={(e) => handleDeleteVideoFile(e)}>
-                    <IoClose size={25} />
+                    <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
                   </button>
               }
             </>
           )}
         </div>
       </div>
+      <Tooltip
+        id='tooltip'
+        backgroundColor='gray'
+        place="top"
+        arrowColor='transparent'
+      />
     </>
   )
 }

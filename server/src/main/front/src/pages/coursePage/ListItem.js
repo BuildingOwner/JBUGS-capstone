@@ -7,6 +7,7 @@ import { IoClose } from "react-icons/io5";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import QuizUploadModal from "../../modals/profModal/uploadModal/QuizUploadModal"
 import AssignmentModal from "../../modals/assignModal/AssignmentModal.js"
+import { Tooltip } from 'react-tooltip';
 
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
@@ -411,7 +412,7 @@ const ListItem = (props) => {
                     <button type="button"
                       className={`btn btn-primary ${styles.deleteBtn}`}
                       onClick={(e) => handleDeleteQuiz(e)}>
-                      <IoClose size={25} />
+                      <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
                     </button>
                   </div>
               }
@@ -426,14 +427,15 @@ const ListItem = (props) => {
                     {fileExtension === "pdf" ?
                       <button type="button"
                         className={`btn btn-primary ${styles.modBtn}`}
-                        onClick={(e) => openUploadModal(e)}>
+                        onClick={(e) => openUploadModal(e)}
+                        data-tooltip-content='퀴즈 생성하기' data-tooltip-id='tooltip'>
                         <HiOutlineSquaresPlus size={25} />
                       </button> : null
                     }
                     <button type="button"
                       className={`btn btn-primary ${styles.deleteBtn}`}
                       onClick={(e) => handleDeleteFile(e)}>
-                      <IoClose size={25} />
+                      <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
                     </button>
                   </div>
               }
@@ -446,7 +448,7 @@ const ListItem = (props) => {
                   <button type="button"
                     className={`btn btn-primary ${styles.deleteBtn}`}
                     onClick={(e) => handleDeleteVideoFile(e)}>
-                    <IoClose size={25} />
+                    <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
                   </button>
               }
             </>
@@ -469,6 +471,12 @@ const ListItem = (props) => {
         props={props}
         timeDifference={timeDifference}
         from={"course"} />
+      <Tooltip
+        id='tooltip'
+        backgroundColor='gray'
+        place="top"
+        arrowColor='transparent'
+      />
     </>
   )
 }

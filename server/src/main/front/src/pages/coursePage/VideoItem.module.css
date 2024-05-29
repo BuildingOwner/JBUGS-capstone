@@ -9,6 +9,7 @@
   padding-right: 0.3rem;
   font-weight: bold !important;
   font-size: var(--font-size-sm) !important;
+  color: #555;
 }
 
 .progressBarPercent{

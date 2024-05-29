@@ -366,25 +366,23 @@ const ListItem = (props) => {
               <h3 className={`${styles.fontSize} ${styles.blue}`}>{videoLength !== null ? videoLength : `00:00`}</h3>
             )}
           </div>
-          <div className={styles.second}>
-            {props.url === 'assignmentlist' && (
-              <h3 className={styles.fontSize}>{props.title}</h3>
-            )}
-            {props.url === 'quizlist' && (
-              <h3 className={styles.fontSize}>{props.quizName}</h3>
-            )}
-            {props.url === 'file' && (
-              <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
-            )}
-            {props.url === 'video' && (
-              <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
-            )}
-          </div>
-          <div className={styles.third}>
-            {props.url === 'video' ?
-              null :
-            <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3>
-
+          <div className={styles.content}>
+            <div className={styles.second}>
+              {props.url === 'assignmentlist' && (
+                <h3 className={styles.fontSize}>{props.title}</h3>
+              )}
+              {props.url === 'quizlist' && (
+                <h3 className={styles.fontSize}>{props.quizName}</h3>
+              )}
+              {props.url === 'file' && (
+                <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
+              )}
+              {props.url === 'video' && (
+                <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
+              )}
+            </div>
+            {props.url === 'assignmentlist' ?
+              <div className={styles.third}> <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3></div> : null
             }
           </div>
         </div>
@@ -443,8 +441,6 @@ const ListItem = (props) => {
           )}
           {props.url === 'video' && (
             <>
-             
-             <ProgressBar now={props.percent} label={`${props.percent}%`} />
               {
                 props.memberInfoDto.memberType === "STUDENT" ? null :
                   <button type="button"
@@ -471,8 +467,8 @@ const ListItem = (props) => {
         isOpen={assignIsOpen}
         onRequestClose={closeAssignModal}
         props={props}
-        timeDifference={timeDifference} 
-        from={"course"}/>
+        timeDifference={timeDifference}
+        from={"course"} />
     </>
   )
 }

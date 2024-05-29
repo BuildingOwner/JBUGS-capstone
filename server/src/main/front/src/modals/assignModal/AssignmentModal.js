@@ -20,27 +20,27 @@ const AssignmentModal = (props) => {
   const [comment, setComment] = useState("")
 
   const uploadAssign = async () => {
-    console.log("업로드 시작")
-    try {
-      const formData = new FormData()
+    // console.log("업로드 시작")
+    // try {
+    //   const formData = new FormData()
 
-      // attachFiles 배열의 각 파일을 formData에 추가
-      if (attachFiles) {
-        for (let i = 0; i < attachFiles.length; i++) {
-          formData.append("attachFiles", attachFiles[i]);
-        }
-      }
+    //   // attachFiles 배열의 각 파일을 formData에 추가
+    //   if (attachFiles) {
+    //     for (let i = 0; i < attachFiles.length; i++) {
+    //       formData.append("attachFiles", attachFiles[i]);
+    //     }
+    //   }
 
-      const response = await axios.post(`/api/course/${data.enrollmentId}/assignment/submit`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      console.log("upload response : ", response)
-    } catch (error) {
-      console.log(error)
-    }
-
+    //   const response = await axios.post(`/api/course/${data.enrollmentId}/assignment/submit`, formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   })
+    //   console.log("upload response : ", response)
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    alert("기능이 준비중입니다.")
   }
 
   const handleFileChange = (event) => {
@@ -248,17 +248,17 @@ const AssignmentModal = (props) => {
       />
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
-        {
+        {/* {
           props?.from === "course" ?
             <button className={`btn btn-primary ${styles.goBtn}`}
               onClick={moveToAssignmentList}>
               과제 페이지
-            </button>
-            : <button className={`btn btn-primary ${styles.goBtn}`}
-              onClick={remainDate === "마감" ? null : uploadAssign}>
-              과제 제출
-            </button>
-        }
+            </button> */}
+        <button className={`btn btn-primary ${styles.goBtn}`}
+          onClick={uploadAssign}>
+          과제 제출
+        </button>
+        {/* } */}
       </div>
     </Modal>
   )

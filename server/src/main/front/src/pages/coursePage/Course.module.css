@@ -123,3 +123,9 @@
 .today{
   box-shadow: 0 0 0 3px var(--bs-warning);
 }
+
+@media (max-width: 1600px) {
+  .weekList {
+    width: 500px;
+  }
+}

@@ -46,9 +46,14 @@ const QuizUploadModal = (props) => {
 
   const uploadAndRender = () => {
     uploadQuiz()
-    handleClose()
+    if (shortAnswer === 0 || choice === 0 || description === null || quizType === null) {
+      alert("한 곳도 비어있어선 안됩니다.")
+      return;
+    }
     alert("퀴즈 생성중입니다.")
+    handleClose()
   }
+
   const uploadQuiz = async () => {
     try {
       const formData = new FormData()
@@ -58,22 +63,26 @@ const QuizUploadModal = (props) => {
       formData.append("choice", choice)
       formData.append("description", description)
       formData.append("quizType", quizType)
+
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
       }
+
       const response = await axios.post(`/api/course/uploadMaterial/${materialId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
+
       console.log("response : ", response)
+      alert(`${props.selectedWeek}퀴즈가 생성되었습니다.`) // 타이밍이 중요
     } catch (error) {
       console.log(error)
     } finally {
-      alert("퀴즈가 생성되었습니다.")
       data.reRender()
     }
   }
+
   return (
     <div onClick={stopPropagation}>
       <Modal className={styles.modalContainer}

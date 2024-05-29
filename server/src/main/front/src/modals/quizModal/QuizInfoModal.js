@@ -67,7 +67,7 @@ const QuizInfoModal = (props) => {
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
           <Info title={"종료 기한"} content={formattedDate} />
-          <Info title={"제한 시간"} content={data.timeLimit} />
+          <Info title={"제한 시간"} content={`${data.timeLimit}분`} />
         </div>
         <div className={styles.contents}>
           {
@@ -91,7 +91,7 @@ const QuizInfoModal = (props) => {
           props.props.memberInfoDto?.memberType === "PROFESSOR" ||
           props.checkDueDate < 0
           ? <button className={`btn btn-primary ${styles.goBtn}`} onClick={moveToQuizAnswer}>
-            해설 보기
+            {props.props.memberInfoDto?.memberType === "PROFESSOR" ? "퀴즈 보기" : "해설 보기"}
           </button>
           : <button className={`btn btn-primary ${styles.goBtn}`} onClick={moveToDoQuiz}>
             응시 하기

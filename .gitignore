@@ -10,6 +10,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 nohup.out
+/server/files
 
 # server/src/main/resources/application.yml
 server/src/main/resources/.env

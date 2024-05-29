@@ -78,8 +78,8 @@ def add_quiz_keyword():
     question = keyword_gen(path, int(choice), int(short))
 
     sql_strings = [json.dumps(question, ensure_ascii=False)]
-    if sql_injection_detector(sql_strings):
-        return "invalied quiz data", 409
+    # if sql_injection_detector(sql_strings):
+    #     return "invalied quiz data", 409
 
     db = getConnection()
     cursor = db.cursor()
@@ -130,7 +130,7 @@ def add_quiz_summary():
     print(len(description))
     
     if len(description) <= 0 or description == "null":
-        description = f"{lecture} {weekNumber}주차 퀴즈"
+        description = f"{lecture} {weekNumber}주차 실습문제"
     print(f"[{current_file_name}] description: {description}\n")
     
     title = f"{lecture} {weekNumber}주차 실습문제"
@@ -145,8 +145,8 @@ def add_quiz_summary():
     question = summary_gen(path, int(choice), int(short))
 
     sql_strings = [json.dumps(question, ensure_ascii=False)]
-    if sql_injection_detector(sql_strings):
-        return "invalied quiz data", 409
+    # if sql_injection_detector(sql_strings):
+    #     return "invalied quiz data", 409
 
     db = getConnection()
     cursor = db.cursor()

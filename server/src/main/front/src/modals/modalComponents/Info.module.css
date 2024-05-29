@@ -3,6 +3,7 @@
   flex-direction: column;
   flex-grow: 1;
   gap: var(--gap-8xs);
+  width: 1px;
 }
 
 .name{
@@ -15,4 +16,5 @@
   font-size: var(--font-size-xl);
   font-weight: bold;
   width: 100%;
+  white-space: pre-line;
 }

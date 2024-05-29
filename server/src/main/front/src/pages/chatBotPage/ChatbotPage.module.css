@@ -77,6 +77,10 @@
   gap: var(--gap-xl);
 }
 
+.chatBoardPadding{
+  padding: var(--padding-base) !important;
+}
+
 .bottomRight {
   width: 230px;
   padding: var(--padding-base);

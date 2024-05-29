@@ -31,13 +31,23 @@ CORS(app, supports_credentials=True)  # CORS를 활성화하고 credentials를 �
 def add_quiz_keyword():
     lecture = request.form.get("lecture")
     lecture_id = request.form.get("lectureId")
-    week_id = request.form.get("week_id")
+    week_id = request.form.get("weekId")
     weekNumber = request.form.get("weekNumber")
     path = request.form.get("path")
     choice = request.form.get("choice")
     short = request.form.get("short")
     time_limit = request.form.get("time_limit")
     description = request.form.get("description")
+    
+    print(f"[{current_file_name}] #add-quiz-keyword")
+    print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] lecture id: {lecture_id}")
+    print(f"[{current_file_name}] week_id: {week_id}")
+    print(f"[{current_file_name}] weekNumber: {weekNumber}")
+    print(f"[{current_file_name}] path: {path}")
+    print(f"[{current_file_name}] choice: {choice}")
+    print(f"[{current_file_name}] short: {short}")
+    print(f"[{current_file_name}] time_limit: {time_limit}")
     
     if lecture == None or lecture == "":
         return "invalied request", 400
@@ -50,24 +60,14 @@ def add_quiz_keyword():
         return "invalied request", 403
     
     if time_limit == None:
-        time_limit = "60분"
+        time_limit = "60"
         
-    if description == None:
+    if len(description) <= 0 or description == "null":
         description = f"{lecture} {weekNumber}주차 연습문제"
+    print(f"[{current_file_name}] description: {description}")
     
     title = f"{lecture} {weekNumber}주차 연습문제"
-
-    print(f"[{current_file_name}] #add-quiz-keyword")
-    print(f"[{current_file_name}] lecture: {lecture}")
-    print(f"[{current_file_name}] lecture id: {lecture_id}")
-    print(f"[{current_file_name}] week: {week_id}")
-    print(f"[{current_file_name}] weekNumber: {weekNumber}")
-    print(f"[{current_file_name}] path: {path}")
-    print(f"[{current_file_name}] choice: {choice}")
-    print(f"[{current_file_name}] short: {short}")
-    print(f"[{current_file_name}] title: {title}")
-    print(f"[{current_file_name}] time_limit: {time_limit}")
-    print(f"[{current_file_name}] description: {description}\n")
+    print(f"[{current_file_name}] title: {title}\n")
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
@@ -78,13 +78,13 @@ def add_quiz_keyword():
     question = keyword_gen(path, int(choice), int(short))
 
     sql_strings = [json.dumps(question, ensure_ascii=False)]
-    if sql_injection_detector(sql_strings):
-        return "invalied quiz data", 409
+    # if sql_injection_detector(sql_strings):
+    #     return "invalied quiz data", 409
 
     db = getConnection()
     cursor = db.cursor()
     sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data, lecture_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    val = ("1", now, formatted_date, now, week_id, title, time_limit, description, question, lecture_id)
+    val = ("0", now, formatted_date, now, week_id, title, time_limit, description, question, lecture_id)
     cursor.execute(sql, val)
 
     db.commit()
@@ -96,13 +96,23 @@ def add_quiz_keyword():
 def add_quiz_summary():
     lecture = request.form.get("lecture")
     lecture_id = request.form.get("lectureId")
-    week_id = request.form.get("week_id")
+    week_id = request.form.get("weekId")
     weekNumber = request.form.get("weekNumber")
     path = request.form.get("path")
     choice = request.form.get("choice")
     short = request.form.get("short")
     time_limit = request.form.get("time_limit")
     description = request.form.get("description")
+    
+    print(f"[{current_file_name}] #add-quiz-keyword")
+    print(f"[{current_file_name}] lecture: {lecture}")
+    print(f"[{current_file_name}] lecture id: {lecture_id}")
+    print(f"[{current_file_name}] week_id: {week_id}")
+    print(f"[{current_file_name}] weekNumber: {weekNumber}")
+    print(f"[{current_file_name}] path: {path}")
+    print(f"[{current_file_name}] choice: {choice}")
+    print(f"[{current_file_name}] short: {short}")
+    print(f"[{current_file_name}] time_limit: {time_limit}")
     
     if lecture == None or lecture == "":
         return "invalied request", 400
@@ -115,24 +125,16 @@ def add_quiz_summary():
         return "invalied request", 403
     
     if time_limit == None:
-        time_limit = "60분"
+        time_limit = "60"
         
-    if description == None:
-        description = f"{lecture} {weekNumber}주차 퀴즈"
+    print(len(description))
+    
+    if len(description) <= 0 or description == "null":
+        description = f"{lecture} {weekNumber}주차 실습문제"
+    print(f"[{current_file_name}] description: {description}\n")
     
     title = f"{lecture} {weekNumber}주차 실습문제"
-
-    print(f"[{current_file_name}] #add-quiz-keyword")
-    print(f"[{current_file_name}] lecture: {lecture}")
-    print(f"[{current_file_name}] lecture id: {lecture_id}")
-    print(f"[{current_file_name}] week_id: {week_id}")
-    print(f"[{current_file_name}] weekNumber: {weekNumber}")
-    print(f"[{current_file_name}] path: {path}")
-    print(f"[{current_file_name}] choice: {choice}")
-    print(f"[{current_file_name}] short: {short}")
-    print(f"[{current_file_name}] title: {title}")
-    print(f"[{current_file_name}] time_limit: {time_limit}")
-    print(f"[{current_file_name}] description: {description}\n")
+    print(f"[{current_file_name}] title: {title}\n")
 
     now = datetime.now()
     one_week_later = now + timedelta(weeks=1)
@@ -143,13 +145,13 @@ def add_quiz_summary():
     question = summary_gen(path, int(choice), int(short))
 
     sql_strings = [json.dumps(question, ensure_ascii=False)]
-    if sql_injection_detector(sql_strings):
-        return "invalied quiz data", 409
+    # if sql_injection_detector(sql_strings):
+    #     return "invalied quiz data", 409
 
     db = getConnection()
     cursor = db.cursor()
     sql = "INSERT INTO quiz (quiz_type, created_at, deadline, update_at, week_id, quiz_name, time_limit, description, json_data, lecture_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    val = ("1", now, formatted_date, now, week_id, title, time_limit, description, question, lecture_id)
+    val = ("2", now, formatted_date, now, week_id, title, time_limit, description, question, lecture_id)
     cursor.execute(sql, val)
 
     db.commit()

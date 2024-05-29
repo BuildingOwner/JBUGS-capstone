@@ -21,7 +21,7 @@ const DoQuiz = (props) => {
   const [answer, setAnswer] = useState({})
   const [score, setScore] = useState()
   const [checked, setChecked] = useState({});
-  const [timeLeft, setTimeLeft] = useState(20 * 60) // 앞에 60은 data.timeLimit(시간제한)
+  const [timeLeft, setTimeLeft] = useState(data.timeLimit * 60) // 앞에 60은 data.timeLimit(시간제한)
   const minusIndex = () => {
     if (indexOfOptions == 0) {
     } else {
@@ -169,7 +169,7 @@ const DoQuiz = (props) => {
     }
     catch (error) {
       if (error.response?.status === 401) {
-        navigate("/")
+        navigate("/login")
       } else {
         // 다른 종류의 오류 발생
         console.error(error)

@@ -31,12 +31,12 @@ function CollepsedSidebar(props) {
         // 오류 처리
         console.error("로그아웃 실패", error);
       });
-    navigate("/");
+    navigate("/login");
   }
 
   return (
     <div className={`${styles.sidebars} ${styles2.sidebars} ${styles3.sidebars}`}>
-      <Link to={"/main"} className={`${styles.logo}`}>
+      <Link to={"/"} className={`${styles.logo}`}>
         <img
           className={` ${styles2.sidebarLogo}`}
           loading="lazy"
@@ -46,43 +46,43 @@ function CollepsedSidebar(props) {
       </Link>
       <div className={`${styles.sidebarContainer} ${styles3.sidebarContainer}`}>
         <div className={`${styles.navBtns} ${styles3.navBtns}`}>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/main"} className={styles.linkBtn}>
+          <Link to={"/"} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <GoHome size="25" />
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/chatbotpage"} state={{ memberName: memberName }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/chatbotpage"} state={{ memberName: memberName }} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <IoChatbubbleEllipsesOutline size="25" />
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
         <div className={`${styles.navBtns} ${styles3.navBtns}`}>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/course"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+          <Link to={"/course"} state={{ enrollmentId: enrollmentId }} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <PiBooks size="25" />
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/qalist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/qalist"} state={{ enrollmentId: enrollmentId }} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <FaQuestion size="25" />
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/noticelist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/noticelist"} state={{ enrollmentId: enrollmentId }} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <TbSpeakerphone size="25" />
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/assignmentlist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/assignmentlist"} state={{ enrollmentId: enrollmentId }} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <LuClipboardList size="25" />
-            </Link>
-          </button>
-          <button className={`btn btn-primary ${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
-            <Link to={"/quizlist"} state={{ enrollmentId: enrollmentId }} className={styles.linkBtn}>
+            </button>
+          </Link>
+          <Link to={"/quizlist"} state={{ enrollmentId: enrollmentId }} className={`${styles.sidebarNavBtn} ${styles2.sidebarNavBtn}`}>
+            <button className={`btn btn-primary ${styles.linkBtn} ${styles2.sidebarNavBtn}`}>
               <MdOutlineQuiz size="25" />
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
       <div className={styles.bottom}>

@@ -36,27 +36,38 @@
   border-radius: 10px;
 }
 
-.sidebarNavBtn{
+.sidebarNavBtn {
   display: flex !important;
   align-items: center;
   border: none !important;
   /* background-color: var(--point-blue) !important; */
   background: none !important;
   width: 60%;
+  border-radius: 5px;
+  text-decoration: none !important;
+}
+
+.sidebarNavBtn:hover {
+  background-color: #ccc !important;
+}
+
+.linkBtn {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--gap-mini) !important;
+  color: black !important;
+  background: none !important;
+  border: none !important;
+}
+
+.linkBtn:hover {
+  background: none !important;
 }
 
 .reactCalendar{
   border: none;
   border-radius: 10px;
   width: 300px;
-}
-
-.linkBtn{
-  display: flex;
-  text-decoration: none;
-  align-items: center;
-  gap: var(--gap-mini);
-  color: black;
 }
 
 .linkBtn h3{

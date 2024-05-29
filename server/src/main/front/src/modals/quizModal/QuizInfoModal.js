@@ -6,15 +6,15 @@ import styles from "./QuizInfoModal.module.css"
 import { IoClose } from "react-icons/io5";
 
 const QuizInfoModal = (props) => {
-  Modal.setAppElement('#root');
+  Modal.setAppElement('#root')
+  const { reRender, ...restProps } = props.props;
   const [formattedDate, setFormattedDate] = useState()
   const navigate = useNavigate()
   const data = props.props
-  console.log("Modal data", data)
   const moveToDoQuiz = () => {
     navigate('/doquiz', {
       state: {
-        props: props.props
+        props: restProps
       },
     })
   }
@@ -22,7 +22,7 @@ const QuizInfoModal = (props) => {
   const moveToQuizAnswer = () => {
     navigate('/quizanswer', {
       state: {
-        props: props.props,
+        props: restProps,
         courseDto: props.courseDto,
       },
     })
@@ -67,7 +67,7 @@ const QuizInfoModal = (props) => {
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
           <Info title={"종료 기한"} content={formattedDate} />
-          <Info title={"제한 시간"} content={data.timeLimit} />
+          <Info title={"제한 시간"} content={`${data.timeLimit}분`} />
         </div>
         <div className={styles.contents}>
           {
@@ -87,9 +87,11 @@ const QuizInfoModal = (props) => {
       </div>
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={props.onRequestClose}>닫기</button>
-        {props.props.submissionStatus === true || props.props.memberInfoDto?.memberType === "PROFESSOR" || props.timeDifference <= 0
+        {props.props.submissionStatus === true ||
+          props.props.memberInfoDto?.memberType === "PROFESSOR" ||
+          props.checkDueDate < 0
           ? <button className={`btn btn-primary ${styles.goBtn}`} onClick={moveToQuizAnswer}>
-            해설 보기
+            {props.props.memberInfoDto?.memberType === "PROFESSOR" ? "퀴즈 보기" : "해설 보기"}
           </button>
           : <button className={`btn btn-primary ${styles.goBtn}`} onClick={moveToDoQuiz}>
             응시 하기

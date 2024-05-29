@@ -6,7 +6,7 @@
   width: fit-content;
 }
 
-.sidebar{
+.sidebar {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -51,17 +51,28 @@
   /* background-color: var(--point-blue) !important; */
   background: none !important;
   width: 90%;
+  border-radius: 5px;
+  text-decoration: none !important;
+}
+
+.sidebarNavBtn:hover {
+  background-color: #ccc !important;
 }
 
 .linkBtn {
-  display: flex;
-  text-decoration: none;
-  align-items: center;
-  gap: var(--gap-mini);
-  color: black;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--gap-mini) !important;
+  color: black !important;
+  background: none !important;
+  border: none !important;
 }
 
-.bottom{
+.linkBtn:hover {
+  background: none !important;
+}
+
+.bottom {
   padding: var(--padding-xl);
   padding-right: 0;
   display: flex;
@@ -69,36 +80,35 @@
   gap: var(--gap-xl);
 }
 
-.userInfo{
+.userInfo {
   display: flex;
   gap: var(--gap-xl);
   align-items: center;
   justify-content: center;
-
 }
 
-.user{
+.user {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.userName{
+.userName {
   font-size: var(--font-size-base);
   font-weight: bold;
 }
 
-.userTrack{
+.userTrack {
   font-size: var(--font-size-base);
 }
 
-.userImage{
+.userImage {
   background-color: white;
   border-radius: 100px;
   padding: var(--padding-3xs);
 }
 
-.logoutBtn{
+.logoutBtn {
   border: none !important;
   background-color: var(--point-blue) !important;
   display: flex !important;

@@ -22,13 +22,14 @@ const FileUploadModal = (props) => {
   const [videoDescription, setVideoDescription] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [quizFlag, setQuizFlag] = useState(false)
+  const [videoLength, setVideoLength] = useState('') // 영상 길이
 
   // Collapse 상태를 토글하는 함수
   const toggleCollapse = () => {
     const filetitle = fileTitle !== null ? fileTitle.split(".") : "null"
     const length = filetitle.length
     const extension = filetitle[length - 1]
-    if(extension !== "pdf") {
+    if (extension !== "pdf") {
       alert("pdf만 퀴즈 생성이 가능합니다.")
       return
     }
@@ -43,8 +44,8 @@ const FileUploadModal = (props) => {
   }
 
   const handleClose = (event) => {
-    setVideoTitle('')
-    setFileTitle('')
+    setVideoTitle(null)
+    setFileTitle(null)
     setFileDescription('')
     setVideoDescription('')
     setDescription('')
@@ -52,7 +53,7 @@ const FileUploadModal = (props) => {
     setVideoFile(null)
     setChoice(null)
     setShortAnswer(null)
-    setQuizType("")
+    setQuizType(null)
     setIsOpen(false)
     if (event) {
       event.stopPropagation()
@@ -60,11 +61,13 @@ const FileUploadModal = (props) => {
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
 
+  // 퀴즈 타입이 변경되었을 경우
   const handleTypeChange = (e) => {
     setQuizType(e.target.value)
     console.log(e.target.value)
   }
 
+  // 파일이 변경되었을 경우
   const handleFileChange = (e) => {
     setAttachFile(e.target.files[0])
     console.log("attachFile : ", e.target.files[0])
@@ -84,6 +87,7 @@ const FileUploadModal = (props) => {
     }
   }
 
+  // 비디오가 변경되었을 경우
   const handleVideoChange = (e) => {
     setVideoFile(e.target.files[0])
     setVideoTitle(e.target.files[0].name)
@@ -102,6 +106,19 @@ const FileUploadModal = (props) => {
       // 파일이 선택되지 않은 경우
       setVideoDescription('');
     }
+    // 비디오 길이를 가져오기 위한 로직 추가
+    const videoElement = document.createElement('video');
+    videoElement.preload = 'metadata';
+
+    videoElement.onloadedmetadata = () => {
+      window.URL.revokeObjectURL(videoElement.src);
+      const duration = videoElement.duration
+      console.log("길이 : ", duration);
+      // 필요 시 상태 업데이트
+      setVideoLength(duration);
+    }
+
+    videoElement.src = URL.createObjectURL(e.target.files[0]);
   }
 
   const handleWeekChange = (e) => {
@@ -128,7 +145,33 @@ const FileUploadModal = (props) => {
     setVideoTitle(e.target.value)
   }
 
+  const uploadAndRender = () => {
+    uploadFiles()
+    handleClose()
+  }
+
   const uploadFiles = async () => {
+    // 유효성 검사 추가
+    if (weekNumber === null || (fileTitle === null && videoTitle === null)) {
+      alert("파일과 비디오중 하나는 업로드 되어야합니다.")
+      return
+    }
+
+    if (quizFlag === true) {
+      if (shortAnswer === 0) {
+        alert("주관식 개수를 선택해주세요.")
+        return
+      }
+      if (choice === 0) {
+        alert("객관식 개수를 선택해주세요.")
+        return
+      }
+      if (quizType === null) {
+        alert("문제 유형을 선택해주세요.")
+        return
+      }
+    }
+
     const formData = new FormData()
     formData.append("weekNumber", weekNumber)
     formData.append("fileTitle", fileTitle)
@@ -140,6 +183,7 @@ const FileUploadModal = (props) => {
     formData.append("description", description)
     formData.append("quizType", quizType)
     formData.append("quizFlag", quizFlag)
+    formData.append("videoLength", videoLength)
 
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
@@ -152,17 +196,21 @@ const FileUploadModal = (props) => {
         }
       })
       console.log("response : ", response)
+      alert(`${weekNumber}주차 파일이 업로드 되었습니다.`); // 사용자에게 알림
     } catch (error) {
       console.log(error);
       alert('파일 업로드에 실패했습니다.'); // 사용자에게 알림
+    } finally {
+      // 부모 컴포넌트를 다시 렌더링
+      props.reRender()
     }
-    // 부모 컴포넌트를 다시 렌더링
-    props.reRender()
-    handleClose()
+
   }
+
   useEffect(() => {
     setWeekNumber(props?.selectedWeek)
   }, [props])
+
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -178,7 +226,7 @@ const FileUploadModal = (props) => {
       isOpen={props.isOpen}
       onRequestClose={handleClose}>
       <div className={styles.top}>
-        <h3 className={styles.title}>파일 업로드</h3>
+        <h3 className={styles.title}>강의자료 추가</h3>
         <button type="button"
           className={`btn btn-primary ${styles.closeBtn}`}
           onClick={handleClose}>X</button>
@@ -301,7 +349,7 @@ const FileUploadModal = (props) => {
         <button className={`btn btn-primary ${styles.closeBtn}`}
           onClick={handleClose}>닫기
         </button>
-        <button className={`btn btn-primary ${styles.goBtn}`} onClick={uploadFiles}>업로드</button>
+        <button className={`btn btn-primary ${styles.goBtn}`} onClick={uploadAndRender}>업로드</button>
       </div>
     </Modal>
   );

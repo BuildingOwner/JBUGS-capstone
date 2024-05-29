@@ -22,6 +22,7 @@ import MakeQaModal from "./modals/qaModal/MakeQaModal";
 import NoticeModal from "./modals/noticeModal/NoticeModal";
 import MakeAssignmentModal from "./modals/profModal/profAssignModal/MakeAssignmentModal";
 import AssignmentList from "./pages/assignmentPage/AssignmentList";
+import VideoPlayer from "./pages/coursePage/VideoPlayer";
 // import ProfEditQuizModal from "./modals/profModal/profQuizModal/ProfEditQuizModal";
 // import ProfAssignmentModal from "./modals/profModal/profAssignModal/ProfAssignmentModal";
 // import ProfStudentQuizInfo from "./pages/profPage/profQuizPage/info/ProfStudentQuizInfo";
@@ -41,104 +42,100 @@ function App() {
   }, [action, pathname]);
 
   useEffect(() => {
-    let title = "";
+    let title = "한성 Eclass +";
     let metaDescription = "";
 
     switch (pathname) {
       case "/":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
-      case "/assignmentinfomodal":
-        title = "";
-        metaDescription = "";
-        break;
-      case "/main-mono":
-        title = "";
+      case "/login":
+        title = "로그인";
         metaDescription = "";
         break;
       case "/course":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/qalist":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/noticelist":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/chatbotpage":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/doquiz":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/quizanswer":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/quizlist":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/fileuploadmodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/quizinfomodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/profeditquizmodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/assignmentmodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/profassignmentmodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/qamodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/makeqamodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/noticemodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/makeassignmentmodal":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/assignmentlist":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/profstudentquizinfo":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/profstudentassigninfo":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/profstudentquizscore":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
       case "/profstudentassignscore":
-        title = "";
+        title = "한성 Eclass +";
         metaDescription = "";
         break;
     }
@@ -159,9 +156,9 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage />} />
       {/* <Route path="/assignmentinfomodal" element={<AssignmentInfoModal />} /> */}
-      <Route path="/main" element={<Main />} />
+      <Route path="/" element={<Main />} />
       <Route path="/course" element={<Course />} />
       <Route path="/qalist" element={<QaList />} />
       <Route path="/noticelist" element={<NoticeList />} />
@@ -177,6 +174,7 @@ function App() {
       <Route path="/noticemodal" element={<NoticeModal />} />
       <Route path="/assignmentlist" element={<AssignmentList />} />
       <Route path="/makeassignmentmodal" element={<MakeAssignmentModal />} />
+      <Route path="/videoplayer" element={<VideoPlayer />} />
       {/* <Route path="/profeditquizmodal" element={<ProfEditQuizModal />} />
       <Route path="/profassignmentmodal" element={<ProfAssignmentModal />} />
       <Route path="/profstudentquizinfo" element={<ProfStudentQuizInfo />} />

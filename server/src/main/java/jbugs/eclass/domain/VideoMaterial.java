@@ -18,6 +18,7 @@ public class VideoMaterial {
     private String videoName; //제목
     private String videoPath;
     private Long fileSize;
+    private String videoLength;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "week_id")

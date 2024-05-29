@@ -16,4 +16,6 @@ public interface VideoMaterialRepository extends JpaRepository<VideoMaterial, Lo
     List<VideoMaterial> findVideoMaterialsByWeekIdAndLectureId(Long weekId, Long lectureId);
 
     List<VideoMaterial> findByLectureId(Long lectureId);
+
+    List<VideoMaterial> findByWeekIdAndLectureId(Long weekId, Long lectureId);
 }

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jbugs.eclass.domain.*;
 import jbugs.eclass.dto.*;
 import jbugs.eclass.repository.EnrollmentRepository;
+import jbugs.eclass.repository.MaterialRepository;
 import jbugs.eclass.repository.VideoMaterialRepository;
 import jbugs.eclass.service.MaterialService;
 import jbugs.eclass.service.VideoPlaybackTimeService;
@@ -43,6 +44,7 @@ public class UploadApiController {
     private final MaterialService materialService;
     private final VideoMaterialRepository videoMaterialRepository;
     private final RestTemplate restTemplate;
+    private final MaterialRepository materialRepository;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -61,6 +63,7 @@ public class UploadApiController {
                                         @RequestParam("choice") String choice,
                                         @RequestParam("description") String description,
                                         @RequestParam("quizType") String quizType,
+                                        @RequestParam("videoLength") String videoLength,
                                         @RequestParam("quizFlag") boolean quizFlag,
                                         @PathVariable Long enrollmentId, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession(false); // 기존 세션 가져오기
@@ -74,16 +77,27 @@ public class UploadApiController {
 
             // 파일 업로드 처리
             if (attachFiles != null && attachFiles.length > 0) {
-                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(attachFiles), weekEntity.getId(), false, fileTitle, lecture));
+                uploadedFilePaths.addAll(uploadFiles(Arrays.asList(attachFiles), weekEntity.getId(), false, fileTitle, lecture, videoLength));
             }
 
             // 비디오 업로드 처리 후 경로(들) 반환
             if (videoFiles != null && videoFiles.length > 0) {
-                uploadFiles(Arrays.asList(videoFiles), weekEntity.getId(), true, videoTitle, lecture);
+                uploadFiles(Arrays.asList(videoFiles), weekEntity.getId(), true, videoTitle, lecture, videoLength);
             }
             // 파일 경로(들)을 사용하여 추가 처리 수행
             if (quizFlag) {
                 for (String filePath : uploadedFilePaths) {
+                    log.info("sendQuizKeywordRequest called with parameters: lectureId={}, lectureName={}, weekId={}, weekNumber={}, filePath={}, choice={}, shortAnswer={}, description={}, quizType={}",
+                            lecture.getId(),
+                            lecture.getName(),
+                            String.valueOf(weekEntity.getId()),
+                            String.valueOf(weekEntity.getWeekNumber()),
+                            filePath,
+                            choice,
+                            shortAnswer,
+                            description,
+                            quizType
+                    );
                     sendQuizKeywordRequest(lecture.getId(),lecture.getName(), String.valueOf(weekEntity.getId()), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
                 }
             }
@@ -97,21 +111,21 @@ public class UploadApiController {
 
     }
 
-    public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title, Lecture lecture) throws IOException {
+    public List<String> uploadFiles(List<MultipartFile> files, Long weekId, boolean isVideo, String title, Lecture lecture, String videoLength) throws IOException {
         Week weekEntity = weekService.findWeekById(weekId).orElseThrow(() -> new IllegalArgumentException("Invalid weekId"));
         List<String> filePaths = new ArrayList<>();
         String lectureName = lecture.getName();
 
         lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
 
-        String directory = isVideo ? fileDir + "video/" : fileDir +"file/";
+        String directory = isVideo ?  "video/" : "file/";
         directory += lectureName + "/";
 
         String currentDirectory = System.getProperty("user.dir");
         if (currentDirectory.indexOf("JBUGS-capstone") == -1) {
-            currentDirectory += "/JBUGS-capstone/server/";
+            currentDirectory += "/JBUGS-capstone/server";
         }
-        File dir = new File(currentDirectory + directory);
+        File dir = new File(currentDirectory +"/files/"+ directory);
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -137,6 +151,7 @@ public class UploadApiController {
                         videoMaterial.setWeek(weekEntity);
                         videoMaterial.setFileSize(fileSize);
                         videoMaterial.setLecture(lecture);
+                        videoMaterial.setVideoLength(videoLength);
                         videoMaterialRepository.save(videoMaterial);
                     } else {
                         Material material = new Material();
@@ -157,9 +172,6 @@ public class UploadApiController {
         }
         return filePaths;
     }
-
-
-
 
     // 파일 업로드 로직 이후에 추가
     public void sendQuizKeywordRequest(Long lectureId, String lecture, String weekId, String weekNumber, String path, String choice, String shortAnswer, String description, String quizType) {
@@ -201,13 +213,13 @@ public class UploadApiController {
 
         lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
 
-        String directory =  fileDir + "file/" +lectureName + "/";
+        String directory =  "file/" +lectureName + "/";
 
         String currentDirectory = System.getProperty("user.dir");
         if(currentDirectory.indexOf("JBUGS-capstone") == -1){
-            currentDirectory += "/JBUGS-capstone/server/";
+            currentDirectory += "/JBUGS-capstone/server";
         }
-        String fullPath = currentDirectory + directory + filename;
+        String fullPath = currentDirectory + "/files/" + directory + filename;
         // 파일의 전체 경로 생성
 
         // 파일 시스템에서 리소스 로드
@@ -238,5 +250,36 @@ public class UploadApiController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(resource);
+    }
+
+    @PostMapping("/uploadMaterial/{materialId}")
+    public ResponseEntity<?> uploadFileByMaterialId(@PathVariable Long materialId,
+                                                    @RequestParam("shortAnswer") String shortAnswer,
+                                                    @RequestParam("choice") String choice,
+                                                    @RequestParam("description") String description,
+                                                    @RequestParam("quizType") String quizType,
+                                                    HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession(false); // 기존 세션 가져오기
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Material material = materialRepository.findById(materialId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Material not found"));
+        Week weekEntity = material.getWeek();
+        Lecture lecture = material.getLecture();
+        String filePath = material.getFilePath();
+        log.info("sendQuizKeywordRequest called with parameters: lectureId={}, lectureName={}, weekId={}, weekNumber={}, filePath={}, choice={}, shortAnswer={}, description={}, quizType={}",
+                lecture.getId(),
+                lecture.getName(),
+                String.valueOf(weekEntity.getId()),
+                String.valueOf(weekEntity.getWeekNumber()),
+                filePath,
+                choice,
+                shortAnswer,
+                description,
+                quizType
+        );
+        sendQuizKeywordRequest(lecture.getId(), lecture.getName(), String.valueOf(weekEntity.getId()), String.valueOf(weekEntity.getWeekNumber()), filePath, choice, shortAnswer, description, quizType);
+
+        // 성공적으로 파일이 저장된 경우
+        return ResponseEntity.ok().body("퀴즈가 생성되었습니다.");
     }
 }

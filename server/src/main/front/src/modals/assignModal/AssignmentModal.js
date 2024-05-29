@@ -6,37 +6,41 @@ import Info from "../modalComponents/Info";
 import { LuFilePlus2 } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AssignmentModal = (props) => {
   Modal.setAppElement("#root")
+  const { reRender, ...restProps } = props.props;
   const data = props?.props
+  const navigate = useNavigate()
   const [fileDescription, setFileDescription] = useState('');
   const [formattedDate, setFormattedDate] = useState()
   const [remainDate, setRemainDate] = useState('')
   const [attachFiles, setAttachFiles] = useState([])
   const [comment, setComment] = useState("")
+
   const uploadAssign = async () => {
-    console.log("업로드 시작")
-    try {
-      const formData = new FormData()
+    // console.log("업로드 시작")
+    // try {
+    //   const formData = new FormData()
 
-      // attachFiles 배열의 각 파일을 formData에 추가
-      if (attachFiles) {
-        for (let i = 0; i < attachFiles.length; i++) {
-          formData.append("attachFiles", attachFiles[i]);
-        }
-      }
+    //   // attachFiles 배열의 각 파일을 formData에 추가
+    //   if (attachFiles) {
+    //     for (let i = 0; i < attachFiles.length; i++) {
+    //       formData.append("attachFiles", attachFiles[i]);
+    //     }
+    //   }
 
-      const response = await axios.post(`/api/course/${data.enrollmentId}/assignment/submit`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      console.log("upload response : ", response)
-    } catch (error) {
-      console.log(error)
-    }
-
+    //   const response = await axios.post(`/api/course/${data.enrollmentId}/assignment/submit`, formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   })
+    //   console.log("upload response : ", response)
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    alert("기능이 준비중입니다.")
   }
 
   const handleFileChange = (event) => {
@@ -76,6 +80,7 @@ const AssignmentModal = (props) => {
     }
   }
 
+  // 댓글창 클릭 시 댓글로
   const onAnswerClick = useCallback(() => {
     const anchor = document.querySelector(
       "[data-scroll-to='commentContainer']"
@@ -85,10 +90,16 @@ const AssignmentModal = (props) => {
     }
   }, []);
 
+  const moveToAssignmentList = () => {
+    navigate('/assignmentlist', { state: restProps })
+  }
+
   const handleClose = (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
     setFileDescription('')
     setAttachFiles([])
-    event.stopPropagation()
     props.onRequestClose() // 괄호를 추가하여 함수가 호출되도록 수정
   }
 
@@ -141,6 +152,19 @@ const AssignmentModal = (props) => {
     setFormattedDate(data1)
   }, [])
 
+  const checkDueDate = (dueDateString) => {
+    // 현재 날짜 및 시간
+    const now = new Date();
+    // 마감 날짜를 나타내는 Date 객체 생성
+    const dueDate = new Date(dueDateString);
+    // dueDate가 now보다 미래인지 확인
+    if (dueDate > now) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <Modal className={styles.modalContainer}
       style={{
@@ -163,11 +187,16 @@ const AssignmentModal = (props) => {
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
-          <Info title={"종료 일시"} content={formattedDate} />
-          <Info title={"마감 기한"} content={remainDate} />
+          {console.log(props)}
+          <Info title={"마감 기한"} content={formattedDate} />
+          <Info title={"마감 여부"} content={checkDueDate(props.props.dueDate) ? "진행중" : "마감"} />
         </div>
         <div className={styles.contents}>
-          <Info title={"제출 여부"} content={<h3 className={`${styles.box} ${styles.red}`}>미제출</h3>} /> {/*미제출은 red, 제출완료는 green*/}
+          {
+            data.status === "SUBMITTED" ? <Info title={"제출 여부"} content={<h3 className={`${styles.box} ${styles.green}`}>제출</h3>} />
+              : <Info title={"제출 여부"} content={<h3 className={`${styles.box} ${styles.red}`}>미제출</h3>} />
+          }
+          {/*미제출은 red, 제출완료는 green*/}
           <Info title={"최종 수정 일시"} content={"2024-10-10"} />
         </div>
         <div className={styles.contents}>
@@ -207,7 +236,7 @@ const AssignmentModal = (props) => {
             <h3 className={styles2.title}>댓글</h3>
           </div>
           <div className={styles2.commentList}>
-            <h3 className={styles2.comment}>댓글이여.</h3>
+            {/* <h3 className={styles2.comment}></h3> */}
           </div>
         </div>
       </div>
@@ -219,10 +248,17 @@ const AssignmentModal = (props) => {
       />
       <div className={styles.bottom}>
         <button className={`btn btn-primary ${styles.closeBtn}`} onClick={handleClose}>닫기</button>
+        {/* {
+          props?.from === "course" ?
+            <button className={`btn btn-primary ${styles.goBtn}`}
+              onClick={moveToAssignmentList}>
+              과제 페이지
+            </button> */}
         <button className={`btn btn-primary ${styles.goBtn}`}
-          onClick={
-            remainDate === "마감" ? null : uploadAssign
-          }>과제 제출</button>
+          onClick={uploadAssign}>
+          과제 제출
+        </button>
+        {/* } */}
       </div>
     </Modal>
   )

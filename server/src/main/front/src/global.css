@@ -267,6 +267,7 @@ body {
 .no-scroll-bar {
   overflow: hidden;
   scrollbar-gutter: stable both-edges;
+  padding: 0 5px;
 }
 
 .no-scroll-bar:hover {
@@ -277,6 +278,7 @@ body {
 .no-scroll-bar::-webkit-scrollbar {
   /* display: none; */
   width: 8px;
+  height: 8px; /* 가로 스크롤바의 높이 */
 }
 
 .no-scroll-bar::-webkit-scrollbar-thumb {

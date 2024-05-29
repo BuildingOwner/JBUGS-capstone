@@ -129,3 +129,10 @@
   width: 100%;
   word-wrap: break-word;
 }
+
+@media (max-width: 1600px) {
+  .modalContainer{
+    padding: var(--padding-4xl);
+    gap: var(--gap-xl);
+  }
+}

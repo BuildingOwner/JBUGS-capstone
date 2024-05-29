@@ -104,7 +104,7 @@ const VideoPlayer = () => {
     setIsReady(true)
   }
 
-  if (videoUrl === false) {
+  if (videoUrl.length < 3) {
     console.log(videoUrl)
     return <LoadingPage />
   };

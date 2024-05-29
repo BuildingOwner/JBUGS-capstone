@@ -118,14 +118,14 @@ public class UploadApiController {
 
         lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
 
-        String directory = isVideo ? fileDir + "video/" : fileDir +"file/";
+        String directory = isVideo ?  "video/" : "file/";
         directory += lectureName + "/";
 
         String currentDirectory = System.getProperty("user.dir");
         if (currentDirectory.indexOf("JBUGS-capstone") == -1) {
-            currentDirectory += "/JBUGS-capstone/server/";
+            currentDirectory += "/JBUGS-capstone/server";
         }
-        File dir = new File(currentDirectory + directory);
+        File dir = new File(currentDirectory +"/files/"+ directory);
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -213,13 +213,13 @@ public class UploadApiController {
 
         lectureName = lectureName.replaceAll("[^a-zA-Z0-9가-힣]", "_");
 
-        String directory =  fileDir + "file/" +lectureName + "/";
+        String directory =  "file/" +lectureName + "/";
 
         String currentDirectory = System.getProperty("user.dir");
         if(currentDirectory.indexOf("JBUGS-capstone") == -1){
-            currentDirectory += "/JBUGS-capstone/server/";
+            currentDirectory += "/JBUGS-capstone/server";
         }
-        String fullPath = currentDirectory + directory + filename;
+        String fullPath = currentDirectory + "/files/" + directory + filename;
         // 파일의 전체 경로 생성
 
         // 파일 시스템에서 리소스 로드

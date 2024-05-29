@@ -130,7 +130,7 @@ def add_quiz_summary():
     print(len(description))
     
     if len(description) <= 0 or description == "null":
-        description = f"{lecture} {weekNumber}주차 퀴즈"
+        description = f"{lecture} {weekNumber}주차 실습문제"
     print(f"[{current_file_name}] description: {description}\n")
     
     title = f"{lecture} {weekNumber}주차 실습문제"

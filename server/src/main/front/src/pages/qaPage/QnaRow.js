@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { FiLock } from "react-icons/fi";
 import QaModal from "../../modals/qaModal/QaModal";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 const QnaRow = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   // 모달창 노출 여부 state
@@ -19,10 +20,20 @@ const QnaRow = (props) => {
     }
   }
 
-  const handleDeleteQna = (event) => {
-    if(event) {
+  const handleDeleteQna = async (event) => {
+    if (event) {
       event.stopPropagation()
     }
+    if (confirm("삭제 하시겠습니까?") === true) {
+      try {
+        const response = await axios.delete(`/api/qna/${props.qnaId}`);
+        console.log(response.data); // 서버로부터의 응답을 처리합니다.
+        alert("삭제되었습니다.")
+      } catch (error) {
+        console.error('Error deleting notice:', error);
+      }
+    }
+    props.reRender()
   }
   const formatDate = (dateString) => {
     const date = new Date(dateString);

@@ -258,6 +258,7 @@ const Course = () => {
                 {assignments[0] ? assignments.map((assignment, i) => (
                   <ListItem
                     key={`assignment${i}`}
+                    assignmentId={assignment.id}
                     title={assignment.title}
                     contents={assignment.contents}
                     dueDate={assignment.dueDate}
@@ -268,6 +269,7 @@ const Course = () => {
                     url={assignmentUrl}
                     memberInfoDto={memberInfoDto}
                     editFlag={editFlag}
+                    reRender={reRender}
                   />
                 )) : <NoItem title={"과제가"} />}
               </div>

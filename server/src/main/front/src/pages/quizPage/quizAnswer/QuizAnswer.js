@@ -284,9 +284,12 @@ const QuizAnswer = () => {
                         <textarea
                           value={answer[questions[indexOfOptions]?.id] || ''}
                           readOnly
-                          className={`${questions[indexOfOptions]?.answer.toLowerCase() === answer[indexOfOptions + 1].toLowerCase() ?
+                          className={`${typeof answer[indexOfOptions + 1] === 'string' &&
+                            questions[indexOfOptions]?.answer.toLowerCase() === answer[indexOfOptions + 1].toLowerCase() ?
                             styles.correct : styles.wrong}`}
                         ></textarea>
+
+
                         <h4>정답 : {questions[indexOfOptions]?.answer}</h4>
                       </>)
                   }

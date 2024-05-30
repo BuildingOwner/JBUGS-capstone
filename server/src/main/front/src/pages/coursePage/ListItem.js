@@ -68,6 +68,22 @@ const ListItem = (props) => {
     event.stopPropagation()
   }
 
+  const handleDeleteAssign = async (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
+    if (confirm("삭제 하시겠습니까?") === true) {
+      try {
+        const response = await axios.delete(`/api/assignment/${props.assignmentId}`)
+        console.log(response)
+        alert("삭제되었습니다.")
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    props.reRender()
+  }
+
   const handleDeleteQuiz = async (event) => {
     if (event) {
       event.stopPropagation()
@@ -76,21 +92,7 @@ const ListItem = (props) => {
       try {
         const response = await axios.delete(`/api/quiz/${props.quizId}`)
         console.log(response)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    props.reRender()
-  }
-
-  const handleDeleteVideoFile = async (event) => {
-    if (event) {
-      event.stopPropagation()
-    }
-    if (confirm("삭제 하시겠습니까?") === true) {
-      try {
-        const response = await axios.delete(`/api/videoMaterial/${props.videoId}`)
-        console.log(response)
+        alert("삭제되었습니다.")
       } catch (error) {
         console.log(error)
       }
@@ -400,7 +402,7 @@ const ListItem = (props) => {
                       <button type="button"
                         className={`btn btn-primary ${styles.deleteBtn}`}
                         // 삭제 구현해야함
-                        onClick={console.log("delete")}>
+                        onClick={handleDeleteAssign}>
                         <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
                       </button>
                     </div> : null

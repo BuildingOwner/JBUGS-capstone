@@ -147,6 +147,7 @@ const QaList = () => {
 
           <div className={styles.content}>
             <div className={styles.tabBtns}>
+              <div className={styles.btnDiv}>
               <button style={{ borderTopLeftRadius: "5px" }}
                 className={`${styles.tabItem} ${qaFilter === 'ALL' ? styles.currentFilter : ''}`}
                 onClick={() => changeQaFilter('ALL')}
@@ -159,6 +160,8 @@ const QaList = () => {
               >
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>내 질문</h3>
               </button>
+              </div>
+              
               {/* 수정 버튼 */}
               {
                 memberInfoDto?.memberType === "PROFESSOR" ? <button type="button"

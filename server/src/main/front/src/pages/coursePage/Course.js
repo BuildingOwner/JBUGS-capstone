@@ -208,20 +208,24 @@ const Course = () => {
                   >{index + 1}</button>
                 ))}
               </nav>
-              {/* 수정 버튼 */}
-              {
-                memberInfoDto.memberType === "PROFESSOR" ?
-                  <button type="button"
-                    className={`btn btn-primary ${styles.addBtn}`}
-                    onClick={() => setEditFlag(!editFlag)}>
-                    <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>자료 수정</h3>
-                  </button> : null
-              }
-              <button type="button" className={`btn btn-primary 
+              {/* 버튼 div */}
+              <div className={styles.buttonDiv}>
+                {/* 수정 버튼 */}
+                {
+                  memberInfoDto.memberType === "PROFESSOR" ?
+                    <button type="button"
+                      className={`btn btn-primary ${styles.addBtn} ${styles.editBtn}`}
+                      onClick={() => setEditFlag(!editFlag)}>
+                      <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>자료 수정</h3>
+                    </button> : null
+                }
+                <button type="button" className={`btn btn-primary 
               ${memberInfoDto?.memberType == "STUDENT" ? styles.hidden : null}
               ${styles.addBtn}`} onClick={openModal}>
-                <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
-              </button>
+                  <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
+                </button>
+              </div>
+
             </div>
           </div>
           <div className={styles.container}>

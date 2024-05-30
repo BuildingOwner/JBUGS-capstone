@@ -63,6 +63,7 @@ const VideoItem = (props) => {
     const newWindow = window.open("/videoplayer", "_blank", "width=800,height=600");
 
     try {
+      console.log(`/api/course/stream/${props.videoId}`)
       const response = await axios.get(`/api/course/stream/${props.videoId}`, {
         responseType: 'blob' // 바이너리 데이터로 응답 받기
       })

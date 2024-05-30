@@ -13,21 +13,33 @@ const VideoPlayer = () => {
   const [videoDuration, setVideoDuration] = useState(0) // 영상 길이(초단위)
   const [playedSeconds, setPlayedSeconds] = useState(0) // 현재 재생 시간
   const [isReady, setIsReady] = useState(false) // 비디오 준비 상태 관리
+  const [percent, setPercent] = useState(0)
   const playerRef = useRef(null) // ReactPlayer 컴포넌트에 대한 ref를 생성
 
   // 동영상 길이가 결정될 때 호출될 함수
   const handleDuration = (duration) => {
-    console.log('Video duration in seconds:', duration)
     setVideoDuration(duration)
   }
 
-  // 동영상 재생 시간이 업데이트될 때 호출될 함수
   const handleProgress = (state) => {
+    // 사용자가 재생 위치를 후퇴시키려고 하는 경우, 함수를 종료
     if (playedSeconds > state.playedSeconds) {
       return
     }
-    console.log('Played seconds:', state.playedSeconds)
-    setPlayedSeconds(state.playedSeconds)
+
+    // 동영상 재생 진행률이 80% 미만이고 사용자가 10초 이상 빨리 건너뛰려고 시도하는 경우
+    if (percent < 80 && state.playedSeconds > playedSeconds + 5) {
+      // 10초 후로 건너뛰기를 방지하기 위해 원래 위치로 되돌림
+      playerRef.current.seekTo(playedSeconds)
+    } else if (percent >= 80) {
+      // 동영상 재생 진행률이 80% 이상인 경우, 사용자가 10초 이상 건너뛰려고 해도 특별한 제한을 두지 않음
+      // 정상적인 재생인 경우, 재생된 시간을 업데이트
+      setPlayedSeconds(state.playedSeconds)
+    } else {
+      // 그 외의 모든 경우 (예: 동영상 재생 진행률이 80% 미만이지만 10초 미만으로 건너뛰는 경우)
+      // 재생된 시간을 업데이트
+      setPlayedSeconds(state.playedSeconds)
+    }
   }
 
   const calcPercent = (long, playedSecond) => {
@@ -61,6 +73,7 @@ const VideoPlayer = () => {
         setVideoId(event.data.videoId)
         setMemberId(event.data.memberId)
         setPlaybackTime(event.data.playbackTime)
+        setPercent(event.data.percent)
       }
     }
 
@@ -115,18 +128,18 @@ const VideoPlayer = () => {
       return
     }
     if (playerRef.current) {
-      playerRef.current.seekTo(playbackTime) // 10초 지점으로 이동
+      playerRef.current.seekTo(playbackTime)
     }
     setIsReady(true)
   }
 
-
-
-  // if (videoUrl === undefined) {
-  //   console.log(videoUrl)
-  //   return <LoadingPage />
-  // }
-
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 `playbackTime`으로 이동
+    if (playerRef.current) {
+      playerRef.current.seekTo(playbackTime);
+      setPlayedSeconds(playbackTime);
+    }
+  }, [playbackTime]);
   return (
     <div className={styles.player}>
       <div className={styles.inner}>

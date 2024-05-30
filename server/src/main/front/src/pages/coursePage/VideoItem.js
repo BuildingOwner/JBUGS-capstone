@@ -50,6 +50,7 @@ const VideoItem = (props) => {
                     videoId: props.videoId,
                     memberId: memberInfoDto.memberId,
                     playbackTime: props.playbackTime,
+                    percent: props.percent,
                 }, '*')
             }
             const checkWindowClosed = setInterval(() => {

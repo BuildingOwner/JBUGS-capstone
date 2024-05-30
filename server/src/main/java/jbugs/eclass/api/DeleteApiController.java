@@ -1,8 +1,6 @@
 package jbugs.eclass.api;
 
-import jbugs.eclass.repository.MaterialRepository;
-import jbugs.eclass.repository.QuizRepository;
-import jbugs.eclass.repository.VideoMaterialRepository;
+import jbugs.eclass.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +16,8 @@ public class DeleteApiController {
     private final MaterialRepository materialRepository;
     private final VideoMaterialRepository videoMaterialRepository;
     private final QuizRepository quizRepository;
-
+    private final NoticeRepository noticeRepository;
+    
     @DeleteMapping("/material/{materialId}")
     public ResponseEntity<?> deleteMaterial(@PathVariable Long materialId) {
         materialRepository.deleteById(materialId);
@@ -35,5 +34,11 @@ public class DeleteApiController {
     public ResponseEntity<?> deleteQuiz(@PathVariable Long quizId) {
         quizRepository.deleteById(quizId);
         return ResponseEntity.ok().body("Quiz with id: " + quizId + " was deleted successfully.");
+    }
+
+    @DeleteMapping("/notice/{noticeId}")
+    public ResponseEntity<?> deleteNotice(@PathVariable Long noticeId) {
+        noticeRepository.deleteById(noticeId);
+        return ResponseEntity.ok().body("Notice with id: " + noticeId + " was deleted successfully.");
     }
 }

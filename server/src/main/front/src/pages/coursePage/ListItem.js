@@ -24,7 +24,7 @@ const ListItem = (props) => {
   const [memberInfoDto, setMemberInfoDto] = useState();
   const [timeDifference, setTimeDifference] = useState(null)
   const [videoLength, setVideoLength] = useState("00:00")
-
+  console.log(props?.editFlag)
   // 과제모달
   const openAssignModal = (event) => {
     if (event) {
@@ -364,9 +364,6 @@ const ListItem = (props) => {
             {props.url === 'file' && (
               <h3 className={`${styles.fontSize} ${fileColor}`}>{fileExtension}</h3>
             )}
-            {props.url === 'video' && (
-              <h3 className={`${styles.fontSize} ${styles.blue}`}>{videoLength !== null ? videoLength : `00:00`}</h3>
-            )}
           </div>
           <div className={styles.content}>
             <div className={styles.second}>
@@ -379,9 +376,6 @@ const ListItem = (props) => {
               {props.url === 'file' && (
                 <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
               )}
-              {props.url === 'video' && (
-                <h3 className={styles.fontSize}>{removeExtension(props.title)}</h3>
-              )}
             </div>
             {props.url === 'assignmentlist' ?
               <div className={styles.third}> <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3></div> : null
@@ -390,14 +384,30 @@ const ListItem = (props) => {
         </div>
         <div className={styles.fourth}>
           {
-            props.url === 'assignmentlist' ? (
-              checkDueDate(props.dueDate) === true ?
-                (
-                  <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
-                ) : (
-                  <h3 className={styles.fontSize}>마감</h3>
-                )
-            ) : null // 'assignmentlist'가 아닐 경우 아무 것도 출력x
+            props.url === 'assignmentlist' && (
+              <>
+                {
+                  checkDueDate(props.dueDate) === true ?
+                    (
+                      <h3 className={styles.fontSize}>{daysRemaining}일 남음</h3>
+                    ) : (
+                      <h3 className={styles.fontSize}>마감</h3>
+                    )
+                }
+                {
+                  props.memberInfoDto.memberType === "PROFESSOR" && props.editFlag === true ?
+                    <div className={styles.modBtns}>
+                      <button type="button"
+                        className={`btn btn-primary ${styles.deleteBtn}`}
+                        // 삭제 구현해야함
+                        onClick={console.log("delete")}>
+                        <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
+                      </button>
+                    </div> : null
+                }
+              </>
+
+            )
           }
 
           {props.url === 'quizlist' && (
@@ -408,14 +418,14 @@ const ListItem = (props) => {
                   <h3 className={styles.fontSize}>마감</h3>
               }
               {
-                props.memberInfoDto.memberType === "STUDENT" ? null :
+                props.memberInfoDto.memberType === "PROFESSOR" && props.editFlag === true ?
                   <div className={styles.modBtns}>
                     <button type="button"
                       className={`btn btn-primary ${styles.deleteBtn}`}
                       onClick={(e) => handleDeleteQuiz(e)}>
                       <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
                     </button>
-                  </div>
+                  </div> : null
               }
             </>
           )}
@@ -423,34 +433,25 @@ const ListItem = (props) => {
             <>
               <h3 className={styles.fontSize}>{byte}</h3>
               {
-                props.memberInfoDto.memberType === "STUDENT" ? null :
-                  <div className={styles.modBtns}>
-                    {fileExtension === "pdf" ?
-                      <button type="button"
-                        className={`btn btn-primary ${styles.modBtn}`}
-                        onClick={(e) => openUploadModal(e)}
-                        data-tooltip-content='퀴즈 생성하기' data-tooltip-id='tooltip'>
-                        <HiOutlineSquaresPlus size={25} />
-                      </button> : null
-                    }
+                props.memberInfoDto.memberType === "PROFESSOR" ? <div className={styles.modBtns}>
+                  {fileExtension === "pdf" ?
                     <button type="button"
+                      className={`btn btn-primary ${styles.modBtn}`}
+                      onClick={(e) => openUploadModal(e)}
+                      data-tooltip-content='퀴즈 생성하기' data-tooltip-id='tooltip'>
+                      <HiOutlineSquaresPlus size={25} />
+                    </button> : null
+                  }
+                  {
+                    props.editFlag === true ? <button type="button"
                       className={`btn btn-primary ${styles.deleteBtn}`}
                       onClick={(e) => handleDeleteFile(e)}>
                       <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
-                    </button>
-                  </div>
-              }
-            </>
-          )}
-          {props.url === 'video' && (
-            <>
-              {
-                props.memberInfoDto.memberType === "STUDENT" ? null :
-                  <button type="button"
-                    className={`btn btn-primary ${styles.deleteBtn}`}
-                    onClick={(e) => handleDeleteVideoFile(e)}>
-                    <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
-                  </button>
+                    </button> : null
+                  }
+
+                </div> : null
+
               }
             </>
           )}

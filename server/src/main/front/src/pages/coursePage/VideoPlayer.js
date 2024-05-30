@@ -8,7 +8,7 @@ const VideoPlayer = () => {
   const [memberId, setMemberId] = useState('')
   const [playbackTime, setPlaybackTime] = useState(0)
   const [videoId, setVideoId] = useState(0)
-  const [videoUrl, setVideoUrl] = useState('')
+  const [videoUrl, setVideoUrl] = useState()
   const [videoDuration, setVideoDuration] = useState(0) // 영상 길이(초단위)
   const [playedSeconds, setPlayedSeconds] = useState(0) // 현재 재생 시간
   const [isReady, setIsReady] = useState(false) // 비디오 준비 상태 관리
@@ -104,7 +104,7 @@ const VideoPlayer = () => {
     setIsReady(true)
   }
 
-  if (videoUrl.length < 3) {
+  if (videoUrl === undefined) {
     console.log(videoUrl)
     return <LoadingPage />
   };

@@ -2,11 +2,11 @@ import styles from "./QnaRow.module.css"
 import { useState, useEffect } from "react";
 import { FiLock } from "react-icons/fi";
 import QaModal from "../../modals/qaModal/QaModal";
+import { IoClose } from "react-icons/io5";
 const QnaRow = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   // 모달창 노출 여부 state
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
+  const [modalIsOpen, setModalIsOpen] = useState(false)
   const openModal = () => {
     setModalIsOpen(true)
   }
@@ -19,6 +19,11 @@ const QnaRow = (props) => {
     }
   }
 
+  const handleDeleteQna = (event) => {
+    if(event) {
+      event.stopPropagation()
+    }
+  }
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().substring(2); // 연도의 마지막 두 자리
@@ -41,7 +46,6 @@ const QnaRow = (props) => {
     <div className={styles.row}
       // secret이 true인 경우에는 작성자와 현재 멤버 이름을 비교후 같으면 onClick 활성화
       onClick={props.secret ? (props.writer === props.memberInfoDto.memberName || props.memberInfoDto.memberType === "PROFESSOR" ? openModal : null) : openModal}>
-      {console.log(props)}
       <QaModal isOpen={modalIsOpen}
         onRequestClose={closeModal}
         props={props} />
@@ -60,6 +64,15 @@ const QnaRow = (props) => {
       <h4 className={styles.writer}>{props.writer}</h4>
       <h4 className={styles.date}>{formattedDate}</h4>
       <h4 className={styles.views}>{props.views}</h4>
+      {
+        props.memberInfoDto.memberType === "PROFESSOR" && props.editFlag === true ?
+          <button type="button"
+            className={`btn btn-primary ${styles.deleteBtn}`}
+            onClick={handleDeleteQna}>
+            <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
+          </button>
+          : null
+      }
     </div>
   );
 };

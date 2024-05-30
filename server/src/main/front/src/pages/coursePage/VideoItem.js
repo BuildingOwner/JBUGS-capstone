@@ -136,9 +136,11 @@ const VideoItem = (props) => {
                                     aria-valuenow="0"
                                     aria-valuemin="0"
                                     aria-valuemax="100">
-                                    <div className={`progress-bar
+                                    <div className={
+                                        `progress-bar
                                         ${styles2.progressBarPercent}
-                                        ${props.percent < 80 ? styles2.redColor : styles2.greenColor}
+                                        ${props.memberInfoDto.memberType === "PROFESSOR" || props.percent >= 80 ?
+                                            styles2.greenColor : styles2.redColor}
                                     `}
                                         style={{ width: `${props.percent}%` }}></div>{props.percent}%
                                 </div> :

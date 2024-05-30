@@ -77,8 +77,6 @@ const QaModal = (props) => {
         comments.push({ writer: writer.trim(), content: content.trim() })
       }
     })
-
-    console.log(comments)
     return comments
   }
 
@@ -187,7 +185,6 @@ const QaModal = (props) => {
     setResponseComment(data?.comment)
     setPrevFiles(data?.materials)
     setCommentData(parseCommentString(data?.comment))
-    console.log(props)
   }, [startFlag]) // 모달이 닫히면 다시 렌더링이 일어남
 
   return (
@@ -294,7 +291,7 @@ const QaModal = (props) => {
               // 댓글이 있을 시에 출력
               commentData?.length > 0 ?
                 commentData.map((comment) => (
-                  <div className={`${styles2.comment} ${console.log(props)}
+                  <div className={`${styles2.comment}
                   ${data?.courseDto.professorName === comment.writer ? styles2.profComment : null}`}>
                     <h4 className={styles.commentWriter}>{comment.writer}</h4>
                     <h4 className={styles.commentContent}>{comment.content}</h4>

@@ -162,7 +162,7 @@ const NoticeList = () => {
                 onClick={() => changeNoticeFilter('FACE_TO_FACE_CLASSES')}>
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>대면수업</h3>
               </button>
-              {/* 공지 삭제 버튼 */}
+              {/* 공지 버튼 */}
               {
                 memberInfoDto?.memberType === "PROFESSOR" ? <button type="button"
                   className={`btn btn-primary ${styles.addBtn}`}

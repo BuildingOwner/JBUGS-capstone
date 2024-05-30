@@ -1,8 +1,9 @@
-.progressBar, .progress{
+.progressBar,
+.progress {
   width: 100% !important;
 }
 
-.progress{
+.progress {
   border-radius: 3px !important;
   height: auto !important;
   justify-content: space-between;
@@ -12,7 +13,16 @@
   color: #555;
 }
 
-.progressBarPercent{
+.progressBarPercent {
   text-align: left;
+  background-color: var(--point-green) !important;
+}
+
+.redColor {
+  background-color: var(--point-red) !important;
+}
+
+
+.greenColor {
   background-color: var(--point-green) !important;
 }

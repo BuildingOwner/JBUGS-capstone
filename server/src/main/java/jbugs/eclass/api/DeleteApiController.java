@@ -17,7 +17,7 @@ public class DeleteApiController {
     private final VideoMaterialRepository videoMaterialRepository;
     private final QuizRepository quizRepository;
     private final NoticeRepository noticeRepository;
-    
+
     @DeleteMapping("/material/{materialId}")
     public ResponseEntity<?> deleteMaterial(@PathVariable Long materialId) {
         materialRepository.deleteById(materialId);

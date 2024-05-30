@@ -187,7 +187,6 @@ const AssignmentModal = (props) => {
       </div>
       <div className={`no-scroll-bar ${styles.gap}`}>
         <div className={styles.contents}>
-          {console.log(props)}
           <Info title={"마감 기한"} content={formattedDate} />
           <Info title={"마감 여부"} content={checkDueDate(props.props.dueDate) ? "진행중" : "마감"} />
         </div>

@@ -158,14 +158,39 @@ const VideoItem = (props) => {
                     )}
                 </div>
             </div>
-            <Tooltip
-                id='tooltip'
-                backgroundColor='gray'
-                place="top"
-                arrowColor='transparent'
-            />
-        </>
-    )
+            <div className={`${styles.third} ${styles2.progressBar}`}>
+              {props.url === 'video' ?
+                <div className={`progress ${styles2.progress}`} role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                  <div className={`progress-bar ${styles2.progressBarPercent}`} style={{ width: `${props.percent}%` }}></div>{props.percent}%
+                </div> :
+                <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3>
+              }
+            </div>
+          </div>
+        </div>
+        <div className={styles.fourth}>
+          {props.url === 'video' && (
+            <>
+              {
+                props.memberInfoDto.memberType === "STUDENT" ? null :
+                  <button type="button"
+                    className={`btn btn-primary ${styles.deleteBtn}`}
+                    onClick={(e) => handleDeleteVideoFile(e)}>
+                    <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
+                  </button>
+              }
+            </>
+          )}
+        </div>
+      </div>
+      <Tooltip
+        id='tooltip'
+        backgroundColor='gray'
+        place="top"
+        arrowColor='transparent'
+      />
+    </>
+  )
 }
 
 export default VideoItem

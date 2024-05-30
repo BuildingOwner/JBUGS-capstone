@@ -16,6 +16,8 @@ public class DeleteApiController {
     private final MaterialRepository materialRepository;
     private final VideoMaterialRepository videoMaterialRepository;
     private final QuizRepository quizRepository;
+    private final QnARepository qnARepository;
+    private final AssignmentRepository assignmentRepository;
     private final NoticeRepository noticeRepository;
 
     @DeleteMapping("/material/{materialId}")
@@ -40,5 +42,17 @@ public class DeleteApiController {
     public ResponseEntity<?> deleteNotice(@PathVariable Long noticeId) {
         noticeRepository.deleteById(noticeId);
         return ResponseEntity.ok().body("Notice with id: " + noticeId + " was deleted successfully.");
+    }
+
+    @DeleteMapping("/qna/{qnaId}")
+    public ResponseEntity<?> deleteQna(@PathVariable Long qnaId){
+        qnARepository.deleteById(qnaId);
+        return ResponseEntity.ok().body("Qna with id: " + qnaId + " was deleted successfully.");
+    }
+
+    @DeleteMapping("/assignment/{assignmentId}")
+    public ResponseEntity<?> deleteAssignment(@PathVariable Long assignmentId){
+        assignmentRepository.deleteById(assignmentId);
+        return ResponseEntity.ok().body("Assignment with id: " + assignmentId + " was deleted successfully.");
     }
 }

@@ -21,7 +21,7 @@ const DoQuiz = (props) => {
   const [answer, setAnswer] = useState({})
   const [score, setScore] = useState()
   const [checked, setChecked] = useState({});
-  const [timeLeft, setTimeLeft] = useState(data.timeLimit * 60) // 앞에 60은 data.timeLimit(시간제한)
+  const [timeLeft, setTimeLeft] = useState(data.timeLimit * 60)
   const minusIndex = () => {
     if (indexOfOptions == 0) {
     } else {
@@ -108,15 +108,19 @@ const DoQuiz = (props) => {
   const fetchScore = async (studentAnswer) => {
     console.log("questions : ", questions)
     console.log("studentAnswer : ", studentAnswer)
-
+    let studentAns
     let scoreCount = 0
     questions.forEach((question) => {
       // question.id를 사용하여 studentAnswer 객체에서 해당 질문의 학생 답안을 찾음
-      const studentAns = studentAnswer[question.id]
+      if (studentAnswer[question.id] !== undefined) {
+        studentAns = studentAnswer[question.id].toLowerCase()
+      }
       // 학생의 답안과 정답을 비교
-      if (studentAns === question.answer) {
-        scoreCount += 1 // 정답인 경우 scoreCount 증가
+      if (studentAns === question.answer.toLowerCase()) {
+        console.log("studentAnswer : ", studentAns)
+        console.log("question.answer.toLowerCase()", question.answer.toLowerCase())
         console.log(`${question.id}가 정답`)
+        scoreCount += 1 // 정답인 경우 scoreCount 증가
       }
     })
 
@@ -189,7 +193,7 @@ const DoQuiz = (props) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prevTime) => { 
+      setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(timer)
           if (prevTime === 1) {

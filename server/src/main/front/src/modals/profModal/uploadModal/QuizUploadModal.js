@@ -11,7 +11,7 @@ const QuizUploadModal = (props) => {
   const [choice, setChoice] = useState(0)
   const [quizType, setQuizType] = useState(null)
   const [description, setDescription] = useState(null)
-
+  const [selectedWekk, setSelectedWeek] = useState(null)
   // 컴포넌트 클릭시 모든 이벤트 버블링 막음
   const stopPropagation = (e) => {
     e.stopPropagation()
@@ -75,13 +75,16 @@ const QuizUploadModal = (props) => {
       })
 
       console.log("response : ", response)
-      alert(`${props.selectedWeek}퀴즈가 생성되었습니다.`) // 타이밍이 중요
+      alert(`${data.selectedWeek}퀴즈가 생성되었습니다.`) // 타이밍이 중요
     } catch (error) {
       console.log(error)
     } finally {
       data.reRender()
     }
   }
+  useEffect(() => {
+    setSelectedWeek(data.selectedWeek)
+  }, [data])
 
   return (
     <div onClick={stopPropagation}>

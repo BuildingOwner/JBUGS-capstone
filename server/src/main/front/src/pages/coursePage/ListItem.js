@@ -106,6 +106,7 @@ const ListItem = (props) => {
       try {
         const response = await axios.delete(`/api/material/${props.fileId}`);
         console.log(response.data); // 서버로부터의 응답을 처리합니다.
+        alert("삭제되었습니다.")
       } catch (error) {
         console.error('Error deleting material:', error);
       }

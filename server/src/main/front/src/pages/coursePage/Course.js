@@ -163,7 +163,6 @@ const Course = () => {
       setQuizs(selectedWeekData.quizzes)
       setClassFiles(selectedWeekData.classFiles)
       setDateRange(calculateDateRange(selectedWeek))
-      // setFetchFlag(false)
     }
   }, [selectedWeek, weeklyContents])
 

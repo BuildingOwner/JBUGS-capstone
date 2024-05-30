@@ -3,11 +3,12 @@ import ReactPlayer from "react-player";
 import styles from "./VideoPlayer.module.css"
 import { useRef, useState, useEffect } from "react"
 import LoadingPage from "../mainPage/LoadingPage"
+import axios from "axios"
 
 const VideoPlayer = () => {
   const [memberId, setMemberId] = useState('')
   const [playbackTime, setPlaybackTime] = useState(0)
-  const [videoId, setVideoId] = useState(0)
+  const [videoId, setVideoId] = useState(null)
   const [videoUrl, setVideoUrl] = useState()
   const [videoDuration, setVideoDuration] = useState(0) // 영상 길이(초단위)
   const [playedSeconds, setPlayedSeconds] = useState(0) // 현재 재생 시간
@@ -35,23 +36,35 @@ const VideoPlayer = () => {
     return percent
   }
 
+  const fetchVideo = async () => {
+    try {
+      console.log(`/api/course/stream/${videoId}`)
+      const response = await axios.get(`/api/course/stream/${videoId}`, {
+        responseType: 'blob' // 바이너리 데이터로 응답 받기
+      })
+      const mimeType = response.data.type
+      const videoBlob = new Blob([response.data], { type: mimeType }) // Blob 객체 생성
+      const videoUrl = URL.createObjectURL(videoBlob) // Blob URL 생성
+      setVideoUrl(videoUrl)
+      console.log("response", response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     // ListItem에서의 postMessage를 받아오는 함수
     const handleMessage = (event) => {
-      // 'videoUrl'과 'videoName'이 있는 경우에만 처리
-      if (event.data && event.data.videoUrl && event.data.videoName) {
+      // 'videoId'가 있을때만 처리
+      if (event.data && event.data.videoId) {
         console.log('Received message:', event.data)
-        setVideoUrl(event.data.videoUrl)
-        setMemberId(event.data.memberId)
         setVideoId(event.data.videoId)
-        if (event.data.playbackTime) {
-          setPlaybackTime(event.data.playbackTime)
-        }
+        setMemberId(event.data.memberId)
+        setPlaybackTime(event.data.playbackTime)
       }
     }
 
     window.addEventListener('message', handleMessage)
-
     return () => {
       window.removeEventListener('message', handleMessage)
     }
@@ -75,7 +88,6 @@ const VideoPlayer = () => {
       // Blob 객체를 생성하여 Content-Type을 application/json으로 설정
       const blob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
 
-
       // navigator.sendBeacon을 사용해 서버에 데이터 전송
       navigator.sendBeacon(`/api/course/save-time`, blob);
 
@@ -92,7 +104,11 @@ const VideoPlayer = () => {
     }
   }, [memberId, videoId, playedSeconds]); // 의존성 배열에 변수를 추가
 
-
+  useEffect(() => {
+    if (videoId !== null) {
+      fetchVideo()
+    }
+  }, [videoId])
 
   const handleReady = () => {
     if (isReady === true) {
@@ -104,10 +120,13 @@ const VideoPlayer = () => {
     setIsReady(true)
   }
 
-  if (videoUrl === undefined) {
-    console.log(videoUrl)
-    return <LoadingPage />
-  };
+
+
+  // if (videoUrl === undefined) {
+  //   console.log(videoUrl)
+  //   return <LoadingPage />
+  // }
+
   return (
     <div className={styles.player}>
       <div className={styles.inner}>

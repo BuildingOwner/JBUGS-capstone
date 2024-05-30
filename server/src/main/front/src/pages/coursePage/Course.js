@@ -13,6 +13,7 @@ import LoadingPage from "../mainPage/LoadingPage";
 const Course = () => {
   const currentDate = new Date();
   const startDate = new Date('2024-03-04'); // 개강일 적는 곳
+  const [fetchFlag, setFetchFlag] = useState(false)
 
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
@@ -114,12 +115,12 @@ const Course = () => {
       setLectureName(lectureName1)
       setDivision(division1)
       setCourseDto(response.data.courseDto)
-      setLectureVideos(videoData)
-      setAssignments(assignmentData)
-      setQuizs(quizData)
-      setClassFiles(fileData)
+      // setLectureVideos(videoData)
+      // setAssignments(assignmentData)
+      // setQuizs(quizData)
+      // setClassFiles(fileData)
       setMemberInfoDto(memberInfo)
-
+      // setFetchFlag(true)
       // 현재 날짜 정보 설정
       const currentDate = new Date();
       const startDate = new Date('2024-03-04') // 개강일 적는 곳
@@ -127,6 +128,17 @@ const Course = () => {
       const month = currentDate.getMonth() + 1
       const date = currentDate.getDate()
 
+      // selectedWeek에 해당하는 데이터를 바로 설정
+      if (selectedWeek) {
+        const selectedWeekData = weeklyContents.find(week => week.week === selectedWeek);
+        if (selectedWeekData) {
+          setLectureVideos(selectedWeekData.lectureVideos);
+          setAssignments(selectedWeekData.assignments);
+          setQuizs(selectedWeekData.quizzes);
+          setClassFiles(selectedWeekData.classFiles);
+          setDateRange(calculateDateRange(selectedWeek));
+        }
+      }
     }
     catch (error) {
       if (error.response.status === 401 || error.response.status === 400) {
@@ -139,7 +151,7 @@ const Course = () => {
   }
 
   useEffect(() => {
-    fetchCourse();
+    fetchCourse()
   }, [reRenderFlag])
 
   useEffect(() => {
@@ -151,12 +163,9 @@ const Course = () => {
       setQuizs(selectedWeekData.quizzes)
       setClassFiles(selectedWeekData.classFiles)
       setDateRange(calculateDateRange(selectedWeek))
+      // setFetchFlag(false)
     }
   }, [selectedWeek, weeklyContents])
-
-  // useEffect(() => {
-  //   setDateRange(calculateDateRange(selectedWeek));
-  // }, [selectedWeek]);
 
   if (!memberInfoDto) return <LoadingPage />;
 
@@ -227,6 +236,7 @@ const Course = () => {
                     enrollmentId={enrollmentId}
                     percent={video.percent}
                     videoLength={video.videoLength}
+                    playbackTime={video.playbackTime}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>

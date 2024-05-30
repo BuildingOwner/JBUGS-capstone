@@ -43,9 +43,9 @@ const VideoItem = (props) => {
   }
 
   const watchVideo = async () => {
-    const videoName = props.videoName.split('.')
-    const length = videoName.length
-    const extension = videoName[length - 1].toLowerCase() // 확장자명 추출
+    const videoName = props.videoName.split('.');
+    const length = videoName.length;
+    const extension = videoName[length - 1].toLowerCase(); // 확장자명 추출
 
     // 확장자에 따른 MIME 타입 매핑
     const mimeTypes = {
@@ -57,20 +57,22 @@ const VideoItem = (props) => {
       'wmv': 'video/x-ms-wmv',
       'flv': 'video/x-flv',
       'mkv': 'video/x-matroska',
-    }
-    const mimeType = mimeTypes[extension] || 'video/mp4'
+    };
+    let mimeType = mimeTypes[extension] || 'video/mp4';
 
-    const newWindow = window.open("/videoplayer", "_blank", "width=800,height=600");
+    
 
     try {
-      console.log(`/api/course/stream/${props.videoId}`)
       const response = await axios.get(`/api/course/stream/${props.videoId}`, {
-        responseType: 'blob' // 바이너리 데이터로 응답 받기
-      })
-      const videoBlob = new Blob([response.data], { type: mimeType }) // Blob 객체 생성
-      const videoUrl = URL.createObjectURL(videoBlob) // Blob URL 생성
-      console.log("response", response)
-      
+        responseType: 'blob', // 바이너리 데이터로 응답 받기
+        timeout: 300000, // 5분
+      });
+      const newWindow = window.open("/videoplayer", "_blank", "width=800,height=600");
+
+      mimeType = response.headers['content-type'] || mimeType; // 서버에서 전송된 MIME 타입을 가져옴
+      const videoBlob = new Blob([response.data], { type: mimeType }); // Blob 객체 생성
+      const videoUrl = URL.createObjectURL(videoBlob); // Blob URL 생성
+      console.log("response", response);
 
       // 새 창이 로드된 후 메시지 전송
       newWindow.onload = function () {
@@ -84,14 +86,72 @@ const VideoItem = (props) => {
           memberId: memberInfoDto.memberId,
           playbackTime: playbackTime
         }, '*');
-      }
-      newWindow.onclose = props.reRender()
+      };
 
+      // 새 창 닫힘 이벤트 처리
+      newWindow.onclose = function () {
+        props.reRender();
+        URL.revokeObjectURL(videoUrl); // 사용이 끝난 후 Blob URL 해제
+      };
     } catch (error) {
-      alert("동영상을 불러올 수 없습니다.")
-      console.log(error)
+      alert("동영상을 불러올 수 없습니다.");
+      console.log(error);
     }
-  }
+  };
+
+  // const watchVideo = async () => {
+  //   const videoName = props.videoName.split('.')
+  //   const length = videoName.length
+  //   const extension = videoName[length - 1].toLowerCase() // 확장자명 추출
+
+  //   // 확장자에 따른 MIME 타입 매핑
+  //   const mimeTypes = {
+  //     'mp4': 'video/mp4',
+  //     'mov': 'video/quicktime',
+  //     'webm': 'video/webm',
+  //     'ogg': 'video/ogg',
+  //     'avi': 'video/x-msvideo',
+  //     'wmv': 'video/x-ms-wmv',
+  //     'flv': 'video/x-flv',
+  //     'mkv': 'video/x-matroska',
+  //   }
+  //   let mimeType = mimeTypes[extension] || 'video/mp4'
+
+  //   const newWindow = window.open("/videoplayer", "_blank", "width=800,height=600");
+
+  //   try {
+  //     console.log(`/api/course/stream/${props.videoId}`)
+  //     const response = await axios.get(`/api/course/stream/${props.videoId}`, {
+  //       responseType: 'blob', // 바이너리 데이터로 응답 받기
+  //       timeout: 300000 // 5분
+  //     })
+  //     mimeType = response.headers['content-type']; // 서버에서 전송된 MIME 타입을 가져옴
+  //     const videoBlob = new Blob([response.data], { type: mimeType }) // Blob 객체 생성
+  //     const videoUrl = URL.createObjectURL(videoBlob) // Blob URL 생성
+  //     console.log("response", response)
+
+
+  //     // 새 창이 로드된 후 메시지 전송
+  //     newWindow.onload = function () {
+  //       // response.headers에서 'playback-time' 헤더의 값을 안전하게 가져오기
+  //       const playbackTime = response.headers['playback-time'] ? response.headers['playback-time'] : null;
+  //       // postMessage를 사용하여 새 창에 메시지 전송
+  //       newWindow.postMessage({
+  //         videoUrl: videoUrl,
+  //         videoName: videoName,
+  //         videoId: props.videoId,
+  //         memberId: memberInfoDto.memberId,
+  //         playbackTime: playbackTime
+  //       }, '*');
+  //     }
+  //     newWindow.onclose = props.reRender()
+
+  //   } catch (error) {
+  //     alert("동영상을 불러올 수 없습니다.")
+  //     console.log(error)
+  //   }
+
+  // }
 
   useEffect(() => {
     if (props.url === "video") {
@@ -133,7 +193,7 @@ const VideoItem = (props) => {
             <div className={`${styles.third} ${styles2.progressBar}`}>
               {props.url === 'video' ?
                 <div className={`progress ${styles2.progress}`} role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                  <div className={`progress-bar ${styles2.progressBarPercent}`} style={{width:`${props.percent}%`}}></div>{props.percent}%
+                  <div className={`progress-bar ${styles2.progressBarPercent}`} style={{ width: `${props.percent}%` }}></div>{props.percent}%
                 </div> :
                 <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3>
               }

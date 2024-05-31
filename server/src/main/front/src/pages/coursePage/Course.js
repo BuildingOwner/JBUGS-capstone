@@ -14,7 +14,7 @@ const Course = () => {
   const currentDate = new Date();
   const startDate = new Date('2024-03-04'); // 개강일 적는 곳
   const [fetchFlag, setFetchFlag] = useState(false)
-
+  const [editFlag, setEditFlag] = useState(false)
   const calculateWeek = (startDate, endDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // 하루의 밀리초 수
 
@@ -163,7 +163,6 @@ const Course = () => {
       setQuizs(selectedWeekData.quizzes)
       setClassFiles(selectedWeekData.classFiles)
       setDateRange(calculateDateRange(selectedWeek))
-      // setFetchFlag(false)
     }
   }, [selectedWeek, weeklyContents])
 
@@ -209,11 +208,24 @@ const Course = () => {
                   >{index + 1}</button>
                 ))}
               </nav>
-              <button type="button" className={`btn btn-primary 
+              {/* 버튼 div */}
+              <div className={styles.buttonDiv}>
+                {/* 수정 버튼 */}
+                {
+                  memberInfoDto.memberType === "PROFESSOR" ?
+                    <button type="button"
+                      className={`btn btn-primary ${styles.addBtn} ${styles.editBtn}`}
+                      onClick={() => setEditFlag(!editFlag)}>
+                      <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>자료 수정</h3>
+                    </button> : null
+                }
+                <button type="button" className={`btn btn-primary 
               ${memberInfoDto?.memberType == "STUDENT" ? styles.hidden : null}
               ${styles.addBtn}`} onClick={openModal}>
-                <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
-              </button>
+                  <h3 style={{ fontSize: "1rem" }}>강의 자료 추가하기</h3>
+                </button>
+              </div>
+
             </div>
           </div>
           <div className={styles.container}>
@@ -237,6 +249,7 @@ const Course = () => {
                     percent={video.percent}
                     videoLength={video.videoLength}
                     playbackTime={video.playbackTime}
+                    editFlag={editFlag}
                   />
                 )) : <NoItem title={"온라인 강의가"} />}
               </div>
@@ -249,6 +262,7 @@ const Course = () => {
                 {assignments[0] ? assignments.map((assignment, i) => (
                   <ListItem
                     key={`assignment${i}`}
+                    assignmentId={assignment.id}
                     title={assignment.title}
                     contents={assignment.contents}
                     dueDate={assignment.dueDate}
@@ -258,6 +272,8 @@ const Course = () => {
                     courseDto={courseDto}
                     url={assignmentUrl}
                     memberInfoDto={memberInfoDto}
+                    editFlag={editFlag}
+                    reRender={reRender}
                   />
                 )) : <NoItem title={"과제가"} />}
               </div>
@@ -280,6 +296,7 @@ const Course = () => {
                     memberInfoDto={memberInfoDto}
                     enrollmentId={enrollmentId}
                     selectedWeek={selectedWeek}
+                    editFlag={editFlag}
                   />
                 )) : <NoItem title={"자료가"} />}
               </div>
@@ -307,6 +324,7 @@ const Course = () => {
                     courseDto={courseDto}
                     url={quizUrl}
                     reRender={reRender}
+                    editFlag={editFlag}
                   />
                 )) : <NoItem title={"퀴즈가"} />}
               </div>

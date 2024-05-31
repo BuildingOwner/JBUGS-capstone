@@ -2,6 +2,9 @@ import styles from "./NoticeRow.module.css"
 import { useState, useEffect } from "react";
 import { BsPinFill } from "react-icons/bs";
 import NoticeModal from "../../modals/noticeModal/NoticeModal"
+import { IoClose } from "react-icons/io5";
+import axios from "axios";
+
 const QnaRow = (props) => {
   const [formattedDate, setFormattedDate] = useState()
   // 모달창 노출 여부 state
@@ -17,6 +20,22 @@ const QnaRow = (props) => {
     setModalIsOpen(false)
     // 이벤트 버블링을 막음
     event.stopPropagation()
+  }
+
+  const handleDeleteNotice = async (event) => {
+    if (event) {
+      event.stopPropagation()
+    }
+    if (confirm("삭제 하시겠습니까?") === true) {
+      try {
+        const response = await axios.delete(`/api/notice/${props.noticeId}`);
+        console.log(response.data); // 서버로부터의 응답을 처리합니다.
+        alert("삭제되었습니다.")
+      } catch (error) {
+        console.error('Error deleting notice:', error);
+      }
+    }
+    props.reRender()
   }
 
   const formatDate = (dateString) => {
@@ -63,6 +82,15 @@ const QnaRow = (props) => {
       <h4 className={styles.writer}>{props.writer}</h4>
       <h4 className={styles.date}>{formattedDate}</h4>
       <h4 className={styles.views}>{props.views}</h4>
+      {
+        props.memberType === "PROFESSOR" && props.editFlag === true ?
+          <button type="button"
+            className={`btn btn-primary ${styles.deleteBtn}`}
+            onClick={(e) => handleDeleteNotice(e)}>
+            <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
+          </button>
+          : null
+      }
     </div>
   );
 };

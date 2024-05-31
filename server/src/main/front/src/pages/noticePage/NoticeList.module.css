@@ -49,7 +49,7 @@
   border: none !important;
 }
 
-.content{
+.content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -58,6 +58,8 @@
 .tabBtns {
   display: flex;
   border-radius: 5px 5px 0 0;
+  justify-content: space-between;
+  padding-right: var(--padding-xl);
 }
 
 .tabItem {
@@ -75,7 +77,7 @@
   background-color: var(--boder-blue);
 }
 
-.colName{
+.colName {
   display: flex;
   height: 50px;
   background-color: var(--point-bg-blue);
@@ -84,22 +86,26 @@
   padding: 0 var(--padding-xl);
 }
 
-.colNum, .colSecret, .colView, .colWriter{
+.colNum,
+.colSecret,
+.colView,
+.colWriter {
   width: 80px;
   text-align: center;
 }
 
-.colAnswered, .colDate{
+.colAnswered,
+.colDate {
   width: 130px;
   text-align: center;
 }
 
-.colTitle{
+.colTitle {
   text-align: center;
   flex-grow: 1;
 }
 
-.list{
+.list {
   display: flex;
   flex-direction: column;
   background-color: var(--bg-blue);
@@ -110,8 +116,12 @@
   height: 500px;
 }
 
-.addBtn{
+.addBtn {
   height: 40px !important;
   background-color: var(--point-blue) !important;
   border: none !important;
+}
+
+.btnDiv {
+  display: flex;
 }

@@ -263,7 +263,7 @@ const QuizAnswer = () => {
                               )}
                             </div> :
                             // 정답이 아니고 유저가 고른 답이면 빨간색
-                            questions[indexOfOptions].options[i] === answer[indexOfOptions + 1] ?
+                            questions[indexOfOptions].options[i].toLowerCase() === answer[indexOfOptions + 1].toLowerCase() ?
                               <div className={`${styles.answerOption} ${styles.wrong}`} key={i}>
                                 {num}
                                 {questions[indexOfOptions].options[i] && (
@@ -284,9 +284,12 @@ const QuizAnswer = () => {
                         <textarea
                           value={answer[questions[indexOfOptions]?.id] || ''}
                           readOnly
-                          className={`${questions[indexOfOptions]?.answer === answer[indexOfOptions + 1] ?
+                          className={`${typeof answer[indexOfOptions + 1] === 'string' &&
+                            questions[indexOfOptions]?.answer.toLowerCase() === answer[indexOfOptions + 1].toLowerCase() ?
                             styles.correct : styles.wrong}`}
                         ></textarea>
+
+
                         <h4>정답 : {questions[indexOfOptions]?.answer}</h4>
                       </>)
                   }
@@ -316,7 +319,7 @@ const QuizAnswer = () => {
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {
                 return (
-                  <div className={`${styles.quizNavBtn} ${questions[i].answer === answer[i + 1] ?
+                  <div className={`${styles.quizNavBtn} ${questions[i].answer.toLowerCase() === answer[i + 1].toLowerCase() ?
                     styles.correct : styles.wrong}`}
                     onClick={() => changeQuestion(i)}>
                     <h3>{i + 1}</h3>

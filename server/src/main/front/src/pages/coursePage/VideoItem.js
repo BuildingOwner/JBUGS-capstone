@@ -50,6 +50,7 @@ const VideoItem = (props) => {
                     videoId: props.videoId,
                     memberId: memberInfoDto.memberId,
                     playbackTime: props.playbackTime,
+                    percent: props.percent,
                 }, '*')
             }
             const checkWindowClosed = setInterval(() => {
@@ -73,7 +74,6 @@ const VideoItem = (props) => {
             let second
             if (Math.floor(duration / 3600) >= 1) {
                 let remain = Math.floor(duration / 60)
-                console.log(remain)
                 let h = Math.floor(duration / 3600)
                 hour = `0${Math.floor(duration / 3600)}`
 
@@ -87,7 +87,6 @@ const VideoItem = (props) => {
                     second = `0${Math.floor(duration % 60)}`
                 } else {
                     second = Math.floor(duration % 60)
-                    console.log("second : ", second)
                 }
 
             } else {
@@ -102,11 +101,8 @@ const VideoItem = (props) => {
                     second = `0${Math.floor(duration % 60)}`
                 } else {
                     second = Math.floor(duration % 60)
-                    console.log("second : ", second)
                 }
             }
-
-
 
             if (hour > 0) {
                 setVideoLength(`${hour}:${minute}:${second}`)
@@ -135,8 +131,19 @@ const VideoItem = (props) => {
                         </div>
                         <div className={`${styles.third} ${styles2.progressBar}`}>
                             {props.url === 'video' ?
-                                <div className={`progress ${styles2.progress}`} role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                    <div className={`progress-bar ${styles2.progressBarPercent}`} style={{ width: `${props.percent}%` }}></div>{props.percent}%
+                                <div className={`progress ${styles2.progress}`}
+                                    role="progressbar"
+                                    aria-label="Basic example"
+                                    aria-valuenow="0"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100">
+                                    <div className={
+                                        `progress-bar
+                                        ${styles2.progressBarPercent}
+                                        ${props.memberInfoDto.memberType === "PROFESSOR" || props.percent >= 80 ?
+                                            styles2.greenColor : styles2.redColor}
+                                    `}
+                                        style={{ width: `${props.percent}%` }}></div>{props.percent}%
                                 </div> :
                                 <h3 className={`${styles.fontSize} ${styles.width}`}>{props.contents}</h3>
                             }
@@ -147,12 +154,12 @@ const VideoItem = (props) => {
                     {props.url === 'video' && (
                         <>
                             {
-                                props.memberInfoDto.memberType === "STUDENT" ? null :
-                                    <button type="button"
-                                        className={`btn btn-primary ${styles.deleteBtn}`}
-                                        onClick={(e) => handleDeleteVideoFile(e)}>
-                                        <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
-                                    </button>
+                                props.memberInfoDto.memberType === "PROFESSOR" && props.editFlag === true ? <button type="button"
+                                    className={`btn btn-primary ${styles.deleteBtn}`}
+                                    onClick={(e) => handleDeleteVideoFile(e)}>
+                                    <IoClose data-tooltip-content='삭제' data-tooltip-id='tooltip' size={25} />
+                                </button> : null
+
                             }
                         </>
                     )}

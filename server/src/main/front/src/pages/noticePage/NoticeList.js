@@ -20,6 +20,8 @@ const NoticeList = () => {
   const [noticeFilter, setNoticeFilter] = useState("ALL")
   const [searchFilter, setSearchFilter] = useState("title")
   const [keyword, setKeyword] = useState("")
+  const [editFlag, setEditFlag] = useState(false)
+
   // reRender를 위한 상태
   const [reRenderFlag, setReRenderFlag] = useState(false)
   // 모달창 노출 여부 state
@@ -52,6 +54,7 @@ const NoticeList = () => {
     setNoticeFilter(e)
     console.log(e)
   }
+
   // 날짜를 기준으로 오름차순으로 정렬하는 함수
   let sortedNoticeDtoList = noticeDtoList?.sort((a, b) => {
     return new Date(a.createdAt) - new Date(b.createdAt)
@@ -141,24 +144,34 @@ const NoticeList = () => {
           </div>
           <div className={styles.content}>
             <div className={styles.tabBtns}>
-              <button style={{ borderTopLeftRadius: "5px" }}
-                className={`${styles.tabItem} ${noticeFilter === 'ALL' ? styles.currentFilter : ''}`}
-                onClick={() => changeNoticeFilter('ALL')}>
-                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 공지</h3>
-              </button>
-              <button className={`${styles.tabItem} ${noticeFilter === 'EXAM' ? styles.currentFilter : ''}`}
-                onClick={() => changeNoticeFilter("EXAM")}>
-                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>시험</h3>
-              </button>
-              <button className={`${styles.tabItem} ${noticeFilter === 'ONLINE' ? styles.currentFilter : ''}`}
-                onClick={() => changeNoticeFilter('ONLINE')}>
-                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>온라인</h3>
-              </button>
-              <button style={{ borderTopRightRadius: "5px" }}
-                className={`${styles.tabItem} ${noticeFilter === 'FACE_TO_FACE_CLASSES' ? styles.currentFilter : ''}`}
-                onClick={() => changeNoticeFilter('FACE_TO_FACE_CLASSES')}>
-                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>대면수업</h3>
-              </button>
+              <div className={styles.btnDiv}>
+                <button style={{ borderTopLeftRadius: "5px" }}
+                  className={`${styles.tabItem} ${noticeFilter === 'ALL' ? styles.currentFilter : ''}`}
+                  onClick={() => changeNoticeFilter('ALL')}>
+                  <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>전체 공지</h3>
+                </button>
+                <button className={`${styles.tabItem} ${noticeFilter === 'EXAM' ? styles.currentFilter : ''}`}
+                  onClick={() => changeNoticeFilter("EXAM")}>
+                  <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>시험</h3>
+                </button>
+                <button className={`${styles.tabItem} ${noticeFilter === 'ONLINE' ? styles.currentFilter : ''}`}
+                  onClick={() => changeNoticeFilter('ONLINE')}>
+                  <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>온라인</h3>
+                </button>
+                <button style={{ borderTopRightRadius: "5px" }}
+                  className={`${styles.tabItem} ${noticeFilter === 'FACE_TO_FACE_CLASSES' ? styles.currentFilter : ''}`}
+                  onClick={() => changeNoticeFilter('FACE_TO_FACE_CLASSES')}>
+                  <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>대면수업</h3>
+                </button>
+              </div>
+              {/* 공지 수정 버튼 */}
+              {
+                memberInfoDto?.memberType === "PROFESSOR" ? <button type="button"
+                  className={`btn btn-primary ${styles.addBtn} ${styles.editBtn}`}
+                  onClick={() => setEditFlag(!editFlag)}>
+                  <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>공지수정</h3>
+                </button> : null
+              }
             </div>
             <div className={styles.colName}>
               <h3 className={styles.colNum} style={{ fontSize: "1.25rem" }}>번호</h3>
@@ -190,6 +203,9 @@ const NoticeList = () => {
                         views={notice.views}
                         writer={notice.writer}
                         key={`notice${i}`}
+                        reRender={reRender}
+                        editFlag={editFlag}
+                        memberType={memberInfoDto?.memberType}
                       />
                     ))
                   : <NoItem title={"공지가"} />

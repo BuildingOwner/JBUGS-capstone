@@ -317,7 +317,7 @@ const QuizAnswer = () => {
               <h3 className={styles.fontSize31xl}>{score}</h3>
             </div>
             <div className={styles.numberNav}>
-              {Array.from({ length: questions.length }).map((_, i) => {
+              {Array.from({ length: questions.length }).map((_, i) => { 
                 const isAnswerString = typeof answer[i + 1] === 'string';
                 const isCorrect = isAnswerString && questions[i].answer.toLowerCase() === answer[i + 1].toLowerCase();
 

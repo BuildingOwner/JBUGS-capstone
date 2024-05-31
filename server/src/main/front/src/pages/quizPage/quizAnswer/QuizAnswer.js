@@ -318,14 +318,20 @@ const QuizAnswer = () => {
             </div>
             <div className={styles.numberNav}>
               {Array.from({ length: questions.length }).map((_, i) => {
+                const isAnswerString = typeof answer[i + 1] === 'string';
+                const isCorrect = isAnswerString && questions[i].answer.toLowerCase() === answer[i + 1].toLowerCase();
+
                 return (
-                  <div className={`${styles.quizNavBtn} ${questions[i].answer.toLowerCase() === answer[i + 1].toLowerCase() ?
-                    styles.correct : styles.wrong}`}
-                    onClick={() => changeQuestion(i)}>
+                  <div
+                    className={`${styles.quizNavBtn} ${isCorrect ? styles.correct : styles.wrong}`}
+                    onClick={() => changeQuestion(i)}
+                    key={i}
+                  >
                     <h3>{i + 1}</h3>
                   </div>
-                )
+                );
               })}
+
             </div>
             <div className={styles.notice}>
               <h3 className={styles.fontSizeBase}>주의 사항</h3>

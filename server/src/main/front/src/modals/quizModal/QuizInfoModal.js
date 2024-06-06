@@ -12,11 +12,12 @@ const QuizInfoModal = (props) => {
   const navigate = useNavigate()
   const data = props.props
   const moveToDoQuiz = () => {
-    navigate('/doquiz', {
-      state: {
-        props: restProps
-      },
-    })
+    if (confirm("퀴즈를 응시하시겠습니까?"))
+      navigate('/doquiz', {
+        state: {
+          props: restProps
+        },
+      })
   }
 
   const moveToQuizAnswer = () => {

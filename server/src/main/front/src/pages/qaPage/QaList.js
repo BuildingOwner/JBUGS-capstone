@@ -22,6 +22,7 @@ const QaList = () => {
   const [qaFilter, setQaFilter] = useState("ALL")
   const [searchFilter, setSearchFilter] = useState("title")
   const [keyword, setKeyword] = useState("")
+  const [editFlag, setEditFlag] = useState(false)
   // reRender를 위한 상태
   const [reRenderFlag, setReRenderFlag] = useState(false)
   // 모달창 노출 여부 state
@@ -146,6 +147,7 @@ const QaList = () => {
 
           <div className={styles.content}>
             <div className={styles.tabBtns}>
+              <div className={styles.btnDiv}>
               <button style={{ borderTopLeftRadius: "5px" }}
                 className={`${styles.tabItem} ${qaFilter === 'ALL' ? styles.currentFilter : ''}`}
                 onClick={() => changeQaFilter('ALL')}
@@ -158,6 +160,16 @@ const QaList = () => {
               >
                 <h3 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>내 질문</h3>
               </button>
+              </div>
+              
+              {/* 수정 버튼 */}
+              {
+                memberInfoDto?.memberType === "PROFESSOR" ? <button type="button"
+                  className={`btn btn-primary ${styles.addBtn}`}
+                  onClick={() => setEditFlag(!editFlag)}>
+                  <h3 style={{ fontSize: "1.05rem", fontWeight: "bold" }}>Q&A 수정</h3>
+                </button> : null
+              }
             </div>
             <div className={styles.colName}>
               <h3 className={styles.colNum} style={{ fontSize: "1.25rem" }}>번호</h3>
@@ -193,6 +205,7 @@ const QaList = () => {
                       materials={qna.materials}
                       comment={qna.comment}
                       reRender={reRender}
+                      editFlag={editFlag}
                     />
                   )) : <NoItem title={"등록된 질문이"} />}
             </div>

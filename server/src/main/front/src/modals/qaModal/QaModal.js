@@ -77,35 +77,35 @@ const QaModal = (props) => {
         comments.push({ writer: writer.trim(), content: content.trim() })
       }
     })
-
-    console.log(comments)
     return comments
   }
 
   const makeComment = async () => {
-    try {
-      console.log("writer:", data.memberInfoDto.memberName)
-      console.log("content:", comment)
+    if (confirm("댓글을 작성하시겠습니까?")) {
+      try {
+        console.log("writer:", data.memberInfoDto.memberName)
+        console.log("content:", comment)
 
-      // 댓글을 서버에 전송
-      const response = await axios.post(`/api/course/qna/${data.qnaId}/comment`, null, {
-        params: {
-          comment: `${responseComment} writer:${data.memberInfoDto.memberName} content:${comment}`
-        }
-      })
+        // 댓글을 서버에 전송
+        const response = await axios.post(`/api/course/qna/${data.qnaId}/comment`, null, {
+          params: {
+            comment: `${responseComment} writer:${data.memberInfoDto.memberName} content:${comment}`
+          }
+        })
 
-      console.log(response)
+        console.log(response)
 
-      // 서버로부터 받은 새로운 댓글 문자열을 파싱하여 댓글 객체 배열로 변환
-      const newComments = parseCommentString(`writer:${data.memberInfoDto.memberName} content:${comment}`)
+        // 서버로부터 받은 새로운 댓글 문자열을 파싱하여 댓글 객체 배열로 변환
+        const newComments = parseCommentString(`writer:${data.memberInfoDto.memberName} content:${comment}`)
 
-      // 기존 댓글 데이터에 새 댓글을 추가
-      setCommentData(prevCommentData => [...prevCommentData, ...newComments])
-      setComment("")
-      data.reRender()
-      console.log(newComments)
-    } catch (error) {
-      console.log(error)
+        // 기존 댓글 데이터에 새 댓글을 추가
+        setCommentData(prevCommentData => [...prevCommentData, ...newComments])
+        setComment("")
+        data.reRender()
+        console.log(newComments)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -185,7 +185,6 @@ const QaModal = (props) => {
     setResponseComment(data?.comment)
     setPrevFiles(data?.materials)
     setCommentData(parseCommentString(data?.comment))
-    console.log(props)
   }, [startFlag]) // 모달이 닫히면 다시 렌더링이 일어남
 
   return (
@@ -292,7 +291,7 @@ const QaModal = (props) => {
               // 댓글이 있을 시에 출력
               commentData?.length > 0 ?
                 commentData.map((comment) => (
-                  <div className={`${styles2.comment} ${console.log(props)}
+                  <div className={`${styles2.comment}
                   ${data?.courseDto.professorName === comment.writer ? styles2.profComment : null}`}>
                     <h4 className={styles.commentWriter}>{comment.writer}</h4>
                     <h4 className={styles.commentContent}>{comment.content}</h4>
